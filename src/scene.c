@@ -42,11 +42,13 @@ void load_level(const level_t *level) {
 }
 
 //calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
-static uint8_t animation_timer = 0;
+static uint8_t animation_timer = 6;
 void render_actors() {
     actor_t *current_actor = active_actors;
-    animation_timer++;
-    animation_timer &= 0x07;
+    animation_timer -= 1;
+    if (animation_timer == 0) {
+        animation_timer = 6;
+    }
     // draw each metasprite
     UINT8 hiwater = 0;
     for (UINT8 i = active_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
@@ -60,7 +62,7 @@ void render_actors() {
                     TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
             }
             // process actor animation
-            if (animation_timer == 0) {
+            if (animation_timer == 1) {
                 current_actor->animation_phase++;
                 // check for the last animation frame
                 if (current_animation[current_actor->animation_phase] == NULL) {

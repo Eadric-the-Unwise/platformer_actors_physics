@@ -109,7 +109,8 @@ void main() {
             // then you should make variables and put all those constants into level struct
             // and load those when load level
             //add counter there
-            // counter++; counter &= 3;
+            // counter++;
+            // counter &= 3; (THIS IS CALLED A BITMASK)
             //if (counter == 0) { //friction }
             //call is physics_counter
             // counter++;

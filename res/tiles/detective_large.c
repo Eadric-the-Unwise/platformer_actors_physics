@@ -127,13 +127,13 @@ const metasprite_t detective_large_metasprite16[] = {
 //};
 
 const metasprite_t* const detective_walk_left[] = {
-    detective_large_metasprite5, detective_large_metasprite6, detective_large_metasprite7, detective_large_metasprite8,
-    detective_large_metasprite9, detective_large_metasprite8, detective_large_metasprite7, detective_large_metasprite6,
+    detective_large_metasprite5, detective_large_metasprite5, detective_large_metasprite6, detective_large_metasprite7, detective_large_metasprite8, detective_large_metasprite8,
+    detective_large_metasprite9, detective_large_metasprite10,
     NULL};
 
 const metasprite_t* const detective_walk_right[] = {
     detective_large_metasprite5, detective_large_metasprite6, detective_large_metasprite7, detective_large_metasprite8,
-    detective_large_metasprite9, detective_large_metasprite8, detective_large_metasprite7, detective_large_metasprite6,
+    detective_large_metasprite9, detective_large_metasprite10,
     NULL};
 
 const metasprite_t* const detective_jump[] = {
