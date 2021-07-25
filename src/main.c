@@ -12,7 +12,7 @@
 #include "level2.h"
 #include "scene.h"
 
-UINT8 joy;
+UINT8 joy, last_joy;
 
 UINT8 floorYposition;
 UINT8 Jump;
@@ -38,10 +38,11 @@ void main() {
 
     // switch on display after everything is ready
     DISPLAY_ON;
-
+    last_joy = joy = 0;
     while (TRUE) {  //main loop runs at 60fps
         // ---------------------------------------------
         // process joystic input
+        last_joy = joy;
         joy = joypad();
         if (joy & J_LEFT) {
             if (PLAYER.SpdX > -MAX_WALK_SPEED)
@@ -58,7 +59,8 @@ void main() {
         }
         if (joy & J_DOWN) {
             ;  // add code here for duck
-        } else if (joy & J_A) {
+
+        } else if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             if (!Jump) {
                 SetActorDirection(&PLAYER, DIR_UP, 0);
                 PLAYER.SpdY = JUMP_IMPULSE;

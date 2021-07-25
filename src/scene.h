@@ -21,6 +21,8 @@
 #define WALK_VELOCITY 4
 #define MAX_WALK_SPEED 16
 #define MAX_FALL_SPEED 64
+//if last_joy and J_A both equal 1, XOR = 0.
+#define CHANGED_BUTTONS (last_joy ^ joy)
 
 typedef enum {
     DIR_LEFT,
