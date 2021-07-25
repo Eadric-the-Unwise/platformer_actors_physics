@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "village_house_1_map.h": "c",
+        "village_house_1_tiles.h": "c",
+        "gb.h": "c",
+        "enemy_arrow.h": "c",
+        "level2.h": "c"
+    }
+}
