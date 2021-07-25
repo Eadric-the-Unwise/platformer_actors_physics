@@ -49,13 +49,13 @@ void main() {
                 PLAYER.SpdX -= WALK_VELOCITY;
             else
                 PLAYER.SpdX = -MAX_WALK_SPEED;
-            if (!Jump) SetActorDirection(&PLAYER, DIR_LEFT, 0);
+            if (!Jump) SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
         } else if (joy & J_RIGHT) {
             if (PLAYER.SpdX < MAX_WALK_SPEED)
                 PLAYER.SpdX += WALK_VELOCITY;
             else
                 PLAYER.SpdX = MAX_WALK_SPEED;
-            if (!Jump) SetActorDirection(&PLAYER, DIR_RIGHT, 0);
+            if (!Jump) SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
         }
         if (joy & J_DOWN) {
             ;  // add code here for duck

@@ -9,65 +9,55 @@
 void animate_level2();
 
 const actor_t level2_actors[4] = {
-    {
-        .x = TO_COORDS(140),
-        .y = TO_COORDS(36),
-        .SpdX = 0,
-        .SpdY = 0,
-        .direction = DIR_NONE,
-        .tile_count = (sizeof(detective_large_data) >> 4),
-        .tile_index = 0,
-        .tile_data = detective_large_data,
-        .animations = {detective_walk_left, detective_walk_right, detective_jump, NULL, detective_stand },
-        .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP},
-        .animation_phase = 0
-    },
-    {
-        .x = TO_COORDS(160),
-        .y = TO_COORDS(140),
-        .SpdX = -8,
-        .SpdY = 0,
-        .direction = DIR_LEFT,
-        .tile_count = (sizeof(enemy_arrow_data) >> 4),
-        .tile_index = 0,
-        .tile_data = enemy_arrow_data,
-        .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL },
-        .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-        .animation_phase = 0
-    },
-    {
-        .x = TO_COORDS(120),
-        .y = TO_COORDS(50),
-        .SpdX = -8,
-        .SpdY = 0,
-        .direction = DIR_LEFT,
-        .tile_count = (sizeof(enemy_arrow_data) >> 4),
-        .tile_index = 0,
-        .tile_data = enemy_arrow_data,
-        .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL },
-        .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-        .animation_phase = 0
-    },
-    {
-        .x = TO_COORDS(140),
-        .y = TO_COORDS(80),
-        .SpdX = -8,
-        .SpdY = 0,
-        .direction = DIR_LEFT,
-        .tile_count = (sizeof(enemy_arrow_data) >> 4),
-        .tile_index = 0,
-        .tile_data = enemy_arrow_data,
-        .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL },
-        .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-        .animation_phase = 0
-    }
-};
+    {.x = TO_COORDS(140),
+     .y = TO_COORDS(36),
+     .SpdX = 0,
+     .SpdY = 0,
+     .direction = DIR_NONE,
+     .tile_count = (sizeof(detective_large_data) >> 4),
+     .tile_index = 0,
+     .tile_data = detective_large_data,
+     .animations = {detective_walk_left, detective_walk_left, detective_jump, NULL, detective_stand},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP},
+     .animation_phase = 0},
+    {.x = TO_COORDS(160),
+     .y = TO_COORDS(140),
+     .SpdX = -8,
+     .SpdY = 0,
+     .direction = DIR_LEFT,
+     .tile_count = (sizeof(enemy_arrow_data) >> 4),
+     .tile_index = 0,
+     .tile_data = enemy_arrow_data,
+     .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animation_phase = 0},
+    {.x = TO_COORDS(120),
+     .y = TO_COORDS(50),
+     .SpdX = -8,
+     .SpdY = 0,
+     .direction = DIR_LEFT,
+     .tile_count = (sizeof(enemy_arrow_data) >> 4),
+     .tile_index = 0,
+     .tile_data = enemy_arrow_data,
+     .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animation_phase = 0},
+    {.x = TO_COORDS(140),
+     .y = TO_COORDS(80),
+     .SpdX = -8,
+     .SpdY = 0,
+     .direction = DIR_LEFT,
+     .tile_count = (sizeof(enemy_arrow_data) >> 4),
+     .tile_index = 0,
+     .tile_data = enemy_arrow_data,
+     .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animation_phase = 0}};
 
 const level_t level2 = {
     .actors = level2_actors,
     .actor_count = 4,
-    .animate_hook = animate_level2
-};
+    .animate_hook = animate_level2};
 
 void animate_level2() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  //The Detective is currently active_actors[0], so active_actors[1] and above are enemies

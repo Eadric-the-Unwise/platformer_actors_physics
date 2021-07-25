@@ -55,11 +55,19 @@ void render_actors() {
         const metasprite_t **current_animation = current_actor->animations[current_actor->direction];
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
-                hiwater += move_metasprite(
-                    current_animation[current_actor->animation_phase],
-                    current_actor->tile_index,
-                    hiwater,
-                    TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                if (current_actor->direction == DIR_RIGHT) {
+                    hiwater += move_metasprite_vflip(
+                        current_animation[current_actor->animation_phase],
+                        current_actor->tile_index,
+                        hiwater,
+                        TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                } else {
+                    hiwater += move_metasprite(
+                        current_animation[current_actor->animation_phase],
+                        current_actor->tile_index,
+                        hiwater,
+                        TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                }
             }
             // process actor animation
             if (animation_timer == 1) {
