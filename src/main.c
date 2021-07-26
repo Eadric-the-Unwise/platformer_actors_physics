@@ -137,6 +137,19 @@ void main() {
         }
         // ---------------------------------------------
 
+        //COMMENT THIS OUT TO REMOVE ABILITY TO TURN DIRECTION MIDAIR
+        if (Jump) {
+            if (PLAYER.direction == DIR_JUMP_L) {
+                if (joy & J_RIGHT) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, PLAYER.animation_phase);
+                }
+            }
+            if (PLAYER.direction == DIR_JUMP_R) {
+                if (joy & J_LEFT) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, PLAYER.animation_phase);
+                }
+            }
+        }
         // Change to IDLE state when not moving
         if (!Jump)
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
@@ -156,7 +169,7 @@ void main() {
                         }
                         break;
                     case DIR_JUMP_L:
-                        if (PLAYER.direction == DIR_RIGHT) {
+                        if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R)) {
                             SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
                         } else {
                             SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
@@ -178,12 +191,13 @@ void main() {
                         }
                         break;
                     case DIR_JUMP_R:
-                        if (PLAYER.direction == DIR_LEFT) {
+                        if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L)) {
                             SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                         } else {
                             SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
                         }
                         break;
+
                         // default:
                         //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                         //     break;
