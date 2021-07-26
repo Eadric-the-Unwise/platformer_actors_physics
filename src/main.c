@@ -66,10 +66,21 @@ void main() {
                     SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
                 } else if (joy & J_RIGHT) {
                     SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-                } else if (PLAYER.last_direction == DIR_IDLE_L) {
-                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-                } else if (PLAYER.last_direction == DIR_IDLE_R) {
-                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                } else {
+                    switch (PLAYER.direction) {
+                        case DIR_IDLE_L:
+                            SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                            break;
+                        case DIR_IDLE_R:
+                            SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                            break;
+                        case DIR_LEFT:
+                            SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                            break;
+                        case DIR_RIGHT:
+                            SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                            break;
+                    }
                 }
                 PLAYER.SpdY = JUMP_IMPULSE;
                 Jump = TRUE;
@@ -131,7 +142,11 @@ void main() {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 switch (PLAYER.last_direction) {
                     case DIR_LEFT:
-                        SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        if (PLAYER.direction == DIR_RIGHT) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        } else {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        }
                         break;
                     case DIR_IDLE_L:
                         if (PLAYER.direction == DIR_RIGHT) {
@@ -141,11 +156,19 @@ void main() {
                         }
                         break;
                     case DIR_JUMP_L:
-                        SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        if (PLAYER.direction == DIR_RIGHT) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        } else {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        }
                         break;
 
                     case DIR_RIGHT:
-                        SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        if (PLAYER.direction == DIR_LEFT) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        } else {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        }
                         break;
                     case DIR_IDLE_R:
                         if (PLAYER.direction == DIR_LEFT) {
@@ -155,7 +178,11 @@ void main() {
                         }
                         break;
                     case DIR_JUMP_R:
-                        SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        if (PLAYER.direction == DIR_LEFT) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        } else {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        }
                         break;
                         // default:
                         //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
