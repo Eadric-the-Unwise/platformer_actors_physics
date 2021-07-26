@@ -57,7 +57,7 @@ void render_actors() {
         const metasprite_t **current_animation = current_actor->animations[current_direction];
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
-                if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R)) {
+                if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R)) {
                     hiwater += move_metasprite_vflip(
                         current_animation[current_actor->animation_phase],
                         current_actor->tile_index,

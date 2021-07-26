@@ -27,11 +27,14 @@
 typedef enum {
     DIR_LEFT,
     DIR_RIGHT,
-    DIR_DOWN,
+    DIR_DOWN_L,
+    DIR_DOWN_R,
+    DIR_CRAWL_L,
+    DIR_CRAWL_R,
     DIR_IDLE_L,
     DIR_IDLE_R,
     DIR_JUMP_L,
-    DIR_JUMP_R
+    DIR_JUMP_R,
 } direction_e;
 
 typedef enum {
@@ -54,8 +57,8 @@ typedef struct actor_t {
     const UINT8 *tile_data;
 
     // animation description
-    const metasprite_t **animations[7];
-    anim_loop_e animations_props[7];
+    const metasprite_t **animations[10];
+    anim_loop_e animations_props[10];
     UINT8 animation_phase;
 } actor_t;
 

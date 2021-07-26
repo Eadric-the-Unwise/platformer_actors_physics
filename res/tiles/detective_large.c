@@ -131,10 +131,19 @@ const metasprite_t* const detective_walk_left[] = {
     detective_large_metasprite9, detective_large_metasprite10,
     NULL};
 
+const metasprite_t* const detective_crouch[] = {
+    detective_large_metasprite1,
+    NULL};
+
+const metasprite_t* const detective_crawl_left[] = {
+    detective_large_metasprite1, detective_large_metasprite2,
+    detective_large_metasprite3, detective_large_metasprite4,
+    NULL};
+
 const metasprite_t* const detective_jump[] = {
     detective_large_metasprite11, detective_large_metasprite12,
     detective_large_metasprite13, detective_large_metasprite14,
-    NULL};
+    NULL, detective_large_metasprite15, detective_large_metasprite16};
 
 const metasprite_t* const detective_stand[] = {
     detective_large_metasprite0, NULL};
