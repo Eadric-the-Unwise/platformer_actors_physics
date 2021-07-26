@@ -58,11 +58,17 @@ void main() {
             if (!Jump) SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
         }
         if (joy & J_DOWN) {
-            ;  // add code here for duck
+            if (!Jump) SetActorDirection(&PLAYER, DIR_DOWN, 0);
 
         } else if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             if (!Jump) {
-                SetActorDirection(&PLAYER, DIR_UP, 0);
+                if (joy & J_LEFT) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                } else if (joy & J_RIGHT) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                }
                 PLAYER.SpdY = JUMP_IMPULSE;
                 Jump = TRUE;
             }
@@ -121,7 +127,20 @@ void main() {
         // Change to IDLE state when not moving
         if (!Jump)
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-                SetActorDirection(&PLAYER, DIR_NONE, 0);
+                if (PLAYER.last_direction == DIR_LEFT) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                } else if (PLAYER.last_direction == DIR_RIGHT) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                }
+                // else if (PLAYER.last_direction == DIR_JUMP_R) {
+                //     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                // } else if (PLAYER.last_direction == DIR_JUMP_L) {
+                //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                // }
+
+                // SWITCH HERE ^
             }
 
         // update PLAYER absolute posiiton

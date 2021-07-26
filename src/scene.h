@@ -27,9 +27,11 @@
 typedef enum {
     DIR_LEFT,
     DIR_RIGHT,
-    DIR_UP,
     DIR_DOWN,
-    DIR_NONE
+    DIR_IDLE_L,
+    DIR_IDLE_R,
+    DIR_JUMP_L,
+    DIR_JUMP_R
 } direction_e;
 
 typedef enum {
@@ -43,6 +45,7 @@ typedef struct actor_t {
     INT16 SpdX;
     INT16 SpdY;
     direction_e direction;
+    direction_e last_direction;
 
     // tiledata related
     UINT8 tile_count;
@@ -51,8 +54,8 @@ typedef struct actor_t {
     const UINT8 *tile_data;
 
     // animation description
-    const metasprite_t **animations[5];
-    anim_loop_e animations_props[5];
+    const metasprite_t **animations[7];
+    anim_loop_e animations_props[7];
     UINT8 animation_phase;
 } actor_t;
 
@@ -75,6 +78,7 @@ void render_actors();
 //fuction body is inlined into the code
 inline void SetActorDirection(actor_t *actor, direction_e dir, UBYTE phase) {
     if (actor->direction != dir) {
+        actor->last_direction = actor->direction;
         actor->direction = dir;
         actor->animation_phase = phase;
     }

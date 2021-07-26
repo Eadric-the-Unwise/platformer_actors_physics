@@ -23,7 +23,7 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         current_actor->y = actor->y;
         current_actor->SpdX = actor->SpdX;
         current_actor->SpdY = actor->SpdY;
-        current_actor->direction = actor->direction;
+        current_actor->last_direction = current_actor->direction = actor->direction;
         current_actor->frame_delay = actor->frame_delay;
         memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations));  // copy array of 5 pointers to animation phases
         memcpy(current_actor->animations_props, actor->animations_props, sizeof(actor->animations_props));
@@ -50,12 +50,14 @@ void render_actors() {
         animation_timer = 6;
     }
     // draw each metasprite
+    direction_e current_direction;
     UINT8 hiwater = 0;
     for (UINT8 i = active_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
-        const metasprite_t **current_animation = current_actor->animations[current_actor->direction];
+        current_direction = current_actor->direction;
+        const metasprite_t **current_animation = current_actor->animations[current_direction];
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
-                if (current_actor->direction == DIR_RIGHT) {
+                if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R)) {
                     hiwater += move_metasprite_vflip(
                         current_animation[current_actor->animation_phase],
                         current_actor->tile_index,
