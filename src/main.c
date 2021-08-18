@@ -49,15 +49,55 @@ void main() {
                 PLAYER.SpdX -= WALK_VELOCITY;
             else
                 PLAYER.SpdX = -MAX_WALK_SPEED;
-            if (!Jump) SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+            if ((!Jump) && !(joy & (J_DOWN))) {
+                SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+            } else if ((!Jump) && (joy & (J_DOWN))) {
+                SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+            }
         } else if (joy & J_RIGHT) {
             if (PLAYER.SpdX < MAX_WALK_SPEED)
                 PLAYER.SpdX += WALK_VELOCITY;
             else
                 PLAYER.SpdX = MAX_WALK_SPEED;
-            if (!Jump) SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
+            if ((!Jump) && !(joy & (J_DOWN))) {
+                SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
+            } else if ((!Jump) && (joy & (J_DOWN))) {
+                SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+            }
         }
 
+        if ((joy & J_LEFT) && (joy & J_DOWN)) {
+        }
+
+        //DOWN while standing still
+        if ((joy & J_DOWN) && (!Jump)) {
+            switch (PLAYER.last_direction) {
+                case DIR_LEFT:
+                    SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                    break;
+                case DIR_IDLE_L:
+                    SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                    break;
+                case DIR_DOWN_L:
+                    SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                    break;
+                case DIR_CRAWL_L:
+                    SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                    break;
+                case DIR_RIGHT:
+                    SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                    break;
+                case DIR_IDLE_R:
+                    SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                    break;
+                case DIR_DOWN_R:
+                    SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                    break;
+                case DIR_CRAWL_R:
+                    SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                    break;
+            }
+        }
         // if (joy & J_DOWN) {
         //     if (!Jump) {
         //         switch (PLAYER.last_direction) {
@@ -139,11 +179,16 @@ void main() {
         if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
             if (PLAYER.SpdY > MAX_FALL_SPEED) PLAYER.SpdY = MAX_FALL_SPEED;
         } else {  //if you touch the floor
-
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
                 Jump = FALSE;
+                //set player idle direction when touching ground
+                if (PLAYER.direction == DIR_JUMP_R) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                } else if (PLAYER.direction == DIR_JUMP_L) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                }
             }
             if (PLAYER.y > TO_COORDS(floorYposition)) PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
         }
@@ -180,7 +225,7 @@ void main() {
 
         // ---------------------------------------------
 
-        //COMMENT THIS OUT TO REMOVE ABILITY TO TURN DIRECTION MIDAIR
+        //TURN DIRECTION MIDAIR
         if (Jump) {
             if (PLAYER.direction == DIR_JUMP_L) {
                 if (joy & J_RIGHT) {
@@ -194,7 +239,7 @@ void main() {
             }
         }
         // Change to IDLE state when not moving
-        if (!Jump) {
+        if ((!Jump) && !(joy & J_DOWN)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 switch (PLAYER.last_direction) {
                     case DIR_LEFT:
@@ -218,6 +263,20 @@ void main() {
                             SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                         }
                         break;
+                    case DIR_DOWN_L:
+                        if (PLAYER.direction == DIR_RIGHT) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        } else {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        }
+                        break;
+                    case DIR_CRAWL_L:
+                        if (PLAYER.direction == DIR_RIGHT) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        } else {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        }
+                        break;
 
                     case DIR_RIGHT:
                         if (PLAYER.direction == DIR_LEFT) {
@@ -235,6 +294,20 @@ void main() {
                         break;
                     case DIR_JUMP_R:
                         if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L)) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        } else {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        }
+                        break;
+                    case DIR_DOWN_R:
+                        if (PLAYER.direction == DIR_LEFT) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        } else {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        }
+                        break;
+                    case DIR_CRAWL_R:
+                        if (PLAYER.direction == DIR_LEFT) {
                             SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                         } else {
                             SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
