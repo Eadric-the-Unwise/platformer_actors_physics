@@ -66,12 +66,9 @@ void main() {
             }
         }
 
-        if ((joy & J_LEFT) && (joy & J_DOWN)) {
-        }
-
         //DOWN while standing still
-        if ((joy & J_DOWN) && (!Jump)) {
-            switch (PLAYER.last_direction) {
+        if ((joy & J_DOWN) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
+            switch (PLAYER.direction) {
                 case DIR_LEFT:
                     SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
                     break;

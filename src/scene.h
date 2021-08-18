@@ -16,7 +16,7 @@
 #define TO_PIXELS(A) ((A) >> 4)
 
 #define GRAVITY 4
-#define FRICTION 1
+#define FRICTION 2
 #define JUMP_IMPULSE -64
 #define WALK_VELOCITY 4
 #define MAX_WALK_SPEED 16
