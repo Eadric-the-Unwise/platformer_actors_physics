@@ -45,20 +45,44 @@ void main() {
         last_joy = joy;
         joy = joypad();
         if (joy & J_LEFT) {
-            if (PLAYER.SpdX > -MAX_WALK_SPEED)
-                PLAYER.SpdX -= WALK_VELOCITY;
-            else
-                PLAYER.SpdX = -MAX_WALK_SPEED;
-            if ((!Jump) && !(joy & (J_DOWN))) {
-                SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
-            } else if ((!Jump) && (joy & (J_DOWN))) {
-                SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+            if (!(joy & (J_DOWN))) {
+                if (PLAYER.SpdX > -MAX_WALK_SPEED)
+                    PLAYER.SpdX -= WALK_VELOCITY;
+                else
+                    PLAYER.SpdX = -MAX_WALK_SPEED;
+                if (!Jump) {
+                    SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+                }
+            } else if (joy & (J_DOWN)) {
+                if (PLAYER.SpdX > -MAX_CRAWL_SPEED)
+                    PLAYER.SpdX -= WALK_VELOCITY;
+                else
+                    PLAYER.SpdX = -MAX_CRAWL_SPEED;
+                if (!Jump) {
+                    SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+                }
             }
         } else if (joy & J_RIGHT) {
-            if (PLAYER.SpdX < MAX_WALK_SPEED)
-                PLAYER.SpdX += WALK_VELOCITY;
-            else
-                PLAYER.SpdX = MAX_WALK_SPEED;
+            if (!(joy & (J_DOWN))) {
+                if (PLAYER.SpdX < MAX_WALK_SPEED)
+                    PLAYER.SpdX += WALK_VELOCITY;
+                else
+                    PLAYER.SpdX = MAX_WALK_SPEED;
+                if (!Jump) {
+                    SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
+                }
+            } else if (joy & (J_DOWN)) {
+                if (PLAYER.SpdX < MAX_CRAWL_SPEED)
+                    PLAYER.SpdX += WALK_VELOCITY;
+                else
+                    PLAYER.SpdX = MAX_CRAWL_SPEED;
+                if (!Jump) {
+                    SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+                }
+            }
+        }
+
+        else if (joy & J_RIGHT) {
             if ((!Jump) && !(joy & (J_DOWN))) {
                 SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
             } else if ((!Jump) && (joy & (J_DOWN))) {
@@ -144,6 +168,12 @@ void main() {
                             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
                             break;
                         case DIR_RIGHT:
+                            SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                            break;
+                        case DIR_DOWN_L:
+                            SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                            break;
+                        case DIR_DOWN_R:
                             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
                             break;
                     }
