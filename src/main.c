@@ -15,7 +15,8 @@
 UINT8 joy, last_joy;
 
 UINT8 floorYposition;
-UINT8 Jump;
+UINT8 Jump, Launch;
+UBYTE launchDelay = 0;
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -33,6 +34,7 @@ void main() {
     // game assumes floor is at the level of 100px. that is a temporary workaround, should use collision maps instead
     floorYposition = 100;
     Jump = FALSE;
+    Launch = FALSE;
 
     load_level(&level1);
 
@@ -44,7 +46,10 @@ void main() {
         // process joystic input
         last_joy = joy;
         joy = joypad();
+
         if (joy & J_LEFT) {
+            Launch = FALSE;
+            launchDelay = 0;
             if (!(joy & (J_DOWN))) {
                 if (PLAYER.SpdX > -MAX_WALK_SPEED)
                     PLAYER.SpdX -= WALK_VELOCITY;
@@ -63,6 +68,8 @@ void main() {
                 }
             }
         } else if (joy & J_RIGHT) {
+            Launch = FALSE;
+            launchDelay = 0;
             if (!(joy & (J_DOWN))) {
                 if (PLAYER.SpdX < MAX_WALK_SPEED)
                     PLAYER.SpdX += WALK_VELOCITY;
@@ -81,17 +88,15 @@ void main() {
                 }
             }
         }
-
-        else if (joy & J_RIGHT) {
-            if ((!Jump) && !(joy & (J_DOWN))) {
-                SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
-            } else if ((!Jump) && (joy & (J_DOWN))) {
-                SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
-            }
-        }
-
         //DOWN while standing still
         if ((joy & J_DOWN) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
+            if (!Launch) {
+                launchDelay++;
+            }
+            if (launchDelay == 50) {
+                Launch = TRUE;
+                launchDelay = 0;
+            }
             switch (PLAYER.direction) {
                 case DIR_LEFT:
                     SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
@@ -119,6 +124,18 @@ void main() {
                     break;
             }
         }
+        //Launch
+        if ((Launch) && (!(joy & J_DOWN))) {
+            PLAYER.SpdY = LAUNCH_IMPULSE;
+            Jump = TRUE;
+            Launch = FALSE;
+            if (PLAYER.direction == DIR_DOWN_L) {
+                SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+            } else if (PLAYER.direction == DIR_DOWN_R) {
+                SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+            }
+        }
+
         // if (joy & J_DOWN) {
         //     if (!Jump) {
         //         switch (PLAYER.last_direction) {
@@ -151,6 +168,8 @@ void main() {
         // }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
+            Launch = FALSE;
+            launchDelay = 0;
             if (!Jump) {
                 if (joy & J_LEFT) {
                     SetActorDirection(&PLAYER, DIR_JUMP_L, 0);

@@ -18,6 +18,7 @@
 #define GRAVITY 4
 #define FRICTION 2
 #define JUMP_IMPULSE -64
+#define LAUNCH_IMPULSE -94
 #define WALK_VELOCITY 4
 #define MAX_WALK_SPEED 16
 #define MAX_CRAWL_SPEED 10
