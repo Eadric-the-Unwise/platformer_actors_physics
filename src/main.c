@@ -125,14 +125,19 @@ void main() {
             }
         }
         //Launch
-        if ((Launch) && (!(joy & J_DOWN))) {
-            PLAYER.SpdY = LAUNCH_IMPULSE;
-            Jump = TRUE;
-            Launch = FALSE;
-            if (PLAYER.direction == DIR_DOWN_L) {
-                SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-            } else if (PLAYER.direction == DIR_DOWN_R) {
-                SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+        if (Launch) {
+            OBP0_REG = 0xE1;
+            OBP1_REG = 0xE1;
+            if (!(joy & J_DOWN)) {
+                OBP0_REG = 0xE4;
+                PLAYER.SpdY = LAUNCH_IMPULSE;
+                Jump = TRUE;
+                Launch = FALSE;
+                if (PLAYER.direction == DIR_DOWN_L) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                } else if (PLAYER.direction == DIR_DOWN_R) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                }
             }
         }
 
