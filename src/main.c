@@ -15,8 +15,9 @@
 UINT8 joy, last_joy;
 
 UINT8 floorYposition;
-UINT8 Jump, Launch;
+UINT8 Jump, Launch, Shooting;
 UBYTE launchDelay = 0;
+UBYTE shooting_counter = 0;
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -35,6 +36,7 @@ void main() {
     floorYposition = 100;
     Jump = FALSE;
     Launch = FALSE;
+    Shooting = FALSE;
 
     load_level(&level1);
 
@@ -47,7 +49,7 @@ void main() {
         last_joy = joy;
         joy = joypad();
 
-        if (joy & J_LEFT) {
+        if ((joy & J_LEFT) && (!Shooting)) {
             Launch = FALSE;
             launchDelay = 0;
             if (!(joy & (J_DOWN))) {
@@ -140,6 +142,12 @@ void main() {
                 }
             }
         }
+        if (Shooting) {
+            shooting_counter--;
+            if (shooting_counter <= 0) {
+                Shooting = FALSE;
+            }
+        }
 
         // if (joy & J_DOWN) {
         //     if (!Jump) {
@@ -206,6 +214,12 @@ void main() {
                 Jump = TRUE;
             }
         }
+        if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (!Jump)) {
+            Shooting = TRUE;
+            shooting_counter = 20;
+        }
+        // else if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (Jump)) {
+        // }
 
 #ifdef DEBUG
         //DEBUG DETECTIVE Y COORDS
