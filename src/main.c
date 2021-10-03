@@ -8,6 +8,9 @@
 #endif
 
 // Include your scene and map header files
+#include "../res/tiles/brick_map.h"
+#include "../res/tiles/brick_tiles.h"
+#include "../res/tiles/collision_map.h"
 #include "level1.h"
 #include "level2.h"
 #include "scene.h"
@@ -31,6 +34,9 @@ void main() {
     SPRITES_8x16;
     SHOW_BKG;
     SHOW_SPRITES;
+
+    set_bkg_data(0, 3, BRICK_TILES);
+    set_bkg_tiles(0, 0, BRICK_MAPWidth, BRICK_MAPHeight, BRICK_MAP);
 
     // game assumes floor is at the level of 100px. that is a temporary workaround, should use collision maps instead
     floorYposition = 100;
@@ -149,37 +155,6 @@ void main() {
             }
         }
 
-        // if (joy & J_DOWN) {
-        //     if (!Jump) {
-        //         switch (PLAYER.last_direction) {
-        //             case DIR_LEFT:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-        //                 break;
-        //             case DIR_IDLE_L:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-        //                 break;
-        //             case DIR_DOWN_L:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-        //                 break;
-        //             case DIR_JUMP_L:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-        //                 break;
-        //             case DIR_IDLE_R:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-        //                 break;
-        //             case DIR_DOWN_R:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-        //                 break;
-        //             case DIR_RIGHT:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-        //                 break;
-        //             case DIR_JUMP_R:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-        //                 break;
-        //         }
-        //     }
-        // }
-
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             Launch = FALSE;
             launchDelay = 0;
@@ -265,30 +240,6 @@ void main() {
             else
                 PLAYER.SpdX -= FRICTION;
         }
-
-        // if (PLAYER.SpdX != 0) {
-        //     UINT8 counter;
-        //     counter++;
-        //     counter &= 7;
-        //     if (counter == 0) {  //friction }
-        //         if (PLAYER.SpdX < 0)
-        //             PLAYER.SpdX += FRICTION;
-        //         else
-        //             PLAYER.SpdX -= FRICTION;
-        //     }
-        // }
-
-        // set idle animation when standing
-        //if you want the character to "slide",
-        // then you should make variables and put all those constants into level struct
-        // and load those when load level
-        //add counter there
-
-        //call is physics_counter
-        // counter++;
-        // counter &= 3; (&3 make is tick 012301230123)
-
-        // ---------------------------------------------
 
         //TURN DIRECTION MIDAIR
         if (Jump) {
@@ -385,19 +336,6 @@ void main() {
                 }
             }
         }
-
-        // if (PLAYER.last_direction == DIR_LEFT) {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-        // } else if (PLAYER.last_direction == DIR_RIGHT) {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-        // } else {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-        // }
-        // else if (PLAYER.last_direction == DIR_JUMP_R) {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-        // } else if (PLAYER.last_direction == DIR_JUMP_L) {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-        // }
 
         // SWITCH HERE ^
 

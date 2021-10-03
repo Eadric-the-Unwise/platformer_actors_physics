@@ -4,6 +4,7 @@
         "village_house_1_tiles.h": "c",
         "gb.h": "c",
         "enemy_arrow.h": "c",
-        "level2.h": "c"
+        "level2.h": "c",
+        "brick_map.h": "c"
     }
 }
