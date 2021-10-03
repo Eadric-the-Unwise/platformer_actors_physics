@@ -21,6 +21,36 @@ UINT8 floorYposition;
 UINT8 Jump, Launch, Shooting;
 UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
+const unsigned char blankmap[1] = {0x00};
+
+UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery);
+UBYTE canplayermoveBR(UINT8 newplayerx, UINT8 newplayery);
+//bottom left pixel
+UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBLx, indexBLy, tileindexBL;
+    UBYTE result;
+
+    indexBLx = (newplayerx - 17) / 8;
+    indexBLy = (newplayery) / 8;
+    tileindexBL = 20 * indexBLy + indexBLx;
+
+    result = COLLISION_MAP[tileindexBL] == blankmap[0];
+
+    return result;
+}
+//bottom right pixel
+UBYTE canplayermoveBR(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBRx, indexBRy, tileindexBR;
+    UBYTE result;
+
+    indexBRx = (newplayerx + 2) / 8;
+    indexBRy = (newplayery) / 8;
+    tileindexBR = 20 * indexBRy + indexBRx;
+
+    result = COLLISION_MAP[tileindexBR] == blankmap[0];
+
+    return result;
+}
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -216,7 +246,7 @@ void main() {
         // WORLD PHYSICS:
         // GRAVITY
         PLAYER.SpdY += GRAVITY;
-        if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
+        if ((canplayermoveBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) && (canplayermoveBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
             if (PLAYER.SpdY > MAX_FALL_SPEED) PLAYER.SpdY = MAX_FALL_SPEED;
         } else {  //if you touch the floor
             if (PLAYER.SpdY > 0) {
@@ -230,8 +260,13 @@ void main() {
                     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                 }
             }
-            if (PLAYER.y > TO_COORDS(floorYposition)) PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
         }
+
+        // if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
+
+        // if (PLAYER.y > TO_COORDS(floorYposition)) {
+        //     PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
+        // }
         // FRICTION
         // THIS IS CURRENTLY THE MINIMUM AMOUNT FRICTION. REDUCE FURTHER BY ADDING A PHYSICS FRAME COUNTER
         if (PLAYER.SpdX != 0) {
