@@ -21,7 +21,7 @@ UINT8 floorYposition;
 UINT8 Jump, Launch, Shooting;
 UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
-const unsigned char blankmap[1] = {0x00};
+const unsigned char blankmap[2] = {0x00, 0x01};
 
 UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery);
 UBYTE canplayermoveBR(UINT8 newplayerx, UINT8 newplayery);
@@ -35,6 +35,43 @@ UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery) {
     tileindexBL = 20 * indexBLy + indexBLx;
 
     result = COLLISION_MAP[tileindexBL] == blankmap[0];
+
+    return result;
+}
+
+UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBLx, indexBLy, tileindexBL;
+    UBYTE result;
+
+    indexBLx = (newplayerx - 17) / 8;
+    indexBLy = (newplayery) / 8;
+    tileindexBL = 20 * indexBLy + indexBLx;
+
+    result = COLLISION_MAP[tileindexBL] == blankmap[1];
+
+    return result;
+}
+UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBRx, indexBRy, tileindexBR;
+    UBYTE result;
+
+    indexBRx = (newplayerx + 1) / 8;
+    indexBRy = (newplayery) / 8;
+    tileindexBR = 20 * indexBRy + indexBRx;
+
+    result = COLLISION_MAP[tileindexBR] == blankmap[1];
+
+    return result;
+}
+UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBRx, indexBRy, tileindexBR;
+    UBYTE result;
+
+    indexBRx = (newplayerx - 9) / 8;
+    indexBRy = (newplayery) / 8;
+    tileindexBR = 20 * indexBRy + indexBRx;
+
+    result = COLLISION_MAP[tileindexBR] == blankmap[1];
 
     return result;
 }
@@ -246,9 +283,11 @@ void main() {
         // WORLD PHYSICS:
         // GRAVITY
         PLAYER.SpdY += GRAVITY;
-        if ((canplayermoveBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
-            if (PLAYER.SpdY > MAX_FALL_SPEED) PLAYER.SpdY = MAX_FALL_SPEED;
-        } else {  //if you touch the floor
+        if (PLAYER.SpdY > MAX_FALL_SPEED) {
+            PLAYER.SpdY = MAX_FALL_SPEED;
+        }
+
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
