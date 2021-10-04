@@ -122,7 +122,7 @@ void main() {
         last_joy = joy;
         joy = joypad();
 
-        if ((joy & J_LEFT) && (!Shooting) && (canplayermoveBL(TO_PIXELS(PLAYER.x) - 6, TO_PIXELS(PLAYER.y) - 4))) {
+        if ((joy & J_LEFT) && (!Shooting) && (canplayermoveBL(TO_PIXELS(PLAYER.x) - 3, TO_PIXELS(PLAYER.y) - 2))) {
             Launch = FALSE;
             launchDelay = 0;
             if (!(joy & (J_DOWN))) {
@@ -222,6 +222,30 @@ void main() {
             }
         }
 
+        if (PLAYER.SpdY != 0) {
+            Jump = TRUE;
+            switch (PLAYER.direction) {
+                case DIR_IDLE_L:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_IDLE_R:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+                case DIR_LEFT:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_RIGHT:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+                case DIR_DOWN_L:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_DOWN_R:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+            }
+        }
+
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             Launch = FALSE;
             launchDelay = 0;
@@ -287,7 +311,7 @@ void main() {
             PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y)))) {
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
