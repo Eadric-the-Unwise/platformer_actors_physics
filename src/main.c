@@ -30,7 +30,7 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
     UBYTE result;
 
     indexBLx = (newplayerx - 17) / 8;
-    indexBLy = (newplayery) / 8;
+    indexBLy = (newplayery - 1) / 8;
     tileindexBL = 20 * indexBLy + indexBLx;
 
     result = COLLISION_MAP[tileindexBL] == blankmap[1];
@@ -43,7 +43,7 @@ UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
     UBYTE result;
 
     indexBRx = (newplayerx) / 8;
-    indexBRy = (newplayery) / 8;
+    indexBRy = (newplayery - 1) / 8;
     tileindexBR = 20 * indexBRy + indexBRx;
 
     result = COLLISION_MAP[tileindexBR] == blankmap[1];
@@ -56,7 +56,7 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
     UBYTE result;
 
     indexBRx = (newplayerx - 9) / 8;
-    indexBRy = (newplayery) / 8;
+    indexBRy = (newplayery - 1) / 8;
     tileindexBR = 20 * indexBRy + indexBRx;
 
     result = COLLISION_MAP[tileindexBR] == blankmap[1];
