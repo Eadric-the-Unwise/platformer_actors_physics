@@ -23,9 +23,8 @@ UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 
-UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery);
-UBYTE canplayermoveBR(UINT8 newplayerx, UINT8 newplayery);
-
+//CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
+//BOTTOM LEFT PIXEL
 UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBLx, indexBLy, tileindexBL;
     UBYTE result;
@@ -38,11 +37,12 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
 
     return result;
 }
+//BOTTOM RIGHT PIXEL
 UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBRx, indexBRy, tileindexBR;
     UBYTE result;
 
-    indexBRx = (newplayerx + 1) / 8;
+    indexBRx = (newplayerx) / 8;
     indexBRy = (newplayery) / 8;
     tileindexBR = 20 * indexBRy + indexBRx;
 
@@ -50,6 +50,7 @@ UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
 
     return result;
 }
+//BOTTOM CENTER PIXEL
 UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBRx, indexBRy, tileindexBR;
     UBYTE result;
@@ -59,32 +60,6 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
     tileindexBR = 20 * indexBRy + indexBRx;
 
     result = COLLISION_MAP[tileindexBR] == blankmap[1];
-
-    return result;
-}
-//bottom left pixel
-UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery) {
-    UINT16 indexBLx, indexBLy, tileindexBL;
-    UBYTE result;
-
-    indexBLx = (newplayerx - 17) / 8;
-    indexBLy = (newplayery) / 8;
-    tileindexBL = 20 * indexBLy + indexBLx;
-
-    result = COLLISION_MAP[tileindexBL] == blankmap[0];
-
-    return result;
-}
-//bottom right pixel
-UBYTE canplayermoveBR(UINT8 newplayerx, UINT8 newplayery) {
-    UINT16 indexBRx, indexBRy, tileindexBR;
-    UBYTE result;
-
-    indexBRx = (newplayerx + 2) / 8;
-    indexBRy = (newplayery) / 8;
-    tileindexBR = 20 * indexBRy + indexBRx;
-
-    result = COLLISION_MAP[tileindexBR] == blankmap[0];
 
     return result;
 }
@@ -310,7 +285,7 @@ void main() {
             PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 1))) {
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
@@ -323,14 +298,19 @@ void main() {
                 }
             }
         }
+        //IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
+            PLAYER.SpdY -= 5;
+        }
+
         //if character has falling X Spd, this will prevent going into the wall
-        if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 4)) {
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y))) {
             if (PLAYER.SpdX < 0) {
                 PLAYER.SpdX = 0;
             }
         }
 
-        if (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 4)) {
+        if (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y))) {
             if (PLAYER.SpdX > 0) {
                 PLAYER.SpdX = 0;
             }
