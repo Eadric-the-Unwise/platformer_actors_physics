@@ -25,19 +25,6 @@ const unsigned char blankmap[2] = {0x00, 0x01};
 
 UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery);
 UBYTE canplayermoveBR(UINT8 newplayerx, UINT8 newplayery);
-//bottom left pixel
-UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery) {
-    UINT16 indexBLx, indexBLy, tileindexBL;
-    UBYTE result;
-
-    indexBLx = (newplayerx - 17) / 8;
-    indexBLy = (newplayery) / 8;
-    tileindexBL = 20 * indexBLy + indexBLx;
-
-    result = COLLISION_MAP[tileindexBL] == blankmap[0];
-
-    return result;
-}
 
 UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBLx, indexBLy, tileindexBL;
@@ -72,6 +59,19 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
     tileindexBR = 20 * indexBRy + indexBRx;
 
     result = COLLISION_MAP[tileindexBR] == blankmap[1];
+
+    return result;
+}
+//bottom left pixel
+UBYTE canplayermoveBL(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBLx, indexBLy, tileindexBL;
+    UBYTE result;
+
+    indexBLx = (newplayerx - 17) / 8;
+    indexBLy = (newplayery) / 8;
+    tileindexBL = 20 * indexBLy + indexBLx;
+
+    result = COLLISION_MAP[tileindexBL] == blankmap[0];
 
     return result;
 }
@@ -122,7 +122,7 @@ void main() {
         last_joy = joy;
         joy = joypad();
 
-        if ((joy & J_LEFT) && (!Shooting)) {
+        if ((joy & J_LEFT) && (!Shooting) && (canplayermoveBL(TO_PIXELS(PLAYER.x) - 6, TO_PIXELS(PLAYER.y) - 4))) {
             Launch = FALSE;
             launchDelay = 0;
             if (!(joy & (J_DOWN))) {
