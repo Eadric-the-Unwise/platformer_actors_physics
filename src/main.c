@@ -122,44 +122,43 @@ void main() {
         last_joy = joy;
         joy = joypad();
 
-        if ((joy & J_LEFT) && (!Shooting) && (canplayermoveBL(TO_PIXELS(PLAYER.x) - 3, TO_PIXELS(PLAYER.y) - 2))) {
+        if ((joy & J_LEFT) && (!Shooting)) {
             Launch = FALSE;
             launchDelay = 0;
-            if (!(joy & (J_DOWN))) {
-                if (PLAYER.SpdX > -MAX_WALK_SPEED)
-                    PLAYER.SpdX -= WALK_VELOCITY;
-                else
-                    PLAYER.SpdX = -MAX_WALK_SPEED;
-                if (!Jump) {
-                    SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
-                }
+
+            if (PLAYER.SpdX > -MAX_WALK_SPEED) {
+                PLAYER.SpdX -= WALK_VELOCITY;
+            } else
+                PLAYER.SpdX = -MAX_WALK_SPEED;
+            if ((!Jump) && !(joy & (J_DOWN))) {
+                SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
             } else if (joy & (J_DOWN)) {
-                if (PLAYER.SpdX > -MAX_CRAWL_SPEED)
-                    PLAYER.SpdX -= WALK_VELOCITY;
-                else
-                    PLAYER.SpdX = -MAX_CRAWL_SPEED;
                 if (!Jump) {
                     SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+                    if (PLAYER.SpdX > -MAX_CRAWL_SPEED)
+                        PLAYER.SpdX -= WALK_VELOCITY;
+                    else
+                        PLAYER.SpdX = -MAX_CRAWL_SPEED;
                 }
             }
-        } else if (joy & J_RIGHT) {
+        } else if ((joy & J_RIGHT) && (!Shooting)) {
             Launch = FALSE;
             launchDelay = 0;
-            if (!(joy & (J_DOWN))) {
-                if (PLAYER.SpdX < MAX_WALK_SPEED)
-                    PLAYER.SpdX += WALK_VELOCITY;
-                else
-                    PLAYER.SpdX = MAX_WALK_SPEED;
-                if (!Jump) {
-                    SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
-                }
+
+            if (PLAYER.SpdX < MAX_WALK_SPEED) {
+                PLAYER.SpdX += WALK_VELOCITY;
+            } else
+                PLAYER.SpdX = MAX_WALK_SPEED;
+            if ((!Jump) && !(joy & (J_DOWN))) {
+                SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
+
             } else if (joy & (J_DOWN)) {
-                if (PLAYER.SpdX < MAX_CRAWL_SPEED)
-                    PLAYER.SpdX += WALK_VELOCITY;
-                else
-                    PLAYER.SpdX = MAX_CRAWL_SPEED;
                 if (!Jump) {
                     SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+                    if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
+                        PLAYER.SpdX += WALK_VELOCITY;
+                    } else
+                        PLAYER.SpdX = MAX_CRAWL_SPEED;
                 }
             }
         }
@@ -222,7 +221,7 @@ void main() {
             }
         }
 
-        if (PLAYER.SpdY != 0) {
+        if (PLAYER.SpdY > 0) {
             Jump = TRUE;
             switch (PLAYER.direction) {
                 case DIR_IDLE_L:
@@ -311,7 +310,7 @@ void main() {
             PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y)))) {
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 1))) {
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
@@ -322,6 +321,18 @@ void main() {
                 } else if (PLAYER.direction == DIR_JUMP_L) {
                     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                 }
+            }
+        }
+        //if character has falling X Spd, this will prevent going into the wall
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 4)) {
+            if (PLAYER.SpdX < 0) {
+                PLAYER.SpdX = 0;
+            }
+        }
+
+        if (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 4)) {
+            if (PLAYER.SpdX > 0) {
+                PLAYER.SpdX = 0;
             }
         }
 
