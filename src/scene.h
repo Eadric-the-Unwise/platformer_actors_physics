@@ -14,6 +14,7 @@
 
 #define TO_COORDS(A) ((A) << 4)
 #define TO_PIXELS(A) ((A) >> 4)
+#define TO_TILES(A) ((A) >> (4 + 3))  //4 is "subpixels to pixels" and 3 is "pixels to tiles".
 
 #define GRAVITY 4
 #define FRICTION 2

@@ -246,7 +246,7 @@ void main() {
         // WORLD PHYSICS:
         // GRAVITY
         PLAYER.SpdY += GRAVITY;
-        if ((canplayermoveBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) && (canplayermoveBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
+        if ((canplayermoveBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
             if (PLAYER.SpdY > MAX_FALL_SPEED) PLAYER.SpdY = MAX_FALL_SPEED;
         } else {  //if you touch the floor
             if (PLAYER.SpdY > 0) {
