@@ -14,7 +14,7 @@
 #include "level1.h"
 #include "level2.h"
 #include "scene.h"
-//collisions-2
+//collisions-2 THIS IS COLLISIONS 2
 UINT8 joy, last_joy;
 
 UINT8 floorYposition;
