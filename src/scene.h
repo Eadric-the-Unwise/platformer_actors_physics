@@ -14,12 +14,15 @@
 
 #define TO_COORDS(A) ((A) << 4)
 #define TO_PIXELS(A) ((A) >> 4)
+#define TO_TILES(A) ((A) >> (4 + 3))  //4 is "subpixels to pixels" and 3 is "pixels to tiles".
 
 #define GRAVITY 4
 #define FRICTION 2
 #define JUMP_IMPULSE -64
+#define LAUNCH_IMPULSE -94
 #define WALK_VELOCITY 4
 #define MAX_WALK_SPEED 16
+#define MAX_CRAWL_SPEED 10
 #define MAX_FALL_SPEED 64
 //if last_joy and J_A both equal 1, XOR = 0.
 #define CHANGED_BUTTONS (last_joy ^ joy)

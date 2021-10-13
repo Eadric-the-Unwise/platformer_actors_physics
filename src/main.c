@@ -8,14 +8,61 @@
 #endif
 
 // Include your scene and map header files
+#include "../res/tiles/brick_map.h"
+#include "../res/tiles/brick_tiles.h"
+#include "../res/tiles/collision_map.h"
 #include "level1.h"
 #include "level2.h"
 #include "scene.h"
-
+//collisions-2 I am commiting and going to push or pull request to the git hub (whichever works)
 UINT8 joy, last_joy;
 
 UINT8 floorYposition;
-UINT8 Jump;
+UINT8 Jump, Launch, Shooting;
+UBYTE launchDelay = 0;
+UBYTE shooting_counter = 0;
+const unsigned char blankmap[2] = {0x00, 0x01};
+
+//CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
+//BOTTOM LEFT PIXEL
+UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBLx, indexBLy, tileindexBL;
+    UBYTE result;
+
+    indexBLx = (newplayerx - 17) / 8;
+    indexBLy = (newplayery - 1) / 8;
+    tileindexBL = 20 * indexBLy + indexBLx;
+
+    result = COLLISION_MAP[tileindexBL] == blankmap[1];
+
+    return result;
+}
+//BOTTOM RIGHT PIXEL
+UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBRx, indexBRy, tileindexBR;
+    UBYTE result;
+
+    indexBRx = (newplayerx) / 8;
+    indexBRy = (newplayery - 1) / 8;
+    tileindexBR = 20 * indexBRy + indexBRx;
+
+    result = COLLISION_MAP[tileindexBR] == blankmap[1];
+
+    return result;
+}
+//BOTTOM CENTER PIXEL
+UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBRx, indexBRy, tileindexBR;
+    UBYTE result;
+
+    indexBRx = (newplayerx - 9) / 8;
+    indexBRy = (newplayery - 1) / 8;
+    tileindexBR = 20 * indexBRy + indexBRx;
+
+    result = COLLISION_MAP[tileindexBR] == blankmap[1];
+
+    return result;
+}
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -30,9 +77,14 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
+    set_bkg_data(0, 3, BRICK_TILES);
+    set_bkg_tiles(0, 0, BRICK_MAPWidth, BRICK_MAPHeight, BRICK_MAP);
+
     // game assumes floor is at the level of 100px. that is a temporary workaround, should use collision maps instead
     floorYposition = 100;
     Jump = FALSE;
+    Launch = FALSE;
+    Shooting = FALSE;
 
     load_level(&level1);
 
@@ -44,30 +96,56 @@ void main() {
         // process joystic input
         last_joy = joy;
         joy = joypad();
-        if (joy & J_LEFT) {
-            if (PLAYER.SpdX > -MAX_WALK_SPEED)
+
+        if ((joy & J_LEFT) && (!Shooting)) {
+            Launch = FALSE;
+            launchDelay = 0;
+
+            if (PLAYER.SpdX > -MAX_WALK_SPEED) {
                 PLAYER.SpdX -= WALK_VELOCITY;
-            else
+            } else
                 PLAYER.SpdX = -MAX_WALK_SPEED;
             if ((!Jump) && !(joy & (J_DOWN))) {
                 SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
-            } else if ((!Jump) && (joy & (J_DOWN))) {
-                SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+            } else if (joy & (J_DOWN)) {
+                if (!Jump) {
+                    SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+                    if (PLAYER.SpdX > -MAX_CRAWL_SPEED)
+                        PLAYER.SpdX -= WALK_VELOCITY;
+                    else
+                        PLAYER.SpdX = -MAX_CRAWL_SPEED;
+                }
             }
-        } else if (joy & J_RIGHT) {
-            if (PLAYER.SpdX < MAX_WALK_SPEED)
+        } else if ((joy & J_RIGHT) && (!Shooting)) {
+            Launch = FALSE;
+            launchDelay = 0;
+
+            if (PLAYER.SpdX < MAX_WALK_SPEED) {
                 PLAYER.SpdX += WALK_VELOCITY;
-            else
+            } else
                 PLAYER.SpdX = MAX_WALK_SPEED;
             if ((!Jump) && !(joy & (J_DOWN))) {
                 SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
-            } else if ((!Jump) && (joy & (J_DOWN))) {
-                SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+
+            } else if (joy & (J_DOWN)) {
+                if (!Jump) {
+                    SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+                    if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
+                        PLAYER.SpdX += WALK_VELOCITY;
+                    } else
+                        PLAYER.SpdX = MAX_CRAWL_SPEED;
+                }
             }
         }
-
         //DOWN while standing still
         if ((joy & J_DOWN) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
+            if (!Launch) {
+                launchDelay++;
+            }
+            if (launchDelay == 50) {
+                Launch = TRUE;
+                launchDelay = 0;
+            }
             switch (PLAYER.direction) {
                 case DIR_LEFT:
                     SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
@@ -95,38 +173,56 @@ void main() {
                     break;
             }
         }
-        // if (joy & J_DOWN) {
-        //     if (!Jump) {
-        //         switch (PLAYER.last_direction) {
-        //             case DIR_LEFT:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-        //                 break;
-        //             case DIR_IDLE_L:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-        //                 break;
-        //             case DIR_DOWN_L:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-        //                 break;
-        //             case DIR_JUMP_L:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-        //                 break;
-        //             case DIR_IDLE_R:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-        //                 break;
-        //             case DIR_DOWN_R:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-        //                 break;
-        //             case DIR_RIGHT:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-        //                 break;
-        //             case DIR_JUMP_R:
-        //                 SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-        //                 break;
-        //         }
-        //     }
-        // }
+        //Launch
+        if (Launch) {
+            OBP0_REG = 0xE1;
+            OBP1_REG = 0xE1;
+            if (!(joy & J_DOWN)) {
+                OBP0_REG = 0xE4;
+                PLAYER.SpdY = LAUNCH_IMPULSE;
+                Jump = TRUE;
+                Launch = FALSE;
+                if (PLAYER.direction == DIR_DOWN_L) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                } else if (PLAYER.direction == DIR_DOWN_R) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                }
+            }
+        }
+        if (Shooting) {
+            shooting_counter--;
+            if (shooting_counter <= 0) {
+                Shooting = FALSE;
+            }
+        }
+
+        if (PLAYER.SpdY > 0) {
+            Jump = TRUE;
+            switch (PLAYER.direction) {
+                case DIR_IDLE_L:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_IDLE_R:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+                case DIR_LEFT:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_RIGHT:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+                case DIR_DOWN_L:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_DOWN_R:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+            }
+        }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
+            Launch = FALSE;
+            launchDelay = 0;
             if (!Jump) {
                 if (joy & J_LEFT) {
                     SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
@@ -146,12 +242,24 @@ void main() {
                         case DIR_RIGHT:
                             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
                             break;
+                        case DIR_DOWN_L:
+                            SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                            break;
+                        case DIR_DOWN_R:
+                            SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                            break;
                     }
                 }
                 PLAYER.SpdY = JUMP_IMPULSE;
                 Jump = TRUE;
             }
         }
+        if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (!Jump)) {
+            Shooting = TRUE;
+            shooting_counter = 20;
+        }
+        // else if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (Jump)) {
+        // }
 
 #ifdef DEBUG
         //DEBUG DETECTIVE Y COORDS
@@ -173,9 +281,11 @@ void main() {
         // WORLD PHYSICS:
         // GRAVITY
         PLAYER.SpdY += GRAVITY;
-        if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
-            if (PLAYER.SpdY > MAX_FALL_SPEED) PLAYER.SpdY = MAX_FALL_SPEED;
-        } else {  //if you touch the floor
+        if (PLAYER.SpdY > MAX_FALL_SPEED) {
+            PLAYER.SpdY = MAX_FALL_SPEED;
+        }
+
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
@@ -187,8 +297,30 @@ void main() {
                     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                 }
             }
-            if (PLAYER.y > TO_COORDS(floorYposition)) PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
         }
+        //IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
+            PLAYER.SpdY -= 5;
+        }
+
+        //if character has falling X Spd, this will prevent going into the wall
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y))) {
+            if (PLAYER.SpdX < 0) {
+                PLAYER.SpdX = 0;
+            }
+        }
+
+        if (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y))) {
+            if (PLAYER.SpdX > 0) {
+                PLAYER.SpdX = 0;
+            }
+        }
+
+        // if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
+
+        // if (PLAYER.y > TO_COORDS(floorYposition)) {
+        //     PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
+        // }
         // FRICTION
         // THIS IS CURRENTLY THE MINIMUM AMOUNT FRICTION. REDUCE FURTHER BY ADDING A PHYSICS FRAME COUNTER
         if (PLAYER.SpdX != 0) {
@@ -197,30 +329,6 @@ void main() {
             else
                 PLAYER.SpdX -= FRICTION;
         }
-
-        // if (PLAYER.SpdX != 0) {
-        //     UINT8 counter;
-        //     counter++;
-        //     counter &= 7;
-        //     if (counter == 0) {  //friction }
-        //         if (PLAYER.SpdX < 0)
-        //             PLAYER.SpdX += FRICTION;
-        //         else
-        //             PLAYER.SpdX -= FRICTION;
-        //     }
-        // }
-
-        // set idle animation when standing
-        //if you want the character to "slide",
-        // then you should make variables and put all those constants into level struct
-        // and load those when load level
-        //add counter there
-
-        //call is physics_counter
-        // counter++;
-        // counter &= 3; (&3 make is tick 012301230123)
-
-        // ---------------------------------------------
 
         //TURN DIRECTION MIDAIR
         if (Jump) {
@@ -317,19 +425,6 @@ void main() {
                 }
             }
         }
-
-        // if (PLAYER.last_direction == DIR_LEFT) {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-        // } else if (PLAYER.last_direction == DIR_RIGHT) {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-        // } else {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-        // }
-        // else if (PLAYER.last_direction == DIR_JUMP_R) {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-        // } else if (PLAYER.last_direction == DIR_JUMP_L) {
-        //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-        // }
 
         // SWITCH HERE ^
 
