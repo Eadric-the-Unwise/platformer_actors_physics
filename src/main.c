@@ -14,17 +14,17 @@
 #include "level1.h"
 #include "level2.h"
 #include "scene.h"
-//collisions-2 I am commiting and going to push or pull request to the git hub (whichever works)
+// collisions-2 I am commiting and going to push or pull request to the git hub (whichever works)
 UINT8 joy, last_joy;
-INT8 y0, y1; //calculates the Velocity by subtracting y1 from y0
+INT8 y0, y1;  // calculates the Velocity by subtracting y1 from y0 in subpixels
 UINT8 floorYposition;
 UINT8 Jump, Launch, Shooting;
 UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 
-//CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
-//BOTTOM LEFT PIXEL
+// CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
+// BOTTOM LEFT PIXEL
 UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBLx, indexBLy, tileindexBL;
     UBYTE result;
@@ -37,7 +37,7 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
 
     return result;
 }
-//BOTTOM RIGHT PIXEL
+// BOTTOM RIGHT PIXEL
 UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBRx, indexBRy, tileindexBR;
     UBYTE result;
@@ -50,7 +50,7 @@ UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
 
     return result;
 }
-//BOTTOM CENTER PIXEL
+// BOTTOM CENTER PIXEL
 UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBRx, indexBRy, tileindexBR;
     UBYTE result;
@@ -85,7 +85,6 @@ void main() {
     Jump = FALSE;
     Launch = FALSE;
     Shooting = FALSE;
-   
 
     load_level(&level1);
     PLAYER.Velocity = 0;
@@ -93,7 +92,7 @@ void main() {
     // switch on display after everything is ready
     DISPLAY_ON;
     last_joy = joy = 0;
-    while (TRUE) {  //main loop runs at 60fps
+    while (TRUE) {  // main loop runs at 60fps
         // ---------------------------------------------
         // process joystic input
         last_joy = joy;
@@ -139,7 +138,7 @@ void main() {
                 }
             }
         }
-        //DOWN while standing still
+        // DOWN while standing still
         if ((joy & J_DOWN) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
             if (!Launch) {
                 launchDelay++;
@@ -175,7 +174,7 @@ void main() {
                     break;
             }
         }
-        //Launch
+        // Launch
         if (Launch) {
             OBP0_REG = 0xE1;
             OBP1_REG = 0xE1;
@@ -264,7 +263,7 @@ void main() {
         // }
 
 #ifdef DEBUG
-        //DEBUG DETECTIVE Y COORDS
+        // DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
             printf("Y=%u\n", TO_PIXELS(PLAYER.y));
         }
@@ -287,25 +286,27 @@ void main() {
             PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + PLAYER.Velocity)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + PLAYER.Velocity)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + PLAYER.Velocity))) {
-            if (PLAYER.SpdY > 0) {
-                PLAYER.SpdY = 0;
-                SetActorDirection(&PLAYER, PLAYER.direction, 5);
-                Jump = FALSE;
-                //set player idle direction when touching ground
-                if (PLAYER.direction == DIR_JUMP_R) {
-                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-                } else if (PLAYER.direction == DIR_JUMP_L) {
-                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-                }
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + TO_PIXELS(PLAYER.Velocity))) {
+            for (int v = PLAYER.Velocity; (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + TO_PIXELS(PLAYER.Velocity))); PLAYER.Velocity -= 1) {
+                PLAYER.Velocity = v;
+            }
+
+            SetActorDirection(&PLAYER, PLAYER.direction, 5);
+            Jump = FALSE;
+            // set player idle direction when touching ground
+            if (PLAYER.direction == DIR_JUMP_R) {
+                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+            } else if (PLAYER.direction == DIR_JUMP_L) {
+                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
             }
         }
-        //IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
-        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
-            PLAYER.SpdY -= 5;
-        }
 
-        //if character has falling X Spd, this will prevent going into the wall
+        // // IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
+        // if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
+        //     PLAYER.SpdY -= 5;
+        // }
+
+        // if character has falling X Spd, this will prevent going into the wall
         if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y))) {
             if (PLAYER.SpdX < 0) {
                 PLAYER.SpdX = 0;
@@ -332,7 +333,7 @@ void main() {
                 PLAYER.SpdX -= FRICTION;
         }
 
-        //TURN DIRECTION MIDAIR
+        // TURN DIRECTION MIDAIR
         if (Jump) {
             if (PLAYER.direction == DIR_JUMP_L) {
                 if (joy & J_RIGHT) {
@@ -431,6 +432,7 @@ void main() {
         // SWITCH HERE ^
 
         // update PLAYER absolute posiiton
+        PLAYER.SpdY = PLAYER.Velocity;  // change player's speed to the distance just above the floor
         PLAYER.y += PLAYER.SpdY;
         PLAYER.x += PLAYER.SpdX;
         y1 = PLAYER.y;
