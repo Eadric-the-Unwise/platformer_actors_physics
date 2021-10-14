@@ -16,7 +16,7 @@
 #include "scene.h"
 //collisions-2 I am commiting and going to push or pull request to the git hub (whichever works)
 UINT8 joy, last_joy;
-
+INT8 y0, y1; //calculates the Velocity by subtracting y1 from y0
 UINT8 floorYposition;
 UINT8 Jump, Launch, Shooting;
 UBYTE launchDelay = 0;
@@ -85,8 +85,10 @@ void main() {
     Jump = FALSE;
     Launch = FALSE;
     Shooting = FALSE;
+   
 
     load_level(&level1);
+    PLAYER.Velocity = 0;
 
     // switch on display after everything is ready
     DISPLAY_ON;
@@ -96,7 +98,7 @@ void main() {
         // process joystic input
         last_joy = joy;
         joy = joypad();
-
+        y0 = PLAYER.y;
         if ((joy & J_LEFT) && (!Shooting)) {
             Launch = FALSE;
             launchDelay = 0;
@@ -285,7 +287,7 @@ void main() {
             PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + PLAYER.Velocity)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + PLAYER.Velocity)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + PLAYER.Velocity))) {
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
@@ -431,6 +433,8 @@ void main() {
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
         PLAYER.x += PLAYER.SpdX;
+        y1 = PLAYER.y;
+        PLAYER.Velocity = y1 - y0;
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
