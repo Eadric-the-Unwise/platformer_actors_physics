@@ -315,8 +315,8 @@ void main() {
         }
 
         if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + TO_PIXELS(PLAYER.SpdY)))) {
-            if (PLAYER.SpdY = 0) {
-                
+            if (PLAYER.SpdY > 0) {
+                PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
                 Jump = FALSE;
                 //set player idle direction when touching ground
