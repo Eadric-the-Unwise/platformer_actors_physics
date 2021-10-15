@@ -50,6 +50,7 @@ typedef struct actor_t {
     UINT16 y;
     INT16 SpdX;
     INT16 SpdY;
+    INT16 Velocity;
     direction_e direction;
     direction_e last_direction;
 

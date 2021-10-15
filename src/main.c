@@ -16,7 +16,7 @@
 #include "scene.h"
 //collisions-1
 UINT8 joy, last_joy;
-
+INT8 y0, y1;  // calculates the Velocity by subtracting y1 from y0 in subpixels
 UINT8 floorYposition;
 UINT8 Jump, Launch, Shooting;
 UBYTE launchDelay = 0;
@@ -88,6 +88,8 @@ void main() {
 
     load_level(&level1);
 
+    PLAYER.Velocity = 0;
+
     // switch on display after everything is ready
     DISPLAY_ON;
     last_joy = joy = 0;
@@ -96,6 +98,7 @@ void main() {
         // process joystic input
         last_joy = joy;
         joy = joypad();
+        y0 = TO_PIXELS(PLAYER.y);
 
         if ((joy & J_LEFT) && (!Shooting)) {
             Launch = FALSE;
@@ -264,7 +267,7 @@ void main() {
 
         //DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
-            printf("Y=%u\n", TO_PIXELS(PLAYER.y));
+            printf("Y=%d Spd=%d\n", TO_PIXELS(PLAYER.y), TO_PIXELS(PLAYER.SpdY));
         }
 
 
@@ -431,12 +434,15 @@ void main() {
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
         PLAYER.x += PLAYER.SpdX;
+  
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
 
         // render all actors on screen
         render_actors();
+        y1 = TO_PIXELS(PLAYER.y);
+        PLAYER.Velocity = y1 - y0;
 
         // wait for VBlank
         wait_vbl_done();
