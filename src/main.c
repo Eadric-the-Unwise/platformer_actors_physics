@@ -3,9 +3,9 @@
 
 // uncomment the line below to switch on debug features
 //#define DEBUG
-#ifdef DEBUG
+// #ifdef DEBUG
 #include <stdio.h>
-#endif
+// #endif
 
 // Include your scene and map header files
 #include "../res/tiles/brick_map.h"
@@ -261,12 +261,12 @@ void main() {
         // else if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (Jump)) {
         // }
 
-#ifdef DEBUG
+
         //DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
             printf("Y=%u\n", TO_PIXELS(PLAYER.y));
         }
-#endif
+
 
         // Load stages on button press
         if (joy & J_START) {
