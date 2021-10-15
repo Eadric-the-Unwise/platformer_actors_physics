@@ -286,27 +286,19 @@ void main() {
             PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
-        // if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + TO_PIXELS(PLAYER.Velocity))) {
-        //     PLAYER.Velocity - 16;
-        //     if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + TO_PIXELS(PLAYER.Velocity))) {
-        //         PLAYER.Velocity - 16;
-        //         if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + TO_PIXELS(PLAYER.Velocity))) {
-        //             PLAYER.Velocity - 16;
-        //             if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + TO_PIXELS(PLAYER.Velocity))) {
-        //                 PLAYER.Velocity - 16;
-        //             }
-        //         }
-        //     }
-        //     PLAYER.SpdY = PLAYER.Velocity;
-        //     SetActorDirection(&PLAYER, PLAYER.direction, 5);
-        //     Jump = FALSE;
-        //     // set player idle direction when touching ground
-        //     if (PLAYER.direction == DIR_JUMP_R) {
-        //         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-        //     } else if (PLAYER.direction == DIR_JUMP_L) {
-        //         SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-        //     }
-        // }
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + TO_PIXELS(PLAYER.Velocity))) {
+            PLAYER.Velocity - 16;
+
+            PLAYER.SpdY = PLAYER.Velocity;
+            SetActorDirection(&PLAYER, PLAYER.direction, 5);
+            Jump = FALSE;
+            // set player idle direction when touching ground
+            if (PLAYER.direction == DIR_JUMP_R) {
+                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+            } else if (PLAYER.direction == DIR_JUMP_L) {
+                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+            }
+        }
 
         // IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
         if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
