@@ -285,6 +285,7 @@ void main() {
             PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
+        //WHEN PLAYER REACHES 1 PIXEL FROM THE FLOOR, SET HIS SPDY TO 0
         if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
@@ -298,6 +299,28 @@ void main() {
                 }
             }
         }
+        //CHANGES THE SPEED OF THE PLAYER SO THAT HIS NEXT RENDER FRAME WILL PLACE HIM 1 PIXEL ABOVE THE FLOOR
+        //CHECK 4 PIXELS BELOW PLAYER
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 4)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 4)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 4))) {
+            if (PLAYER.SpdY > TO_COORDS(3)) {
+                PLAYER.SpdY = TO_COORDS(3);
+            }
+        }
+        //CHECK 3 PIXELS BELOW PLAYER
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 3)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 3)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) +3))) {
+            if (PLAYER.SpdY > TO_COORDS(2)) {
+                PLAYER.SpdY = TO_COORDS(2);
+            }
+        }
+        //CHECK 2 PIXELS BELOW PLAYER
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 2)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 2)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) +2))) {
+            if (PLAYER.SpdY > TO_COORDS(1)) {
+                PLAYER.SpdY = TO_COORDS(1);
+            }
+        }
+        
+
+
         //Collisions 4
         //IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
         if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
