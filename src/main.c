@@ -298,6 +298,7 @@ void main() {
                 }
             }
         }
+        //Collisions 4
         //IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
         if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
             PLAYER.SpdY -= 5;
