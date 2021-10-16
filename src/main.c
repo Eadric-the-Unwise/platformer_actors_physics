@@ -339,14 +339,18 @@ void main() {
                 PLAYER.SpdX = 0;
             }
         }
+        if ((PLAYER.SpdY < 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 1)) {
+            if (PLAYER.SpdX > 0) {
+                PLAYER.SpdX = 0;
+            }
+        }
+        else if ((PLAYER.SpdY > 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) + 1)) {
+            if (PLAYER.SpdX > 0) {
+                PLAYER.SpdX = 0;
+            }
+        }
 
-        // if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
 
-        // if (PLAYER.y > TO_COORDS(floorYposition)) {
-        //     PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
-        // }
-        // FRICTION
-        // THIS IS CURRENTLY THE MINIMUM AMOUNT FRICTION. REDUCE FURTHER BY ADDING A PHYSICS FRAME COUNTER
         if (PLAYER.SpdX != 0) {
             if (PLAYER.SpdX < 0)
                 PLAYER.SpdX += FRICTION;
