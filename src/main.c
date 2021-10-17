@@ -14,7 +14,7 @@
 #include "level1.h"
 #include "level2.h"
 #include "scene.h"
-//collisions-2 I am commiting and going to push or pull request to the git hub (whichever works)
+
 UINT8 joy, last_joy;
 
 UINT8 floorYposition;
@@ -23,8 +23,8 @@ UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 
-//CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
-//BOTTOM LEFT PIXEL
+// CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
+// BOTTOM LEFT PIXEL
 UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBLx, indexBLy, tileindexBL;
     UBYTE result;
@@ -37,7 +37,7 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
 
     return result;
 }
-//BOTTOM RIGHT PIXEL
+// BOTTOM RIGHT PIXEL
 UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBRx, indexBRy, tileindexBR;
     UBYTE result;
@@ -50,7 +50,7 @@ UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
 
     return result;
 }
-//BOTTOM CENTER PIXEL
+// BOTTOM CENTER PIXEL
 UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBRx, indexBRy, tileindexBR;
     UBYTE result;
@@ -91,7 +91,7 @@ void main() {
     // switch on display after everything is ready
     DISPLAY_ON;
     last_joy = joy = 0;
-    while (TRUE) {  //main loop runs at 60fps
+    while (TRUE) {  // main loop runs at 60fps
         // ---------------------------------------------
         // process joystic input
         last_joy = joy;
@@ -137,7 +137,7 @@ void main() {
                 }
             }
         }
-        //DOWN while standing still
+        // DOWN while standing still
         if ((joy & J_DOWN) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
             if (!Launch) {
                 launchDelay++;
@@ -173,7 +173,7 @@ void main() {
                     break;
             }
         }
-        //Launch
+        // Launch
         if (Launch) {
             OBP0_REG = 0xE1;
             OBP1_REG = 0xE1;
@@ -262,7 +262,7 @@ void main() {
         // }
 
 #ifdef DEBUG
-        //DEBUG DETECTIVE Y COORDS
+        // DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
             printf("Y=%u\n", TO_PIXELS(PLAYER.y));
         }
@@ -285,12 +285,13 @@ void main() {
             PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
+        // WHEN PLAYER REACHES 1 PIXEL FROM THE FLOOR, SET HIS SPDY TO 0
         if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1))) {
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
                 Jump = FALSE;
-                //set player idle direction when touching ground
+                // set player idle direction when touching ground
                 if (PLAYER.direction == DIR_JUMP_R) {
                     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
                 } else if (PLAYER.direction == DIR_JUMP_L) {
@@ -298,12 +299,33 @@ void main() {
                 }
             }
         }
-        //IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
+        // CHANGES THE SPEED OF THE PLAYER SO THAT HIS NEXT RENDER FRAME WILL PLACE HIM 1 PIXEL ABOVE THE FLOOR
+        // CHECK 4 PIXELS BELOW PLAYER
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 4)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 4)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 4))) {
+            if (PLAYER.SpdY > TO_COORDS(3)) {
+                PLAYER.SpdY = TO_COORDS(3);
+            }
+        }
+        // CHECK 3 PIXELS BELOW PLAYER
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 3)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 3)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 3))) {
+            if (PLAYER.SpdY > TO_COORDS(2)) {
+                PLAYER.SpdY = TO_COORDS(2);
+            }
+        }
+        // CHECK 2 PIXELS BELOW PLAYER
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 2)) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 2)) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 2))) {
+            if (PLAYER.SpdY > TO_COORDS(1)) {
+                PLAYER.SpdY = TO_COORDS(1);
+            }
+        }
+
+        // Collisions 4
+        // IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
         if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
             PLAYER.SpdY -= 5;
         }
 
-        //if character has falling X Spd, this will prevent going into the wall
+        // if character has falling X Spd, this will prevent going into the wall
         if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y))) {
             if (PLAYER.SpdX < 0) {
                 PLAYER.SpdX = 0;
@@ -315,14 +337,25 @@ void main() {
                 PLAYER.SpdX = 0;
             }
         }
+        if ((PLAYER.SpdY < 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 1)) {
+            if (PLAYER.SpdX > 0) {
+                PLAYER.SpdX = 0;
+            }
+        } else if ((PLAYER.SpdY > 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) + 1)) {
+            if (PLAYER.SpdX > 0) {
+                PLAYER.SpdX = 0;
+            }
+        }
+        if ((PLAYER.SpdY < 0) && checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 1)) {
+            if (PLAYER.SpdX < 0) {
+                PLAYER.SpdX = 0;
+            }
+        } else if ((PLAYER.SpdY > 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) + 1)) {
+            if (PLAYER.SpdX < 0) {
+                PLAYER.SpdX = 0;
+            }
+        }
 
-        // if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
-
-        // if (PLAYER.y > TO_COORDS(floorYposition)) {
-        //     PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
-        // }
-        // FRICTION
-        // THIS IS CURRENTLY THE MINIMUM AMOUNT FRICTION. REDUCE FURTHER BY ADDING A PHYSICS FRAME COUNTER
         if (PLAYER.SpdX != 0) {
             if (PLAYER.SpdX < 0)
                 PLAYER.SpdX += FRICTION;
@@ -330,7 +363,7 @@ void main() {
                 PLAYER.SpdX -= FRICTION;
         }
 
-        //TURN DIRECTION MIDAIR
+        // TURN DIRECTION MIDAIR
         if (Jump) {
             if (PLAYER.direction == DIR_JUMP_L) {
                 if (joy & J_RIGHT) {
