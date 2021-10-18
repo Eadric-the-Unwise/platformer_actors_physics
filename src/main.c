@@ -13,6 +13,7 @@
 #include "../res/tiles/collision_wide_map.h"
 #include "level1.h"
 #include "level2.h"
+#include "macros.h"
 #include "scene.h"
 
 UINT8 joy, last_joy;
@@ -77,8 +78,8 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    set_bkg_data(0, 3, BRICK_WIDE_TILES);
-    set_bkg_tiles(0, 0, BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPHeight, BRICK_WIDE_MAP);
+    // set_bkg_data(0, 3, BRICK_WIDE_TILES);
+    // set_bkg_tiles(0, 0, BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPHeight, BRICK_WIDE_MAP);
 
     // game assumes floor is at the level of 100px. that is a temporary workaround, should use collision maps instead
     floorYposition = 100;
@@ -86,6 +87,7 @@ void main() {
     Launch = FALSE;
     Shooting = FALSE;
 
+    init_submap();
     load_level(&level1);
 
     // switch on display after everything is ready

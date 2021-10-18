@@ -22,10 +22,10 @@
 
 */
 
-
 /* Bank of tiles. */
 #define BRICK_WIDE_TILESBank 0
 /* Start of tile array. */
+extern const void __bank_BRICK_WIDE_TILES;
 extern unsigned char BRICK_WIDE_TILES[];
 
 /* End of BRICK_WIDE_TILES.H */
