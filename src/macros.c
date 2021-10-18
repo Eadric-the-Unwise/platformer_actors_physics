@@ -1,11 +1,13 @@
 #include "macros.h"
 
+#include "scene.h"
+
 Variables bkg;
 
 void set_camera() {
     // update hardware scroll position
     SCY_REG = bkg.camera_y;
-    SCX_REG = bkg.camera_x;
+    SCX_REG = TO_PIXELS(bkg.camera_x);
     // up or down
     bkg.map_pos_y = (UBYTE)(bkg.camera_y >> 3u);
     if (bkg.map_pos_y != bkg.old_map_pos_y) {
@@ -18,7 +20,7 @@ void set_camera() {
         bkg.old_map_pos_y = bkg.map_pos_y;
     }
     // left or right
-    bkg.map_pos_x = (UBYTE)(bkg.camera_x >> 3u);
+    bkg.map_pos_x = (UBYTE)(bkg.camera_x >> 7u);
     if (bkg.map_pos_x != bkg.old_map_pos_x) {
         if (bkg.camera_x < bkg.old_camera_x) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 1, MIN(19u, bkg.level_map_height - bkg.map_pos_y), bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);

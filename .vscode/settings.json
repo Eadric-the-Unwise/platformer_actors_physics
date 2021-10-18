@@ -6,6 +6,7 @@
         "enemy_arrow.h": "c",
         "level2.h": "c",
         "brick_map.h": "c",
-        "brick_tiles.h": "c"
+        "brick_tiles.h": "c",
+        "scene.h": "c"
     }
 }

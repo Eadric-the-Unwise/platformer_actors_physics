@@ -103,7 +103,7 @@ void main() {
         if ((joy & J_LEFT) && (!Shooting)) {
             if (bkg.camera_style == horizontal_cam) {
                 if (bkg.camera_x) {
-                    bkg.camera_x--;
+                    // bkg.camera_x--;
                     bkg.redraw = TRUE;
                 }
             }
@@ -128,7 +128,7 @@ void main() {
         } else if ((joy & J_RIGHT) && (!Shooting)) {
             if (bkg.camera_style == horizontal_cam) {
                 if (bkg.camera_x < bkg.camera_max_x) {
-                    bkg.camera_x++;
+                    // bkg.camera_x++;
                     bkg.redraw = TRUE;
                 }
             }
@@ -280,7 +280,7 @@ void main() {
         // #ifdef DEBUG
         // DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
-            printf("CamX=%u\n", bkg.camera_x);
+            printf("SpdX=%u\n", PLAYER.SpdX);
         }
         // #endif
 
@@ -341,12 +341,12 @@ void main() {
             PLAYER.SpdY -= 5;
         }
 
-        // if character has falling X Spd, this will prevent going into the wall
-        if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y))) {
-            if (PLAYER.SpdX < 0) {
-                PLAYER.SpdX = 0;
-            }
-        }
+        // // if character has falling X Spd, this will prevent going into the wall
+        // if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y))) {
+        //     if (PLAYER.SpdX < 0) {
+        //         PLAYER.SpdX = 0;
+        //     }
+        // }
 
         // if (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y))) {
         //     if (PLAYER.SpdX > 0) {
@@ -362,11 +362,11 @@ void main() {
         //         PLAYER.SpdX = 0;
         //     }
         // }
-        if ((PLAYER.SpdY < 0) && checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 1)) {
-            if (PLAYER.SpdX < 0) {
-                PLAYER.SpdX = 0;
-            }
-        }
+        // if ((PLAYER.SpdY < 0) && checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 1)) {
+        //     if (PLAYER.SpdX < 0) {
+        //         PLAYER.SpdX = 0;
+        //     }
+        // }
         //  else if ((PLAYER.SpdY > 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) + 1)) {
         //     if (PLAYER.SpdX < 0) {
         //         PLAYER.SpdX = 0;
@@ -480,7 +480,7 @@ void main() {
 
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
-        PLAYER.x += PLAYER.SpdX;
+        bkg.camera_x += PLAYER.SpdX;
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
