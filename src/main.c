@@ -6,7 +6,7 @@
 #ifdef DEBUG
 #include <stdio.h>
 #endif
-// SUBMAP-2 BRANCH
+// SUBMAP-3 BRANCH
 //  Include your scene and map header files
 #include "../res/tiles/brick_wide_map.h"
 #include "../res/tiles/brick_wide_tiles.h"
