@@ -10,8 +10,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../res/tiles/submap.h"
 #include "level.h"
+#include "submap.h"
 
 void set_camera();
 void performantdelay(UINT8 numloops);

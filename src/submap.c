@@ -1,6 +1,6 @@
 #include "submap.h"
 
-#include "../../src/macros.h"
+#include "macros.h"
 
 // extern const void __bank_submap_map;
 // extern const void __bank_submap_tiles;
