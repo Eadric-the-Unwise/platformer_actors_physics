@@ -70,7 +70,7 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
 /******************************/
 void main() {
     DISPLAY_OFF;
-
+    extern Variables bkg;
     BGP_REG = 0xE4;
     OBP0_REG = 0xE4;
     OBP1_REG = 0xE1;
@@ -100,6 +100,12 @@ void main() {
         joy = joypad();
 
         if ((joy & J_LEFT) && (!Shooting)) {
+            if (bkg.camera_style == horizontal_cam) {
+                if (bkg.camera_x) {
+                    bkg.camera_x--;
+                    bkg.redraw = TRUE;
+                }
+            }
             Launch = FALSE;
             launchDelay = 0;
 
@@ -119,6 +125,13 @@ void main() {
                 }
             }
         } else if ((joy & J_RIGHT) && (!Shooting)) {
+            if (bkg.camera_style == horizontal_cam) {
+                if (bkg.camera_x < bkg.camera_max_x) {
+                    bkg.camera_x++;
+                    bkg.redraw = TRUE;
+                }
+            }
+
             Launch = FALSE;
             launchDelay = 0;
 
@@ -472,8 +485,11 @@ void main() {
 
         // render all actors on screen
         render_actors();
-
-        // wait for VBlank
-        wait_vbl_done();
+        if (bkg.redraw) {
+            wait_vbl_done();
+            set_camera();
+            bkg.redraw = FALSE;
+        } else
+            wait_vbl_done();
     }
 }
