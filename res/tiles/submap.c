@@ -10,7 +10,7 @@ extern Variables bkg;
 void init_submap() {
     HIDE_BKG;
     bkg.sliding = FALSE;
-    bkg.camera_x = 160;
+    bkg.camera_x = 0;
     bkg.camera_y = 0;
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
