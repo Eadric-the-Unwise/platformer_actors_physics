@@ -6,7 +6,7 @@
 #ifdef DEBUG
 #include <stdio.h>
 #endif
-// SUBMAP-2 BRANCH
+// SUBMAP-2 BRANCH PLATFORMER
 //  Include your scene and map header files
 #include "../res/tiles/brick_wide_map.h"
 #include "../res/tiles/brick_wide_tiles.h"
@@ -101,12 +101,12 @@ void main() {
         joy = joypad();
 
         if ((joy & J_LEFT) && (!Shooting)) {
-            if (bkg.camera_style == horizontal_cam) {
-                if (bkg.camera_x) {
-                    bkg.camera_x--;
-                    bkg.redraw = TRUE;
-                }
-            }
+            // if (bkg.camera_style == horizontal_cam) {
+            //     if (bkg.camera_x) {
+            //         bkg.camera_x--;
+            //         bkg.redraw = TRUE;
+            //     }
+            // }
             Launch = FALSE;
             launchDelay = 0;
 
@@ -126,12 +126,12 @@ void main() {
                 }
             }
         } else if ((joy & J_RIGHT) && (!Shooting)) {
-            if (bkg.camera_style == horizontal_cam) {
-                if (bkg.camera_x < bkg.camera_max_x) {
-                    bkg.camera_x++;
-                    bkg.redraw = TRUE;
-                }
-            }
+            // if (bkg.camera_style == horizontal_cam) {
+            //     if (bkg.camera_x < bkg.camera_max_x) {
+            //         bkg.camera_x++;
+            //         bkg.redraw = TRUE;
+            //     }
+            // }
 
             Launch = FALSE;
             launchDelay = 0;
