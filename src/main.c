@@ -6,8 +6,8 @@
 #ifdef DEBUG
 #include <stdio.h>
 #endif
-
-// Include your scene and map header files
+// HORIZONTAL BRANCH
+//  Include your scene and map header files
 #include "../res/tiles/brick_map.h"
 #include "../res/tiles/brick_tiles.h"
 #include "../res/tiles/collision_map.h"
