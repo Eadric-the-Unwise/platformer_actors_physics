@@ -10,7 +10,7 @@
   Compression          : None.
   Counter              : None.
   Tile size            : 8 x 8
-  Tiles                : 0 to 1
+  Tiles                : 0 to 2
 
   Palette colors       : None.
   SGB Palette          : None.
@@ -24,8 +24,8 @@
 
 
 /* Bank of tiles. */
-#define BRICK_WIDE_TILE_DATABank 0
+#define BRICK_WIDE_TILESBank 0
 /* Start of tile array. */
-extern unsigned char BRICK_WIDE_TILE_DATA[];
+extern unsigned char BRICK_WIDE_TILES[];
 
 /* End of BRICK_WIDE_TILES.H */
