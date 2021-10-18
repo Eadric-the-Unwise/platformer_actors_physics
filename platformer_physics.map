@@ -72,12 +72,12 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000008  l__HEADER |    00000018  l__BSS    |    0000002B  l__GSINIT
      0000002C  l__HEADER |    00000030  l__HEADER |    0000006A  l__HOME  
      00000083  l__HEADER |    0000012D  l__BASE   |    0000017B  l__DATA  
-     00000200  s__CODE   |    00000305  l__INITIA |    00000305  l__INITIA
+     00000200  s__CODE   |    000008C5  l__INITIA |    000008C5  l__INITIA
      00002690  l__CODE   |    00002890  s__HOME   |    000028FA  s__BASE  
      00002A27  s__CODE_0 |    00002A27  s__INITIA |    00002A27  s__LIT   
-     00002D2C  s__GSINIT |    00002D57  s__GSFINA |    0000C000  _shadow_O
+     000032EC  s__GSINIT |    00003317  s__GSFINA |    0000C000  _shadow_O
      0000C0A0  s__DATA   |    0000C21B  s__BSS    |    0000C233  s__INITIA
-     0000C538  s__HEAP   |    0000E000  .STACK    |    0000FF80  .refresh_
+     0000CAF8  s__HEAP   |    0000E000  .STACK    |    0000FF80  .refresh_
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
@@ -306,7 +306,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           00002A27    00000305 =         773. bytes (REL,CON)
+_INITIALIZER           00002A27    000008C5 =        2245. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -315,17 +315,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                00002D2C    0000002B =          43. bytes (REL,CON)
+_GSINIT                000032EC    0000002B =          43. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00002D2C  gsinit   
+     000032EC  gsinit   
 ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               00002D57    00000001 =           1. bytes (REL,CON)
+_GSFINAL               00003317    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -358,12 +358,13 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZED           0000C233    00000305 =         773. bytes (REL,CON)
+_INITIALIZED           0000C233    000008C5 =        2245. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      0000C233  _launchDe |    0000C234  _shooting |    0000C235  _animate_
-     0000C238  _BRICK_MA |    0000C3A0  _BRICK_TI |    0000C3D0  _COLLISIO
+     0000C238  _BRICK_MA |    0000C3A0  _BRICK_TI |    0000C3D0  _BRICK_WI
+     0000C6A0  _BRICK_WI |    0000C6C0  _COLLISIO |    0000C828  _COLLISIO
 ASxxxx Linker V03.00 + NoICE + sdld,  page 30.
 Hexadecimal  [32-Bits]
 
@@ -930,23 +931,29 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc112600.rel
+C:\Users\User\AppData\Local\Temp/lcc102760.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc112601.rel
+C:\Users\User\AppData\Local\Temp/lcc102761.rel
                                           [ level2 ]
-C:\Users\User\AppData\Local\Temp/lcc112602.rel
+C:\Users\User\AppData\Local\Temp/lcc102762.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc112603.rel
+C:\Users\User\AppData\Local\Temp/lcc102763.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc112604.rel
+C:\Users\User\AppData\Local\Temp/lcc102764.rel
                                           [ brick_map ]
-C:\Users\User\AppData\Local\Temp/lcc112605.rel
+C:\Users\User\AppData\Local\Temp/lcc102765.rel
                                           [ brick_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc112606.rel
+C:\Users\User\AppData\Local\Temp/lcc102766.rel
+                                          [ brick_wide_map ]
+C:\Users\User\AppData\Local\Temp/lcc102767.rel
+                                          [ brick_wide_tiles ]
+C:\Users\User\AppData\Local\Temp/lcc102768.rel
                                           [ collision_map ]
-C:\Users\User\AppData\Local\Temp/lcc112607.rel
+C:\Users\User\AppData\Local\Temp/lcc102769.rel
+                                          [ collision_wide_map ]
+C:\Users\User\AppData\Local\Temp/lcc1027610.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc112608.rel
+C:\Users\User\AppData\Local\Temp/lcc1027611.rel
                                           [ enemy_arrow ]
 
 

@@ -8,9 +8,12 @@
 #endif
 // HORIZONTAL BRANCH
 //  Include your scene and map header files
-#include "../res/tiles/brick_map.h"
-#include "../res/tiles/brick_tiles.h"
-#include "../res/tiles/collision_map.h"
+// #include "../res/tiles/brick_map.h"
+// #include "../res/tiles/brick_tiles.h"
+#include "../res/tiles/brick_wide_map.h"
+#include "../res/tiles/brick_wide_tiles.h"
+// #include "../res/tiles/collision_map.h"
+#include "../res/tiles/collision_wide_map.h"
 #include "level1.h"
 #include "level2.h"
 #include "scene.h"
@@ -33,7 +36,7 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
     indexBLy = (newplayery - 1) / 8;
     tileindexBL = 20 * indexBLy + indexBLx;
 
-    result = COLLISION_MAP[tileindexBL] == blankmap[1];
+    result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
 
     return result;
 }
@@ -46,7 +49,7 @@ UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
     indexBRy = (newplayery - 1) / 8;
     tileindexBR = 20 * indexBRy + indexBRx;
 
-    result = COLLISION_MAP[tileindexBR] == blankmap[1];
+    result = COLLISION_WIDE_MAP[tileindexBR] == blankmap[1];
 
     return result;
 }
@@ -59,7 +62,7 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
     indexBRy = (newplayery - 1) / 8;
     tileindexBR = 20 * indexBRy + indexBRx;
 
-    result = COLLISION_MAP[tileindexBR] == blankmap[1];
+    result = COLLISION_WIDE_MAP[tileindexBR] == blankmap[1];
 
     return result;
 }
@@ -77,8 +80,8 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    set_bkg_data(0, 3, BRICK_TILES);
-    set_bkg_tiles(0, 0, BRICK_MAPWidth, BRICK_MAPHeight, BRICK_MAP);
+    set_bkg_data(0, 3, BRICK_WIDE_TILE_DATA);
+    set_bkg_tiles(0, 0, BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPHeight, BRICK_WIDE_MAP);
 
     // game assumes floor is at the level of 100px. that is a temporary workaround, should use collision maps instead
     floorYposition = 100;
