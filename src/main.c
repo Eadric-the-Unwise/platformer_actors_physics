@@ -344,6 +344,7 @@ void main() {
                 PLAYER.SpdX = 0;
             }
         }
+        //THIS DOESN'T PREVENT GETTING STUCK ON CORNER
         else if ((PLAYER.SpdY > 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) + 1)) {
             if (PLAYER.SpdX > 0) {
                 PLAYER.SpdX = 0;
