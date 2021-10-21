@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../res/tiles/submap.h"
+#include "submap.h"
 #include "level.h"
 
 void set_camera();

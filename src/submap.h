@@ -3,8 +3,8 @@
 
 #include <gb/gb.h>
 
-#include "brick_wide_map.h"
-#include "brick_wide_tiles.h"
+#include "../res/tiles/brick_wide_map.h"
+#include "../res/tiles/brick_wide_tiles.h"
 
 void init_submap();
 

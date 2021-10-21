@@ -96,17 +96,17 @@ _CODE                  00000200    000028BE =       10430. bytes (REL,CON)
      000003FA  _animate_ |    00000565  _level2_a |    0000061D  _level2  
      00000622  _set_came |    00000922  _set_leve |    0000096B  _performa
      00000978  _main     |    000013E8  _blankmap |    000013F3  _load_sce
-     000015A9  _load_lev |    000015E4  _render_a |    0000180B  _detectiv
-     0000204B  _detectiv |    00002067  _detectiv |    0000207F  _detectiv
-     00002097  _detectiv |    000020B3  _detectiv |    000020CB  _detectiv
-     000020E7  _detectiv |    00002103  _detectiv |    0000211F  _detectiv
-     0000213B  _detectiv |    00002157  _detectiv |    00002173  _detectiv
-     0000218B  _detectiv |    000021A7  _detectiv |    000021C3  _detectiv
-     000021DF  _detectiv |    000021F7  _detectiv |    00002213  _detectiv
-     00002235  _detectiv |    00002247  _detectiv |    0000224B  _detectiv
-     00002255  _detectiv |    00002263  _detectiv |    00002267  _enemy_ar
-     00002327  _enemy_ar |    00002333  _enemy_ar |    0000233F  _enemy_ar
-     0000234B  _enemy_ar |    0000234F  _enemy_ar |    00002355  _init_sub
+     000015A9  _load_lev |    000015E4  _render_a |    0000180B  _init_sub
+     0000193C  _detectiv |    0000217C  _detectiv |    00002198  _detectiv
+     000021B0  _detectiv |    000021C8  _detectiv |    000021E4  _detectiv
+     000021FC  _detectiv |    00002218  _detectiv |    00002234  _detectiv
+     00002250  _detectiv |    0000226C  _detectiv |    00002288  _detectiv
+     000022A4  _detectiv |    000022BC  _detectiv |    000022D8  _detectiv
+     000022F4  _detectiv |    00002310  _detectiv |    00002328  _detectiv
+     00002344  _detectiv |    00002366  _detectiv |    00002378  _detectiv
+     0000237C  _detectiv |    00002386  _detectiv |    00002394  _detectiv
+     00002398  _enemy_ar |    00002458  _enemy_ar |    00002464  _enemy_ar
+     00002470  _enemy_ar |    0000247C  _enemy_ar |    00002480  _enemy_ar
      00002486  _abs      |    00002495  ___move_m |    000024CD  ___hide_m
      000024ED  ___move_m |    00002529  ___move_m |    00002565  ___move_m
      000025A3  _putchar  |    000025AC  _setchar  |    000025B5  _gotoxy  
@@ -971,34 +971,34 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125920.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc160120.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125921.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc160121.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125922.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc160122.rel
                                           [ macros ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125923.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc160123.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125924.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc160124.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125925.rel
-                                          [ brick_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125926.rel
-                                          [ brick_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125927.rel
-                                          [ brick_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125928.rel
-                                          [ brick_wide_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc125929.rel
-                                          [ collision_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1259210.rel
-                                          [ collision_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1259211.rel
-                                          [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1259212.rel
-                                          [ enemy_arrow ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1259213.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc160125.rel
                                           [ submap ]
+C:\Users\EMART~1\AppData\Local\Temp/lcc160126.rel
+                                          [ brick_map ]
+C:\Users\EMART~1\AppData\Local\Temp/lcc160127.rel
+                                          [ brick_tiles ]
+C:\Users\EMART~1\AppData\Local\Temp/lcc160128.rel
+                                          [ brick_wide_map ]
+C:\Users\EMART~1\AppData\Local\Temp/lcc160129.rel
+                                          [ brick_wide_tiles ]
+C:\Users\EMART~1\AppData\Local\Temp/lcc1601210.rel
+                                          [ collision_map ]
+C:\Users\EMART~1\AppData\Local\Temp/lcc1601211.rel
+                                          [ collision_wide_map ]
+C:\Users\EMART~1\AppData\Local\Temp/lcc1601212.rel
+                                          [ detective_large ]
+C:\Users\EMART~1\AppData\Local\Temp/lcc1601213.rel
+                                          [ enemy_arrow ]
 
 
 Libraries Linked                          [ object file ]

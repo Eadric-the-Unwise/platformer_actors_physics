@@ -1,7 +1,7 @@
 #include "submap.h"
 
-#include "../../src/macros.h"
-#include "../../src/scene.h"
+#include "macros.h"
+#include "scene.h"
 
 // extern const void __bank_submap_map;
 // extern const void __bank_submap_tiles;
