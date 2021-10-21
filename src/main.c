@@ -84,12 +84,12 @@ void main() {
                 }
             }
         } else if ((joy & J_RIGHT) && (!Shooting)) {
-            // if (bkg.camera_style == horizontal_cam) {
-            //     if (bkg.camera_x < bkg.camera_max_x) {
-            //         // bkg.camera_x++;
-            //         bkg.redraw = TRUE;
-            //     }
-            // }
+            if (bkg.camera_style == horizontal_cam) {
+                if (bkg.camera_x < bkg.camera_max_x) {
+                    // bkg.camera_x++;
+                    bkg.redraw = TRUE;
+                }
+            }
 
             Launch = FALSE;
             launchDelay = 0;
@@ -381,6 +381,7 @@ void main() {
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
         PLAYER.x += PLAYER.SpdX;
+        PLAYER.x - bkg.camera_x + 8;
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
