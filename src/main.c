@@ -59,7 +59,6 @@ void main() {
         joy = joypad();
 
         if ((joy & J_LEFT) && (!Shooting)) {
-          
             Launch = FALSE;
             launchDelay = 0;
 
@@ -79,7 +78,6 @@ void main() {
                 }
             }
         } else if ((joy & J_RIGHT) && (!Shooting)) {
-
             Launch = FALSE;
             launchDelay = 0;
 
@@ -236,17 +234,16 @@ void main() {
         // ---------------------------------------------
         // WORLD PHYSICS:
         // GRAVITY
-        
 
-            PLAYER.SpdY += GRAVITY;
-        if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
+        PLAYER.SpdY += GRAVITY;
+        if (TO_PIXELS(PLAYER.y) < floorYposition) {  // if you are above the floorYposition
             if (PLAYER.SpdY > MAX_FALL_SPEED) PLAYER.SpdY = MAX_FALL_SPEED;
-        } else {  //if you touch the floor
+        } else {  // if you touch the floor
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
                 SetActorDirection(&PLAYER, PLAYER.direction, 5);
                 Jump = FALSE;
-                //set player idle direction when touching ground
+                // set player idle direction when touching ground
                 if (PLAYER.direction == DIR_JUMP_R) {
                     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
                 } else if (PLAYER.direction == DIR_JUMP_L) {
@@ -255,26 +252,22 @@ void main() {
             }
             if (PLAYER.y > TO_COORDS(floorYposition)) PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
         }
-        if (PLAYER.SpdX != 0) {
-            if (PLAYER.SpdX < 0){
-                if (PLAYER.SpdX != -MAX_WALK_SPEED){    
+
+        if (PLAYER.SpdX < 0) {
+            if (PLAYER.SpdX != -MAX_WALK_SPEED) {
                 PLAYER.SpdX += FRICTION;
-                }
-                else if ((PLAYER.SpdX = -MAX_WALK_SPEED) && !(joy & J_LEFT)){
-                 PLAYER.SpdX += FRICTION;
-                }
-            
-            if (PLAYER.SpdX > 0){
-                 if (PLAYER.SpdX != MAX_WALK_SPEED){
+            } else if ((PLAYER.SpdX <= -MAX_WALK_SPEED) && !(joy & J_LEFT)) {
+                PLAYER.SpdX += FRICTION;
+            }
+        }
+        if (PLAYER.SpdX > 0) {
+            if (PLAYER.SpdX != MAX_WALK_SPEED) {
                 PLAYER.SpdX -= FRICTION;
-            } else if ((PLAYER.SpdX = MAX_WALK_SPEED) && !(joy & J_RIGHT)){
-                 PLAYER.SpdX -= FRICTION;
-                }
-        
+            } else if ((PLAYER.SpdX >= MAX_WALK_SPEED) && !(joy & J_RIGHT)) {
+                PLAYER.SpdX -= FRICTION;
+            }
         }
-        }
-        }
-    
+
         // #ifdef DEBUG
         // DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
@@ -389,7 +382,7 @@ void main() {
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
 
-        if (PLAYER.SpdX != 0){
+        if (PLAYER.SpdX != 0) {
             bkg.redraw = TRUE;
         }
         // render all actors on screen
