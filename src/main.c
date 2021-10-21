@@ -59,12 +59,7 @@ void main() {
         joy = joypad();
 
         if ((joy & J_LEFT) && (!Shooting)) {
-            // if (bkg.camera_style == horizontal_cam) {
-            //     if (bkg.camera_x) {
-            //         // bkg.camera_x--;
-            //         bkg.redraw = TRUE;
-            //     }
-            // }
+          
             Launch = FALSE;
             launchDelay = 0;
 
@@ -84,12 +79,6 @@ void main() {
                 }
             }
         } else if ((joy & J_RIGHT) && (!Shooting)) {
-            if (bkg.camera_style == horizontal_cam) {
-                if (bkg.camera_x < bkg.camera_max_x) {
-                    // bkg.camera_x++;
-                    bkg.redraw = TRUE;
-                }
-            }
 
             Launch = FALSE;
             launchDelay = 0;
@@ -235,13 +224,6 @@ void main() {
         // else if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (Jump)) {
         // }
 
-        // #ifdef DEBUG
-        // DEBUG DETECTIVE Y COORDS
-        if (joy & J_B) {
-            printf("SpdX=%u\n", PLAYER.SpdX);
-        }
-        // #endif
-
         // Load stages on button press
         if (joy & J_START) {
             load_level(&level2);
@@ -274,11 +256,31 @@ void main() {
             if (PLAYER.y > TO_COORDS(floorYposition)) PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
         }
         if (PLAYER.SpdX != 0) {
-            if (PLAYER.SpdX < 0)
+            if (PLAYER.SpdX < 0){
+                if (PLAYER.SpdX != -MAX_WALK_SPEED){    
                 PLAYER.SpdX += FRICTION;
-            else
+                }
+                else if ((PLAYER.SpdX = -MAX_WALK_SPEED) && !(joy & J_LEFT)){
+                 PLAYER.SpdX += FRICTION;
+                }
+            
+            if (PLAYER.SpdX > 0){
+                 if (PLAYER.SpdX != MAX_WALK_SPEED){
                 PLAYER.SpdX -= FRICTION;
+            } else if ((PLAYER.SpdX = MAX_WALK_SPEED) && !(joy & J_RIGHT)){
+                 PLAYER.SpdX -= FRICTION;
+                }
+        
         }
+        }
+        }
+    
+        // #ifdef DEBUG
+        // DEBUG DETECTIVE Y COORDS
+        if (joy & J_B) {
+            printf("SpdX=%u\n", PLAYER.SpdX);
+        }
+        // #endif
 
         // TURN DIRECTION MIDAIR
         if (Jump) {
@@ -380,12 +382,16 @@ void main() {
 
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
-        PLAYER.x += PLAYER.SpdX;
-        PLAYER.x - bkg.camera_x + 8;
+        // PLAYER.x += PLAYER.SpdX;
+        bkg.camera_x += PLAYER.SpdX;
+        // PLAYER.x = (PLAYER.x) - (bkg.camera_x);
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
 
+        if (PLAYER.SpdX != 0){
+            bkg.redraw = TRUE;
+        }
         // render all actors on screen
         render_actors();
         if (bkg.redraw) {
