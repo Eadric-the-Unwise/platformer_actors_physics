@@ -25,48 +25,6 @@ UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 extern Variables bkg;
 
-// CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
-// BOTTOM LEFT PIXEL
-UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
-    UINT16 indexBLx, indexBLy, indexCamX, tileindexBL;
-    UBYTE result;
-
-    indexBLx = (newplayerx - 17) / 8;
-    indexBLy = (newplayery - 1) / 8;
-    indexCamX = (bkg.camera_x) / 8;
-    tileindexBL = 40 * (indexBLy) + (indexBLx + indexCamX);
-
-    result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
-
-    return result;
-}
-// // BOTTOM RIGHT PIXEL
-// UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery) {
-//     UINT16 indexBRx, indexBRy, tileindexBR;
-//     UBYTE result;
-
-//     indexBRx = (newplayerx) / 8;
-//     indexBRy = (newplayery - 1) / 8;
-//     tileindexBR = 40 * indexBRy + indexBRx;
-
-//     result = COLLISION_WIDE_MAP[tileindexBR] == blankmap[1];
-
-//     return result;
-// }
-// // BOTTOM CENTER PIXEL
-// UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery) {
-//     UINT16 indexBRx, indexBRy, tileindexBR;
-//     UBYTE result;
-
-//     indexBRx = (newplayerx - 9) / 8;
-//     indexBRy = (newplayery - 1) / 8;
-//     tileindexBR = 40 * indexBRy + indexBRx;
-
-//     result = COLLISION_WIDE_MAP[tileindexBR] == blankmap[1];
-
-//     return result;
-// }
-
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /******************************/
@@ -83,7 +41,7 @@ void main() {
     // set_bkg_tiles(0, 0, BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPHeight, BRICK_WIDE_MAP);
 
     // game assumes floor is at the level of 100px. that is a temporary workaround, should use collision maps instead
-    floorYposition = 100;
+    floorYposition = 128;
     Jump = FALSE;
     Launch = FALSE;
     Shooting = FALSE;
@@ -101,12 +59,12 @@ void main() {
         joy = joypad();
 
         if ((joy & J_LEFT) && (!Shooting)) {
-            if (bkg.camera_style == horizontal_cam) {
-                if (bkg.camera_x) {
-                    // bkg.camera_x--;
-                    bkg.redraw = TRUE;
-                }
-            }
+            // if (bkg.camera_style == horizontal_cam) {
+            //     if (bkg.camera_x) {
+            //         // bkg.camera_x--;
+            //         bkg.redraw = TRUE;
+            //     }
+            // }
             Launch = FALSE;
             launchDelay = 0;
 
@@ -126,12 +84,12 @@ void main() {
                 }
             }
         } else if ((joy & J_RIGHT) && (!Shooting)) {
-            if (bkg.camera_style == horizontal_cam) {
-                if (bkg.camera_x < bkg.camera_max_x) {
-                    // bkg.camera_x++;
-                    bkg.redraw = TRUE;
-                }
-            }
+            // if (bkg.camera_style == horizontal_cam) {
+            //     if (bkg.camera_x < bkg.camera_max_x) {
+            //         // bkg.camera_x++;
+            //         bkg.redraw = TRUE;
+            //     }
+            // }
 
             Launch = FALSE;
             launchDelay = 0;
@@ -296,83 +254,25 @@ void main() {
         // ---------------------------------------------
         // WORLD PHYSICS:
         // GRAVITY
-        PLAYER.SpdY += GRAVITY;
-        if (PLAYER.SpdY > MAX_FALL_SPEED) {
-            PLAYER.SpdY = MAX_FALL_SPEED;
-        }
+        
 
-        // WHEN PLAYER REACHES 1 PIXEL FROM THE FLOOR, SET HIS SPDY TO 0
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) + 1))) {
+            PLAYER.SpdY += GRAVITY;
+        if (TO_PIXELS(PLAYER.y) < floorYposition) {  //if you are above the floorYposition
+            if (PLAYER.SpdY > MAX_FALL_SPEED) PLAYER.SpdY = MAX_FALL_SPEED;
+        } else {  //if you touch the floor
             if (PLAYER.SpdY > 0) {
                 PLAYER.SpdY = 0;
-                // SetActorDirection(&PLAYER, PLAYER.direction, 5);
+                SetActorDirection(&PLAYER, PLAYER.direction, 5);
                 Jump = FALSE;
-                // set player idle direction when touching ground
+                //set player idle direction when touching ground
                 if (PLAYER.direction == DIR_JUMP_R) {
                     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
                 } else if (PLAYER.direction == DIR_JUMP_L) {
                     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                 }
             }
+            if (PLAYER.y > TO_COORDS(floorYposition)) PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
         }
-        // CHANGES THE SPEED OF THE PLAYER SO THAT HIS NEXT RENDER FRAME WILL PLACE HIM 1 PIXEL ABOVE THE FLOOR
-        // CHECK 4 PIXELS BELOW PLAYER
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) + 4))) {
-            if (PLAYER.SpdY > TO_COORDS(3)) {
-                PLAYER.SpdY = TO_COORDS(3);
-            }
-        }
-        // CHECK 3 PIXELS BELOW PLAYER
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) + 3))) {
-            if (PLAYER.SpdY > TO_COORDS(2)) {
-                PLAYER.SpdY = TO_COORDS(2);
-            }
-        }
-        // CHECK 2 PIXELS BELOW PLAYER
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) + 2))) {
-            if (PLAYER.SpdY > TO_COORDS(1)) {
-                PLAYER.SpdY = TO_COORDS(1);
-            }
-        }
-
-        // Collisions 4
-        // IF CHARACTER'S PIXEL GOES INTO THE FLOOR, LIFT HIM UP
-        if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y)))) {
-            PLAYER.SpdY -= 5;
-        }
-
-        // // if character has falling X Spd, this will prevent going into the wall
-        // if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y))) {
-        //     if (PLAYER.SpdX < 0) {
-        //         PLAYER.SpdX = 0;
-        //     }
-        // }
-
-        // if (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y))) {
-        //     if (PLAYER.SpdX > 0) {
-        //         PLAYER.SpdX = 0;
-        //     }
-        // }
-        // if ((PLAYER.SpdY < 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 1)) {
-        //     if (PLAYER.SpdX > 0) {
-        //         PLAYER.SpdX = 0;
-        //     }
-        // } else if ((PLAYER.SpdY > 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) + 1)) {
-        //     if (PLAYER.SpdX > 0) {
-        //         PLAYER.SpdX = 0;
-        //     }
-        // }
-        // if ((PLAYER.SpdY < 0) && checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 1)) {
-        //     if (PLAYER.SpdX < 0) {
-        //         PLAYER.SpdX = 0;
-        //     }
-        // }
-        //  else if ((PLAYER.SpdY > 0) && checkcollisionBR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) + 1)) {
-        //     if (PLAYER.SpdX < 0) {
-        //         PLAYER.SpdX = 0;
-        //     }
-        // }
-
         if (PLAYER.SpdX != 0) {
             if (PLAYER.SpdX < 0)
                 PLAYER.SpdX += FRICTION;
@@ -480,7 +380,7 @@ void main() {
 
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
-        bkg.camera_x += PLAYER.SpdX;
+        PLAYER.x += PLAYER.SpdX;
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
