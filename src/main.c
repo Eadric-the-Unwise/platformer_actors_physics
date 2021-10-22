@@ -48,7 +48,7 @@ void main() {
 
     init_submap();
     load_level(&level1);
-    bkg.redraw = TRUE;
+
 
     // switch on display after everything is ready
     DISPLAY_ON;

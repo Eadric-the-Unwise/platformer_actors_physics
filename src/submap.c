@@ -10,12 +10,13 @@ extern Variables bkg;
 
 void init_submap() {
     HIDE_BKG;
+    bkg.redraw = TRUE;
     bkg.sliding = FALSE;
     bkg.camera_x = TO_COORDS(160);
     bkg.camera_y = 0;
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
-    bkg.map_pos_x = (UBYTE)(bkg.camera_x >> 3u);
+    bkg.map_pos_x = (UBYTE)(bkg.camera_x >> 7u);
     bkg.map_pos_y = (UBYTE)(bkg.camera_y >> 3u);
 
     set_bkg_data_nonbanked(0, 3, BRICK_WIDE_TILES, BANK(BRICK_WIDE_TILES));
@@ -27,8 +28,6 @@ void init_submap() {
 
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
-
-    bkg.redraw = FALSE;
 
     bkg.camera_style = horizontal_cam;
 
