@@ -374,12 +374,18 @@ void main() {
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
         // PLAYER.x += PLAYER.SpdX;
-        if (TO_PIXELS(bkg.camera_x) > 0){
+        if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)){
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
         }
-        else if (TO_PIXELS(bkg.camera_x) -1 <= 0){
+        if (TO_PIXELS(bkg.camera_x) -1 <= 0){
             if ((joy & J_RIGHT) && (PLAYER.SpdX > 0)){
+                bkg.camera_x += PLAYER.SpdX;
+        bkg.redraw = TRUE;
+            }
+        }
+        else if (TO_PIXELS(bkg.camera_x) +1 >= bkg.camera_max_x){
+            if ((joy & J_LEFT) && (PLAYER.SpdX < 0)){
                 bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
             }
