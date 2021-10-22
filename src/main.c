@@ -373,19 +373,21 @@ void main() {
 
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
-        // PLAYER.x += PLAYER.SpdX;
+//THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
         if ((bkg.camera_x_p > 0) && (bkg.camera_x_p < bkg.camera_max_x)){
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
         }
+        else 
+        PLAYER.x += PLAYER.SpdX;
         if (bkg.camera_x_p -1 <= 0){
-            if ((joy & J_RIGHT) && (PLAYER.SpdX > 0)){
+            if ((joy & J_RIGHT) && (PLAYER.SpdX > 0) && (TO_PIXELS(PLAYER.x) >= 118)){
                 bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
             }
         }
         else if (bkg.camera_x_p +1 >= bkg.camera_max_x){
-            if ((joy & J_LEFT) && (PLAYER.SpdX < 0)){
+            if ((joy & J_LEFT) && (PLAYER.SpdX < 0) && (TO_PIXELS(PLAYER.x) <= 118)){
                 bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
             }
