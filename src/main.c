@@ -25,6 +25,21 @@ UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 extern Variables bkg;
 
+//CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
+//BOTTOM LEFT PIXEL
+UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
+    UINT16 indexBLx, indexBLy, tileindexBL;
+    UBYTE result;
+
+    indexBLx = (newplayerx - 17) / 8;
+    indexBLy = (newplayery - 1) / 8;
+    tileindexBL = 20 * indexBLy + indexBLx;
+
+    result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
+
+    return result;
+}
+
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /******************************/
@@ -48,7 +63,6 @@ void main() {
 
     init_submap();
     load_level(&level1);
-
 
     // switch on display after everything is ready
     DISPLAY_ON;
@@ -158,64 +172,64 @@ void main() {
         //     }
         // }
 
-        // if (PLAYER.SpdY > 0) {
-        //     Jump = TRUE;
-        //     switch (PLAYER.direction) {
-        //         case DIR_IDLE_L:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //             break;
-        //         case DIR_IDLE_R:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //             break;
-        //         case DIR_LEFT:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //             break;
-        //         case DIR_RIGHT:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //             break;
-        //         case DIR_DOWN_L:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //             break;
-        //         case DIR_DOWN_R:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //             break;
-        //     }
-        // }
+        if (PLAYER.SpdY > 0) {
+            Jump = TRUE;
+            switch (PLAYER.direction) {
+                case DIR_IDLE_L:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_IDLE_R:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+                case DIR_LEFT:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_RIGHT:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+                case DIR_DOWN_L:
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                    break;
+                case DIR_DOWN_R:
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                    break;
+            }
+        }
 
-        // if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
-        //     Launch = FALSE;
-        //     launchDelay = 0;
-        //     if (!Jump) {
-        //         if (joy & J_LEFT) {
-        //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //         } else if (joy & J_RIGHT) {
-        //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //         } else {
-        //             switch (PLAYER.direction) {
-        //                 case DIR_IDLE_L:
-        //                     SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //                     break;
-        //                 case DIR_IDLE_R:
-        //                     SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //                     break;
-        //                 case DIR_LEFT:
-        //                     SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //                     break;
-        //                 case DIR_RIGHT:
-        //                     SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //                     break;
-        //                 case DIR_DOWN_L:
-        //                     SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //                     break;
-        //                 case DIR_DOWN_R:
-        //                     SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //                     break;
-        //             }
-        //         }
-        //         PLAYER.SpdY = JUMP_IMPULSE;
-        //         Jump = TRUE;
-        //     }
-        // }
+        if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
+            Launch = FALSE;
+            launchDelay = 0;
+            if (!Jump) {
+                if (joy & J_LEFT) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                } else if (joy & J_RIGHT) {
+                    SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                } else {
+                    switch (PLAYER.direction) {
+                        case DIR_IDLE_L:
+                            SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                            break;
+                        case DIR_IDLE_R:
+                            SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                            break;
+                        case DIR_LEFT:
+                            SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                            break;
+                        case DIR_RIGHT:
+                            SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                            break;
+                        case DIR_DOWN_L:
+                            SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                            break;
+                        case DIR_DOWN_R:
+                            SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                            break;
+                    }
+                }
+                PLAYER.SpdY = JUMP_IMPULSE;
+                Jump = TRUE;
+            }
+        }
         if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (!Jump)) {
             Shooting = TRUE;
             shooting_counter = 20;
@@ -272,7 +286,7 @@ void main() {
         // #ifdef DEBUG
         // DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
-            printf("CAMX=%u\n", bkg.camera_x_p);
+            printf("ty=%u\n", TO_PIXELS(PLAYER.y) / 8);
         }
         // #endif
 
@@ -373,23 +387,37 @@ void main() {
 
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
-//THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
-        if ((bkg.camera_x_p > 0) && (bkg.camera_x_p < bkg.camera_max_x)){
-        bkg.camera_x += PLAYER.SpdX;
-        bkg.redraw = TRUE;
-        }
-        else 
-        PLAYER.x += PLAYER.SpdX;
-        if (bkg.camera_x_p -1 <= 0){
-            if ((joy & J_RIGHT) && (PLAYER.SpdX > 0) && (TO_PIXELS(PLAYER.x) >= 118)){
-                bkg.camera_x += PLAYER.SpdX;
-        bkg.redraw = TRUE;
+
+        //Y-AXIS COLLISION CHECK
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
+            UBYTE ty = PLAYER.y / 8;
+            PLAYER.y = ty;
+            PLAYER.SpdY = 0;
+            SetActorDirection(&PLAYER, PLAYER.direction, 5);
+            Jump = FALSE;
+            //set player idle direction when touching ground
+            if (PLAYER.direction == DIR_JUMP_R) {
+                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+            } else if (PLAYER.direction == DIR_JUMP_L) {
+                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
             }
         }
-        else if (bkg.camera_x_p +1 >= bkg.camera_max_x){
-            if ((joy & J_LEFT) && (PLAYER.SpdX < 0) && (TO_PIXELS(PLAYER.x) <= 118)){
+
+        //THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
+        if ((bkg.camera_x_p > 0) && (bkg.camera_x_p < bkg.camera_max_x)) {
+            bkg.camera_x += PLAYER.SpdX;
+            bkg.redraw = TRUE;
+        } else
+            PLAYER.x += PLAYER.SpdX;
+        if (bkg.camera_x_p - 1 <= 0) {
+            if ((joy & J_RIGHT) && (PLAYER.SpdX > 0) && (TO_PIXELS(PLAYER.x) >= 118)) {
                 bkg.camera_x += PLAYER.SpdX;
-        bkg.redraw = TRUE;
+                bkg.redraw = TRUE;
+            }
+        } else if (bkg.camera_x_p + 1 >= bkg.camera_max_x) {
+            if ((joy & J_LEFT) && (PLAYER.SpdX < 0) && (TO_PIXELS(PLAYER.x) <= 118)) {
+                bkg.camera_x += PLAYER.SpdX;
+                bkg.redraw = TRUE;
             }
         }
         // PLAYER.x = (PLAYER.x) - (bkg.camera_x);
