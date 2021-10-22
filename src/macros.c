@@ -40,6 +40,7 @@ void set_camera() {
     }
     // set old camera position to current camera position
     bkg.old_camera_x = bkg.camera_x, bkg.old_camera_y = bkg.camera_y;
+    bkg.camera_x_p = TO_PIXELS(bkg.camera_x);
 }
 
 inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, UINT8 bank) {
