@@ -48,6 +48,7 @@ void main() {
 
     init_submap();
     load_level(&level1);
+    bkg.redraw = TRUE;
 
     // switch on display after everything is ready
     DISPLAY_ON;
@@ -271,7 +272,7 @@ void main() {
         // #ifdef DEBUG
         // DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
-            printf("SpdX=%u\n", PLAYER.SpdX);
+            printf("CAMX=%u\n", TO_PIXELS(bkg.camera_x));
         }
         // #endif
 
