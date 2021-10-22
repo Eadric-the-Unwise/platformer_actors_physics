@@ -251,21 +251,8 @@ void main() {
         // GRAVITY
 
         PLAYER.SpdY += GRAVITY;
-        if (TO_PIXELS(PLAYER.y) < floorYposition) {  // if you are above the floorYposition
-            if (PLAYER.SpdY > MAX_FALL_SPEED) PLAYER.SpdY = MAX_FALL_SPEED;
-        } else {  // if you touch the floor
-            if (PLAYER.SpdY > 0) {
-                PLAYER.SpdY = 0;
-                SetActorDirection(&PLAYER, PLAYER.direction, 5);
-                Jump = FALSE;
-                // set player idle direction when touching ground
-                if (PLAYER.direction == DIR_JUMP_R) {
-                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-                } else if (PLAYER.direction == DIR_JUMP_L) {
-                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-                }
-            }
-            if (PLAYER.y > TO_COORDS(floorYposition)) PLAYER.y = TO_COORDS(floorYposition);  // if we "sunk into the ground" because of high speed, then float up
+        if (PLAYER.SpdY > MAX_FALL_SPEED) {
+            PLAYER.SpdY = MAX_FALL_SPEED;
         }
 
         if (PLAYER.SpdX < 0) {
@@ -286,7 +273,7 @@ void main() {
         // #ifdef DEBUG
         // DEBUG DETECTIVE Y COORDS
         if (joy & J_B) {
-            printf("ty=%u\n", TO_PIXELS(PLAYER.y) / 8);
+            printf("ty=%u\n", (TO_PIXELS(PLAYER.y) / 8));
         }
         // #endif
 
@@ -390,8 +377,8 @@ void main() {
 
         //Y-AXIS COLLISION CHECK
         if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
-            UBYTE ty = PLAYER.y / 8;
-            PLAYER.y = ty;
+            UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
+            PLAYER.y = TO_COORDS(ty) - TO_COORDS(1);
             PLAYER.SpdY = 0;
             SetActorDirection(&PLAYER, PLAYER.direction, 5);
             Jump = FALSE;
