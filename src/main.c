@@ -33,7 +33,7 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
 
     indexBLx = (newplayerx - 17) / 8;
     indexBLy = (newplayery - 1) / 8;
-    tileindexBL = 20 * indexBLy + indexBLx;
+    tileindexBL = 40 * indexBLy + indexBLx;
 
     result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
 
@@ -230,10 +230,10 @@ void main() {
                 Jump = TRUE;
             }
         }
-        if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (!Jump)) {
-            Shooting = TRUE;
-            shooting_counter = 20;
-        }
+        // if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (!Jump)) {
+        //     Shooting = TRUE;
+        //     shooting_counter = 20;
+        // }
         // else if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && (Jump)) {
         // }
 
@@ -249,10 +249,11 @@ void main() {
         // ---------------------------------------------
         // WORLD PHYSICS:
         // GRAVITY
-
-        PLAYER.SpdY += GRAVITY;
-        if (PLAYER.SpdY > MAX_FALL_SPEED) {
-            PLAYER.SpdY = MAX_FALL_SPEED;
+        if (PLAYER.SpdY != 0) {
+            PLAYER.SpdY += GRAVITY;
+            if (PLAYER.SpdY > MAX_FALL_SPEED) {
+                PLAYER.SpdY = MAX_FALL_SPEED;
+            }
         }
 
         if (PLAYER.SpdX < 0) {
@@ -378,7 +379,7 @@ void main() {
         //Y-AXIS COLLISION CHECK
         if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
             UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
-            PLAYER.y = TO_COORDS(ty) - TO_COORDS(1);
+            PLAYER.y = TO_COORDS((ty * 8) - 1);
             PLAYER.SpdY = 0;
             SetActorDirection(&PLAYER, PLAYER.direction, 5);
             Jump = FALSE;
