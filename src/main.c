@@ -31,13 +31,13 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBLx, indexBLy, tileindexBL;
     UBYTE result;
 
-    indexBLx = ((newplayerx - 17) + (TO_PIXELS(bkg.camera_x))) / 8;
+    indexBLx = (newplayerx - 17) / 8;
     indexBLy = (newplayery - 1) / 8;
     tileindexBL = 40 * ((indexBLy + indexBLx) ); //MAP TILE WIDTH
 
     result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
   if (joy & J_B) {
-            printf("BLX=%u\n", indexBLx);
+            printf("BLX=%u\n", tileindexBL);
         }
     return result;
 }

@@ -95,9 +95,9 @@ _CODE                  00000200    00002620 =        9760. bytes (REL,CON)
      00000200  _move_arr |    0000036B  _level1_a |    000003F5  _level1  
      000003FA  _animate_ |    00000565  _level2_a |    0000061D  _level2  
      00000622  _set_came |    0000093C  _set_leve |    00000985  _performa
-     00000992  _checkcol |    00000A49  _blankmap |    00000A53  _main    
-     00001189  _load_sce |    0000133F  _load_lev |    0000137A  _render_a
-     000015A1  _init_sub |    0000169E  _detectiv |    00001EDE  _detectiv
+     00000992  _checkcol |    00000A47  _blankmap |    00000A51  _main    
+     00001187  _load_sce |    0000133D  _load_lev |    00001378  _render_a
+     0000159F  _init_sub |    0000169E  _detectiv |    00001EDE  _detectiv
      00001EFA  _detectiv |    00001F12  _detectiv |    00001F2A  _detectiv
      00001F46  _detectiv |    00001F5E  _detectiv |    00001F7A  _detectiv
      00001F96  _detectiv |    00001FB2  _detectiv |    00001FCE  _detectiv
@@ -971,33 +971,33 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172920.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26280.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172921.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26281.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172922.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26282.rel
                                           [ macros ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172923.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26283.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172924.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26284.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172925.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26285.rel
                                           [ submap ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172926.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26286.rel
                                           [ brick_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172927.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26287.rel
                                           [ brick_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172928.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26288.rel
                                           [ brick_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc172929.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc26289.rel
                                           [ brick_wide_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1729210.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc262810.rel
                                           [ collision_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1729211.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc262811.rel
                                           [ collision_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1729212.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc262812.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1729213.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc262813.rel
                                           [ enemy_arrow ]
 
 
