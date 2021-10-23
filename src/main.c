@@ -31,12 +31,14 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
     UINT16 indexBLx, indexBLy, tileindexBL;
     UBYTE result;
 
-    indexBLx = (newplayerx - 17) / 8;
+    indexBLx = ((newplayerx - 17) + (TO_PIXELS(bkg.camera_x))) / 8;
     indexBLy = (newplayery - 1) / 8;
-    tileindexBL = 40 * indexBLy + indexBLx;
+    tileindexBL = 40 * ((indexBLy + indexBLx) ); //MAP TILE WIDTH
 
     result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
-
+  if (joy & J_B) {
+            printf("BLX=%u\n", indexBLx);
+        }
     return result;
 }
 
@@ -249,12 +251,12 @@ void main() {
         // ---------------------------------------------
         // WORLD PHYSICS:
         // GRAVITY
-        if (PLAYER.SpdY != 0) {
+      
             PLAYER.SpdY += GRAVITY;
             if (PLAYER.SpdY > MAX_FALL_SPEED) {
                 PLAYER.SpdY = MAX_FALL_SPEED;
             }
-        }
+        
 
         if (PLAYER.SpdX < 0) {
             if (PLAYER.SpdX != -MAX_WALK_SPEED) {
