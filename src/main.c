@@ -27,12 +27,14 @@ extern Variables bkg;
 
 //CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
 //BOTTOM LEFT PIXEL
-UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery) {
-    UINT16 indexBLx, indexBLy, tileindexBL;
+UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+    UINT16 indexBLx, indexBLy, indexCamx, tileindexBL;
     UBYTE result;
 
-    indexBLx = (newplayerx - 17) / 8;
+    indexCamx = camera_x / 8;
+    indexBLx = ((newplayerx - 17) + indexCamx) / 8;
     indexBLy = (newplayery - 1) / 8;
+
     tileindexBL = 40 * ((indexBLy + indexBLx) ); //MAP TILE WIDTH
 
     result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
@@ -379,7 +381,7 @@ void main() {
         PLAYER.y += PLAYER.SpdY;
 
         //Y-AXIS COLLISION CHECK
-        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y))) {
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) {
             UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
             PLAYER.y = TO_COORDS((ty * 8) - 1);
             PLAYER.SpdY = 0;
