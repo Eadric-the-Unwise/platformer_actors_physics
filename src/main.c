@@ -257,7 +257,7 @@ void main() {
                             break;
                     }
                 }
-                PLAYER.SpdY = -128;
+                PLAYER.SpdY = JUMP_IMPULSE;
                 Jump = TRUE;
             }
         }
