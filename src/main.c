@@ -380,10 +380,11 @@ void main() {
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
 
-        //Y-AXIS COLLISION CHECK
-        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) {
+        //Y-AXIS COLLISION CHECK (ADD NEGATIVE AND POSITIVE IFS SO THE LOOP ONLY CHECKS 1 FOR Y AND 1 FOR X MOVEMENT)
+        if (PLAYER.SpdY > 0){
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) {
             UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
-            PLAYER.y = TO_COORDS((ty * 8) - 1);
+            PLAYER.y = TO_COORDS((ty * 8));
             PLAYER.SpdY = 0;
             SetActorDirection(&PLAYER, PLAYER.direction, 5);
             Jump = FALSE;
@@ -393,6 +394,50 @@ void main() {
             } else if (PLAYER.direction == DIR_JUMP_L) {
                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
             }
+        }
+        } else if (PLAYER.SpdY < 0){
+               if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 1, TO_PIXELS(bkg.camera_x))) {
+            UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
+            PLAYER.y = TO_COORDS((ty * 8));
+            PLAYER.SpdY = 0;
+            SetActorDirection(&PLAYER, PLAYER.direction, 5);
+            Jump = FALSE;
+            //set player idle direction when touching ground
+            if (PLAYER.direction == DIR_JUMP_R) {
+                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+            } else if (PLAYER.direction == DIR_JUMP_L) {
+                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+            }
+        }
+        }
+                if (PLAYER.SpdX > 0){
+        if (checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) {
+            UBYTE tx = (TO_PIXELS(PLAYER.x) / 8);
+            PLAYER.x = TO_COORDS((tx * 8));
+            PLAYER.SpdX = 0;
+            SetActorDirection(&PLAYER, PLAYER.direction, 5);
+            Jump = FALSE;
+            //set player idle direction when touching ground
+            if (PLAYER.direction == DIR_JUMP_R) {
+                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+            } else if (PLAYER.direction == DIR_JUMP_L) {
+                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+            }
+        }
+        } else if (PLAYER.SpdX < 0){
+               if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) {
+            UBYTE tx = (TO_PIXELS(PLAYER.x) / 8);
+            PLAYER.x = TO_COORDS((tx * 8));
+            PLAYER.SpdX = 0;
+            SetActorDirection(&PLAYER, PLAYER.direction, 5);
+            Jump = FALSE;
+            //set player idle direction when touching ground
+            if (PLAYER.direction == DIR_JUMP_R) {
+                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+            } else if (PLAYER.direction == DIR_JUMP_L) {
+                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+            }
+        }
         }
 
         //THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
