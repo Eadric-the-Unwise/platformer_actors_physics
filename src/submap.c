@@ -12,7 +12,7 @@ void init_submap() {
     HIDE_BKG;
     bkg.redraw = TRUE;
     bkg.sliding = FALSE;
-    bkg.camera_x = TO_COORDS(80);
+    bkg.camera_x = TO_COORDS(160);
     bkg.camera_y = 0;
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;

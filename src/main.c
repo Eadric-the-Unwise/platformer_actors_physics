@@ -35,15 +35,42 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     indexBLx = ((newplayerx - 17) + indexCamx) / 8;
     indexBLy = (newplayery - 1) / 8;
 
-    tileindexBL = 40 * indexBLy + indexBLx; //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexBL = COLLISION_WIDE_MAPWidth * indexBLy + indexBLx; //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
 
     result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
-  if (joy & J_B) {
-            printf("BLX=%u\n", tileindexBL);
-        }
+
     return result;
 }
+//BOTTOM RIGHT PIXEL
+UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+    UINT16 indexBLx, indexBLy, indexCamx, tileindexBL;
+    UBYTE result;
 
+    indexCamx = camera_x;
+    indexBLx = ((newplayerx) + indexCamx) / 8;
+    indexBLy = (newplayery - 1) / 8;
+
+    tileindexBL = COLLISION_WIDE_MAPWidth * indexBLy + indexBLx; //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+
+    result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
+
+    return result;
+}
+//BOTTOM CENTER PIXEL
+UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+    UINT16 indexBLx, indexBLy, indexCamx, tileindexBL;
+    UBYTE result;
+
+    indexCamx = camera_x;
+    indexBLx = ((newplayerx - 9) + indexCamx) / 8;
+    indexBLy = (newplayery - 1) / 8;
+
+    tileindexBL = COLLISION_WIDE_MAPWidth * indexBLy + indexBLx; //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+
+    result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
+
+    return result;
+}
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /******************************/
@@ -382,9 +409,9 @@ void main() {
 
         //Y-AXIS COLLISION CHECK (ADD NEGATIVE AND POSITIVE IFS SO THE LOOP ONLY CHECKS 1 FOR Y AND 1 FOR X MOVEMENT)
         if (PLAYER.SpdY > 0){
-        if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) {
+        if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x)))) {
             UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
-            PLAYER.y = TO_COORDS((ty * 8));
+            PLAYER.y = TO_COORDS(ty * 8);
             PLAYER.SpdY = 0;
             SetActorDirection(&PLAYER, PLAYER.direction, 5);
             Jump = FALSE;
@@ -398,7 +425,7 @@ void main() {
         } else if (PLAYER.SpdY < 0){
                if (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 1, TO_PIXELS(bkg.camera_x))) {
             UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
-            PLAYER.y = TO_COORDS((ty * 8));
+            PLAYER.y = TO_COORDS(ty * 8);
             PLAYER.SpdY = 0;
             SetActorDirection(&PLAYER, PLAYER.direction, 5);
             Jump = FALSE;
@@ -410,10 +437,10 @@ void main() {
             }
         }
         }
-                if (PLAYER.SpdX > 0){
-        if (checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) {
-            UBYTE tx = (TO_PIXELS(PLAYER.x) / 8);
-            PLAYER.x = TO_COORDS((tx * 8));
+        if (PLAYER.SpdX > 0){
+        if (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) {
+            UBYTE tx = ((TO_PIXELS(PLAYER.x) + 1) / 8);
+            PLAYER.x = TO_COORDS((tx * 8) - 1);
             PLAYER.SpdX = 0;
             SetActorDirection(&PLAYER, PLAYER.direction, 5);
             Jump = FALSE;
@@ -426,8 +453,8 @@ void main() {
         }
         } else if (PLAYER.SpdX < 0){
                if (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) {
-            UBYTE tx = (TO_PIXELS(PLAYER.x) / 8);
-            PLAYER.x = TO_COORDS((tx * 8));
+            UBYTE tx = ((TO_PIXELS(PLAYER.x) - 1) / 8);
+            PLAYER.x = TO_COORDS((tx * 8) + 1);
             PLAYER.SpdX = 0;
             SetActorDirection(&PLAYER, PLAYER.direction, 5);
             Jump = FALSE;
@@ -439,6 +466,7 @@ void main() {
             }
         }
         }
+
 
         //THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
         if ((bkg.camera_x_p > 0) && (bkg.camera_x_p < bkg.camera_max_x)) {

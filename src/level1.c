@@ -9,7 +9,7 @@
 void move_arrows();
 
 const actor_t level1_actors[3] = {
-    {.x = TO_COORDS(88),
+    {.x = TO_COORDS(128),
      .y = TO_COORDS(40),
      .SpdX = 0,
      .SpdY = 0,
