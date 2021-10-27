@@ -31,11 +31,11 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexBLx, indexBLy, indexCamx, tileindexBL;
     UBYTE result;
 
-    indexCamx = camera_x / 8;
+    indexCamx = camera_x;
     indexBLx = ((newplayerx - 17) + indexCamx) / 8;
     indexBLy = (newplayery - 1) / 8;
 
-    tileindexBL = 40 * ((indexBLy + indexBLx) ); //MAP TILE WIDTH
+    tileindexBL = 40 * indexBLy + indexBLx; //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
 
     result = COLLISION_WIDE_MAP[tileindexBL] == blankmap[1];
   if (joy & J_B) {
