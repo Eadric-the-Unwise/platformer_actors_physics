@@ -5,7 +5,7 @@
  Map Include File.
 
  Info:
-   Section       :
+   Section       : 
    Bank          : 0
    Map size      : 40 x 18
    Tile set      : C:\c_code\TileMapBuilder\gb_Tile Designer\tile_sets\dk_large bricks.gbr
@@ -22,7 +22,6 @@
 #define BRICK_WIDE_MAPHeight 18
 #define BRICK_WIDE_MAPBank 0
 
-extern const void __bank_BRICK_WIDE_MAP;
 extern unsigned char BRICK_WIDE_MAP[];
 
 /* End of BRICK_WIDE_MAP.H */

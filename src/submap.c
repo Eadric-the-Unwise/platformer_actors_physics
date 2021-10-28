@@ -23,8 +23,8 @@ void init_submap() {
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
     bkg.camera_max_y = (BRICK_WIDE_MAPHeight - 18) * 8;
     bkg.camera_max_x = (BRICK_WIDE_MAPWidth - 20) * 8;
-    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, BRICK_WIDE_MAP, BRICK_WIDE_MAPWidth, BANK(BRICK_WIDE_MAP));
-    set_level(BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPHeight, BRICK_WIDE_MAP, BANK(BRICK_WIDE_MAP));
+    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, BRICK_WIDE_MAP, BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPBank);
+    set_level(BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPHeight, BRICK_WIDE_MAP, BRICK_WIDE_MAPBank);
 
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
