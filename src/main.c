@@ -19,7 +19,7 @@
 UINT8 joy, last_joy;
 
 UINT8 floorYposition;
-UINT8 Jump, Launch, Shooting;
+UINT8 Jump, Crouch, Launch, Shooting;
 UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
@@ -88,9 +88,7 @@ void main() {
 
     // game assumes floor is at the level of 100px. that is a temporary workaround, should use collision maps instead
     floorYposition = 128;
-    Jump = FALSE;
-    Launch = FALSE;
-    Shooting = FALSE;
+    Jump = Crouch = Launch = Shooting = FALSE;
 
     init_submap();
     load_level(&level1);
@@ -112,11 +110,12 @@ void main() {
                 PLAYER.SpdX -= WALK_VELOCITY;
             } else
                 PLAYER.SpdX = -MAX_WALK_SPEED;
-            if ((!Jump) && !(joy & (J_DOWN))) {
+               if ((!Jump) && !(joy & (J_DOWN))) {
                 SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
             } else if (joy & (J_DOWN)) {
                 if (!Jump) {
                     SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+                    Crouch = TRUE;
                     if (PLAYER.SpdX > -MAX_CRAWL_SPEED)
                         PLAYER.SpdX -= WALK_VELOCITY;
                     else
@@ -137,6 +136,7 @@ void main() {
             } else if (joy & (J_DOWN)) {
                 if (!Jump) {
                     SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+                    Crouch = TRUE;
                     if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
                         PLAYER.SpdX += WALK_VELOCITY;
                     } else
@@ -146,6 +146,7 @@ void main() {
         }
         // DOWN while standing still
         if ((joy & J_DOWN) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
+            Crouch = TRUE;
             if (!Launch) {
                 launchDelay++;
             }
@@ -180,6 +181,9 @@ void main() {
                     break;
             }
         }
+        if ((Crouch) && !(joy & J_DOWN)){
+            Crouch = FALSE;
+        }
         // Launch
         if (Launch) {
             OBP0_REG = 0xE1;
@@ -188,7 +192,7 @@ void main() {
                 OBP0_REG = 0xE4;
                 PLAYER.SpdY = LAUNCH_IMPULSE;
                 Jump = TRUE;
-                Launch = FALSE;
+                Crouch = Launch = FALSE;
                 if (PLAYER.direction == DIR_DOWN_L) {
                     SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
                 } else if (PLAYER.direction == DIR_DOWN_R) {
@@ -205,6 +209,7 @@ void main() {
 
         if (PLAYER.SpdY > 0) {
             Jump = TRUE;
+            Crouch = FALSE;
             switch (PLAYER.direction) {
                 case DIR_IDLE_L:
                     SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
@@ -228,7 +233,7 @@ void main() {
         }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
-            Launch = FALSE;
+            Crouch = Launch = FALSE;
             launchDelay = 0;
             if (!Jump) {
                 // if (joy & J_LEFT) {
@@ -302,12 +307,7 @@ void main() {
             }
         }
 
-        // #ifdef DEBUG
-        // DEBUG DETECTIVE Y COORDS
-        if (joy & J_B) {
-            printf("sx=%u sy=%u\n", PLAYER.SpdX, PLAYER.SpdY);
-        }
-        // #endif
+
 
         // // TURN DIRECTION MIDAIR
         // if (Jump) {
@@ -324,14 +324,9 @@ void main() {
         // }
      
 
-     
-
-        // update PLAYER absolute posiiton
-        PLAYER.y += PLAYER.SpdY;
-
         //Y-AXIS COLLISION CHECK (ADD NEGATIVE AND POSITIVE IFS SO THE LOOP ONLY CHECKS 1 FOR Y AND 1 FOR X MOVEMENT)
         if (PLAYER.SpdY > 0) {
-            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x)))) {
+            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) - 4, TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x)))) {
                 UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
@@ -345,7 +340,7 @@ void main() {
                 }
             }
         } else if (PLAYER.SpdY < 0) {
-            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x)))) {
+            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) - 4, TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x)))) {
                 UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
@@ -364,13 +359,13 @@ void main() {
                 UBYTE tx = ((TO_PIXELS(PLAYER.x) + 1) / 8);
                 PLAYER.x = TO_COORDS((tx * 8) - 1);
                 PLAYER.SpdX = 0;
-                SetActorDirection(&PLAYER, PLAYER.direction, 5);
-                Jump = FALSE;
                 //set player idle direction when touching ground
+                if (!Jump){
                 if (PLAYER.direction == DIR_JUMP_R) {
                     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
                 } else if (PLAYER.direction == DIR_JUMP_L) {
                     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                    }
                 }
             }
         } else if (PLAYER.SpdX < 0) {
@@ -378,18 +373,18 @@ void main() {
                 UBYTE tx = ((TO_PIXELS(PLAYER.x) - 1) / 8);
                 PLAYER.x = TO_COORDS((tx * 8) + 1);
                 PLAYER.SpdX = 0;
-                SetActorDirection(&PLAYER, PLAYER.direction, 5);
-                Jump = FALSE;
                 //set player idle direction when touching ground
+                if (!Jump){
                 if (PLAYER.direction == DIR_JUMP_R) {
                     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
                 } else if (PLAYER.direction == DIR_JUMP_L) {
                     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                    }
                 }
             }
         }
            // Change to IDLE state when not moving
-        if ((!Jump) && !(joy & J_DOWN)) {
+        if ((!Jump) && !(Crouch)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 switch (PLAYER.last_direction) {
                     case DIR_LEFT:
@@ -466,7 +461,8 @@ void main() {
                 }
             }
         }
-
+        // update PLAYER absolute posiiton
+        PLAYER.y += PLAYER.SpdY;
         //THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
         if ((bkg.camera_x_p > 0) && (bkg.camera_x_p < bkg.camera_max_x)) {
             bkg.camera_x += PLAYER.SpdX;
@@ -484,7 +480,11 @@ void main() {
                 bkg.redraw = TRUE;
             }
         }
-        // PLAYER.x = (PLAYER.x) - (bkg.camera_x);
+     // #ifdef DEBUG
+        if (joy & J_B) {
+            printf("sx=%u sy=%u\n", PLAYER.SpdX, PLAYER.SpdY);
+        }
+        // #endif
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
