@@ -286,30 +286,63 @@ void main() {
             }
         }
         if (PLAYER.SpdX > 0) {
-            if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 8, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 16, TO_PIXELS(bkg.camera_x)))) {
-                // UBYTE tx = ((TO_PIXELS(PLAYER.x) + 1) / 8);
-                // PLAYER.x = TO_COORDS((tx * 8) - 1);
-                PLAYER.SpdX = 0;
-                //set player idle direction when touching ground
-                if (!Jump) {
-                    if (PLAYER.direction == DIR_JUMP_R) {
-                        SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-                    } else if (PLAYER.direction == DIR_JUMP_L) {
-                        SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+            if (Crouch) {
+                if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x)))) {
+                    // UBYTE tx = ((TO_PIXELS(PLAYER.x) + 1) / 8);
+                    // PLAYER.x = TO_COORDS((tx * 8) - 1);
+                    PLAYER.SpdX = 0;
+                    //set player idle direction when touching ground
+                    if (!Jump) {
+                        if (PLAYER.direction == DIR_JUMP_R) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        } else if (PLAYER.direction == DIR_JUMP_L) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        }
+                    }
+                }
+
+            } else {
+                if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 12, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+                    // UBYTE tx = ((TO_PIXELS(PLAYER.x) + 1) / 8);
+                    // PLAYER.x = TO_COORDS((tx * 8) - 1);
+                    PLAYER.SpdX = 0;
+                    //set player idle direction when touching ground
+                    if (!Jump) {
+                        if (PLAYER.direction == DIR_JUMP_R) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        } else if (PLAYER.direction == DIR_JUMP_L) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        }
                     }
                 }
             }
         } else if (PLAYER.SpdX < 0) {
-            if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 8, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 16, TO_PIXELS(bkg.camera_x)))) {
-                // UBYTE tx = ((TO_PIXELS(PLAYER.x) - 1) / 8);
-                // PLAYER.x = TO_COORDS((tx * 8) + 1 + bkg.camera_x_p);
-                PLAYER.SpdX = 0;
-                //set player idle direction when touching ground
-                if (!Jump) {
-                    if (PLAYER.direction == DIR_JUMP_R) {
-                        SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-                    } else if (PLAYER.direction == DIR_JUMP_L) {
-                        SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+            if (Crouch) {
+                if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x)))) {
+                    // UBYTE tx = ((TO_PIXELS(PLAYER.x) - 1) / 8);
+                    // PLAYER.x = TO_COORDS((tx * 8) + 1 + bkg.camera_x_p);
+                    PLAYER.SpdX = 0;
+                    //set player idle direction when touching ground
+                    if (!Jump) {
+                        if (PLAYER.direction == DIR_JUMP_R) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        } else if (PLAYER.direction == DIR_JUMP_L) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        }
+                    }
+                }
+            } else {
+                if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+                    // UBYTE tx = ((TO_PIXELS(PLAYER.x) - 1) / 8);
+                    // PLAYER.x = TO_COORDS((tx * 8) + 1 + bkg.camera_x_p);
+                    PLAYER.SpdX = 0;
+                    //set player idle direction when touching ground
+                    if (!Jump) {
+                        if (PLAYER.direction == DIR_JUMP_R) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                        } else if (PLAYER.direction == DIR_JUMP_L) {
+                            SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                        }
                     }
                 }
             }
