@@ -98,21 +98,25 @@ void main() {
         joy = joypad();
 
         if ((joy & J_LEFT) && (!Shooting)) {
+            
+            if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
+                SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+            } else if (Crouch) {
+                if (!Jump) {
+                    SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+                }
+            }
+            if (Crouch) {
+                if (PLAYER.SpdX > -MAX_CRAWL_SPEED){
+                PLAYER.SpdX -= WALK_VELOCITY;}
+                else
+                PLAYER.SpdX = -MAX_CRAWL_SPEED;
+            }
+            else if (!(Crouch)){
             if (PLAYER.SpdX > -MAX_WALK_SPEED) {
                 PLAYER.SpdX -= WALK_VELOCITY;
             } else
                 PLAYER.SpdX = -MAX_WALK_SPEED;
-            if ((!Jump) && !(joy & (J_DOWN))) {
-                SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
-            } else if (joy & (J_DOWN)) {
-                if (!Jump) {
-                    SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
-                    Crouch = TRUE;
-                    if (PLAYER.SpdX > -MAX_CRAWL_SPEED)
-                        PLAYER.SpdX -= WALK_VELOCITY;
-                    else
-                        PLAYER.SpdX = -MAX_CRAWL_SPEED;
-                }
             }
         } else if ((joy & J_RIGHT) && (!Shooting)) {
             if (PLAYER.SpdX < MAX_WALK_SPEED) {
@@ -133,9 +137,11 @@ void main() {
                 }
             }
         }
-        // DOWN while standing still
-        if ((joy & J_DOWN) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
+        if ((joy & J_DOWN) && !(Jump)){
             Crouch = TRUE;
+        }
+        // DOWN while standing still
+        if ((Crouch) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
 
             switch (PLAYER.direction) {
                 case DIR_LEFT:
@@ -349,11 +355,13 @@ void main() {
         }
 
         if ((Crouch) && !(joy & J_DOWN)) {
+            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+            } else
             Crouch = FALSE;
         }
 
         // Change to IDLE state when not moving
-        if ((!Jump) && !(joy & J_DOWN)) {
+        if ((!Jump) && !(joy & J_DOWN) && !(Crouch)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 switch (PLAYER.last_direction) {
                     case DIR_LEFT:
