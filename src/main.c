@@ -143,7 +143,7 @@ void main() {
             Crouch = TRUE;
         }
         // DOWN while standing still
-        if ((Crouch) && !(joy & J_LEFT) && !(joy & J_RIGHT) && (!Jump)) {
+        if ((Crouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
 
             switch (PLAYER.direction) {
                 case DIR_LEFT:
@@ -306,11 +306,16 @@ void main() {
                         } else if (PLAYER.direction == DIR_JUMP_L) {
                             SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                         }
+                         if (PLAYER.direction == DIR_CRAWL_R) {
+                            SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                        } else if (PLAYER.direction == DIR_CRAWL_L) {
+                            SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                        }
                     }
                 }
 
             } else {
-                if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 12, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+                if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 12, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
                     // UBYTE tx = ((TO_PIXELS(PLAYER.x) + 1) / 8);
                     // PLAYER.x = TO_COORDS((tx * 8) - 1);
                     PLAYER.SpdX = 0;
@@ -337,10 +342,15 @@ void main() {
                         } else if (PLAYER.direction == DIR_JUMP_L) {
                             SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                         }
+                        if (PLAYER.direction == DIR_CRAWL_R) {
+                            SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                        } else if (PLAYER.direction == DIR_CRAWL_L) {
+                            SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                        }
                     }
                 }
             } else {
-                if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+                if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
                     // UBYTE tx = ((TO_PIXELS(PLAYER.x) - 1) / 8);
                     // PLAYER.x = TO_COORDS((tx * 8) + 1 + bkg.camera_x_p);
                     PLAYER.SpdX = 0;
@@ -363,11 +373,15 @@ void main() {
             Crouch = FALSE;
             }
             else if (joy & J_RIGHT){
-            if ((checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) - 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-            } else
+                     if ((checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) - 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+                         } else
             Crouch = FALSE;
             }
-            }
+            if (!(joy & J_LEFT) && !(joy & J_RIGHT)){
+                            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+            } else Crouch = FALSE;
+         }
+        }
         
 
         // Change to IDLE state when not moving
