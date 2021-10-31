@@ -98,7 +98,6 @@ void main() {
         joy = joypad();
 
         if (joy & J_LEFT) {
-            
             if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
                 SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
             } else if (Crouch) {
@@ -107,16 +106,15 @@ void main() {
                 }
             }
             if (Crouch) {
-                if (PLAYER.SpdX > -MAX_CRAWL_SPEED){
-                PLAYER.SpdX -= WALK_VELOCITY;}
-                else
-                PLAYER.SpdX = -MAX_CRAWL_SPEED;
-            }
-            else if (!(Crouch)){
-            if (PLAYER.SpdX > -MAX_WALK_SPEED) {
-                PLAYER.SpdX -= WALK_VELOCITY;
-            } else
-                PLAYER.SpdX = -MAX_WALK_SPEED;
+                if (PLAYER.SpdX > -MAX_CRAWL_SPEED) {
+                    PLAYER.SpdX -= WALK_VELOCITY;
+                } else
+                    PLAYER.SpdX = -MAX_CRAWL_SPEED;
+            } else if (!(Crouch)) {
+                if (PLAYER.SpdX > -MAX_WALK_SPEED) {
+                    PLAYER.SpdX -= WALK_VELOCITY;
+                } else
+                    PLAYER.SpdX = -MAX_WALK_SPEED;
             }
         } else if (joy & J_RIGHT) {
             if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
@@ -127,24 +125,22 @@ void main() {
                 }
             }
             if (Crouch) {
-                    if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
-                        PLAYER.SpdX += WALK_VELOCITY;
-                    } else
-                        PLAYER.SpdX = MAX_CRAWL_SPEED;
-            }
-            else if (!(Crouch)){
-            if (PLAYER.SpdX < MAX_WALK_SPEED) {
-                PLAYER.SpdX += WALK_VELOCITY;
-            } else
-                PLAYER.SpdX = MAX_WALK_SPEED;
+                if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
+                    PLAYER.SpdX += WALK_VELOCITY;
+                } else
+                    PLAYER.SpdX = MAX_CRAWL_SPEED;
+            } else if (!(Crouch)) {
+                if (PLAYER.SpdX < MAX_WALK_SPEED) {
+                    PLAYER.SpdX += WALK_VELOCITY;
+                } else
+                    PLAYER.SpdX = MAX_WALK_SPEED;
             }
         }
-        if ((joy & J_DOWN) && !(Jump)){
+        if ((joy & J_DOWN) && !(Jump)) {
             Crouch = TRUE;
         }
         // DOWN while standing still
         if ((Crouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
-
             switch (PLAYER.direction) {
                 case DIR_LEFT:
                     SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
@@ -306,7 +302,7 @@ void main() {
                         } else if (PLAYER.direction == DIR_JUMP_L) {
                             SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
                         }
-                         if (PLAYER.direction == DIR_CRAWL_R) {
+                        if (PLAYER.direction == DIR_CRAWL_R) {
                             SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
                         } else if (PLAYER.direction == DIR_CRAWL_L) {
                             SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
@@ -367,22 +363,21 @@ void main() {
         }
 
         if ((Crouch) && !(joy & J_DOWN)) {
-            if (joy & J_LEFT){
-            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) + 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-            } else
-            Crouch = FALSE;
+            if (joy & J_LEFT) {
+                if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) + 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+                } else
+                    Crouch = FALSE;
+            } else if (joy & J_RIGHT) {
+                if ((checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) - 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+                } else
+                    Crouch = FALSE;
             }
-            else if (joy & J_RIGHT){
-                     if ((checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) - 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-                         } else
-            Crouch = FALSE;
+            if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+                } else
+                    Crouch = FALSE;
             }
-            if (!(joy & J_LEFT) && !(joy & J_RIGHT)){
-                            if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-            } else Crouch = FALSE;
-         }
         }
-        
 
         // Change to IDLE state when not moving
         if ((!Jump) && !(joy & J_DOWN) && !(Crouch)) {
@@ -483,9 +478,17 @@ void main() {
         }
         // #ifdef DEBUG
         if (joy & J_B) {
-            printf("J=%u\n", Jump);
+            printf("J=%u\n", TO_PIXELS(PLAYER.y));
         }
         // #endif
+        //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
+        if (TO_PIXELS(PLAYER.y) > 249) {
+            DISPLAY_OFF;
+            PLAYER.y = TO_COORDS(0);
+            load_level(&level1);
+            init_submap();
+            DISPLAY_ON;
+        }
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
