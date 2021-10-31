@@ -5,7 +5,7 @@
  Map Include File.
 
  Info:
-   Section       :
+   Section       : 
    Bank          : 0
    Map size      : 40 x 18
    Tile set      : C:\c_code\TileMapBuilder\gb_Tile Designer\tile_sets\basic_collisions.gbr
@@ -22,7 +22,6 @@
 #define COLLISION_WIDE_MAPHeight 18
 #define COLLISION_WIDE_MAPBank 0
 
-extern const void __bank_COLLISION_WIDE_MAP;
 extern unsigned char COLLISION_WIDE_MAP[];
 
 /* End of COLLISION_WIDE_MAP.H */
