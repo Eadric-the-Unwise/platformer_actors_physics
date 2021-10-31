@@ -1,13 +1,13 @@
 /*
 
- COLLISION_MAP.H
+ COLLISION_WIDE_MAP.H
 
  Map Include File.
 
  Info:
-   Section       : 
+   Section       :
    Bank          : 0
-   Map size      : 20 x 18
+   Map size      : 40 x 18
    Tile set      : C:\c_code\TileMapBuilder\gb_Tile Designer\tile_sets\basic_collisions.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -18,10 +18,11 @@
 
 */
 
-#define COLLISION_MAPWidth 20
-#define COLLISION_MAPHeight 18
-#define COLLISION_MAPBank 0
+#define COLLISION_WIDE_MAPWidth 40
+#define COLLISION_WIDE_MAPHeight 18
+#define COLLISION_WIDE_MAPBank 0
 
-extern unsigned char COLLISION_MAP[];
+extern const void __bank_COLLISION_WIDE_MAP;
+extern unsigned char COLLISION_WIDE_MAP[];
 
-/* End of COLLISION_MAP.H */
+/* End of COLLISION_WIDE_MAP.H */

@@ -1,6 +1,6 @@
 /*
 
- BRICK_TILES.H
+ BRICK_WIDE_TILES.H
 
  Include File.
 
@@ -22,10 +22,10 @@
 
 */
 
-
 /* Bank of tiles. */
-#define BRICK_TILESBank 0
+#define BRICK_WIDE_TILESBank 0
 /* Start of tile array. */
-extern unsigned char BRICK_TILES[];
+extern const void __bank_BRICK_WIDE_TILES;
+extern unsigned char BRICK_WIDE_TILES[];
 
-/* End of BRICK_TILES.H */
+/* End of BRICK_WIDE_TILES.H */

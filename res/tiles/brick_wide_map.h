@@ -1,13 +1,13 @@
 /*
 
- BRICK_MAP.H
+ BRICK_WIDE_MAP.H
 
  Map Include File.
 
  Info:
-   Section       : 
+   Section       :
    Bank          : 0
-   Map size      : 20 x 18
+   Map size      : 40 x 18
    Tile set      : C:\c_code\TileMapBuilder\gb_Tile Designer\tile_sets\dk_large bricks.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -18,10 +18,11 @@
 
 */
 
-#define BRICK_MAPWidth 20
-#define BRICK_MAPHeight 18
-#define BRICK_MAPBank 0
+#define BRICK_WIDE_MAPWidth 40
+#define BRICK_WIDE_MAPHeight 18
+#define BRICK_WIDE_MAPBank 0
 
-extern unsigned char BRICK_MAP[];
+extern const void __bank_BRICK_WIDE_MAP;
+extern unsigned char BRICK_WIDE_MAP[];
 
-/* End of BRICK_MAP.H */
+/* End of BRICK_WIDE_MAP.H */
