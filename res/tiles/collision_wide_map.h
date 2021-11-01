@@ -7,7 +7,7 @@
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 205 x 18
+   Map size      : 100 x 18
    Tile set      : C:\c_code\TileMapBuilder\gb_Tile Designer\tile_sets\basic_collisions.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -18,7 +18,7 @@
 
 */
 
-#define COLLISION_WIDE_MAPWidth 205
+#define COLLISION_WIDE_MAPWidth 100
 #define COLLISION_WIDE_MAPHeight 18
 #define COLLISION_WIDE_MAPBank 0
 
