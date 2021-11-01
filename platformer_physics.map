@@ -76,9 +76,9 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      0000003F  l__GSINIT |    00000044  l__BSS    |    00000083  l__HEADER
      000000F8  l__HOME   |    000000FF  ___bank_B |    00000199  l__DATA  
      00000200  s__CODE   |    00000845  l__BASE   |    00000E45  l__INITIA
-     00000E45  l__INITIA |    000036F0  l__CODE   |    000038F0  s__HOME  
-     000039E8  s__BASE   |    0000422D  s__CODE_0 |    0000422D  s__INITIA
-     0000422D  s__LIT    |    00005072  s__GSINIT |    000050B1  s__GSFINA
+     00000E45  l__INITIA |    00002E91  l__CODE   |    00003091  s__HOME  
+     00003189  s__BASE   |    000039CE  s__CODE_0 |    000039CE  s__INITIA
+     000039CE  s__LIT    |    00004813  s__GSINIT |    00004852  s__GSFINA
      0000C000  _shadow_O |    0000C0A0  s__DATA   |    0000C239  s__BSS   
      0000C27D  s__INITIA |    0000D0C2  s__HEAP   |    0000E000  .STACK   
      0000FF80  .refresh_ |    00FF4000  s__CODE_2
@@ -87,7 +87,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE                  00000200    000036F0 =       14064. bytes (REL,CON)
+_CODE                  00000200    00002E91 =       11921. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -95,24 +95,24 @@ _CODE                  00000200    000036F0 =       14064. bytes (REL,CON)
      0000039E  _animate_ |    00000509  _level2_a |    000005C1  _level2  
      000005C6  _set_came |    000008E0  _set_leve |    00000929  _performa
      00000936  _checkcol |    000009BE  _blankmap |    000009C0  _checkcol
-     00000A42  _checkcol |    00000ACA  _main     |    00002256  _load_sce
-     0000240C  _load_lev |    00002447  _render_a |    0000266E  _init_sub
-     0000276E  _detectiv |    00002FAE  _detectiv |    00002FCA  _detectiv
-     00002FE2  _detectiv |    00002FFA  _detectiv |    00003016  _detectiv
-     0000302E  _detectiv |    0000304A  _detectiv |    00003066  _detectiv
-     00003082  _detectiv |    0000309E  _detectiv |    000030BA  _detectiv
-     000030D6  _detectiv |    000030EE  _detectiv |    0000310A  _detectiv
-     00003126  _detectiv |    00003142  _detectiv |    0000315A  _detectiv
-     00003176  _detectiv |    00003198  _detectiv |    000031AA  _detectiv
-     000031AE  _detectiv |    000031B8  _detectiv |    000031C6  _detectiv
-     000031CA  _enemy_ar |    0000328A  _enemy_ar |    00003296  _enemy_ar
-     000032A2  _enemy_ar |    000032AE  _enemy_ar |    000032B2  _enemy_ar
-     000032B8  _abs      |    000032C7  ___move_m |    000032FF  ___hide_m
-     0000331F  ___move_m |    0000335B  ___move_m |    00003397  ___move_m
-     000033D5  _putchar  |    000033DE  _setchar  |    000033E7  _gotoxy  
-     000033F2  _posx     |    00003403  _posy     |    000034BC  ___printf
-     0000384A  _utoa     |    00003859  _itoa     |    00003868  .itoa    
-     0000387C  .utoa    
+     00000A42  _checkcol |    00000ACA  _main     |    000019F7  _load_sce
+     00001BAD  _load_lev |    00001BE8  _render_a |    00001E0F  _init_sub
+     00001F0F  _detectiv |    0000274F  _detectiv |    0000276B  _detectiv
+     00002783  _detectiv |    0000279B  _detectiv |    000027B7  _detectiv
+     000027CF  _detectiv |    000027EB  _detectiv |    00002807  _detectiv
+     00002823  _detectiv |    0000283F  _detectiv |    0000285B  _detectiv
+     00002877  _detectiv |    0000288F  _detectiv |    000028AB  _detectiv
+     000028C7  _detectiv |    000028E3  _detectiv |    000028FB  _detectiv
+     00002917  _detectiv |    00002939  _detectiv |    0000294B  _detectiv
+     0000294F  _detectiv |    00002959  _detectiv |    00002967  _detectiv
+     0000296B  _enemy_ar |    00002A2B  _enemy_ar |    00002A37  _enemy_ar
+     00002A43  _enemy_ar |    00002A4F  _enemy_ar |    00002A53  _enemy_ar
+     00002A59  _abs      |    00002A68  ___move_m |    00002AA0  ___hide_m
+     00002AC0  ___move_m |    00002AFC  ___move_m |    00002B38  ___move_m
+     00002B76  _putchar  |    00002B7F  _setchar  |    00002B88  _gotoxy  
+     00002B93  _posx     |    00002BA4  _posy     |    00002C5D  ___printf
+     00002FEB  _utoa     |    00002FFA  _itoa     |    00003009  .itoa    
+     0000301D  .utoa    
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -287,45 +287,45 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_HOME                  000038F0    000000F8 =         248. bytes (REL,CON)
+_HOME                  00003091    000000F8 =         248. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     000038F0  .remove_V |    000038F3  .remove_i |    00003910  .add_VBL 
-     00003913  .add_int  |    0000391E  .wait_vbl |    0000391E  _wait_vbl
-     0000392D  .display_ |    0000392D  _display_ |    00003944  _remove_V
-     0000394F  _add_VBL  |    0000395A  _set_bkg_ |    0000397F  _set_bkg_
-     000039AE  _printf   |    000039C7  _sprintf 
+     00003091  .remove_V |    00003094  .remove_i |    000030B1  .add_VBL 
+     000030B4  .add_int  |    000030BF  .wait_vbl |    000030BF  _wait_vbl
+     000030CE  .display_ |    000030CE  _display_ |    000030E5  _remove_V
+     000030F0  _add_VBL  |    000030FB  _set_bkg_ |    00003120  _set_bkg_
+     0000314F  _printf   |    00003168  _sprintf 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 23.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_BASE                  000039E8    00000845 =        2117. bytes (REL,CON)
+_BASE                  00003189    00000845 =        2117. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     000039E8  _set_tile |    000039ED  _set_bkg_ |    000039ED  _set_win_
-     000039F5  _set_spri |    00003A25  _set_bkg_ |    00003A69  .set_xy_w
-     00003A72  .set_xy_b |    00003A81  .set_xy_s |    00003AC7  .padup   
-     00003AC7  _waitpadu |    00003AD7  .jpad     |    00003AD7  _joypad  
-     00003AFF  _waitpad  |    00003B02  .wait_pad |    00003B09  ___sdcc_c
-     00003B0A  ___memcpy |    00003B0A  _memcpy   |    00003B4D  _font_loa
-     00003B54  font_copy |    00003B8A  font_copy |    00003BD9  font_load
-     00003C21  font_copy |    00003C69  font_set  |    00003C76  .put_char
-     00003C8E  .out_char |    00003C94  .del_char |    00003CEA  _font_loa
-     00003CF8  _font_set |    00003D07  _font_ini |    00003D27  .cls     
-     00003D27  _cls      |    00003D59  .cr_curs  |    00003D6E  .adv_curs
-     00003DCA  .tmode    |    00003DF3  .tmode_ou |    00003E03  _color   
-     00003E12  .drawing_ |    00003E1D  .drawing_ |    00003E59  _add_LCD 
-     00003E64  .add_LCD  |    00003E6A  _remove_L |    00003E75  .remove_L
-     00003E7B  _font_ibm
+     00003189  _set_tile |    0000318E  _set_bkg_ |    0000318E  _set_win_
+     00003196  _set_spri |    000031C6  _set_bkg_ |    0000320A  .set_xy_w
+     00003213  .set_xy_b |    00003222  .set_xy_s |    00003268  .padup   
+     00003268  _waitpadu |    00003278  .jpad     |    00003278  _joypad  
+     000032A0  _waitpad  |    000032A3  .wait_pad |    000032AA  ___sdcc_c
+     000032AB  ___memcpy |    000032AB  _memcpy   |    000032EE  _font_loa
+     000032F5  font_copy |    0000332B  font_copy |    0000337A  font_load
+     000033C2  font_copy |    0000340A  font_set  |    00003417  .put_char
+     0000342F  .out_char |    00003435  .del_char |    0000348B  _font_loa
+     00003499  _font_set |    000034A8  _font_ini |    000034C8  .cls     
+     000034C8  _cls      |    000034FA  .cr_curs  |    0000350F  .adv_curs
+     0000356B  .tmode    |    00003594  .tmode_ou |    000035A4  _color   
+     000035B3  .drawing_ |    000035BE  .drawing_ |    000035FA  _add_LCD 
+     00003605  .add_LCD  |    0000360B  _remove_L |    00003616  .remove_L
+     0000361C  _font_ibm
 ASxxxx Linker V03.00 + NoICE + sdld,  page 24.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           0000422D    00000E45 =        3653. bytes (REL,CON)
+_INITIALIZER           000039CE    00000E45 =        3653. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -334,17 +334,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                00005072    0000003F =          63. bytes (REL,CON)
+_GSINIT                00004813    0000003F =          63. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00005072  gsinit   
+     00004813  gsinit   
 ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               000050B1    00000001 =           1. bytes (REL,CON)
+_GSFINAL               00004852    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -971,27 +971,27 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc205520.rel
+C:\Users\User\AppData\Local\Temp/lcc204600.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc205521.rel
+C:\Users\User\AppData\Local\Temp/lcc204601.rel
                                           [ level2 ]
-C:\Users\User\AppData\Local\Temp/lcc205522.rel
+C:\Users\User\AppData\Local\Temp/lcc204602.rel
                                           [ macros ]
-C:\Users\User\AppData\Local\Temp/lcc205523.rel
+C:\Users\User\AppData\Local\Temp/lcc204603.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc205524.rel
+C:\Users\User\AppData\Local\Temp/lcc204604.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc205525.rel
+C:\Users\User\AppData\Local\Temp/lcc204605.rel
                                           [ submap ]
-C:\Users\User\AppData\Local\Temp/lcc205526.rel
+C:\Users\User\AppData\Local\Temp/lcc204606.rel
                                           [ brick_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc205527.rel
+C:\Users\User\AppData\Local\Temp/lcc204607.rel
                                           [ brick_wide_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc205528.rel
+C:\Users\User\AppData\Local\Temp/lcc204608.rel
                                           [ collision_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc205529.rel
+C:\Users\User\AppData\Local\Temp/lcc204609.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc2055210.rel
+C:\Users\User\AppData\Local\Temp/lcc2046010.rel
                                           [ enemy_arrow ]
 
 
