@@ -7,7 +7,7 @@
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 40 x 18
+   Map size      : 80 x 18
    Tile set      : C:\c_code\TileMapBuilder\gb_Tile Designer\tile_sets\dk_large bricks.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -18,7 +18,7 @@
 
 */
 
-#define BRICK_WIDE_MAPWidth 40
+#define BRICK_WIDE_MAPWidth 80
 #define BRICK_WIDE_MAPHeight 18
 #define BRICK_WIDE_MAPBank 0
 
