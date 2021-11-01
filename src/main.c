@@ -328,8 +328,6 @@ void main() {
         } else if (PLAYER.SpdX < 0) {
             if (Crouch) {
                 if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x)))) {
-                    // UBYTE tx = ((TO_PIXELS(PLAYER.x) - 1) / 8);
-                    // PLAYER.x = TO_COORDS((tx * 8) + 1 + bkg.camera_x_p);
                     PLAYER.SpdX = 0;
                     //set player idle direction when touching ground
                     if (!Jump) {
@@ -347,8 +345,6 @@ void main() {
                 }
             } else {
                 if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-                    // UBYTE tx = ((TO_PIXELS(PLAYER.x) - 1) / 8);
-                    // PLAYER.x = TO_COORDS((tx * 8) + 1 + bkg.camera_x_p);
                     PLAYER.SpdX = 0;
                     //set player idle direction when touching ground
                     if (!Jump) {
