@@ -48,7 +48,7 @@ typedef enum {
 
 typedef struct actor_t {
     INT16 x;
-    UINT16 y;
+    INT16 y;
     INT16 SpdX;
     INT16 SpdY;
     direction_e direction;

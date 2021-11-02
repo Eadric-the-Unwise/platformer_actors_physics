@@ -474,11 +474,11 @@ void main() {
         }
         // #ifdef DEBUG
         if (joy & J_B) {
-            printf("NPC1.x=%u -CAM=%u\n", TO_PIXELS(NPC(1).x), (TO_PIXELS(NPC(1).x) - TO_PIXELS(bkg.camera_x)));
+            printf("NPC1.X=%u\nNPC2.x=%u\n", TO_PIXELS(NPC(1).x), TO_PIXELS(NPC(2).x));
         }
         // #endif
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
-        if (TO_PIXELS(PLAYER.y) > 249) {
+        if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
             DISPLAY_OFF;
             PLAYER.y = TO_COORDS(0);
             load_level(&level1);

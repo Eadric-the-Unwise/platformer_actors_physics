@@ -10,8 +10,8 @@ void move_arrows();
 void move_x();
 
 const actor_t level1_actors[3] = {
-    {.x = TO_COORDS(128),
-     .y = TO_COORDS(40),
+    {.x = TO_COORDS(120),
+     .y = TO_COORDS(-5),
      .SpdX = 0,
      .SpdY = 0,
      .direction = DIR_IDLE_L,
@@ -22,7 +22,7 @@ const actor_t level1_actors[3] = {
      .animations = {detective_walk_left, detective_walk_left, detective_crouch, detective_crouch, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_jump, detective_jump},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0},
-    {.x = TO_COORDS(120),
+    {.x = TO_COORDS(401),
      .y = TO_COORDS(136),
      .SpdX = -20,
      .SpdY = 0,
@@ -33,8 +33,8 @@ const actor_t level1_actors[3] = {
      .animations = {enemy_arrow_left, enemy_arrow_left, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0},
-    {.x = TO_COORDS(180),
-     .y = TO_COORDS(136),
+    {.x = TO_COORDS(274),
+     .y = TO_COORDS(112),
      .SpdX = 12,
      .SpdY = 0,
      .direction = DIR_RIGHT,

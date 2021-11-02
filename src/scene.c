@@ -1,7 +1,9 @@
 #include "scene.h"
+#include "level.h"
 
 #include <gb/gb.h>
 #include <string.h>
+extern Variables bkg;
 
 // array of avaliable actors
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
@@ -45,6 +47,8 @@ void load_level(const level_t *level) {
 static uint8_t animation_timer = 6;
 void render_actors() {
     actor_t *current_actor = active_actors;
+    UINT16 NPC_Cam_Offset = (TO_PIXELS(current_actor->x) - TO_PIXELS(bkg.camera_x));
+    UINT16 Cam_NPC_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
     animation_timer -= 1;
     if (animation_timer == 0) {
         animation_timer = 6;
@@ -57,6 +61,8 @@ void render_actors() {
         const metasprite_t **current_animation = current_actor->animations[current_direction];
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
+                //HERE MUST BE ALL NPC BUT THE PLAYER//
+                if ((NPC_Cam_Offset < 255) || (Cam_NPC_Offset < 255)){
                 if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R)) {
                     hiwater += move_metasprite_vflip(
                         current_animation[current_actor->animation_phase],
@@ -69,6 +75,7 @@ void render_actors() {
                         current_actor->tile_index,
                         hiwater,
                         TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                }
                 }
             }
             // process actor animation
@@ -89,4 +96,4 @@ void render_actors() {
     }
     // hide rest of the hardware sprites
     for (UINT8 i = hiwater; i < 40u; i++) shadow_OAM[i].y = 0;
-}
+} 
