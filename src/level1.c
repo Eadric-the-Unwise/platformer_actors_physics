@@ -70,18 +70,20 @@ void move_arrows() {
 }
 void move_x() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  //The Detective is currently active_actors[0], so active_actors[1] and above are enemies
-    
-    for (UINT8 i = active_actors_count - 1; i != 0; i--) {
-    UINT16 NPC_Cam_Offset = (TO_PIXELS(current_actor->x) - TO_PIXELS(bkg.camera_x));
-    UINT16 Cam_NPC_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
-        if (NPC_Cam_Offset < 255){
-                if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
-        current_actor->x -= PLAYER.SpdX;}
-        } else if (Cam_NPC_Offset < 255){
-                    if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
 
-        current_actor->x -= PLAYER.SpdX;}
-        } else {}
+    for (UINT8 i = active_actors_count - 1; i != 0; i--) {
+        UINT16 NPC_Cam_Offset = (TO_PIXELS(current_actor->x) - TO_PIXELS(bkg.camera_x));
+        UINT16 Cam_NPC_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
+        if (NPC_Cam_Offset < 255) {
+            if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
+                current_actor->x -= PLAYER.SpdX;
+            }
+        } else if (Cam_NPC_Offset < 255) {
+            if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
+                current_actor->x -= PLAYER.SpdX;
+            }
+        } else {
+        }
         current_actor++;
     }
 }
