@@ -47,7 +47,7 @@ typedef enum {
 } anim_loop_e;
 
 typedef struct actor_t {
-    UINT16 x;
+    INT16 x;
     UINT16 y;
     INT16 SpdX;
     INT16 SpdY;

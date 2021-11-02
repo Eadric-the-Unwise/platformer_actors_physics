@@ -75,9 +75,12 @@ void move_x() {
     UINT16 NPC_Cam_Offset = (TO_PIXELS(current_actor->x) - TO_PIXELS(bkg.camera_x));
     UINT16 Cam_NPC_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
         if (NPC_Cam_Offset < 255){
-        current_actor->x -= PLAYER.SpdX;
+                if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
+        current_actor->x -= PLAYER.SpdX;}
         } else if (Cam_NPC_Offset < 255){
-        current_actor->x -= PLAYER.SpdX;
+                    if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
+
+        current_actor->x -= PLAYER.SpdX;}
         } else {}
         current_actor++;
     }
