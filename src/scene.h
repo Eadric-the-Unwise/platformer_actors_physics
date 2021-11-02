@@ -11,6 +11,7 @@
 #define FALL_DELAY 12
 
 #define PLAYER active_actors[ACTOR_DETECTIVE]
+#define NPC(A) active_actors[A]
 
 #define TO_COORDS(A) ((A) << 4)
 #define TO_PIXELS(A) ((A) >> 4)

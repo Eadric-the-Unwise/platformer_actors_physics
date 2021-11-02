@@ -474,7 +474,7 @@ void main() {
         }
         // #ifdef DEBUG
         if (joy & J_B) {
-            printf("PX=%uPY=%u\n", TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y));
+            printf("=%u\n", (TO_PIXELS(NPC(1).x) - TO_PIXELS(bkg.camera_x)));
         }
         // #endif
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
