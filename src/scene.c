@@ -62,7 +62,7 @@ void render_actors() {
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
                 //HERE MUST BE ALL NPC BUT THE PLAYER//
-                if (NPC_PLAYER_Offset < 140 || NPC_PLAYER_Offset > -170) {
+                if (NPC_PLAYER_Offset <= 160 || NPC_PLAYER_Offset >= -160) {
                     if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R)) {
                         hiwater += move_metasprite_vflip(
                             current_animation[current_actor->animation_phase],
@@ -77,6 +77,9 @@ void render_actors() {
                             TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
                     }
                 }
+                else hide_metasprite(
+                    current_animation[current_actor->animation_phase],
+                    hiwater);
             }
             // process actor animation
             if (animation_timer == 1) {
