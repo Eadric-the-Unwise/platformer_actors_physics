@@ -48,8 +48,6 @@ void load_level(const level_t *level) {
 static uint8_t animation_timer = 6;
 void render_actors() {
     actor_t *current_actor = active_actors;
-    UINT16 NPC_Cam_Offset = (TO_PIXELS(current_actor->x) - TO_PIXELS(bkg.camera_x));
-    UINT16 Cam_NPC_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
     animation_timer -= 1;
     if (animation_timer == 0) {
         animation_timer = 6;
@@ -58,12 +56,13 @@ void render_actors() {
     direction_e current_direction;
     UINT8 hiwater = 0;
     for (UINT8 i = active_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
+        UINT16 NPC_PLAYER_Offset = (TO_PIXELS(PLAYER.x) - TO_PIXELS(current_actor->x));
         current_direction = current_actor->direction;
         const metasprite_t **current_animation = current_actor->animations[current_direction];
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
                 //HERE MUST BE ALL NPC BUT THE PLAYER//
-                if (current_actor == PLAYER) {
+                if (NPC_PLAYER_Offset < 140 || NPC_PLAYER_Offset > -170) {
                     if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R)) {
                         hiwater += move_metasprite_vflip(
                             current_animation[current_actor->animation_phase],
@@ -76,22 +75,6 @@ void render_actors() {
                             current_actor->tile_index,
                             hiwater,
                             TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
-                    }
-                } else if (current_actor != PLAYER) {
-                    if ((NPC_Cam_Offset < 255) || (Cam_NPC_Offset < 255)) {
-                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R)) {
-                            hiwater += move_metasprite_vflip(
-                                current_animation[current_actor->animation_phase],
-                                current_actor->tile_index,
-                                hiwater,
-                                TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
-                        } else {
-                            hiwater += move_metasprite(
-                                current_animation[current_actor->animation_phase],
-                                current_actor->tile_index,
-                                hiwater,
-                                TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
-                        }
                     }
                 }
             }

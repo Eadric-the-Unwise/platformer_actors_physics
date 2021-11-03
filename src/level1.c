@@ -11,7 +11,7 @@ void move_x();
 
 const actor_t level1_actors[3] = {
     {.x = TO_COORDS(120),
-     .y = TO_COORDS(-5),
+     .y = TO_COORDS(40),
      .SpdX = 0,
      .SpdY = 0,
      .direction = DIR_IDLE_L,

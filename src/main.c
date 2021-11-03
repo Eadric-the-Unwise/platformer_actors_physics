@@ -474,7 +474,7 @@ void main() {
         }
         // #ifdef DEBUG
         if (joy & J_B) {
-            printf("NPC1.X=%u\nNPC2.x=%u\n", TO_PIXELS(NPC(1).x), TO_PIXELS(NPC(2).x));
+            printf("P.X=%u\nOff.x=%u\n", TO_PIXELS(PLAYER.x), (TO_PIXELS(PLAYER.x) - TO_PIXELS(active_actors[ACTOR_FIRST_NPC].x)));
         }
         // #endif
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
