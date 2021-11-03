@@ -9,7 +9,6 @@
 #define ACTOR_DETECTIVE 0
 #define ACTOR_FIRST_NPC 1
 #define FALL_DELAY 12
-#define METASPRITE 128
 
 #define PLAYER active_actors[ACTOR_DETECTIVE]
 #define NPC(A) active_actors[A]
@@ -57,7 +56,6 @@ typedef struct actor_t {
 
     // tiledata related
     UINT8 tile_count;
-    UINT8 metasprite_count;
     UINT8 tile_index;
     UINT8 frame_delay;
     const UINT8 *tile_data;

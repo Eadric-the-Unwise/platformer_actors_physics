@@ -478,7 +478,7 @@ void main() {
         // }
         // #endif
                 if (joy & J_B) {
-            printf("N1x=%u N2x=%u\nOff.x=%u\n", TO_PIXELS(active_actors[ACTOR_FIRST_NPC].x), TO_PIXELS(active_actors[(ACTOR_FIRST_NPC + 1)].x), (TO_PIXELS(PLAYER.x) - TO_PIXELS(active_actors[ACTOR_FIRST_NPC + 1].x)));
+            printf("Map.x=%u P.y=%u\n", (TO_PIXELS(PLAYER.x) + TO_PIXELS(bkg.camera_x)), TO_PIXELS(PLAYER.y));
         }
        
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH

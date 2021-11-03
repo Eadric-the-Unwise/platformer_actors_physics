@@ -28,14 +28,13 @@ const actor_t level1_actors[3] = {
      .SpdY = 0,
      .direction = DIR_LEFT,
      .tile_count = (sizeof(enemy_arrow_data) >> 4),
-     .metasprite_count = (enemy_arrow_WIDTH * enemy_arrow_HEIGHT) / METASPRITE,
      .tile_index = 0,
      .tile_data = enemy_arrow_data,
      .animations = {enemy_arrow_left, enemy_arrow_left, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0},
-    {.x = TO_COORDS(40),
-     .y = TO_COORDS(136),
+    {.x = TO_COORDS(376),
+     .y = TO_COORDS(112),
      .SpdX = 12,
      .SpdY = 0,
      .direction = DIR_RIGHT,
@@ -73,17 +72,18 @@ void move_x() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  //The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
-        UINT16 NPC_Cam_Offset = (TO_PIXELS(current_actor->x) - TO_PIXELS(bkg.camera_x));
-        UINT16 Cam_NPC_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
+        UINT16 NPC_Cam_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
         if (NPC_Cam_Offset < 255) {
             if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
                 current_actor->x -= PLAYER.SpdX;
             }
-        } else if (Cam_NPC_Offset < 255) {
+        } 
+        else if (NPC_Cam_Offset > 255) {
             if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
                 current_actor->x -= PLAYER.SpdX;
             }
-        } else {
+        } 
+        else {
         }
         current_actor++;
     }
