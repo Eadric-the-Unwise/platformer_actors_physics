@@ -474,11 +474,17 @@ void main() {
         }
         // #ifdef DEBUG
         // if (joy & J_B) {
-        //     printf("P.X=%u\nOff.x=%u\n", TO_PIXELS(PLAYER.x), (TO_PIXELS(PLAYER.x) - TO_PIXELS(active_actors[ACTOR_FIRST_NPC].x)));
+        // INT16 PLAYER_x = TO_PIXELS(PLAYER.x);
+        // INT16 current_actor_x = TO_PIXELS(active_actors[ACTOR_FIRST_NPC + 1].x);
+        // INT16 NPC_PLAYER_Offset = (PLAYER_x - current_actor_x);
+        // printf("P.X=%u\nOff.x=%d\n", TO_PIXELS(PLAYER.x), NPC_PLAYER_Offset);
         // }
         // #endif
-                if (joy & J_B) {
-            printf("Map.x=%u P.y=%u\n", (TO_PIXELS(PLAYER.x) + TO_PIXELS(bkg.camera_x)), TO_PIXELS(PLAYER.y));
+        //         if (joy & J_B) {
+        //     printf("Map.x=%u P.y=%u\n", (TO_PIXELS(PLAYER.x) + TO_PIXELS(bkg.camera_x)), TO_PIXELS(PLAYER.y));
+        // }
+            if (joy & J_B) {
+            printf("cam.x=%u\n", TO_PIXELS(bkg.camera_x));
         }
        
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH

@@ -1,5 +1,6 @@
 #include "level1.h"
 
+
 #include <gb/gb.h>
 #include <stdlib.h>
 
@@ -8,7 +9,7 @@
 extern Variables bkg;
 void move_arrows();
 void move_x();
-
+//CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 const actor_t level1_actors[3] = {
     {.x = TO_COORDS(120),
      .y = TO_COORDS(40),
