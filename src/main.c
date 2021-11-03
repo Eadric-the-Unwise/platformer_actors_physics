@@ -292,8 +292,6 @@ void main() {
         if (PLAYER.SpdX > 0) {
             if (Crouch) {
                 if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x)))) {
-                    // UBYTE tx = ((TO_PIXELS(PLAYER.x) + 1) / 8);
-                    // PLAYER.x = TO_COORDS((tx * 8) - 1);
                     PLAYER.SpdX = 0;
                     //set player idle direction when touching ground
                     // if (!Jump) {
@@ -312,8 +310,6 @@ void main() {
 
             } else {
                 if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 12, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-                    // UBYTE tx = ((TO_PIXELS(PLAYER.x) + 1) / 8);
-                    // PLAYER.x = TO_COORDS((tx * 8) - 1);
                     PLAYER.SpdX = 0;
                     //set player idle direction when touching ground
                     // if (!Jump) {
@@ -483,10 +479,10 @@ void main() {
         //         if (joy & J_B) {
         //     printf("Map.x=%u P.y=%u\n", (TO_PIXELS(PLAYER.x) + TO_PIXELS(bkg.camera_x)), TO_PIXELS(PLAYER.y));
         // }
-            if (joy & J_B) {
-            printf("cam.x=%u\n", TO_PIXELS(bkg.camera_x));
+        if (joy & J_B) {
+            printf("PSpd=%d\nNPCSpd=%d", PLAYER.SpdX, active_actors[1].SpdX);
         }
-       
+
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
             DISPLAY_OFF;

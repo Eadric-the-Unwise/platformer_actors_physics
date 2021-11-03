@@ -78,12 +78,12 @@ void render_actors() {
                             hiwater,
                             TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
                     }
-                }
-                else { 
+                } else {
                     // hiwater -= current_actor->metasprite_count;
                     hide_metasprite(
-                    current_animation[current_actor->animation_phase],
-                    hiwater);}
+                        current_animation[current_actor->animation_phase],
+                        hiwater);
+                }
             }
             // process actor animation
             if (animation_timer == 1) {
