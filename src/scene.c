@@ -67,7 +67,7 @@ void render_actors() {
         const metasprite_t **current_animation = current_actor->animations[current_direction];
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
-                //HERE MUST BE ALL NPC BUT THE PLAYER//
+                //PLAYER THEORETICALLY WILL ALWAYS LOAD BECAUSE PLAYER.x - PLAYER.x = 0//
                 if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -100) {
                     if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R)) {
                         hiwater += move_metasprite_vflip(
