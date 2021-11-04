@@ -1,6 +1,5 @@
 #include "level1.h"
 
-
 #include <gb/gb.h>
 #include <stdlib.h>
 
@@ -25,7 +24,7 @@ const actor_t level1_actors[3] = {
      .animation_phase = 0},
     {.x = TO_COORDS(-129),
      .y = TO_COORDS(136),
-     .SpdX = -20,
+     .SpdX = 0,
      .SpdY = 0,
      .direction = DIR_LEFT,
      .tile_count = (sizeof(enemy_arrow_data) >> 4),
@@ -36,7 +35,7 @@ const actor_t level1_actors[3] = {
      .animation_phase = 0},
     {.x = TO_COORDS(-264),
      .y = TO_COORDS(112),
-     .SpdX = 12,
+     .SpdX = 0,
      .SpdY = 0,
      .direction = DIR_RIGHT,
      .tile_count = (sizeof(enemy_arrow_data) >> 4),
@@ -78,13 +77,11 @@ void move_x() {
             if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
                 current_actor->x -= PLAYER.SpdX;
             }
-        } 
-        else if (NPC_Cam_Offset > 255) {
+        } else if (NPC_Cam_Offset > 255) {
             if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
                 current_actor->x -= PLAYER.SpdX;
             }
-        } 
-        else {
+        } else {
         }
         current_actor++;
     }
