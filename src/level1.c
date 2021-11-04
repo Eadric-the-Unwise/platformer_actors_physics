@@ -9,7 +9,7 @@ extern Variables bkg;
 void move_arrows();
 void move_x();
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
-const actor_t level1_actors[3] = {
+const actor_t level1_actors[4] = {
     {.x = TO_COORDS(120),
      .y = TO_COORDS(40),
      .SpdX = 0,
@@ -21,7 +21,8 @@ const actor_t level1_actors[3] = {
      .frame_delay = 7,
      .animations = {detective_walk_left, detective_walk_left, detective_crouch, detective_crouch, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_jump, detective_jump},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-     .animation_phase = 0},
+     .animation_phase = 0,
+     .copy = FALSE},
     {.x = TO_COORDS(-129),
      .y = TO_COORDS(136),
      .SpdX = 0,
@@ -32,7 +33,8 @@ const actor_t level1_actors[3] = {
      .tile_data = enemy_arrow_data,
      .animations = {enemy_arrow_left, enemy_arrow_left, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-     .animation_phase = 0},
+     .animation_phase = 0,
+     .copy = FALSE},
     {.x = TO_COORDS(-264),
      .y = TO_COORDS(112),
      .SpdX = 0,
@@ -43,11 +45,23 @@ const actor_t level1_actors[3] = {
      .tile_data = enemy_arrow_data,
      .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-     .animation_phase = 0}};
+     .animation_phase = FALSE},
+    {.x = TO_COORDS(-264),
+     .y = TO_COORDS(80),
+     .SpdX = 0,
+     .SpdY = 0,
+     .direction = DIR_RIGHT,
+     .tile_count = (sizeof(enemy_arrow_data) >> 4),
+     .tile_index = 0,
+     .tile_data = enemy_arrow_data,
+     .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animation_phase = 0,
+     .copy= TRUE}};
 
 const level_t level1 = {
     .actors = level1_actors,
-    .actor_count = 3,
+    .actor_count = 4,
     .animate_hook = move_x  // function that put life into the scene
 };
 

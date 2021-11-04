@@ -64,6 +64,7 @@ typedef struct actor_t {
     const metasprite_t **animations[10];
     anim_loop_e animations_props[10];
     UINT8 animation_phase;
+    UBYTE copy;
 } actor_t;
 
 typedef void (*animate_level_t)();
