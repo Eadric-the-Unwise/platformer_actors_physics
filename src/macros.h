@@ -2,9 +2,7 @@
 // prevents the includes from being called twice
 #define __MACROS_H__
 
-#include <gb/console.h>
-#include <gb/drawing.h>
-#include <gb/font.h>
+
 #include <gb/gb.h>
 #include <gb/metasprites.h>
 #include <stdint.h>

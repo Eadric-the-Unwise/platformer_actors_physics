@@ -4,8 +4,6 @@
 //it makes sure that the header file is only included once
 #pragma once
 #include <stdio.h>
-#include <gb/font.h>
-#include <gb/console.h>
 #include <gb/drawing.h>
 
 enum Cam
