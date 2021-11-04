@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/c_code/gbdk/include/**",
-                "C:/c_code/gbdk/include"
+                "C:/c_code/gbdk/include",
+                "C:/c_code/gbdk/include/asm/gbz80",
+                "C:/c_code/gbdk/include/asm/z80"
             ],
             "defines": [
                 "_DEBUG",

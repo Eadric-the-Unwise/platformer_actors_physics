@@ -20,7 +20,7 @@ void set_bkg_submap_nonbanked(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const UINT8 *m
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 //##joins the __bank and 'A' variable name together
 #define __BANK_PREFIX(A) __bank_##A
-#define BANK(A) (UBYTE) & (__BANK_PREFIX(A))
+// #define BANK(A) (UBYTE) & (__BANK_PREFIX(A))
 // #define __SIZE_PREFIX(A) __size_##A
 // #define SIZE(A) (UWORD) & (__SIZE_PREFIX(A))
 // #define OFFSET(A) (void *)&(A)

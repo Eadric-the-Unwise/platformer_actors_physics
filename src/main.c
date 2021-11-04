@@ -24,12 +24,8 @@ UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 extern Variables bkg;
+uint8_t shadow_scx = 0, shadow_scy = 0;
 
-uint8_t shadow_scx, shadow_scy;
-void onVBlank() {
-    SCX_REG = shadow_scx;
-    SCY_REG = shadow_scy;
-}
 //CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
 //BOTTOM LEFT PIXEL
 UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -92,10 +88,9 @@ void main() {
 
     init_submap();
     load_level(&level1);
-    CRITICAL {
-        add_VBL(onVBlank);
-    }
-
+    // shadow_scx = (UBYTE)(bkg.camera_x >> 4u);
+    // shadow_scy = bkg.camera_y;
+    DISABLE_VBL_TRANSFER;
     // switch on display after everything is ready
     DISPLAY_ON;
     last_joy = joy = 0;
@@ -178,9 +173,9 @@ void main() {
         // }
 
         //IF PLAYER IS FREE FALLING FOR ANY REASON
-        // if (PLAYER.SpdY != 0) {
-        //     Jump = TRUE;
-        //     Crouch = FALSE;
+        if (PLAYER.SpdY != 0) {
+            Jump = TRUE;
+            Crouch = FALSE;
         //     switch (PLAYER.direction) {
         //         case DIR_IDLE_L:
         //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
@@ -207,7 +202,7 @@ void main() {
         //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
         //             break;
         //     }
-        // }
+        }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             Crouch = Launch = FALSE;
@@ -507,9 +502,13 @@ void main() {
         render_actors();
         if (bkg.redraw) {
             wait_vbl_done();
-            set_camera();
             bkg.redraw = FALSE;
-        } else
-            wait_vbl_done();
+            refresh_OAM();
+            set_camera();
+
+        } else{
+            wait_vbl_done();}
+            refresh_OAM();
+       
     }
 }

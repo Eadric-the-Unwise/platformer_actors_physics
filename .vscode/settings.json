@@ -8,6 +8,8 @@
         "brick_map.h": "c",
         "brick_tiles.h": "c",
         "scene.h": "c",
-        "level1.h": "c"
-    }
+        "level1.h": "c",
+        "metasprites.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

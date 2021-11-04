@@ -5,10 +5,10 @@
 Variables bkg;
 
 void set_camera() {
-    // update hardware scroll position
+
     SCY_REG = bkg.camera_y;
     SCX_REG = (UBYTE)(bkg.camera_x >> 4u);
-    // up or down
+
     bkg.map_pos_y = (UBYTE)(bkg.camera_y >> 3u);
     if (bkg.map_pos_y != bkg.old_map_pos_y) {
         if (bkg.camera_y < bkg.old_camera_y) {
