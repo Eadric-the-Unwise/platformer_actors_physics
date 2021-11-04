@@ -25,6 +25,11 @@ UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 extern Variables bkg;
 
+uint8_t shadow_scx, shadow_scy;
+void onVBlank() {
+    SCX_REG = shadow_scx;
+    SCY_REG = shadow_scy;
+}
 //CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
 //BOTTOM LEFT PIXEL
 UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -87,6 +92,9 @@ void main() {
 
     init_submap();
     load_level(&level1);
+    CRITICAL {
+        add_VBL(onVBlank);
+    }
 
     // switch on display after everything is ready
     DISPLAY_ON;
