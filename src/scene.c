@@ -21,6 +21,8 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
     UINT8 hiwater = 0;
     for (UINT8 i = actors_count; i != 0; i--) {  //counter direction does not matter, because pointer is moved. only number of iterations matter.
         if (actor->copy == TRUE){
+        hiwater -= actor->tile_count;
+        current_actor->tile_index = hiwater;
         } else if (actor->copy == FALSE) {
         current_actor->tile_index = hiwater;
         set_sprite_data(hiwater, actor->tile_count, actor->tile_data);}
@@ -29,13 +31,12 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         current_actor->SpdX = actor->SpdX;
         current_actor->SpdY = actor->SpdY;
         current_actor->last_direction = current_actor->direction = actor->direction;
+        current_actor->NPC_type = actor->NPC_type;
         current_actor->frame_delay = actor->frame_delay;
         memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations));  // copy array of 5 pointers to animation phases
         memcpy(current_actor->animations_props, actor->animations_props, sizeof(actor->animations_props));
         current_actor->animation_phase = actor->animation_phase;
-        if (actor->copy == TRUE){}
-        else if (actor->copy == FALSE) {
-        hiwater += actor->tile_count;}
+        hiwater += actor->tile_count;
         current_actor++;
         actor++;
     }

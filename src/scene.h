@@ -42,6 +42,12 @@ typedef enum {
 } direction_e;
 
 typedef enum {
+    PATROL,
+    PISTOL,
+    WALK,
+} NPC_type_e;
+
+typedef enum {
     ANIM_LOOP,
     ANIM_ONCE
 } anim_loop_e;
@@ -53,7 +59,7 @@ typedef struct actor_t {
     INT16 SpdY;
     direction_e direction;
     direction_e last_direction;
-
+    NPC_type_e NPC_type;
     // tiledata related
     UINT8 tile_count;
     UINT8 tile_index;

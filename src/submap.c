@@ -14,6 +14,8 @@ void init_submap() {
     bkg.sliding = FALSE;
     bkg.camera_max_y = (BRICK_WIDE_MAPHeight - 18) * 8;
     bkg.camera_max_x = (BRICK_WIDE_MAPWidth - 20) * 8;
+    bkg.camera_tiles_x = BRICK_WIDE_MAPWidth * 8;
+    bkg.camera_tiles_y = BRICK_WIDE_MAPHeight * 8;
     bkg.camera_x = TO_COORDS(bkg.camera_max_x);
     bkg.camera_y = 0;
     bkg.old_camera_x = bkg.camera_x;

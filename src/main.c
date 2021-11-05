@@ -483,7 +483,7 @@ void main() {
         //     printf("Map.x=%u P.y=%u\n", (TO_PIXELS(PLAYER.x) + TO_PIXELS(bkg.camera_x)), TO_PIXELS(PLAYER.y));
         // }
         if (joy & J_B) {
-            printf("PSpd=%d\nNPCSpd=%d", PLAYER.SpdX, active_actors[1].SpdX);
+            printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
         }
 
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH

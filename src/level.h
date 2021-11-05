@@ -18,7 +18,8 @@ typedef struct Variables
 {
     UINT16 camera_max_y;
     UINT16 camera_max_x;
-    UBYTE camera_x_p; //in pixels
+    UINT16 camera_tiles_x;
+    UINT16 camera_tiles_y;
     UBYTE joy;
 
     UBYTE sliding;
