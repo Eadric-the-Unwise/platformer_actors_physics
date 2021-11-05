@@ -54,7 +54,7 @@ const actor_t level1_actors[4] = {
      .copy = FALSE},
     {.x = TO_COORDS(-87),
      .y = TO_COORDS(136),
-     .SpdX = 0,
+     .SpdX = 6,
      .SpdY = 0,
      .direction = DIR_RIGHT,
      .NPC_type = WALK,
@@ -94,11 +94,11 @@ void render_level1() {
 
     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
         UINT16 NPC_Cam_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
-        if (NPC_Cam_Offset < TO_PIXELS(bkg.camera_tiles_x)) {
+        if (NPC_Cam_Offset < bkg.camera_tiles_x) {
             if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
                 current_actor->x -= PLAYER.SpdX;
             }
-        } else if (NPC_Cam_Offset > TO_PIXELS(bkg.camera_tiles_x)) {
+        } else if (NPC_Cam_Offset > bkg.camera_tiles_x) {
             if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
                 current_actor->x -= PLAYER.SpdX;
             }
@@ -119,6 +119,10 @@ void render_level1() {
             patrol_timer = 45;
 
         }
+    }
+    else if (current_actor->NPC_type == WALK){
+        current_actor->x += current_actor->SpdX;
+
     }
         current_actor++;
     }
