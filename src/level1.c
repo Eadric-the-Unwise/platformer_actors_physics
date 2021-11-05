@@ -52,9 +52,10 @@ const actor_t level1_actors[4] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE},
+     //CLOSEST NPC THAT WALKS TOWARD PLAYER//
     {.x = TO_COORDS(-87),
      .y = TO_COORDS(136),
-     .SpdX = 0,
+     .SpdX = 6,
      .SpdY = 0,
      .direction = DIR_RIGHT,
      .NPC_type = WALK,
@@ -119,6 +120,9 @@ void render_level1() {
             patrol_timer = 45;
 
         }
+    }
+    else if (current_actor->NPC_type == WALK){
+        current_actor->x += current_actor->SpdX;
     }
         current_actor++;
     }
