@@ -94,16 +94,9 @@ void render_level1() {
 
     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
         UINT16 NPC_Cam_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
-        if (NPC_Cam_Offset < bkg.camera_tiles_x) {
             if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
                 current_actor->x -= PLAYER.SpdX;
             }
-        } else if (NPC_Cam_Offset > bkg.camera_tiles_x) {
-            if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
-                current_actor->x -= PLAYER.SpdX;
-            }
-        } else {
-        }
 
     if (current_actor->NPC_type == PATROL){
         patrol_timer--;
@@ -121,6 +114,7 @@ void render_level1() {
         }
     }
     else if (current_actor->NPC_type == WALK){
+        if (TO_PIXELS(current_actor->x) > -20)
         current_actor->x += current_actor->SpdX;
 
     }
