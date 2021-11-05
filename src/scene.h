@@ -45,6 +45,7 @@ typedef enum {
     PATROL,
     PISTOL,
     WALK,
+    Walking,
 } NPC_type_e;
 
 typedef enum {
