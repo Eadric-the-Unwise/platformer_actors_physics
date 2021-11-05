@@ -8,6 +8,9 @@
 extern Variables bkg;
 void move_arrows();
 void render_level1();
+
+UINT8 patrol_timer = 45;
+
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 const actor_t level1_actors[4] = {
     {.x = TO_COORDS(136),
@@ -103,14 +106,18 @@ void render_level1() {
         }
 
     if (current_actor->NPC_type == PATROL){
+        patrol_timer--;
         current_actor->x += current_actor->SpdX;
 
-        if (current_actor->x < TO_COORDS(-360)) {
+        if ((current_actor->direction == DIR_LEFT) && (patrol_timer == 0)){
             SetActorDirection(current_actor, DIR_RIGHT, 0);
             current_actor->SpdX = abs(current_actor->SpdX);
-        } else if (current_actor->x > TO_COORDS(80)) {
+            patrol_timer = 45;
+        } else if ((current_actor->direction == DIR_RIGHT) && (patrol_timer == 0)){
             SetActorDirection(current_actor, DIR_LEFT, 0);
             current_actor->SpdX = -abs(current_actor->SpdX);
+            patrol_timer = 45;
+
         }
     }
         current_actor++;
