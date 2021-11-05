@@ -495,9 +495,6 @@ void main() {
             DISPLAY_ON;
         }
 
-        // call level animation hook (if any), that makes other actors move (and interact in future)
-        if (animate_level) animate_level();
-
         // render all actors on screen
         render_actors();
         if (bkg.redraw) {
