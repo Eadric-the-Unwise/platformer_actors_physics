@@ -19,4 +19,6 @@
 
 @REM C:\c_code\gbdk\bin\png2mtspr res\tiles\detective_platform_stand.png -sw 24 -sh 32 -spr8x16
 
-C:\c_code\gbdk\bin\png2mtspr res\tiles\detective_large.png -sw 24 -sh 32 -spr8x16
+@REM C:\c_code\gbdk\bin\png2mtspr res\tiles\detective_large.png -sw 24 -sh 32 -spr8x16
+
+C:\c_code\gbdk\bin\png2asset res\tiles\vertical_platform_V1.png -sw 48 -sh 16 -spr8x16

@@ -64,7 +64,7 @@ const actor_t level1_actors[4] = {
      .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
-     .copy= TRUE}};
+     .copy = TRUE}};
 
 const level_t level1 = {
     .actors = level1_actors,
@@ -94,30 +94,27 @@ void render_level1() {
 
     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
         UINT16 NPC_Cam_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
-            if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
-                current_actor->x -= PLAYER.SpdX;
-            }
-
-    if (current_actor->NPC_type == PATROL){
-        patrol_timer--;
-        current_actor->x += current_actor->SpdX;
-
-        if ((current_actor->direction == DIR_LEFT) && (patrol_timer == 0)){
-            SetActorDirection(current_actor, DIR_RIGHT, 0);
-            current_actor->SpdX = abs(current_actor->SpdX);
-            patrol_timer = 45;
-        } else if ((current_actor->direction == DIR_RIGHT) && (patrol_timer == 0)){
-            SetActorDirection(current_actor, DIR_LEFT, 0);
-            current_actor->SpdX = -abs(current_actor->SpdX);
-            patrol_timer = 45;
-
+        if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
+            current_actor->x -= PLAYER.SpdX;
         }
-    }
-    else if (current_actor->NPC_type == WALK){
-        if (TO_PIXELS(current_actor->x) >= -40)
-        current_actor->x += current_actor->SpdX;
 
-    }
+        if (current_actor->NPC_type == PATROL) {
+            patrol_timer--;
+            current_actor->x += current_actor->SpdX;
+
+            if ((current_actor->direction == DIR_LEFT) && (patrol_timer == 0)) {
+                SetActorDirection(current_actor, DIR_RIGHT, 0);
+                current_actor->SpdX = abs(current_actor->SpdX);
+                patrol_timer = 45;
+            } else if ((current_actor->direction == DIR_RIGHT) && (patrol_timer == 0)) {
+                SetActorDirection(current_actor, DIR_LEFT, 0);
+                current_actor->SpdX = -abs(current_actor->SpdX);
+                patrol_timer = 45;
+            }
+        } else if (current_actor->NPC_type == WALK) {
+            if (TO_PIXELS(current_actor->x) >= -40)
+                current_actor->x += current_actor->SpdX;
+        }
         current_actor++;
     }
 }

@@ -99,47 +99,47 @@ void main() {
         // process joystic input
         last_joy = joy;
         joy = joypad();
-if (!Spawn){
-        if (joy & J_LEFT) {
-            if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
-                SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
-            } else if (Crouch) {
-                if (!Jump) {
-                    SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+        if (!Spawn) {
+            if (joy & J_LEFT) {
+                if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
+                    SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+                } else if (Crouch) {
+                    if (!Jump) {
+                        SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+                    }
                 }
-            }
-            if (Crouch) {
-                if (PLAYER.SpdX > -MAX_CRAWL_SPEED) {
-                    PLAYER.SpdX -= WALK_VELOCITY;
-                } else
-                    PLAYER.SpdX = -MAX_CRAWL_SPEED;
-            } else if (!(Crouch)) {
-                if (PLAYER.SpdX > -MAX_WALK_SPEED) {
-                    PLAYER.SpdX -= WALK_VELOCITY;
-                } else
-                    PLAYER.SpdX = -MAX_WALK_SPEED;
-            }
-        } else if (joy & J_RIGHT) {
-            if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
-                SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
-            } else if (Crouch) {
-                if (!Jump) {
-                    SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+                if (Crouch) {
+                    if (PLAYER.SpdX > -MAX_CRAWL_SPEED) {
+                        PLAYER.SpdX -= WALK_VELOCITY;
+                    } else
+                        PLAYER.SpdX = -MAX_CRAWL_SPEED;
+                } else if (!(Crouch)) {
+                    if (PLAYER.SpdX > -MAX_WALK_SPEED) {
+                        PLAYER.SpdX -= WALK_VELOCITY;
+                    } else
+                        PLAYER.SpdX = -MAX_WALK_SPEED;
                 }
-            }
-            if (Crouch) {
-                if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
-                    PLAYER.SpdX += WALK_VELOCITY;
-                } else
-                    PLAYER.SpdX = MAX_CRAWL_SPEED;
-            } else if (!(Crouch)) {
-                if (PLAYER.SpdX < MAX_WALK_SPEED) {
-                    PLAYER.SpdX += WALK_VELOCITY;
-                } else
-                    PLAYER.SpdX = MAX_WALK_SPEED;
+            } else if (joy & J_RIGHT) {
+                if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
+                    SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
+                } else if (Crouch) {
+                    if (!Jump) {
+                        SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+                    }
+                }
+                if (Crouch) {
+                    if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
+                        PLAYER.SpdX += WALK_VELOCITY;
+                    } else
+                        PLAYER.SpdX = MAX_CRAWL_SPEED;
+                } else if (!(Crouch)) {
+                    if (PLAYER.SpdX < MAX_WALK_SPEED) {
+                        PLAYER.SpdX += WALK_VELOCITY;
+                    } else
+                        PLAYER.SpdX = MAX_WALK_SPEED;
+                }
             }
         }
-}
         if ((joy & J_DOWN) && !(Jump)) {
             Crouch = TRUE;
         }
@@ -177,32 +177,32 @@ if (!Spawn){
         if (PLAYER.SpdY != 0) {
             Jump = TRUE;
             Crouch = FALSE;
-        //     switch (PLAYER.direction) {
-        //         case DIR_IDLE_L:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //             break;
-        //         case DIR_IDLE_R:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //             break;
-        //         case DIR_LEFT:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //             break;
-        //         case DIR_RIGHT:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //             break;
-        //         case DIR_DOWN_L:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //             break;
-        //         case DIR_DOWN_R:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //             break;
-        //         case DIR_CRAWL_L:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
-        //             break;
-        //         case DIR_CRAWL_R:
-        //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-        //             break;
-        //     }
+            //     switch (PLAYER.direction) {
+            //         case DIR_IDLE_L:
+            //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+            //             break;
+            //         case DIR_IDLE_R:
+            //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+            //             break;
+            //         case DIR_LEFT:
+            //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+            //             break;
+            //         case DIR_RIGHT:
+            //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+            //             break;
+            //         case DIR_DOWN_L:
+            //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+            //             break;
+            //         case DIR_DOWN_R:
+            //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+            //             break;
+            //         case DIR_CRAWL_L:
+            //             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+            //             break;
+            //         case DIR_CRAWL_R:
+            //             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+            //             break;
+            //     }
         }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
@@ -234,7 +234,7 @@ if (!Spawn){
                 //         SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
                 //         break;
                 // }
-                // }
+
                 PLAYER.SpdY = JUMP_IMPULSE;
                 Jump = TRUE;
             }
@@ -483,7 +483,7 @@ if (!Spawn){
         //         if (joy & J_B) {
         //     printf("Map.x=%u P.y=%u\n", (TO_PIXELS(PLAYER.x) + TO_PIXELS(bkg.camera_x)), TO_PIXELS(PLAYER.y));
         // }
-                // #ifdef DEBUG
+        // #ifdef DEBUG
         if (joy & J_B) {
             printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
         }
@@ -509,9 +509,9 @@ if (!Spawn){
             refresh_OAM();
             set_camera();
 
-        } else{
-            wait_vbl_done();}
-            refresh_OAM();
-       
+        } else {
+            wait_vbl_done();
+        }
+        refresh_OAM();
     }
 }
