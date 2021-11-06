@@ -52,9 +52,9 @@ const actor_t level1_actors[4] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE},
-    {.x = TO_COORDS(-87),
+    {.x = TO_COORDS(-71),
      .y = TO_COORDS(136),
-     .SpdX = 6,
+     .SpdX = 5,
      .SpdY = 0,
      .direction = DIR_RIGHT,
      .NPC_type = WALK,
@@ -114,7 +114,7 @@ void render_level1() {
         }
     }
     else if (current_actor->NPC_type == WALK){
-        if (TO_PIXELS(current_actor->x) > -20)
+        if (TO_PIXELS(current_actor->x) >= -40)
         current_actor->x += current_actor->SpdX;
 
     }

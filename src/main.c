@@ -19,7 +19,7 @@
 UINT8 joy, last_joy;
 
 UINT8 floorYposition;
-UINT8 Jump, Crouch, Launch, Shooting;
+UINT8 Spawn, Jump, Crouch, Launch, Shooting;
 UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
@@ -85,7 +85,7 @@ void main() {
     SHOW_SPRITES;
 
     Jump = Crouch = Launch = Shooting = FALSE;
-
+    Spawn = TRUE;
     init_submap();
     load_level(&level1);
     // shadow_scx = (UBYTE)(bkg.camera_x >> 4u);
@@ -99,7 +99,7 @@ void main() {
         // process joystic input
         last_joy = joy;
         joy = joypad();
-
+if (!Spawn){
         if (joy & J_LEFT) {
             if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
                 SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
@@ -139,6 +139,7 @@ void main() {
                     PLAYER.SpdX = MAX_WALK_SPEED;
             }
         }
+}
         if ((joy & J_DOWN) && !(Jump)) {
             Crouch = TRUE;
         }
@@ -270,7 +271,7 @@ void main() {
                 UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
-                Jump = FALSE;
+                Spawn = Jump = FALSE;
                 //set player idle direction when touching ground
                 // if (PLAYER.direction == DIR_JUMP_R) {
                 //     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
@@ -471,25 +472,27 @@ void main() {
                 bkg.redraw = TRUE;
             }
         }
-        // #ifdef DEBUG
+
         // if (joy & J_B) {
         // INT16 PLAYER_x = TO_PIXELS(PLAYER.x);
         // INT16 current_actor_x = TO_PIXELS(active_actors[ACTOR_FIRST_NPC + 1].x);
         // INT16 NPC_PLAYER_Offset = (PLAYER_x - current_actor_x);
         // printf("P.X=%u\nOff.x=%d\n", TO_PIXELS(PLAYER.x), NPC_PLAYER_Offset);
         // }
-        // #endif
+
         //         if (joy & J_B) {
         //     printf("Map.x=%u P.y=%u\n", (TO_PIXELS(PLAYER.x) + TO_PIXELS(bkg.camera_x)), TO_PIXELS(PLAYER.y));
         // }
+                // #ifdef DEBUG
         if (joy & J_B) {
             printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
         }
-
+        // #endif
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
             DISPLAY_OFF;
             PLAYER.y = TO_COORDS(0);
+            Spawn = TRUE;
             load_level(&level1);
             init_submap();
             DISPLAY_ON;
