@@ -64,7 +64,8 @@ typedef struct actor_t {
     // tiledata related
     UINT8 tile_count;
     UINT8 tile_index;
-    UINT8 patrol_timer;
+    UINT16 patrol_timer;
+    UINT16 patrol_reset;
     const UINT8 *tile_data;
 
     // animation description

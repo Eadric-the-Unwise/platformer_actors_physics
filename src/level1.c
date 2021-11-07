@@ -49,6 +49,7 @@ const actor_t level1_actors[5] = {
      .tile_index = 0,
      .tile_data = enemy_arrow_data,
      .patrol_timer = 45,
+     .patrol_reset = 45,
      .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
@@ -69,15 +70,16 @@ const actor_t level1_actors[5] = {
      .copy = TRUE},
     //ELEVATOR
     {.x = TO_COORDS((-464) + (vertical_platform_V1_WIDTH - 16)),
-     .y = TO_COORDS(40 + 16),
+     .y = TO_COORDS(72 + 16),
      .SpdX = 0,
-     .SpdY = 4,
+     .SpdY = 16,
      .direction = DIR_RIGHT,
      .NPC_type = ELEVATOR,
      .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
      .tile_index = 0,
      .tile_data = vertical_platform_V1_data,
-     .patrol_timer = 45,
+     .patrol_timer = 80,
+     .patrol_reset = 80,
      .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
@@ -122,11 +124,11 @@ void render_level1() {
             if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
                 SetActorDirection(current_actor, DIR_RIGHT, 0);
                 current_actor->SpdX = abs(current_actor->SpdX);
-                current_actor->patrol_timer = 45;
+                current_actor->patrol_timer = current_actor->patrol_reset;
             } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
                 SetActorDirection(current_actor, DIR_LEFT, 0);
                 current_actor->SpdX = -abs(current_actor->SpdX);
-                current_actor->patrol_timer = 45;
+                current_actor->patrol_timer = current_actor->patrol_reset;
             }
 
         } else if (current_actor->NPC_type == ELEVATOR) {
@@ -136,11 +138,11 @@ void render_level1() {
             if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
                 SetActorDirection(current_actor, DIR_RIGHT, 0);
                 current_actor->SpdY = abs(current_actor->SpdY);
-                current_actor->patrol_timer = 45;
+                current_actor->patrol_timer = current_actor->patrol_reset;
             } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
                 SetActorDirection(current_actor, DIR_LEFT, 0);
                 current_actor->SpdY = -abs(current_actor->SpdY);
-                current_actor->patrol_timer = 45;
+                current_actor->patrol_timer = current_actor->patrol_reset;
             }
         } else if (current_actor->NPC_type == WALK) {
             if (TO_PIXELS(current_actor->x) >= -40)
