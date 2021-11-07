@@ -17,7 +17,6 @@ const actor_t level2_actors[4] = {
      .tile_count = (sizeof(detective_large_data) >> 4),
      .tile_index = 0,
      .tile_data = detective_large_data,
-     .frame_delay = 7,
      .animations = {detective_walk_left, detective_walk_left, NULL, NULL, NULL, detective_stand, detective_stand, detective_jump, detective_jump},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 5},

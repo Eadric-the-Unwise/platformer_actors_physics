@@ -33,7 +33,6 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         current_actor->SpdY = actor->SpdY;
         current_actor->last_direction = current_actor->direction = actor->direction;
         current_actor->NPC_type = actor->NPC_type;
-        current_actor->frame_delay = actor->frame_delay;
         current_actor->patrol_timer = actor->patrol_timer;
         memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations));  // copy array of 5 pointers to animation phases
         memcpy(current_actor->animations_props, actor->animations_props, sizeof(actor->animations_props));
