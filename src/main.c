@@ -11,6 +11,8 @@
 #include "../res/tiles/brick_wide_map.h"
 #include "../res/tiles/brick_wide_tiles.h"
 #include "../res/tiles/collision_wide_map.h"
+#include "../res/tiles/detective_large.h"
+#include "../res/tiles/enemy_arrow.h"
 #include "level1.h"
 #include "level2.h"
 #include "macros.h"
@@ -25,6 +27,7 @@ UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 extern Variables bkg;
 uint8_t shadow_scx = 0, shadow_scy = 0;
+BOOLEAN overlap(UBYTE, UBYTE, UBYTE, UBYTE, UBYTE, UBYTE, UBYTE, UBYTE);
 
 //CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
 //BOTTOM LEFT PIXEL
@@ -72,6 +75,20 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
     return result;
 }
+
+//LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
+BOOLEAN overlap(UBYTE x_1, UBYTE y_1, UBYTE w_1, UBYTE h_1,
+                UBYTE x_2, UBYTE y_2, UBYTE w_2, UBYTE h_2) {
+    // Standard rectangle-to-rectangle collision check
+    if ((x_1 < ((x_2 + w_2) - 3)) && (((x_1 + w_1) - 8) > x_2) &&
+        (y_1 < ((y_2 + h_2) - 16)) && (((y_1 + h_1) - 16) > y_2)) {
+        printf("y2+h2=%u\n", (y_2 + h_2));
+        return 0x01U;
+
+    } else
+        return 0x00U;
+}
+
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /******************************/
@@ -500,6 +517,11 @@ void main() {
             init_submap();
             load_level(&level1);
             DISPLAY_ON;
+        }
+
+        // Handle Dino collision with hazards (only one for now)
+        if (overlap(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), detective_large_WIDTH, detective_large_HEIGHT, TO_PIXELS(active_actors[3].x), TO_PIXELS(active_actors[3].y), enemy_arrow_WIDTH, enemy_arrow_HEIGHT) == 0x01U) {
+            printf("GAME OVER\n");
         }
 
         // call level animation hook (if any), that makes other actors move (and interact in future)

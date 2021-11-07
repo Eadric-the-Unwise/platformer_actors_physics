@@ -12,7 +12,7 @@ void render_level1();
 
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 const actor_t level1_actors[5] = {
-    //PLAYER
+    //0 PLAYER
     {.x = TO_COORDS(136),
      .y = TO_COORDS(-8),
      .SpdX = 0,
@@ -25,7 +25,7 @@ const actor_t level1_actors[5] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE},
-    //PISTOL NPC
+    //1 NPC PISTOL
     {.x = TO_COORDS(-185),
      .y = TO_COORDS(136),
      .SpdX = 0,
@@ -39,6 +39,7 @@ const actor_t level1_actors[5] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE},
+    //2 NPC PATROL
     {.x = TO_COORDS(-360),
      .y = TO_COORDS(112),
      .SpdX = 12,
@@ -54,7 +55,7 @@ const actor_t level1_actors[5] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE},
-    //1st NPC WALKING
+    //3 NPC WALK
     {.x = TO_COORDS(-71),
      .y = TO_COORDS(136),
      .SpdX = 5,
@@ -68,7 +69,7 @@ const actor_t level1_actors[5] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = TRUE},
-    //ELEVATOR
+    //4 ELEVATOR
     {.x = TO_COORDS((-464) + (vertical_platform_V1_WIDTH - 16)),
      .y = TO_COORDS(72 + 16),
      .SpdX = 0,

@@ -75,6 +75,10 @@ typedef struct actor_t {
     UBYTE copy;
 } actor_t;
 
+typedef struct point_t {
+    UINT16 x, y;
+} point_t;
+
 typedef void (*animate_level_t)();
 
 typedef struct level_t {
