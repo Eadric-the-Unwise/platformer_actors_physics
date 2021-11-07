@@ -70,17 +70,17 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     //ELEVATOR
-    {.x = TO_COORDS(-80),
+    {.x = TO_COORDS(-432),
      .y = TO_COORDS(136),
      .SpdX = 0,
      .SpdY = 0,
-     .direction = DIR_RIGHT,
-     .NPC_type = ELEVATOR,
+     .direction = DIR_LEFT,
+     .NPC_type = PISTOL,
      .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
      .tile_index = 0,
      .tile_data = vertical_platform_V1_data,
-     .animations = {elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-     .animations_props = {ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animations = {elevator_frame, enemy_arrow_left, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE}};
 

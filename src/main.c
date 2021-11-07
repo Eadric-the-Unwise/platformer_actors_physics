@@ -485,13 +485,13 @@ void main() {
         // }
         // #ifdef DEBUG
 
-        // if (joy & J_B) {
-        //     printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
-        // }
-
         if (joy & J_B) {
-            printf("ELEV.X=%d\nNPC1.X=%d", TO_PIXELS(active_actors[2].x), TO_PIXELS(active_actors[4].x));
+            printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
         }
+
+        // if (joy & J_B) {
+        //     printf("ELEV.X=%d\nNPC1.X=%d", TO_PIXELS(active_actors[2].x), TO_PIXELS(active_actors[4].x));
+        // }
         // #endif
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
