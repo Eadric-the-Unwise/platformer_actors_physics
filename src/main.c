@@ -1,5 +1,5 @@
 #include <gb/gb.h>
-#include <gb/metasprites.h>
+#include <gbdk/metasprites.h>
 
 // uncomment the line below to switch on debug features
 //#define DEBUG
@@ -90,7 +90,7 @@ void main() {
     load_level(&level1);
     // shadow_scx = (UBYTE)(bkg.camera_x >> 4u);
     // shadow_scy = bkg.camera_y;
-    DISABLE_VBL_TRANSFER;
+    // DISABLE_VBL_TRANSFER;
     // switch on display after everything is ready
     DISPLAY_ON;
     last_joy = joy = 0;
@@ -496,10 +496,9 @@ void main() {
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
             DISPLAY_OFF;
-            PLAYER.y = TO_COORDS(0);
             Spawn = TRUE;
-            load_level(&level1);
             init_submap();
+            load_level(&level1);
             DISPLAY_ON;
         }
 

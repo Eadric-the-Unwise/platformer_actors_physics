@@ -3,7 +3,7 @@
 #define __SCENE_H__
 
 #include <gb/gb.h>
-#include <gb/metasprites.h>
+#include <gbdk/metasprites.h>
 
 #define MAX_ACTIVE_ACTORS 8
 #define ACTOR_DETECTIVE 0

@@ -70,8 +70,8 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     //ELEVATOR
-    {.x = TO_COORDS(-432),
-     .y = TO_COORDS(136),
+    {.x = TO_COORDS((-464) + (vertical_platform_V1_WIDTH - 16)),
+     .y = TO_COORDS(40 + 16),
      .SpdX = 0,
      .SpdY = 0,
      .direction = DIR_LEFT,

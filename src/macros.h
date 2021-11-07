@@ -2,14 +2,13 @@
 // prevents the includes from being called twice
 #define __MACROS_H__
 
-
 #include <gb/gb.h>
-#include <gb/metasprites.h>
+#include <gbdk/metasprites.h>
 #include <stdint.h>
 #include <stdio.h>
 
-#include "submap.h"
 #include "level.h"
+#include "submap.h"
 
 void set_camera();
 void performantdelay(UINT8 numloops);
