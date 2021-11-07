@@ -51,6 +51,7 @@ const actor_t level1_actors[5] = {
      .tile_count = (sizeof(enemy_arrow_data) >> 4),
      .tile_index = 0,
      .tile_data = enemy_arrow_data,
+     .patrol_timer = 45,
      .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
@@ -117,17 +118,17 @@ void render_level1() {
         }
 
         if (current_actor->NPC_type == PATROL) {
-            patrol_timer--;
+            current_actor->patrol_timer--;
             current_actor->x += current_actor->SpdX;
 
-            if ((current_actor->direction == DIR_LEFT) && (patrol_timer == 0)) {
+            if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
                 SetActorDirection(current_actor, DIR_RIGHT, 0);
                 current_actor->SpdX = abs(current_actor->SpdX);
-                patrol_timer = 45;
-            } else if ((current_actor->direction == DIR_RIGHT) && (patrol_timer == 0)) {
+                current_actor->patrol_timer = 45;
+            } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
                 SetActorDirection(current_actor, DIR_LEFT, 0);
                 current_actor->SpdX = -abs(current_actor->SpdX);
-                patrol_timer = 45;
+                current_actor->patrol_timer = 45;
             }
         } else if (current_actor->NPC_type == WALK) {
             if (TO_PIXELS(current_actor->x) >= -40)
