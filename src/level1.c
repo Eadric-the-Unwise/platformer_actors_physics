@@ -10,8 +10,6 @@ extern Variables bkg;
 // void move_arrows();
 void render_level1();
 
-UINT8 patrol_timer = 45;
-
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 const actor_t level1_actors[5] = {
     //PLAYER
@@ -73,13 +71,14 @@ const actor_t level1_actors[5] = {
     {.x = TO_COORDS((-464) + (vertical_platform_V1_WIDTH - 16)),
      .y = TO_COORDS(40 + 16),
      .SpdX = 0,
-     .SpdY = 0,
-     .direction = DIR_LEFT,
-     .NPC_type = PISTOL,
+     .SpdY = 4,
+     .direction = DIR_RIGHT,
+     .NPC_type = ELEVATOR,
      .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
      .tile_index = 0,
      .tile_data = vertical_platform_V1_data,
-     .animations = {elevator_frame, enemy_arrow_left, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+     .patrol_timer = 45,
+     .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE}};
@@ -127,6 +126,20 @@ void render_level1() {
             } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
                 SetActorDirection(current_actor, DIR_LEFT, 0);
                 current_actor->SpdX = -abs(current_actor->SpdX);
+                current_actor->patrol_timer = 45;
+            }
+
+        } else if (current_actor->NPC_type == ELEVATOR) {
+            current_actor->patrol_timer--;
+            current_actor->y += current_actor->SpdY;
+
+            if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
+                SetActorDirection(current_actor, DIR_RIGHT, 0);
+                current_actor->SpdY = abs(current_actor->SpdY);
+                current_actor->patrol_timer = 45;
+            } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
+                SetActorDirection(current_actor, DIR_LEFT, 0);
+                current_actor->SpdY = -abs(current_actor->SpdY);
                 current_actor->patrol_timer = 45;
             }
         } else if (current_actor->NPC_type == WALK) {
