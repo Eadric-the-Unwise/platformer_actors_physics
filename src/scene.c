@@ -20,12 +20,13 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
 
     UINT8 hiwater = 0;
     for (UINT8 i = actors_count; i != 0; i--) {  //counter direction does not matter, because pointer is moved. only number of iterations matter.
-        if (actor->copy == TRUE){
-        hiwater -= actor->tile_count;
-        current_actor->tile_index = hiwater;
+        if (actor->copy == TRUE) {
+            hiwater -= actor->tile_count;
+            current_actor->tile_index = hiwater;
         } else if (actor->copy == FALSE) {
-        current_actor->tile_index = hiwater;
-        set_sprite_data(hiwater, actor->tile_count, actor->tile_data);}
+            current_actor->tile_index = hiwater;
+            set_sprite_data(hiwater, actor->tile_count, actor->tile_data);
+        }
         current_actor->x = actor->x;
         current_actor->y = actor->y;
         current_actor->SpdX = actor->SpdX;
@@ -59,7 +60,7 @@ void render_actors() {
     }
     // draw each metasprite
     direction_e current_direction;
-    UINT8 hiwater = 0; //OAM Sprite hiwater
+    UINT8 hiwater = 0;  //OAM Sprite hiwater
     for (UINT8 i = active_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
         INT16 PLAYER_x = TO_PIXELS(PLAYER.x);
         INT16 current_actor_x = TO_PIXELS(current_actor->x);

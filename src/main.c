@@ -484,8 +484,13 @@ void main() {
         //     printf("Map.x=%u P.y=%u\n", (TO_PIXELS(PLAYER.x) + TO_PIXELS(bkg.camera_x)), TO_PIXELS(PLAYER.y));
         // }
         // #ifdef DEBUG
+
+        // if (joy & J_B) {
+        //     printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
+        // }
+
         if (joy & J_B) {
-            printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
+            printf("ELEV.X=%d\nNPC1.X=%d", TO_PIXELS(active_actors[2].x), TO_PIXELS(active_actors[4].x));
         }
         // #endif
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
