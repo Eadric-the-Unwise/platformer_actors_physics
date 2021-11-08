@@ -17,6 +17,8 @@ const actor_t level1_actors[5] = {
      .y = TO_COORDS(-8),
      .SpdX = 0,
      .SpdY = -16,
+     .w = detective_large_WIDTH,
+     .h = detective_large_HEIGHT,
      .direction = DIR_IDLE_L,
      .tile_count = (sizeof(detective_large_data) >> 4),
      .tile_index = 0,
@@ -30,6 +32,8 @@ const actor_t level1_actors[5] = {
      .y = TO_COORDS(136),
      .SpdX = 0,
      .SpdY = 0,
+     .w = enemy_arrow_WIDTH,
+     .h = enemy_arrow_HEIGHT,
      .direction = DIR_LEFT,
      .NPC_type = PISTOL,
      .tile_count = (sizeof(enemy_arrow_data) >> 4),
@@ -44,6 +48,8 @@ const actor_t level1_actors[5] = {
      .y = TO_COORDS(112),
      .SpdX = 12,
      .SpdY = 0,
+     .w = enemy_arrow_WIDTH,
+     .h = enemy_arrow_HEIGHT,
      .direction = DIR_RIGHT,
      .NPC_type = PATROL,
      .tile_count = (sizeof(enemy_arrow_data) >> 4),
@@ -60,8 +66,8 @@ const actor_t level1_actors[5] = {
      .y = TO_COORDS(136),
      .SpdX = 5,
      .SpdY = 0,
-     .point_x = -71,
-     .point_y = 136,
+     .w = enemy_arrow_WIDTH,
+     .h = enemy_arrow_HEIGHT,
      .direction = DIR_RIGHT,
      .NPC_type = WALK,
      .tile_count = (sizeof(enemy_arrow_data) >> 4),
@@ -76,6 +82,8 @@ const actor_t level1_actors[5] = {
      .y = TO_COORDS(72 + 16),
      .SpdX = 0,
      .SpdY = 16,
+     .w = vertical_platform_V1_WIDTH,
+     .h = vertical_platform_V1_HEIGHT,
      .direction = DIR_RIGHT,
      .NPC_type = ELEVATOR,
      .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
@@ -115,7 +123,6 @@ void render_level1() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  //The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
-        UINT16 NPC_Cam_Offset = (TO_PIXELS(bkg.camera_x) - TO_PIXELS(current_actor->x));
         if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
             current_actor->x -= PLAYER.SpdX;
         }

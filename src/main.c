@@ -27,7 +27,7 @@ UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 extern Variables bkg;
 uint8_t shadow_scx = 0, shadow_scy = 0;
-BOOLEAN overlap(UBYTE, UBYTE, UBYTE, UBYTE, UBYTE, UBYTE, UBYTE, UBYTE);
+BOOLEAN overlap(INT16, INT16, UINT8, UINT8, INT16, INT16, UINT8, UINT8);
 
 //CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
 //BOTTOM LEFT PIXEL
@@ -75,10 +75,9 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
     return result;
 }
-
 //LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
-BOOLEAN overlap(UBYTE x_1, UBYTE y_1, UBYTE w_1, UBYTE h_1,
-                UBYTE x_2, UBYTE y_2, UBYTE w_2, UBYTE h_2) {
+BOOLEAN overlap(INT16 x_1, INT16 y_1, UINT8 w_1, UINT8 h_1,
+                INT16 x_2, INT16 y_2, UINT8 w_2, UINT8 h_2) {
     // Standard rectangle-to-rectangle collision check
     INT16 l1, r1, l2, r2;
     l1 = (x_1 - (w_1 - 8));
@@ -112,6 +111,7 @@ void main() {
     Spawn = TRUE;
     init_submap();
     load_level(&level1);
+    actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
     // shadow_scx = (UBYTE)(bkg.camera_x >> 4u);
     // shadow_scy = bkg.camera_y;
     // DISABLE_VBL_TRANSFER;
@@ -513,6 +513,19 @@ void main() {
             printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
         }
 
+        // for (UINT8 i = active_actors_count - 1; i != 0; i--) {
+        //     INT16 PLAYER_x = TO_PIXELS(PLAYER.x);
+        //     INT16 PLAYER_y = TO_PIXELS(PLAYER.y);
+        //     UINT8 PW = PLAYER.w;
+        //     UINT8 PH = PLAYER.h;
+
+        //     if (overlap(PLAYER_x, PLAYER_y, PW, PH, TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y), current_actor->w, current_actor->h) == 0x01U) {
+        //         if (current_actor->ON == TRUE) {
+        //             printf("GAME OVER\n");
+        //         }
+        //     }
+        // }
+
         // if (joy & J_B) {
         //     printf("ELEV.X=%d\nNPC1.X=%d", TO_PIXELS(active_actors[2].x), TO_PIXELS(active_actors[4].x));
         // }
@@ -528,7 +541,9 @@ void main() {
 
         // Handle Dino collision with hazards (only one for now)
         if (overlap(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), detective_large_WIDTH, detective_large_HEIGHT, TO_PIXELS(active_actors[3].x), TO_PIXELS(active_actors[3].y), enemy_arrow_WIDTH, enemy_arrow_HEIGHT) == 0x01U) {
-            printf("GAME OVER\n");
+            if (active_actors[3].ON == TRUE) {
+                printf("GAME OVER\n");
+            }
         }
 
         // call level animation hook (if any), that makes other actors move (and interact in future)

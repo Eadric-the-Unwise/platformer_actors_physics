@@ -38,6 +38,7 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations));  // copy array of 5 pointers to animation phases
         memcpy(current_actor->animations_props, actor->animations_props, sizeof(actor->animations_props));
         current_actor->animation_phase = actor->animation_phase;
+        current_actor->ON = actor->ON;
         hiwater += actor->tile_count;
         current_actor++;
         actor++;
@@ -72,6 +73,7 @@ void render_actors() {
             if (current_animation[current_actor->animation_phase] != NULL) {
                 //PLAYER THEORETICALLY WILL ALWAYS LOAD BECAUSE PLAYER.x - PLAYER.x = 0//
                 if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -100) {
+                    current_actor->ON = TRUE;
                     if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R)) {
                         hiwater += move_metasprite_vflip(
                             current_animation[current_actor->animation_phase],
@@ -90,6 +92,7 @@ void render_actors() {
                     hide_metasprite(
                         current_animation[current_actor->animation_phase],
                         hiwater);
+                    current_actor->ON = FALSE;
                 }
             }
             // process actor animation

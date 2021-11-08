@@ -58,8 +58,8 @@ typedef struct actor_t {
     INT16 y;
     INT16 SpdX;
     INT16 SpdY;
-    INT16 point_x;
-    INT16 point_y;
+    UINT8 w;
+    UINT8 h;
     direction_e direction;
     direction_e last_direction;
     NPC_type_e NPC_type;
@@ -75,6 +75,7 @@ typedef struct actor_t {
     anim_loop_e animations_props[10];
     UINT8 animation_phase;
     UBYTE copy;
+    UBYTE ON;
 } actor_t;
 
 typedef void (*animate_level_t)();
