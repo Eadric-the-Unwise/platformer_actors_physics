@@ -80,13 +80,20 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 BOOLEAN overlap(UBYTE x_1, UBYTE y_1, UBYTE w_1, UBYTE h_1,
                 UBYTE x_2, UBYTE y_2, UBYTE w_2, UBYTE h_2) {
     // Standard rectangle-to-rectangle collision check
-    if ((x_1 < ((x_2 + w_2) - 3)) && (((x_1 + w_1) - 8) > x_2) &&
-        (y_1 < ((y_2 + h_2) - 16)) && (((y_1 + h_1) - 16) > y_2)) {
-        printf("y2+h2=%u\n", (y_2 + h_2));
-        return 0x01U;
+    INT16 l1, r1, l2, r2;
+    l1 = (x_1 - (w_1 - 8));
+    r1 = (y_1 - h_1);
+    l2 = (x_2 - (w_2 - 4));
+    r2 = (y_2 - (h_2 + 6));
 
-    } else
+    if ((l1 >= x_2) || (l2 >= x_1)) {
         return 0x00U;
+    }
+    if ((r1 >= y_2) || (r2 >= y_1)) {
+        return 0X00U;
+    }
+
+    return 0x01U;
 }
 
 /******************************/
