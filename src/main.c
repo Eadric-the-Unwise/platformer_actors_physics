@@ -540,12 +540,13 @@ void main() {
         }
 
         // Handle Dino collision with hazards (only one for now)
-        if (overlap(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), detective_large_WIDTH, detective_large_HEIGHT, TO_PIXELS(active_actors[3].x), TO_PIXELS(active_actors[3].y), enemy_arrow_WIDTH, enemy_arrow_HEIGHT) == 0x01U) {
-            if (active_actors[3].ON == TRUE) {
+        for (UINT8 i = ACTOR_FIRST_NPC; i != (active_actors_count - 1); i++) {
+        if (overlap(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), PLAYER.w, PLAYER.h, TO_PIXELS(active_actors[i].x), TO_PIXELS(active_actors[i].y), active_actors[i].w, active_actors[i].h) == 0x01U) {
+            if (active_actors[i].ON == TRUE) {
                 printf("GAME OVER\n");
             }
         }
-
+        }
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
 
