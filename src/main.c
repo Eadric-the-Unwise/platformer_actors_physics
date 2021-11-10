@@ -27,7 +27,7 @@ UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 extern Variables bkg;
 uint8_t shadow_scx = 0, shadow_scy = 0;
-BOOLEAN overlap(INT16, INT16, UINT8, UINT8, INT16, INT16, UINT8, UINT8);
+BOOLEAN overlap(INT16, INT16, INT16, INT16);
 
 
 //CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
@@ -77,8 +77,7 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     return result;
 }
 //LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
-BOOLEAN overlap(INT16 x_1, INT16 y_1, UINT8 BL_1, UINT8 TR_1,
-                INT16 x_2, INT16 y_2, UINT8 BL_2, UINT8 TR_2) {
+BOOLEAN overlap(INT16 BL_1, INT16 TR_1, INT16 BL_2, INT16 TR_2) {
     // Standard rectangle-to-rectangle collision check
     INT16 l1, r1, l2, r2;
     l1 = (BL_1);
@@ -86,10 +85,16 @@ BOOLEAN overlap(INT16 x_1, INT16 y_1, UINT8 BL_1, UINT8 TR_1,
     l2 = (BL_2);
     r2 = (TR_2);
 
-    if ((l1 >= BL_2) || (l2 >= BL_1)) {
+   if (l1.x == r1.x || l1.y == r1.y || l2.x == r2.x
+        || l2.y == r2.y) {
+        // the line cannot have positive overlap
         return 0x00U;
     }
-    if ((r1 >= TR_2) || (r2 >= TR_1)) {
+
+    if ((l1.x >= r2.x) || (l2.x >= r1.x)) {
+        return 0x00U;
+    }
+    if ((r1.y >= l2.y) || (r2.y >= l1.y)) {
         return 0X00U;
     }
 
@@ -541,11 +546,14 @@ void main() {
             PLAYER.y = TO_COORDS(40);
         }
 
-        // Handle Dino collision with hazards (only one for now)
+        // COPIED FROM DINO COLLISIONS
         for (UINT8 i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             PLAYER.BL = {TO_PIXELS(PLAYER.x) - PLAYER.w, TO_PIXELS(PLAYER.y) + 8};
             PLAYER.TR = {TO_PIXELS(PLAYER.x) + 8, TO_PIXELS(PLAYER.y) - PLAYER.h};
-        if (overlap(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), PLAYER.BL, PLAYER.TR, TO_PIXELS(active_actors[i].x), TO_PIXELS(active_actors[i].y), active_actors[i].w, active_actors[i].h) == 0x01U) {
+            active_actors[i].BL = {TO_PIXELS(active_actors[i].x) - active_actors[i].w, TO_PIXELS(active_actors[i].y) + 8}; 
+            active_actors[i].TR = {TO_PIXELS(active_actors[i].x) + 8, TO_PIXELS(active_actors[i].y) - active_actors[i].h}; 
+
+        if (overlap(PLAYER.BL, PLAYER.TR, active_actors[i].BL, active_actors[i].TR) == 0x01U) {
             if (active_actors[i].ON == TRUE) {
                 printf("GAME OVER\n");
             }

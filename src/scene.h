@@ -54,7 +54,7 @@ typedef enum {
 } anim_loop_e;
 
 typedef struct Point {
-    int x, y;
+    INT8 x, y;
 } Point;
 
 typedef struct actor_t {
