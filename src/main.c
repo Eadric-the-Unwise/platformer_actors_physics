@@ -80,10 +80,10 @@ BOOLEAN overlap(INT16 x_1, INT16 y_1, UINT8 w_1, UINT8 h_1,
                 INT16 x_2, INT16 y_2, UINT8 w_2, UINT8 h_2) {
     // Standard rectangle-to-rectangle collision check
     INT16 l1, r1, l2, r2;
-    l1 = (x_1 - (w_1 - 8));
+    l1 = (x_1 - w_1);
     r1 = (y_1 - h_1);
-    l2 = (x_2 - (w_2 - 4));
-    r2 = (y_2 - (h_2 + 6));
+    l2 = (x_2 - w_2);
+    r2 = (y_2 - h_2);
 
     if ((l1 >= x_2) || (l2 >= x_1)) {
         return 0x00U;
@@ -532,15 +532,16 @@ void main() {
         // #endif
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
-            DISPLAY_OFF;
-            Spawn = TRUE;
-            init_submap();
-            load_level(&level1);
-            DISPLAY_ON;
+            // DISPLAY_OFF;
+            // Spawn = TRUE;
+            // init_submap();
+            // load_level(&level1);
+            // DISPLAY_ON;
+            PLAYER.y = TO_COORDS(40);
         }
 
         // Handle Dino collision with hazards (only one for now)
-        for (UINT8 i = ACTOR_FIRST_NPC; i != (active_actors_count - 1); i++) {
+        for (UINT8 i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
         if (overlap(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), PLAYER.w, PLAYER.h, TO_PIXELS(active_actors[i].x), TO_PIXELS(active_actors[i].y), active_actors[i].w, active_actors[i].h) == 0x01U) {
             if (active_actors[i].ON == TRUE) {
                 printf("GAME OVER\n");
