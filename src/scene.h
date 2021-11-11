@@ -64,8 +64,8 @@ typedef struct actor_t {
     INT16 SpdY;
     UINT8 w;
     UINT8 h;
-    Point BL;
-    Point TR;
+    UINT8 BL;
+    UINT8 TR;
     direction_e direction;
     direction_e last_direction;
     NPC_type_e NPC_type;
