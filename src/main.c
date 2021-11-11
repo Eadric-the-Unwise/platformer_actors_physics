@@ -168,6 +168,7 @@ void main() {
         }
         if ((joy & J_DOWN) && !(Jump)) {
             Crouch = TRUE;
+            PLAYER.h_offset = 24;
         }
         // DOWN while standing still
         // if ((Crouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
@@ -546,14 +547,14 @@ void main() {
         for (UINT8 i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
         //[y][x]
         UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
-        PTR_y = TO_PIXELS(PLAYER.y) - PLAYER.h;
-        PTR_x = TO_PIXELS(PLAYER.x) + 8;
-        PBL_y = TO_PIXELS(PLAYER.y);
-        PBL_x = TO_PIXELS(PLAYER.x) - PLAYER.w;
+        PTR_y = TO_PIXELS(PLAYER.y) - (PLAYER.h - PLAYER.h_offset); //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract
+        PTR_x = TO_PIXELS(PLAYER.x) + PLAYER.x_offset; //TR x
+        PBL_y = TO_PIXELS(PLAYER.y) + PLAYER.y_offset; //BL y
+        PBL_x = TO_PIXELS(PLAYER.x) - (PLAYER.w - PLAYER.x_offset);//BL x
         NTR_y = TO_PIXELS(active_actors[i].y) - active_actors[i].h;
-        NTR_x = TO_PIXELS(active_actors[i].x) + 8;
-        NBL_y = TO_PIXELS(active_actors[i].y) + 8;
-        NBL_x = TO_PIXELS(active_actors[i].x) - active_actors[i].w;
+        NTR_x = TO_PIXELS(active_actors[i].x) + active_actors[i].x_offset;
+        NBL_y = TO_PIXELS(active_actors[i].y) + active_actors[i].y_offset;
+        NBL_x = TO_PIXELS(active_actors[i].x) - (active_actors[i].w - active_actors[i].w_offset);
         
         if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
             if (active_actors[i].ON == TRUE) {

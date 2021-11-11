@@ -53,10 +53,6 @@ typedef enum {
     ANIM_ONCE
 } anim_loop_e;
 
-typedef struct Point {
-    INT8 x, y;
-} Point;
-
 typedef struct actor_t {
     INT16 x;
     INT16 y;
@@ -64,8 +60,10 @@ typedef struct actor_t {
     INT16 SpdY;
     UINT8 w;
     UINT8 h;
-    UINT8 BL;
-    UINT8 TR;
+    UINT8 w_offset;
+    UINT8 h_offset;
+    UINT8 x_offset;
+    UINT8 y_offset;
     direction_e direction;
     direction_e last_direction;
     NPC_type_e NPC_type;

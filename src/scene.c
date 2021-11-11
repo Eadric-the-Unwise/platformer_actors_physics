@@ -33,8 +33,10 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         current_actor->SpdY = actor->SpdY;
         current_actor->w = actor->w;
         current_actor->h = actor->h;
-        current_actor->BL = actor->BL;
-        current_actor->TR = actor->TR;
+        current_actor->w_offset = actor->w_offset;
+        current_actor->h_offset = actor->h_offset;
+        current_actor->x_offset = actor->x_offset;
+        current_actor->y_offset = actor->y_offset;
         current_actor->last_direction = current_actor->direction = actor->direction;
         current_actor->NPC_type = actor->NPC_type;
         current_actor->patrol_timer = actor->patrol_timer;
