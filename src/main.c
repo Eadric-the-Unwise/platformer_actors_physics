@@ -18,10 +18,10 @@
 #include "macros.h"
 #include "scene.h"
 
-UINT8 joy, last_joy;
+UBYTE joy, last_joy;
 
-UINT8 floorYposition;
-UINT8 Spawn, Jump, Crouch, Launch, Shooting;
+UBYTE floorYposition;
+UBYTE Spawn, Jump, Crouch, Launch, Shooting;
 UBYTE launchDelay = 0;
 UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
@@ -29,10 +29,9 @@ extern Variables bkg;
 uint8_t shadow_scx = 0, shadow_scy = 0;
 BOOLEAN overlap(INT16, INT16, INT16, INT16, INT16, INT16, INT16, INT16);
 
-
 //CHECKS WHETHER OR NOT THE OFFSET OF PLAYER POSITION COLLIDES WITH A COLLISION TILE
 //BOTTOM LEFT PIXEL
-UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+UBYTE checkcollisionBL(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexBLx, indexBLy, indexCamx, tileindexBL;
     UBYTE result;
 
@@ -47,7 +46,7 @@ UBYTE checkcollisionBL(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     return result;
 }
 //BOTTOM RIGHT PIXEL
-UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+UBYTE checkcollisionBR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexBLx, indexBLy, indexCamx, tileindexBL;
     UBYTE result;
 
@@ -62,7 +61,7 @@ UBYTE checkcollisionBR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     return result;
 }
 //BOTTOM CENTER PIXEL
-UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+UBYTE checkcollisionBC(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexBLx, indexBLy, indexCamx, tileindexBL;
     UBYTE result;
 
@@ -76,13 +75,34 @@ UBYTE checkcollisionBC(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
     return result;
 }
+void check_D(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+    UINT16 indexDLx, indexDCx, indexDRx, index_y, indexCamx, tileindexDL, tileindexDC, tileindexDR;
+
+    indexCamx = camera_x;
+    indexDLx = ((newplayerx - 17) + indexCamx) / 8;
+    indexDCx = ((newplayerx - 9) + indexCamx) / 8;
+    indexDRx = ((newplayerx) + indexCamx) / 8;
+    index_y = (newplayery - 1) / 8;
+
+    tileindexDL = COLLISION_WIDE_MAPWidth * index_y + indexDLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexDC = COLLISION_WIDE_MAPWidth * index_y + indexDCx;
+    tileindexDR = COLLISION_WIDE_MAPWidth * index_y + indexDRx;
+
+    if ((COLLISION_WIDE_MAP[tileindexDL] == 0x01) || (COLLISION_WIDE_MAP[tileindexDC] == 0x01) || (COLLISION_WIDE_MAP[tileindexDR] == 0x01)) {
+        UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
+        PLAYER.y = TO_COORDS(ty * 8);
+        PLAYER.SpdY = 0;
+        Spawn = Jump = FALSE;
+        switch_idle_jump();
+    } else if (COLLISION_WIDE_MAP[tileindexDL] == 0x00) {
+    }
+}
+
 //LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
 BOOLEAN overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x) {
     // Standard rectangle-to-rectangle collision check
 
-
-   if (l1_x == r1_x || l1_y == r1_y || l2_x == r2_x
-        || l2_y == r2_y) {
+    if (l1_x == r1_x || l1_y == r1_y || l2_x == r2_x || l2_y == r2_y) {
         // the line cannot have positive overlap
         return 0x00U;
     }
@@ -217,13 +237,8 @@ void main() {
 
         //Y-AXIS COLLISION CHECK (ADD NEGATIVE AND POSITIVE IFS SO THE LOOP ONLY CHECKS 1 FOR Y AND 1 FOR X MOVEMENT)
         if (PLAYER.SpdY > 0) {
-            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x)))) {
-                UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
-                PLAYER.y = TO_COORDS(ty * 8);
-                PLAYER.SpdY = 0;
-                Spawn = Jump = FALSE;
-                switch_idle_jump();
-            }
+            check_D(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x));
+
         } else if (PLAYER.SpdY < 0) {
             if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x)))) {
                 UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
@@ -239,14 +254,14 @@ void main() {
                     PLAYER.SpdX = 0;
                     //set player idle direction when touching ground
                     if (!Jump) {
-                    switch_crawl();
+                        switch_crawl();
                     }
                 }
 
             } else {
                 if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 12, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
                     PLAYER.SpdX = 0;
-                    switch_idle_jump(); //NOT SURE IF NEEDED
+                    switch_idle_jump();  //NOT SURE IF NEEDED
                 }
             }
         } else if (PLAYER.SpdX < 0) {
@@ -255,12 +270,12 @@ void main() {
                     PLAYER.SpdX = 0;
                     if (!Jump) {
                         switch_crawl();
-                    }                     
+                    }
                 }
             } else {
                 if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
                     PLAYER.SpdX = 0;
-                    switch_idle_jump(); //NOT SURE IF NEEDED
+                    switch_idle_jump();  //NOT SURE IF NEEDED
                 }
             }
         }
@@ -284,8 +299,8 @@ void main() {
 
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch)) {
-        if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-        switch_idle();
+            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
+                switch_idle();
             }
         }
         // update PLAYER absolute posiiton
@@ -320,22 +335,22 @@ void main() {
             PLAYER.y = TO_COORDS(40);
         }
         // COPIED FROM DINO COLLISIONS
-        for (UINT8 i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
-        //[y][x]
-        UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
-        PTR_y = TO_PIXELS(PLAYER.y) - (PLAYER.h - PLAYER.h_offset); //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract
-        PTR_x = TO_PIXELS(PLAYER.x) + PLAYER.x_offset; //TR x
-        PBL_y = TO_PIXELS(PLAYER.y) + PLAYER.y_offset; //BL y
-        PBL_x = TO_PIXELS(PLAYER.x) - (PLAYER.w - PLAYER.x_offset);//BL x
-        NTR_y = TO_PIXELS(active_actors[i].y) - active_actors[i].h;
-        NTR_x = TO_PIXELS(active_actors[i].x) + active_actors[i].x_offset;
-        NBL_y = TO_PIXELS(active_actors[i].y) + active_actors[i].y_offset;
-        NBL_x = TO_PIXELS(active_actors[i].x) - (active_actors[i].w - active_actors[i].w_offset);
-        
-        if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
-            if (active_actors[i].ON == TRUE) {
-                printf("GAME OVER\n");
-                 }
+        for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
+            //[y][x]
+            UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
+            PTR_y = TO_PIXELS(PLAYER.y) - (PLAYER.h - PLAYER.h_offset);  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract
+            PTR_x = TO_PIXELS(PLAYER.x) + PLAYER.x_offset;               //TR x
+            PBL_y = TO_PIXELS(PLAYER.y) + PLAYER.y_offset;               //BL y
+            PBL_x = TO_PIXELS(PLAYER.x) - (PLAYER.w - PLAYER.x_offset);  //BL x
+            NTR_y = TO_PIXELS(active_actors[i].y) - active_actors[i].h;
+            NTR_x = TO_PIXELS(active_actors[i].x) + active_actors[i].x_offset;
+            NBL_y = TO_PIXELS(active_actors[i].y) + active_actors[i].y_offset;
+            NBL_x = TO_PIXELS(active_actors[i].x) - (active_actors[i].w - active_actors[i].w_offset);
+
+            if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
+                if (active_actors[i].ON == TRUE) {
+                    printf("GAME OVER\n");
+                }
             }
         }
         // call level animation hook (if any), that makes other actors move (and interact in future)
