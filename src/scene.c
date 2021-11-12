@@ -120,3 +120,149 @@ void render_actors() {
     // hide rest of the hardware sprites
     for (UINT8 i = hiwater; i < 40u; i++) shadow_OAM[i].y = 0;
 }
+void switch_down() {
+                switch (PLAYER.direction) {
+                case DIR_LEFT:
+                    SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                    break;
+                case DIR_IDLE_L:
+                    SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                    break;
+                case DIR_DOWN_L:
+                    SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                    break;
+                case DIR_CRAWL_L:
+                    SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                    break;
+                case DIR_RIGHT:
+                    SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                    break;
+                case DIR_IDLE_R:
+                    SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                    break;
+                case DIR_DOWN_R:
+                    SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                    break;
+                case DIR_CRAWL_R:
+                    SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                    break;
+            }
+}
+void switch_jump() {
+                    switch (PLAYER.direction) {
+                    case DIR_IDLE_L:
+                        SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                        break;
+                    case DIR_IDLE_R:
+                        SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                        break;
+                    case DIR_LEFT:
+                        SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                        break;
+                    case DIR_RIGHT:
+                        SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                        break;
+                    case DIR_DOWN_L:
+                        SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                        break;
+                    case DIR_DOWN_R:
+                        SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                        break;
+                    case DIR_CRAWL_L:
+                        SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+                        break;
+                    case DIR_CRAWL_R:
+                        SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+                        break;
+                }
+}
+void switch_idle() {
+     switch (PLAYER.last_direction) {
+            case DIR_LEFT:
+                if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                }
+                break;
+            case DIR_IDLE_L:
+                if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                }
+                break;
+            case DIR_JUMP_L:
+                if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                }
+                break;
+            case DIR_DOWN_L:
+                if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                }
+                break;
+            case DIR_CRAWL_L:
+                if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                }
+                break;
+
+            case DIR_RIGHT:
+                if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                }
+                break;
+            case DIR_IDLE_R:
+                if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                }
+                break;
+            case DIR_JUMP_R:
+                if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                }
+                break;
+            case DIR_DOWN_R:
+                if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                }
+                break;
+            case DIR_CRAWL_R:
+                if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+                    SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                } else {
+                    SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                }
+                break;
+                }
+}
+void switch_idle_jump() {
+                        if (PLAYER.direction == DIR_JUMP_R) {
+                        SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+                    } else if (PLAYER.direction == DIR_JUMP_L) {
+                        SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+                    }
+}
+
+void switch_crawl() {
+                        if (PLAYER.direction == DIR_CRAWL_R) {
+                            SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+                        } else if (PLAYER.direction == DIR_CRAWL_L) {
+                            SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+                        }
+}

@@ -22,9 +22,8 @@
 
 */
 #pragma bank 255
-#ifndef __INTELLISENSE__
 const void __at(255) __bank_BRICK_WIDE_TILES;
-#endif
+
 /* Start of tile array. */
 unsigned char BRICK_WIDE_TILES[] =
     {

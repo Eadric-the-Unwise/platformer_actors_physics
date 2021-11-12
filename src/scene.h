@@ -97,6 +97,11 @@ extern UINT8 active_actors_count;
 
 void load_level(const level_t *level);
 void render_actors();
+void switch_down();
+void switch_jump();
+void switch_idle();
+void switch_idle_jump();
+void switch_crawl();
 
 //fuction body is inlined into the code
 inline void SetActorDirection(actor_t *actor, direction_e dir, UBYTE phase) {
