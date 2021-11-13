@@ -76,8 +76,71 @@ UBYTE checkcollisionBC(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 
     return result;
 }
+// CAN POSSIBLE USE ONLY 2 FUNCTIONS AND JUST ADD A DIFFERENT PLUG VALUE FROM THE BEGINNING FOR U/D L/R
+void check_L(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+    UINT16 indexLDy, indexLCy, indexLTy, index_x, indexCamx, tileindexLD, tileindexLC, tileindexLT;
+
+    indexCamx = camera_x;
+    indexLDy = (newplayery - 1) / 8;
+    indexLCy = (newplayery - 16) / 8;
+    indexLTy = (newplayery - 24) / 8;
+    index_x = ((newplayerx - 16) + indexCamx) / 8;
+
+    tileindexLD = COLLISION_WIDE_MAPWidth * indexLDy + index_x;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexLC = COLLISION_WIDE_MAPWidth * indexLCy + index_x;
+    tileindexLT = COLLISION_WIDE_MAPWidth * indexLTy + index_x;
+
+    if (Crouch) {
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01)) {
+            if (!Jump) {
+                PLAYER.SpdX = 0;
+                switch_crawl();
+            }
+        }
+    } else if (!Crouch) {
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexLT] == 0x01)) {
+            PLAYER.SpdX = 0;
+            if (!Jump) {
+                switch_idle_jump();  //NOT SURE IF NEEDED
+            }
+        }
+    }
+    // else if (COLLISION_WIDE_MAP[tileindexLD] == 0x00) {
+    // }
+}
+void check_R(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+    UINT16 indexRDy, indexRCy, indexRTy, index_x, indexCamx, tileindexRD, tileindexRC, tileindexRT;
+
+    indexCamx = camera_x;
+    indexRDy = (newplayery - 1) / 8;
+    indexRCy = (newplayery - 16) / 8;
+    indexRTy = (newplayery - 24) / 8;
+    index_x = ((newplayerx) + indexCamx) / 8;
+
+    tileindexRD = COLLISION_WIDE_MAPWidth * indexRDy + index_x;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexRC = COLLISION_WIDE_MAPWidth * indexRCy + index_x;
+    tileindexRT = COLLISION_WIDE_MAPWidth * indexRTy + index_x;
+
+    if (Crouch) {
+        if ((COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01)) {
+            PLAYER.SpdX = 0;
+            if (!Jump) {
+                switch_crawl();
+            }
+        }
+    } else {
+        if ((COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
+            PLAYER.SpdX = 0;
+            if (!Jump) {
+                switch_idle_jump();  //NOT SURE IF NEEDED
+            }
+        }
+    }
+    // else if (COLLISION_WIDE_MAP[tileindexRD] == 0x00) {
+    // }
+}
 void check_D(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
-    UINT16 indexDLx, indexDCx, indexDRx, index_y, indexCamx, tileindexDL, tileindexDC, tileindexDR;
+    UINT16 indexDLx, indexDCx, indexDRx, index_y, indexCamx, tileindexDL, tileindexDC, tileindexDT;
 
     indexCamx = camera_x;
     indexDLx = ((newplayerx - 17) + indexCamx) / 8;
@@ -87,16 +150,40 @@ void check_D(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 
     tileindexDL = COLLISION_WIDE_MAPWidth * index_y + indexDLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexDC = COLLISION_WIDE_MAPWidth * index_y + indexDCx;
-    tileindexDR = COLLISION_WIDE_MAPWidth * index_y + indexDRx;
+    tileindexDT = COLLISION_WIDE_MAPWidth * index_y + indexDRx;
 
-    if ((COLLISION_WIDE_MAP[tileindexDL] == 0x01) || (COLLISION_WIDE_MAP[tileindexDC] == 0x01) || (COLLISION_WIDE_MAP[tileindexDR] == 0x01)) {
+    if ((COLLISION_WIDE_MAP[tileindexDL] == 0x01) || (COLLISION_WIDE_MAP[tileindexDC] == 0x01) || (COLLISION_WIDE_MAP[tileindexDT] == 0x01)) {
         UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
         PLAYER.y = TO_COORDS(ty * 8);
         PLAYER.SpdY = 0;
         Spawn = Jump = FALSE;
         switch_idle_jump();
-    } else if (COLLISION_WIDE_MAP[tileindexDL] == 0x00) {
     }
+    // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
+    // }
+}
+void check_U(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+    UINT16 indexDLx, indexDCx, indexDRx, index_y, indexCamx, tileindexDL, tileindexDC, tileindexDT;
+
+    indexCamx = camera_x;
+    indexDLx = ((newplayerx - 17) + indexCamx) / 8;
+    indexDCx = ((newplayerx - 9) + indexCamx) / 8;
+    indexDRx = ((newplayerx) + indexCamx) / 8;
+    index_y = (newplayery - 1) / 8;
+
+    tileindexDL = COLLISION_WIDE_MAPWidth * index_y + indexDLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexDC = COLLISION_WIDE_MAPWidth * index_y + indexDCx;
+    tileindexDT = COLLISION_WIDE_MAPWidth * index_y + indexDRx;
+
+    if ((COLLISION_WIDE_MAP[tileindexDL] == 0x01) || (COLLISION_WIDE_MAP[tileindexDC] == 0x01) || (COLLISION_WIDE_MAP[tileindexDT] == 0x01)) {
+        UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
+        PLAYER.y = TO_COORDS(ty * 8);
+        PLAYER.SpdY = 0;
+        Jump = FALSE;
+        switch_idle_jump();
+    }
+    // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
+    // }
 }
 
 //LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
@@ -241,62 +328,33 @@ void main() {
             check_D(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x));
 
         } else if (PLAYER.SpdY < 0) {
-            if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x)))) {
-                UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
-                PLAYER.y = TO_COORDS(ty * 8);
-                PLAYER.SpdY = 0;
-                Jump = FALSE;
-                switch_idle_jump();
-            }
+            check_U(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x));
         }
+        //IF MOVING RIGHT
         if (PLAYER.SpdX > 0) {
-            if (Crouch) {
-                if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x)))) {
-                    PLAYER.SpdX = 0;
-                    //set player idle direction when touching ground
-                    if (!Jump) {
-                        switch_crawl();
-                    }
-                }
-
-            } else {
-                if ((checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 12, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-                    PLAYER.SpdX = 0;
-                    switch_idle_jump();  //NOT SURE IF NEEDED
-                }
-            }
+            check_R(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+            //IF MOVING LEFT
         } else if (PLAYER.SpdX < 0) {
-            if (Crouch) {
-                if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x)))) {
-                    PLAYER.SpdX = 0;
-                    if (!Jump) {
-                        switch_crawl();
-                    }
-                }
-            } else {
-                if ((checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-                    PLAYER.SpdX = 0;
-                    switch_idle_jump();  //NOT SURE IF NEEDED
-                }
-            }
+            check_L(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
         }
 
-        if ((Crouch) && !(joy & J_DOWN)) {
-            if (joy & J_LEFT) {
-                if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) + 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-                } else
-                    Crouch = FALSE;
-            } else if (joy & J_RIGHT) {
-                if ((checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) - 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-                } else
-                    Crouch = FALSE;
-            }
-            if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-                if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-                } else
-                    Crouch = FALSE;
-            }
-        }
+        //PERHAPS REPLACE THIS WITH A NEW SEPARATE FUNCTION CALLED check_C();
+        // if ((Crouch) && !(joy & J_DOWN)) {
+        //     if (joy & J_LEFT) {
+        //         if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) + 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+        //         } else
+        //             Crouch = FALSE;
+        //     } else if (joy & J_RIGHT) {
+        //         if ((checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) - 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+        //         } else
+        //             Crouch = FALSE;
+        //     }
+        //     if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+        //         if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
+        //         } else
+        //             Crouch = FALSE;
+        //     }
+        // }
 
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch)) {
