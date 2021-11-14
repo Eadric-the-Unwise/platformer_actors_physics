@@ -92,31 +92,40 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 }
 //CHECK CROUCH
 void check_C(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexT;
+    UINT16 indexCLx, indexCCx, indexCRx, indexSLx, indexSRx, index_y, indexCamx, tileindexCL, tileindexCC, tileindexCT, tileindexSL, tileindexSR;
 
     indexCamx = camera_x;
-    indexLx = ((newplayerx - 13) + indexCamx) / 8;
-    indexCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexRx = ((newplayerx - 3) + indexCamx) / 8;
+    //CROUCH VALUES
+    indexCLx = ((newplayerx - 14) + indexCamx) / 8;
+    indexCCx = ((newplayerx - 8) + indexCamx) / 8;
+    indexCRx = ((newplayerx - 2) + indexCamx) / 8;
+    //STANDING VALUES (CHECK TO PUSH PLAYER LEFT OR RIGHT IF HEAD IS IN A COLLISION)
+    indexSLx = ((newplayerx - 15) + indexCamx) / 8;
+    indexSRx = ((newplayerx) + indexCamx) / 8;
     index_y = (newplayery - 20) / 8;
 
-    tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
-    tileindexT = COLLISION_WIDE_MAPWidth * index_y + indexRx;
+    tileindexCL = COLLISION_WIDE_MAPWidth * index_y + indexCLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexCC = COLLISION_WIDE_MAPWidth * index_y + indexCCx;
+    tileindexCT = COLLISION_WIDE_MAPWidth * index_y + indexCRx;
+    //STANDING
+    tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;
+    tileindexSR = COLLISION_WIDE_MAPWidth * index_y + indexSRx;
 
-    if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexT] == 0x01)) {
-    } else {
-        //WALK LEFT
-        // if (PLAYER.SpdX < 0) {
-        //     PLAYER.SpdX -= MAX_WALK_SPEED;
-        //     //WALK RIGHT
-        // } else if (PLAYER.SpdX > 0) {
-        //     PLAYER.SpdX += MAX_WALK_SPEED;
+    if (Crouch) {
+        if ((COLLISION_WIDE_MAP[tileindexCL] == 0x01) || (COLLISION_WIDE_MAP[tileindexCC] == 0x01) || (COLLISION_WIDE_MAP[tileindexCT] == 0x01)) {
+        } else {
+            Crouch = FALSE;
+        }
+    } else if (!Crouch) {
+        if (COLLISION_WIDE_MAP[tileindexSR] == 0x01) {
+            PLAYER.SpdX -= MAX_CRAWL_SPEED;
+        } else if (COLLISION_WIDE_MAP[tileindexSL] == 0x01) {
+            PLAYER.SpdX += MAX_CRAWL_SPEED;
+        }
+
+        // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
         // }
-        Crouch = FALSE;
     }
-    // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
-    // }
 }
 
 //LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
@@ -155,9 +164,6 @@ void main() {
     init_submap();
     load_level(&level1);
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
-    // shadow_scx = (UBYTE)(bkg.camera_x >> 4u);
-    // shadow_scy = bkg.camera_y;
-    // DISABLE_VBL_TRANSFER;
     // switch on display after everything is ready
     DISPLAY_ON;
     last_joy = joy = 0;
@@ -279,24 +285,10 @@ void main() {
                 check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
             }
         }
-        //     if (joy & J_LEFT) {
-        //         if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) + 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-        //         } else
-        //             Crouch = FALSE;
-        //     } else if (joy & J_RIGHT) {
-        //         if ((checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) - 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-        //         } else
-        //             Crouch = FALSE;
-        //     }
-        //     if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-        //         if ((checkcollisionBL(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
-        //         } else
-        //             Crouch = FALSE;
-        //     }
-
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch)) {
-            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
+            if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
                 switch_idle();
             }
         }
@@ -319,9 +311,9 @@ void main() {
                 bkg.redraw = TRUE;
             }
         }
-        if (joy & J_B) {
-            printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
-        }
+        // if (joy & J_B) {
+        //     printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
+        // }
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
             // DISPLAY_OFF;
@@ -343,12 +335,6 @@ void main() {
             NTR_x = TO_PIXELS(active_actors[i].x) + active_actors[i].x_offset;
             NBL_y = TO_PIXELS(active_actors[i].y) + active_actors[i].y_offset;
             NBL_x = TO_PIXELS(active_actors[i].x) - (active_actors[i].w - active_actors[i].w_offset);
-
-            // if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
-            // if (active_actors[i].ON == TRUE) {
-            //     printf("GAME OVER\n");
-            // }
-            // }
         }
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
