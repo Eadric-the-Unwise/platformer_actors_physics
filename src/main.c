@@ -68,24 +68,52 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 }
 
 void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
-    UINT16 indexDLx, indexDCx, indexDRx, index_y, indexCamx, tileindexDL, tileindexDC, tileindexDT;
+    UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexT;
 
     indexCamx = camera_x;
-    indexDLx = ((newplayerx - 16) + indexCamx) / 8;
-    indexDCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexDRx = ((newplayerx - 1) + indexCamx) / 8;
+    indexLx = ((newplayerx - 16) + indexCamx) / 8;
+    indexCx = ((newplayerx - 8) + indexCamx) / 8;
+    indexRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - 1) / 8;
 
-    tileindexDL = COLLISION_WIDE_MAPWidth * index_y + indexDLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexDC = COLLISION_WIDE_MAPWidth * index_y + indexDCx;
-    tileindexDT = COLLISION_WIDE_MAPWidth * index_y + indexDRx;
+    tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
+    tileindexT = COLLISION_WIDE_MAPWidth * index_y + indexRx;
 
-    if ((COLLISION_WIDE_MAP[tileindexDL] == 0x01) || (COLLISION_WIDE_MAP[tileindexDC] == 0x01) || (COLLISION_WIDE_MAP[tileindexDT] == 0x01)) {
+    if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexT] == 0x01)) {
         UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
         PLAYER.y = TO_COORDS(ty * 8);
         PLAYER.SpdY = 0;
         Spawn = Jump = FALSE;
         switch_idle_jump();
+    }
+    // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
+    // }
+}
+//CHECK CROUCH
+void check_C(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+    UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexT;
+
+    indexCamx = camera_x;
+    indexLx = ((newplayerx - 13) + indexCamx) / 8;
+    indexCx = ((newplayerx - 8) + indexCamx) / 8;
+    indexRx = ((newplayerx - 3) + indexCamx) / 8;
+    index_y = (newplayery - 20) / 8;
+
+    tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
+    tileindexT = COLLISION_WIDE_MAPWidth * index_y + indexRx;
+
+    if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexT] == 0x01)) {
+    } else {
+        //WALK LEFT
+        // if (PLAYER.SpdX < 0) {
+        //     PLAYER.SpdX -= MAX_WALK_SPEED;
+        //     //WALK RIGHT
+        // } else if (PLAYER.SpdX > 0) {
+        //     PLAYER.SpdX += MAX_WALK_SPEED;
+        // }
+        Crouch = FALSE;
     }
     // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
     // }
@@ -181,6 +209,8 @@ void main() {
         }
         if ((joy & J_DOWN) && !(Jump)) {
             Crouch = TRUE;
+        }
+        if (Crouch) {
             PLAYER.h_offset = 24;
         }
         // DOWN while standing still
@@ -244,7 +274,11 @@ void main() {
         }
 
         //PERHAPS REPLACE THIS WITH A NEW SEPARATE FUNCTION CALLED check_C();
-        // if ((Crouch) && !(joy & J_DOWN)) {
+        if (Crouch) {
+            if (!(joy & J_DOWN)) {
+                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+            }
+        }
         //     if (joy & J_LEFT) {
         //         if ((checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 15, TO_PIXELS(bkg.camera_x))) || (checkcollisionBL(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x))) || (checkcollisionBC(TO_PIXELS(PLAYER.x) + 5, TO_PIXELS(PLAYER.y) - 23, TO_PIXELS(bkg.camera_x)))) {
         //         } else
@@ -259,7 +293,6 @@ void main() {
         //         } else
         //             Crouch = FALSE;
         //     }
-        // }
 
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch)) {
