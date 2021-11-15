@@ -21,8 +21,9 @@
 UBYTE joy, last_joy;
 
 UBYTE floorYposition;
-UBYTE Spawn, Jump, Crouch, Launch, Shooting;
+UBYTE Spawn, Jump, Crouch, canCrouch, Launch, Shooting;
 UBYTE launchDelay = 0;
+UBYTE canCrouch_timer, canCrouch_Ftimer;
 UBYTE shooting_counter = 0;
 const unsigned char blankmap[2] = {0x00, 0x01};
 extern Variables bkg;
@@ -61,11 +62,21 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 switch_idle_jump();  //NOT SURE IF NEEDED
             }
         }
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01)) {
+            canCrouch_timer -= 1;
+            if (canCrouch_timer == 1) {
+                canCrouch = TRUE;
+                // printf("It works!\n");
+                Crouch = TRUE;
+                // canCrouch = FALSE;
+                canCrouch_timer = 40;
+                PLAYER.SpdX -= MAX_CRAWL_SPEED;
+            }
+        }
+        // else if (COLLISION_WIDE_MAP[tileindexLD] == 0x00) {
+        // }
     }
-    // else if (COLLISION_WIDE_MAP[tileindexLD] == 0x00) {
-    // }
 }
-
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
@@ -200,8 +211,10 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    Jump = Crouch = Launch = Shooting = FALSE;
+    Jump = Crouch = canCrouch = Launch = Shooting = FALSE;
     Spawn = TRUE;
+    canCrouch_timer = 40;
+    canCrouch_Ftimer = 30;
     init_submap();
     load_level(&level1);
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
@@ -215,8 +228,11 @@ void main() {
         joy = joypad();
         if (!Spawn) {
             if (joy & J_LEFT) {
-                if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
+                if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
                     SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+                    if (PLAYER.SpdX == 0) {
+                        check_LR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                    }
                 } else if (Crouch) {
                     if (!Jump) {
                         SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
@@ -275,7 +291,13 @@ void main() {
             //CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
             check_J(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x));
         }
-
+        if ((Crouch) && (canCrouch)) {
+            canCrouch_Ftimer -= 1;
+            if (canCrouch_Ftimer == 1) {
+                canCrouch = FALSE;
+                canCrouch_Ftimer = 30;
+            }
+        }
         // ---------------------------------------------
         // ---------------------------------------------
         // WORLD PHYSICS:
@@ -317,7 +339,7 @@ void main() {
         }
 
         //PERHAPS REPLACE THIS WITH A NEW SEPARATE FUNCTION CALLED check_C();
-        if (Crouch) {
+        if ((Crouch) && (!canCrouch)) {
             if (!(joy & J_DOWN)) {
                 check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
             }
