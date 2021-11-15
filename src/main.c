@@ -68,7 +68,7 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 canCrouch = TRUE;
                 Crouch = TRUE;
                 // canCrouch = FALSE;
-                canCrouch_timer = 40;
+                canCrouch_timer = 10;
             }
         }
         // else if (COLLISION_WIDE_MAP[tileindexLD] == 0x00) {
@@ -211,7 +211,7 @@ void main() {
 
     Jump = Crouch = canCrouch = Launch = Shooting = FALSE;
     Spawn = TRUE;
-    canCrouch_timer = 40;
+    canCrouch_timer = 10;
     canCrouch_Ftimer = 8;
     init_submap();
     load_level(&level1);
@@ -226,19 +226,20 @@ void main() {
         joy = joypad();
         if (!Spawn) {
             if (joy & J_LEFT) {
+                if (PLAYER.SpdX == 0) {
+                    // NEED TO SOMEHOW ACTIVATE canCrouch WHEN PRESSING LEFT WITHOUT DISRUPTING THE REGULAR J_DOWN CROUCH CHECK
+                    if (joy & J_DOWN) {
+                        canCrouch_timer = 2;
+                    }
+                    check_LR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                }
                 if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
                     if (canCrouch) {
                         PLAYER.direction == DIR_CRAWL_L;
                     } else {
                         SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
                     }
-                    if (PLAYER.SpdX == 0) {
-                        // NEED TO SOMEHOW ACTIVATE canCrouch WHEN PRESSING LEFT WITHOUT DISRUPTING THE REGULAR J_DOWN CROUCH CHECK
-                        // if (joy & J_DOWN) {
-                        //     canCrouch_timer = 2;
-                        // }
-                        check_LR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
-                    }
+
                 } else if (Crouch) {
                     if (!Jump) {
                         SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
@@ -306,7 +307,7 @@ void main() {
             }
         }
         if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-            canCrouch_timer = 40;
+            canCrouch_timer = 10;
         }
         // ---------------------------------------------
         // ---------------------------------------------
