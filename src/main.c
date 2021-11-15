@@ -29,7 +29,6 @@ extern Variables bkg;
 uint8_t shadow_scx = 0, shadow_scy = 0;
 BOOLEAN overlap(INT16, INT16, INT16, INT16, INT16, INT16, INT16, INT16);
 
-// CAN POSSIBLE USE ONLY 2 FUNCTIONS AND JUST ADD A DIFFERENT PLUG VALUE FROM THE BEGINNING FOR U/D L/R
 void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexDy, indexCy, indexTy, index_Lx, index_Rx, indexCamx, tileindexLD, tileindexLC, tileindexLT, tileindexRD, tileindexRC, tileindexRT;
 
@@ -67,6 +66,7 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     // }
 }
 
+//TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
     indexCamx = camera_x;
@@ -90,6 +90,7 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
     // }
 }
+//TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCL, tileindexCC, tileindexCR;
     //CL = Crouch Left CC = Crouch Center CR = Crouch Right
@@ -371,7 +372,14 @@ void main() {
             NTR_x = TO_PIXELS(active_actors[i].x) + active_actors[i].x_offset;
             NBL_y = TO_PIXELS(active_actors[i].y) + active_actors[i].y_offset;
             NBL_x = TO_PIXELS(active_actors[i].x) - (active_actors[i].w - active_actors[i].w_offset);
+
+            // if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
+            //     if (active_actors[i].ON == TRUE) {
+            //         printf("GAME OVER\n");
+            //     }
+            // }
         }
+
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
 
