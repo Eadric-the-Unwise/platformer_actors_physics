@@ -66,7 +66,6 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             canCrouch_timer -= 1;
             if (canCrouch_timer == 1) {
                 canCrouch = TRUE;
-                // printf("It works!\n");
                 Crouch = TRUE;
                 // canCrouch = FALSE;
                 canCrouch_timer = 40;
@@ -234,6 +233,10 @@ void main() {
                         SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
                     }
                     if (PLAYER.SpdX == 0) {
+                        // NEED TO SOMEHOW ACTIVATE canCrouch WHEN PRESSING LEFT WITHOUT DISRUPTING THE REGULAR J_DOWN CROUCH CHECK
+                        // if (joy & J_DOWN) {
+                        //     canCrouch_timer = 2;
+                        // }
                         check_LR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
                     }
                 } else if (Crouch) {
