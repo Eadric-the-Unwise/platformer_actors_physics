@@ -70,7 +70,6 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 Crouch = TRUE;
                 // canCrouch = FALSE;
                 canCrouch_timer = 40;
-                PLAYER.SpdX -= MAX_CRAWL_SPEED;
             }
         }
         // else if (COLLISION_WIDE_MAP[tileindexLD] == 0x00) {
@@ -214,7 +213,7 @@ void main() {
     Jump = Crouch = canCrouch = Launch = Shooting = FALSE;
     Spawn = TRUE;
     canCrouch_timer = 40;
-    canCrouch_Ftimer = 30;
+    canCrouch_Ftimer = 8;
     init_submap();
     load_level(&level1);
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
@@ -229,7 +228,11 @@ void main() {
         if (!Spawn) {
             if (joy & J_LEFT) {
                 if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
-                    SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+                    if (canCrouch) {
+                        PLAYER.direction == DIR_CRAWL_L;
+                    } else {
+                        SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+                    }
                     if (PLAYER.SpdX == 0) {
                         check_LR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
                     }
@@ -292,11 +295,15 @@ void main() {
             check_J(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x));
         }
         if ((Crouch) && (canCrouch)) {
+            PLAYER.SpdX = -MAX_CRAWL_SPEED;
             canCrouch_Ftimer -= 1;
             if (canCrouch_Ftimer == 1) {
                 canCrouch = FALSE;
-                canCrouch_Ftimer = 30;
+                canCrouch_Ftimer = 8;
             }
+        }
+        if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+            canCrouch_timer = 40;
         }
         // ---------------------------------------------
         // ---------------------------------------------
