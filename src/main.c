@@ -55,6 +55,15 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 switch_crawl();
             }
         }
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x00) && (COLLISION_WIDE_MAP[tileindexRC] == 0x00) && (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
+            if (canCrouch_timer == 1) {
+                canCrouch = TRUE;
+                Crouch = TRUE;
+                // canCrouch = FALSE;
+                canCrouch_timer = 10;
+            }
+            canCrouch_timer -= 1;
+        }
     } else if (!Crouch) {
         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
             PLAYER.SpdX = 0;
@@ -62,14 +71,14 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 switch_idle_jump();  //NOT SURE IF NEEDED
             }
         }
-        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01)) {
-            canCrouch_timer -= 1;
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x00) && (COLLISION_WIDE_MAP[tileindexRC] == 0x00) && (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
             if (canCrouch_timer == 1) {
                 canCrouch = TRUE;
                 Crouch = TRUE;
                 // canCrouch = FALSE;
                 canCrouch_timer = 10;
             }
+            canCrouch_timer -= 1;
         }
         // else if (COLLISION_WIDE_MAP[tileindexLD] == 0x00) {
         // }
@@ -79,9 +88,9 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
     indexCamx = camera_x;
-    indexLx = ((newplayerx - 16) + indexCamx) / 8;
+    indexLx = ((newplayerx - 14) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexRx = ((newplayerx - 1) + indexCamx) / 8;
+    indexRx = ((newplayerx - 3) + indexCamx) / 8;
     index_y = (newplayery - 1) / 8;
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
@@ -104,9 +113,9 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCL, tileindexCC, tileindexCR;
     //CL = Crouch Left CC = Crouch Center CR = Crouch Right
     indexCamx = camera_x;
-    indexLx = ((newplayerx - 16) + indexCamx) / 8;
+    indexLx = ((newplayerx - 14) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexRx = ((newplayerx - 1) + indexCamx) / 8;
+    indexRx = ((newplayerx - 3) + indexCamx) / 8;
     index_y = (newplayery - 1) / 8;
     index_Cy = (newplayery + 7) / 8;
 
@@ -211,8 +220,8 @@ void main() {
 
     Jump = Crouch = canCrouch = Launch = Shooting = FALSE;
     Spawn = TRUE;
-    canCrouch_timer = 10;
-    canCrouch_Ftimer = 8;
+    canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
+    canCrouch_Ftimer = 8;  //TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
     init_submap();
     load_level(&level1);
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
@@ -227,15 +236,14 @@ void main() {
         if (!Spawn) {
             if (joy & J_LEFT) {
                 if (PLAYER.SpdX == 0) {
-                    // NEED TO SOMEHOW ACTIVATE canCrouch WHEN PRESSING LEFT WITHOUT DISRUPTING THE REGULAR J_DOWN CROUCH CHECK
                     if (joy & J_DOWN) {
-                        canCrouch_timer = 2;
+                        canCrouch_timer = 1;
                     }
                     check_LR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
                     if (canCrouch) {
-                        PLAYER.direction == DIR_CRAWL_L;
+                        SetActorDirection(&PLAYER, DIR_CRAWL_L, PLAYER.animation_phase);
                     } else {
                         SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
                     }
@@ -256,9 +264,20 @@ void main() {
                     } else
                         PLAYER.SpdX = -MAX_WALK_SPEED;
                 }
+
             } else if (joy & J_RIGHT) {
+                if (PLAYER.SpdX == 0) {
+                    if (joy & J_DOWN) {
+                        canCrouch_timer = 1;
+                    }
+                    check_LR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                }
                 if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
-                    SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
+                    if (canCrouch) {
+                        SetActorDirection(&PLAYER, DIR_CRAWL_R, PLAYER.animation_phase);
+                    } else {
+                        SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
+                    }
                 } else if (Crouch) {
                     if (!Jump) {
                         SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
@@ -284,7 +303,7 @@ void main() {
             PLAYER.h_offset = 24;
         }
         // DOWN while standing still
-        if ((Crouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
+        if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
             switch_down();
         }
         //IF PLAYER IS FREE FALLING FOR ANY REASON
@@ -299,7 +318,11 @@ void main() {
             check_J(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x));
         }
         if ((Crouch) && (canCrouch)) {
-            PLAYER.SpdX = -MAX_CRAWL_SPEED;
+            if ((PLAYER.direction == DIR_CRAWL_L) || (PLAYER.direction == DIR_DOWN_L)) {
+                PLAYER.SpdX = -MAX_CRAWL_SPEED;
+            } else if ((PLAYER.direction == DIR_CRAWL_R) || (PLAYER.direction == DIR_DOWN_R)) {
+                PLAYER.SpdX = MAX_CRAWL_SPEED;
+            }
             canCrouch_Ftimer -= 1;
             if (canCrouch_Ftimer == 1) {
                 canCrouch = FALSE;
