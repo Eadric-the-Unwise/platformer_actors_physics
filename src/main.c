@@ -98,10 +98,10 @@ void check_C(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     //CROUCH VALUES
     indexCLx = ((newplayerx - 14) + indexCamx) / 8;
     indexCCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexCRx = ((newplayerx - 2) + indexCamx) / 8;
+    indexCRx = ((newplayerx - 3) + indexCamx) / 8;
     //STANDING VALUES (CHECK TO PUSH PLAYER LEFT OR RIGHT IF HEAD IS IN A COLLISION)
-    indexSLx = ((newplayerx - 15) + indexCamx) / 8;
-    indexSRx = ((newplayerx) + indexCamx) / 8;
+    indexSLx = ((newplayerx - 16) + indexCamx) / 8;
+    indexSRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - 20) / 8;
 
     tileindexCL = COLLISION_WIDE_MAPWidth * index_y + indexCLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
@@ -287,9 +287,9 @@ void main() {
         }
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch)) {
-            if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 switch_idle();
+                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
             }
         }
         // update PLAYER absolute posiiton
