@@ -68,8 +68,7 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 }
 
 void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexT;
-
+    UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
     indexCamx = camera_x;
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
@@ -78,17 +77,58 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
-    tileindexT = COLLISION_WIDE_MAPWidth * index_y + indexRx;
+    tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
 
-    if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexT] == 0x01)) {
+    if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
         UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
         PLAYER.y = TO_COORDS(ty * 8);
         PLAYER.SpdY = 0;
         Spawn = Jump = FALSE;
         switch_idle_jump();
     }
+
     // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
     // }
+}
+void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+    UINT16 indexLx, indexCx, indexRx, index_y, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCL, tileindexCC, tileindexCR;
+    //CL = Crouch Left CC = Crouch Center CR = Crouch Right
+    indexCamx = camera_x;
+    indexLx = ((newplayerx - 16) + indexCamx) / 8;
+    indexCx = ((newplayerx - 8) + indexCamx) / 8;
+    indexRx = ((newplayerx - 1) + indexCamx) / 8;
+    index_y = (newplayery - 1) / 8;
+    index_Cy = (newplayery + 7) / 8;
+
+    tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
+    tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
+
+    tileindexCL = COLLISION_WIDE_MAPWidth * index_Cy + indexLx;
+    tileindexCC = COLLISION_WIDE_MAPWidth * index_Cy + indexCx;
+    tileindexCR = COLLISION_WIDE_MAPWidth * index_Cy + indexRx;
+
+    if (Crouch) {
+        if ((COLLISION_WIDE_MAP[tileindexCL] == 0x01) || (COLLISION_WIDE_MAP[tileindexCC] == 0x01) || (COLLISION_WIDE_MAP[tileindexCR] == 0x01)) {
+        } else {
+            Crouch = Launch = FALSE;
+            if (!Jump) {
+                PLAYER.SpdY = JUMP_IMPULSE;
+                Jump = TRUE;
+                switch_jump();
+            }
+        }
+    } else if (!Crouch) {
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
+        } else {
+            Crouch = Launch = FALSE;
+            if (!Jump) {
+                PLAYER.SpdY = JUMP_IMPULSE;
+                Jump = TRUE;
+                switch_jump();
+            }
+        }
+    }
 }
 //CHECK CROUCH
 void check_C(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
@@ -231,12 +271,8 @@ void main() {
         }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
-            Crouch = Launch = FALSE;
-            if (!Jump) {
-                PLAYER.SpdY = JUMP_IMPULSE;
-                Jump = TRUE;
-                switch_jump();
-            }
+            //CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
+            check_J(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x));
         }
 
         // ---------------------------------------------
