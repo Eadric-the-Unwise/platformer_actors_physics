@@ -97,6 +97,7 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
 
+    if (PLAYER.SpdY > 0){
     if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
         UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
         PLAYER.y = TO_COORDS(ty * 8);
@@ -104,24 +105,36 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         Spawn = Jump = FALSE;
         switch_idle_jump();
     }
-
+    } else if (PLAYER.SpdY < 0){
+    if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
+        PLAYER.SpdY = 0;
+        }
+    }
     // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
     // }
 }
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index_y, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCL, tileindexCC, tileindexCR;
+    UINT16 indexLx, indexCx, indexRx, indexSLx, indexSRx, index_y, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSR;
     //CL = Crouch Left CC = Crouch Center CR = Crouch Right
     indexCamx = camera_x;
+  
     indexLx = ((newplayerx - 14) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexRx = ((newplayerx - 3) + indexCamx) / 8;
+    indexRx = ((newplayerx - 5) + indexCamx) / 8;
+ 
+    indexSLx = ((newplayerx - 10) + indexCamx) / 8;
+    indexSRx = ((newplayerx - 5) + indexCamx) / 8;
+    
     index_y = (newplayery - 1) / 8;
     index_Cy = (newplayery + 7) / 8;
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
+
+    tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexSR = COLLISION_WIDE_MAPWidth * index_y + indexSRx;
 
     tileindexCL = COLLISION_WIDE_MAPWidth * index_Cy + indexLx;
     tileindexCC = COLLISION_WIDE_MAPWidth * index_Cy + indexCx;
@@ -138,7 +151,18 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             }
         }
     } else if (!Crouch) {
-        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
+        //CHECKING 0X01 here prevents him from "trying" to jump aka glitched animation 1 frame
+        if (PLAYER.SpdX > 0){
+        if (COLLISION_WIDE_MAP[tileindexSL] == 0x02){
+        } else if (PLAYER.SpdX < 0){
+            if (COLLISION_WIDE_MAP[tileindexSR] == 0x02){
+            }
+        }
+
+        
+//THIS ISNT FINISH FIX IT
+        }
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexC] == 0x02) || (COLLISION_WIDE_MAP[tileindexR] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
         } else {
             Crouch = Launch = FALSE;
             if (!Jump) {
