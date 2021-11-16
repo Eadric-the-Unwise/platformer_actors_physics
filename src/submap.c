@@ -23,7 +23,7 @@ void init_submap() {
     bkg.map_pos_x = (UBYTE)(bkg.camera_x >> 7u);
     bkg.map_pos_y = (UBYTE)(bkg.camera_y >> 3u);
 
-    set_bkg_data_nonbanked(0, 3, BRICK_WIDE_TILES, BANK(BRICK_WIDE_TILES));
+    set_bkg_data_nonbanked(0, 5, BRICK_WIDE_TILES, BRICK_WIDE_TILESBank);
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
 
     set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, BRICK_WIDE_MAP, BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPBank);

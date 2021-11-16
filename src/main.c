@@ -25,7 +25,7 @@ UBYTE Spawn, Jump, Crouch, canCrouch, Launch, Shooting;
 UBYTE launchDelay = 0;
 UBYTE canCrouch_timer, canCrouch_Ftimer;
 UBYTE shooting_counter = 0;
-const unsigned char blankmap[2] = {0x00, 0x01};
+const unsigned char blankmap[3] = {0x00, 0x01, 0x02};
 extern Variables bkg;
 uint8_t shadow_scx = 0, shadow_scy = 0;
 BOOLEAN overlap(INT16, INT16, INT16, INT16, INT16, INT16, INT16, INT16);
