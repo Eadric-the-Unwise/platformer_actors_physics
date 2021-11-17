@@ -21,7 +21,7 @@
 UBYTE joy, last_joy;
 
 UBYTE floorYposition;
-UBYTE Spawn, Jump, Crouch, canCrouch, Launch, Shooting;
+UBYTE Spawn, Jump, Crouch, canCrouch, x_Adjust, Launch, Shooting;
 UBYTE launchDelay = 0;
 UBYTE canCrouch_timer, canCrouch_Ftimer;
 UBYTE shooting_counter = 0;
@@ -96,7 +96,18 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
-
+//IF THE CHARACTER IS STANDING UNDER AN 0x02 COLLISION CORNER AND CLIPS, ADJUST HIS X UNTIL HE IS SAFELY OUTSIDE OF THE COLLISION WALL OF TILES
+    if (x_Adjust) {
+    if ((COLLISION_WIDE_MAP[tileindexL] != 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)){
+            PLAYER.SpdX = -MAX_WALK_SPEED;
+        }
+    else if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)){
+            PLAYER.SpdX = MAX_WALK_SPEED;
+        }
+    else if ((COLLISION_WIDE_MAP[tileindexL] != 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)){
+        x_Adjust = FALSE;
+    }
+    }
     if (PLAYER.SpdY > 0){
     if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
         UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
@@ -121,8 +132,8 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
   
     indexLx = ((newplayerx - 14) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexRx = ((newplayerx - 5) + indexCamx) / 8;
- 
+    indexRx = ((newplayerx - 3) + indexCamx) / 8;
+ //STANDING x with a few pixels of forgiveness for 0x02 collision checks
     indexSLx = ((newplayerx - 10) + indexCamx) / 8;
     indexSRx = ((newplayerx - 5) + indexCamx) / 8;
     
@@ -152,17 +163,14 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         }
     } else if (!Crouch) {
         //CHECKING 0X01 here prevents him from "trying" to jump aka glitched animation 1 frame
-        if (PLAYER.SpdX > 0){
-        if (COLLISION_WIDE_MAP[tileindexSL] == 0x02){
-        } else if (PLAYER.SpdX < 0){
-            if (COLLISION_WIDE_MAP[tileindexSR] == 0x02){
-            }
         }
-
-        
-//THIS ISNT FINISH FIX IT
+        if ((COLLISION_WIDE_MAP[tileindexL] != 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)){
+            x_Adjust = TRUE;
         }
-        if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexC] == 0x02) || (COLLISION_WIDE_MAP[tileindexR] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
+        else if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)){
+            x_Adjust = TRUE;
+        }
+        if (((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
         } else {
             Crouch = Launch = FALSE;
             if (!Jump) {
@@ -171,8 +179,8 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 switch_jump();
             }
         }
-    }
 }
+
 //CHECK CROUCH
 void check_C(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexCLx, indexCCx, indexCRx, indexSLx, indexSRx, index_y, indexCamx, tileindexCL, tileindexCC, tileindexCT, tileindexSL, tileindexSR;
@@ -242,7 +250,7 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    Jump = Crouch = canCrouch = Launch = Shooting = FALSE;
+    Jump = Crouch = canCrouch = x_Adjust = Launch = Shooting = FALSE;
     Spawn = TRUE;
     canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCrouch_Ftimer = 8;  //TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
