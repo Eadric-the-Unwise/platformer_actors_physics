@@ -388,7 +388,7 @@ void main() {
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             if (Crouch){
                 canDescend = TRUE;
-             check_J(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 2, TO_PIXELS(bkg.camera_x));}
+             check_J(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x));}
             
             else if (!Crouch) {
             //CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
