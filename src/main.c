@@ -1,8 +1,6 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
 
-// uncomment the line below to switch on debug features
-//#define DEBUG
 #ifdef DEBUG
 #include <stdio.h>
 #endif
@@ -165,7 +163,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         }
     } else if (!Crouch) {
         //CHECKING 0X01 here prevents him from "trying" to jump aka glitched animation 1 frame
-        }
+        
         //IF WALK SPEED IS LESS THAN MAX, MAKE HIS JUMP ABILITY ON CORNERS A BIT MORE RESTRICTED
         if ((PLAYER.SpdX < MAX_WALK_SPEED) && (PLAYER.SpdX > -MAX_WALK_SPEED)){
            if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexSL] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexSR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
@@ -201,7 +199,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 }
             }
         }   
-
+    }
 }
 
 //CHECK CROUCH
@@ -460,7 +458,7 @@ void main() {
             }
         }
         // if (joy & J_B) {
-        //     printf("CamxD=-%u\n", (bkg.camera_max_x - TO_PIXELS(bkg.camera_x)));
+        //     printf("Crouch=%u\n", Crouch);
         // }
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
