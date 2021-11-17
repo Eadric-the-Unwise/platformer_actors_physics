@@ -126,7 +126,7 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 }
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, indexSLx, indexSRx, index_y, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSR;
+    UINT16 indexLx, indexCx, indexRx, indexSLx, indexSCx, indexSRx, index_y, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
     //CL = Crouch Left CC = Crouch Center CR = Crouch Right
     indexCamx = camera_x;
   
@@ -135,6 +135,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
  //STANDING x with a few pixels of forgiveness for 0x02 collision checks
     indexSLx = ((newplayerx - 10) + indexCamx) / 8;
+    indexSCx = ((newplayerx - 9) + indexCamx) / 8;
     indexSRx = ((newplayerx - 5) + indexCamx) / 8;
     
     index_y = (newplayery - 1) / 8;
@@ -145,6 +146,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
 
     tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexSC = COLLISION_WIDE_MAPWidth * index_y + indexSCx;
     tileindexSR = COLLISION_WIDE_MAPWidth * index_y + indexSRx;
 
     tileindexCL = COLLISION_WIDE_MAPWidth * index_Cy + indexLx;
@@ -166,7 +168,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         
         //IF WALK SPEED IS LESS THAN MAX, MAKE HIS JUMP ABILITY ON CORNERS A BIT MORE RESTRICTED
         if ((PLAYER.SpdX < MAX_WALK_SPEED) && (PLAYER.SpdX > -MAX_WALK_SPEED)){
-           if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexSL] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexSR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
+           if (((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexSL] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexSR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
            } else {
             Crouch = Launch = FALSE;
             if (!Jump) {
