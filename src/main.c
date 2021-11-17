@@ -65,10 +65,12 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             canCrouch_timer -= 1;
         }
     } else if (!Crouch) {
-        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
+        if ((COLLISION_WIDE_MAP[tileindexLD] != 0x00) || (COLLISION_WIDE_MAP[tileindexLC] != 0x00) || (COLLISION_WIDE_MAP[tileindexLT] != 0x00) || (COLLISION_WIDE_MAP[tileindexRD] != 0x00) || (COLLISION_WIDE_MAP[tileindexRC] != 0x00) || (COLLISION_WIDE_MAP[tileindexRT] != 0x00)) {
+            if (!x_Adjust){
             PLAYER.SpdX = 0;
             if (!Jump) {
                 switch_idle_jump();  //NOT SURE IF NEEDED
+            }
             }
         }
         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x00) && (COLLISION_WIDE_MAP[tileindexRC] == 0x00) && (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
