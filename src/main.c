@@ -290,7 +290,7 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    Jump = Crouch = canCrouch = x_Adjust = Launch = Shooting = FALSE;
+    Jump = Crouch = canCrouch = canDescend = Descend = x_Adjust = Launch = Shooting = FALSE;
     Spawn = TRUE;
     canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCrouch_Ftimer = Descend_timer = 16;  //TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
