@@ -137,7 +137,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
  //STANDING x with a few pixels of forgiveness for 0x02 collision checks
     indexSLx = ((newplayerx - 10) + indexCamx) / 8;
-    indexSRx = ((newplayerx - 7) + indexCamx) / 8;
+    indexSRx = ((newplayerx - 5) + indexCamx) / 8;
     
     index_y = (newplayery - 1) / 8;
     index_Cy = (newplayery + 7) / 8;
@@ -159,52 +159,34 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             Crouch = Launch = FALSE;
             if (!Jump) {
                 PLAYER.SpdY = JUMP_IMPULSE;
-                Jump = TRUE;
+                Jump = x_Adjust = TRUE;
                 switch_jump();
             }
         }
     } else if (!Crouch) {
         //CHECKING 0X01 here prevents him from "trying" to jump aka glitched animation 1 frame
         }
-        if (PLAYER.SpdX < 0){
-        if ((COLLISION_WIDE_MAP[tileindexL] != 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)){
-            x_Adjust = TRUE;
-            }
-        }
-        else if (PLAYER.SpdX > 0){
-        if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)){
-            x_Adjust = TRUE;
-            }
-        }
-        else if (PLAYER.SpdX == 0) {
-                    if ((COLLISION_WIDE_MAP[tileindexSL] != 0x02) && (COLLISION_WIDE_MAP[tileindexSR] == 0x02)){
-            x_Adjust = TRUE;
-            } else if ((COLLISION_WIDE_MAP[tileindexSL] == 0x02) && (COLLISION_WIDE_MAP[tileindexSR] != 0x02)){
-            x_Adjust = TRUE;
-            }
-        }
-        if (PLAYER.SpdX != 0){
-           if (((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))){
-           } else {
-            Crouch = Launch = FALSE;
-            if (!Jump) {
-                PLAYER.SpdY = JUMP_IMPULSE;
-                Jump = TRUE;
-                switch_jump();
-            }
-           }
-        }
-        else if (PLAYER.SpdX == 0){
+                if (PLAYER.SpdX == 0){
            if (((COLLISION_WIDE_MAP[tileindexSL] == 0x02) && (COLLISION_WIDE_MAP[tileindexSR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
            } else {
             Crouch = Launch = FALSE;
             if (!Jump) {
                 PLAYER.SpdY = JUMP_IMPULSE;
-                Jump = TRUE;
+                Jump = x_Adjust = TRUE;
                 switch_jump();
             }
            }
-        }
+        } else {
+            if (((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))){
+           } else {
+            Crouch = Launch = FALSE;
+            if (!Jump) {
+                PLAYER.SpdY = JUMP_IMPULSE;
+                Jump = x_Adjust = TRUE;
+                switch_jump();
+            }
+           }
+        }   
 
 }
 
