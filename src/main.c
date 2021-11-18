@@ -179,9 +179,9 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                     }
                 }
             } 
-            if (((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexSL] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexSR] == 0x02))){
+            if (( (COLLISION_WIDE_MAP[tileindexSL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexSR] == 0x02)){
                 x_Adjust = TRUE;
-            }
+            }   
         } else {  //IF WALK SPEED MAX, THEN ALLOW SOME LEEWAY ON WHEN HE IS ABLE TO JUMP OUT OF A CORNER (EXCEPT INTO THE CORNER FROM OUTSIDE)
             if (PLAYER.direction == DIR_RIGHT) {
                 if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
