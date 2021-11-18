@@ -20,12 +20,9 @@ UBYTE joy, last_joy;
 
 UBYTE floorYposition;
 UBYTE Spawn, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
-UBYTE launchDelay = 0;
 UBYTE canCrouch_timer, canCrouch_Ftimer, Drop_timer;
-UBYTE shooting_counter = 0;
-const unsigned char blankmap[3] = {0x00, 0x01, 0x02};
 extern Variables bkg;
-uint8_t shadow_scx = 0, shadow_scy = 0;
+// uint8_t shadow_scx = 0, shadow_scy = 0;
 BOOLEAN overlap(INT16, INT16, INT16, INT16, INT16, INT16, INT16, INT16);
 
 void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
@@ -99,10 +96,11 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     //IF THE CHARACTER IS STANDING UNDER AN 0x02 COLLISION CORNER AND CLIPS, ADJUST HIS X UNTIL HE IS SAFELY OUTSIDE OF THE COLLISION WALL OF TILES
     if (x_Adjust) {
         if ((COLLISION_WIDE_MAP[tileindexL] != 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) {
-            PLAYER.SpdX = -MAX_WALK_SPEED;
+            PLAYER.SpdX = -MAX_CRAWL_SPEED;
         } else if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)) {
-            PLAYER.SpdX = MAX_WALK_SPEED;
+            PLAYER.SpdX = MAX_CRAWL_SPEED;
         } else if ((COLLISION_WIDE_MAP[tileindexL] != 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)) {
+            PLAYER.SpdX = 0;
             x_Adjust = FALSE;
         }
     }
