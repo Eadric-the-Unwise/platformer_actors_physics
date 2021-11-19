@@ -32,7 +32,7 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE},
     //1 NPC PISTOL
-    {.x = TO_COORDS(-185),
+    {.x = TO_COORDS(-233),
      .y = TO_COORDS(136),
      .SpdX = 0,
      .SpdY = 0,
@@ -72,7 +72,7 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE},
     //3 NPC WALK
-    {.x = TO_COORDS(-71),
+    {.x = TO_COORDS(-201),
      .y = TO_COORDS(136),
      .SpdX = 5,
      .SpdY = 0,
@@ -171,7 +171,7 @@ void render_level1() {
                 current_actor->patrol_timer = current_actor->patrol_reset;
             }
         } else if (current_actor->NPC_type == WALK) {
-            if (TO_PIXELS(current_actor->x) >= -10)
+            if (TO_PIXELS(current_actor->x) >= 0)
                 current_actor->x += current_actor->SpdX;
         }
         current_actor++;
