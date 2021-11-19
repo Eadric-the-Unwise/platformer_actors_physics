@@ -10,7 +10,7 @@
 #include "collisions.h"
 #include "level1.h"
 #include "level2.h"
-#include "macros.h"
+#include "camera.h"
 #include "scene.h"
 
 UBYTE joy, last_joy;
@@ -213,23 +213,9 @@ void main() {
         }
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
-        //THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
-        if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
-            bkg.camera_x += PLAYER.SpdX;
-            bkg.redraw = TRUE;
-        } else
-            PLAYER.x += PLAYER.SpdX;
-        if (TO_PIXELS(bkg.camera_x) - 1 <= 0) {
-            if ((joy & J_RIGHT) && (PLAYER.SpdX > 0) && (TO_PIXELS(PLAYER.x) >= 118)) {
-                bkg.camera_x += PLAYER.SpdX;
-                bkg.redraw = TRUE;
-            }
-        } else if (TO_PIXELS(bkg.camera_x) + 1 >= bkg.camera_max_x) {
-            if ((joy & J_LEFT) && (PLAYER.SpdX < 0) && (TO_PIXELS(PLAYER.x) <= 118)) {
-                bkg.camera_x += PLAYER.SpdX;
-                bkg.redraw = TRUE;
-            }
-        }
+        
+        render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
+
         // if (joy & J_B) {
         //     printf("SpdX=%d\n", PLAYER.SpdX);
         // }
@@ -258,9 +244,9 @@ void main() {
 
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].ON == TRUE) {
-            DISPLAY_OFF;
-            // Spawn = TRUE;
-            // init_submap();
+            // DISPLAY_OFF;
+            Spawn = TRUE;
+            init_submap();
             // load_level(&level1);
             // DISPLAY_ON;
                 }

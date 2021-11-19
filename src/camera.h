@@ -1,6 +1,6 @@
-#ifndef __MACROS_H__
+#ifndef __camera_H__
 // prevents the includes from being called twice
-#define __MACROS_H__
+#define __camera_H__
 
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
@@ -11,6 +11,7 @@
 #include "submap.h"
 
 void set_camera();
+void render_camera(UBYTE playerx, INT16 camx);
 void performantdelay(UINT8 numloops);
 inline void set_level(UINT8, UINT8, const UINT8 *, UINT8 bank);
 void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank);

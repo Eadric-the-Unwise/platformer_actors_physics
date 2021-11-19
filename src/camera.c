@@ -1,8 +1,9 @@
-#include "macros.h"
+#include "camera.h"
 
 #include "scene.h"
 
 Variables bkg;
+extern UBYTE joy;
 
 void set_camera() {
 
@@ -42,7 +43,25 @@ inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, 
     bkg.camera_max_x = (map_width - 20) * 8;
     bkg.level_map_bank = bank;
 }
-
+void render_camera(UBYTE playerx, INT16 camx) {
+        //THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
+        if ((camx > 0) && (camx < bkg.camera_max_x)) {
+            bkg.camera_x += PLAYER.SpdX;
+            bkg.redraw = TRUE;
+        } else
+            PLAYER.x += PLAYER.SpdX;
+        if ((camx - 1) <= 0) {
+            if ((joy & J_RIGHT) && (PLAYER.SpdX > 0) && (playerx >= 118)) {
+                bkg.camera_x += PLAYER.SpdX;
+                bkg.redraw = TRUE;
+            }
+        } else if ((camx + 1) >= bkg.camera_max_x) {
+            if ((joy & J_LEFT) && (PLAYER.SpdX < 0) && (playerx <= 118)) {
+                bkg.camera_x += PLAYER.SpdX;
+                bkg.redraw = TRUE;
+            }
+        }
+}
 void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank)
 #ifndef __INTELLISENSE__
     NONBANKED
