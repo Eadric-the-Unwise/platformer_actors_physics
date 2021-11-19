@@ -185,20 +185,34 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexR] == 0x02)) {
                 x_Adjust = TRUE;
             }
-        } else if ((PLAYER.SpdX == MAX_WALK_SPEED) || (PLAYER.SpdX == -MAX_WALK_SPEED)) {  //IF WALK SPEED MAX, THEN ALLOW SOME LEEWAY ON WHEN HE IS ABLE TO JUMP OUT OF A CORNER (EXCEPT INTO THE CORNER FROM OUTSIDE)
-
-            if (((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
-            } else {
-                if (!Drop) {
-                    Crouch = Launch = FALSE;
-                    if (!Jump) {
-                        PLAYER.SpdY = JUMP_IMPULSE;
-                        Jump = TRUE;
-                        switch_jump();
+        } else {  //IF WALK SPEED MAX, THEN ALLOW SOME LEEWAY ON WHEN HE IS ABLE TO JUMP OUT OF A CORNER (EXCEPT INTO THE CORNER FROM OUTSIDE)
+            if (PLAYER.direction == DIR_RIGHT) {
+                if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexR] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
+                } else {
+                    if (!Drop) {
+                        Crouch = Launch = FALSE;
+                        if (!Jump) {
+                            PLAYER.SpdY = JUMP_IMPULSE;
+                            Jump = TRUE;
+                            switch_jump();
+                        }
                     }
                 }
             }
-            if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexC] == 0x02) || (COLLISION_WIDE_MAP[tileindexR] == 0x02)) {
+            if (PLAYER.direction == DIR_LEFT) {
+                if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
+                } else {
+                    if (!Drop) {
+                        Crouch = Launch = FALSE;
+                        if (!Jump) {
+                            PLAYER.SpdY = JUMP_IMPULSE;
+                            Jump = TRUE;
+                            switch_jump();
+                        }
+                    }
+                }
+            }
+            if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexR] == 0x02)) {
                 x_Adjust = TRUE;
             }
         }
