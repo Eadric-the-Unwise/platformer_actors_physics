@@ -58,8 +58,6 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             }
             canCrouch_timer -= 1;
         }
-        // else if (COLLISION_WIDE_MAP[tileindexLD] == 0x00) {
-        // }
     }
 }
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
@@ -105,8 +103,6 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             PLAYER.SpdY = 0;
         }
     }
-    // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
-    // }
 }
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
@@ -129,7 +125,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
 
-    tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx; 
     tileindexSC = COLLISION_WIDE_MAPWidth * index_y + indexSCx;
     tileindexSR = COLLISION_WIDE_MAPWidth * index_y + indexSRx;
 
@@ -150,8 +146,6 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             }
         }
     } else if (!Crouch) {
-        //CHECKING 0X01 here prevents him from "trying" to jump aka glitched animation 1 frame
-
         //IF WALK SPEED IS LESS THAN MAX, MAKE HIS JUMP ABILITY ON CORNERS A BIT MORE RESTRICTED
         if ((PLAYER.SpdX < MAX_WALK_SPEED) && (PLAYER.SpdX > -MAX_WALK_SPEED)) {
             if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
@@ -250,9 +244,6 @@ void check_C(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         } else if (COLLISION_WIDE_MAP[tileindexSL] == 0x01) {
             PLAYER.SpdX += MAX_CRAWL_SPEED;
         }
-
-        // else if ((COLLISION_WIDE_MAP[tileindexDL] == 0x00) && (COLLISION_WIDE_MAP[tileindexDC] == 0x00) && (COLLISION_WIDE_MAP[tileindexDT] == 0x00)) {
-        // }
     }
 }
 
@@ -264,7 +255,6 @@ BOOLEAN overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT1
         // the line cannot have positive overlap
         return 0x00U;
     }
-
     if ((l1_x >= r2_x) || (l2_x >= r1_x)) {
         return 0x00U;
     }

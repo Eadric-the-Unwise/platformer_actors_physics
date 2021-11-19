@@ -1,11 +1,7 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
-
-#ifdef DEBUG
 #include <stdio.h>
-#endif
-// SUBMAP-3 BRANCH
-//  Include your scene and map header files
+
 #include "../res/tiles/brick_wide_map.h"
 #include "../res/tiles/brick_wide_tiles.h"
 #include "../res/tiles/collision_wide_map.h"
@@ -18,11 +14,8 @@
 #include "scene.h"
 
 UBYTE joy, last_joy;
-
-
 extern Variables bkg;
 // uint8_t shadow_scx = 0, shadow_scy = 0;
-
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -133,11 +126,15 @@ void main() {
         }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
+            UBYTE px, py, camx;
+            px = TO_PIXELS(PLAYER.x);
+            py = TO_PIXELS(PLAYER.y);
+            camx = TO_PIXELS(bkg.camera_x);
             if (Crouch) {
-                check_Drop(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x));
+                check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
             }
             //CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
-            check_J(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x));
+            check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
         }
         if (Drop) {
             Drop_timer -= 1;
@@ -238,31 +235,36 @@ void main() {
         // }
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
-            // DISPLAY_OFF;
-            // Spawn = TRUE;
-            // init_submap();
-            // load_level(&level1);
-            // DISPLAY_ON;
             PLAYER.y = TO_COORDS(50);
         }
         // COPIED FROM DINO COLLISIONS
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             //[y][x]
             UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
-            PTR_y = TO_PIXELS(PLAYER.y) - (PLAYER.h - PLAYER.h_offset);  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract
-            PTR_x = TO_PIXELS(PLAYER.x) + PLAYER.x_offset;               //TR x
-            PBL_y = TO_PIXELS(PLAYER.y) + PLAYER.y_offset;               //BL y
-            PBL_x = TO_PIXELS(PLAYER.x) - (PLAYER.w - PLAYER.x_offset);  //BL x
-            NTR_y = TO_PIXELS(active_actors[i].y) - active_actors[i].h;
-            NTR_x = TO_PIXELS(active_actors[i].x) + active_actors[i].x_offset;
-            NBL_y = TO_PIXELS(active_actors[i].y) + active_actors[i].y_offset;
-            NBL_x = TO_PIXELS(active_actors[i].x) - (active_actors[i].w - active_actors[i].w_offset);
+            UBYTE px, py, ax, ay;
+            px = TO_PIXELS(PLAYER.x);
+            py = TO_PIXELS(PLAYER.y);
+            ax = TO_PIXELS(active_actors[i].x);
+            ay = TO_PIXELS(active_actors[i].y);
+            
+            PTR_y = py - (PLAYER.h - PLAYER.h_offset);  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract
+            PTR_x = px + PLAYER.x_offset;               //TR x
+            PBL_y = py + PLAYER.y_offset;               //BL y
+            PBL_x = px - (PLAYER.w - PLAYER.x_offset);  //BL x
+            NTR_y = ay - active_actors[i].h;
+            NTR_x = ax + active_actors[i].x_offset;
+            NBL_y = ay + active_actors[i].y_offset;
+            NBL_x = ax - (active_actors[i].w - active_actors[i].w_offset);
 
-            // if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
-            //     if (active_actors[i].ON == TRUE) {
-            //         printf("GAME OVER\n");
-            //     }
-            // }
+            if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
+                if (active_actors[i].ON == TRUE) {
+            DISPLAY_OFF;
+            // Spawn = TRUE;
+            // init_submap();
+            // load_level(&level1);
+            // DISPLAY_ON;
+                }
+            }
         }
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
