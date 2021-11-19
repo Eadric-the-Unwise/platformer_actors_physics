@@ -46,12 +46,15 @@ void main() {
         last_joy = joy;
         joy = joypad();
         if (!Spawn) {
+            UBYTE px, py;
+            px = TO_PIXELS(PLAYER.x);
+            py = TO_PIXELS(PLAYER.y);
             if (joy & J_LEFT) {
                 if (PLAYER.SpdX == 0) {
                     if (joy & J_DOWN) {
                         canCrouch_timer = 1;
                     }
-                    check_LR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                    check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
                     if (canCrouch) {
@@ -82,7 +85,7 @@ void main() {
                     if (joy & J_DOWN) {
                         canCrouch_timer = 1;
                     }
-                    check_LR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                    check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
                     if (canCrouch) {
@@ -126,10 +129,9 @@ void main() {
         }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
-            UBYTE px, py, camx;
+            UBYTE px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-            camx = TO_PIXELS(bkg.camera_x);
             if (Crouch) {
                 check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
             }
@@ -213,7 +215,7 @@ void main() {
         }
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
-        
+
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
 
         // if (joy & J_B) {
@@ -244,11 +246,11 @@ void main() {
 
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].ON == TRUE) {
-            // DISPLAY_OFF;
+            DISPLAY_OFF;
             Spawn = TRUE;
             init_submap();
-            // load_level(&level1);
-            // DISPLAY_ON;
+            load_level(&level1);
+            DISPLAY_ON;
                 }
             }
         }
