@@ -171,7 +171,7 @@ void render_level1() {
                 current_actor->patrol_timer = current_actor->patrol_reset;
             }
         } else if (current_actor->NPC_type == WALK) {
-            if (TO_PIXELS(current_actor->x) >= -40)
+            if (TO_PIXELS(current_actor->x) >= -10)
                 current_actor->x += current_actor->SpdX;
         }
         current_actor++;
