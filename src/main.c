@@ -103,7 +103,9 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
             }
         }
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x00) && (COLLISION_WIDE_MAP[tileindexR] == 0x00)) {
+            if (PLAYER.SpdX != MAX_WALK_SPEED && PLAYER.SpdX != -MAX_WALK_SPEED && (!(joy & J_LEFT)) && (!(joy & J_RIGHT))) {
             PLAYER.SpdX = 0;
+            }
             x_Adjust = FALSE;
         }
     }
