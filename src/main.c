@@ -95,11 +95,14 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
     //IF THE CHARACTER IS STANDING UNDER AN 0x02 COLLISION CORNER AND CLIPS, ADJUST HIS X UNTIL HE IS SAFELY OUTSIDE OF THE COLLISION WALL OF TILES
     if (x_Adjust) {
-        if ((COLLISION_WIDE_MAP[tileindexL] != 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) {
-            PLAYER.SpdX = -MAX_CRAWL_SPEED;
-        } else if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)) {
-            PLAYER.SpdX = MAX_CRAWL_SPEED;
-        } else if ((COLLISION_WIDE_MAP[tileindexL] == 0x00) && (COLLISION_WIDE_MAP[tileindexR] == 0x00)) {
+        if ((PLAYER.SpdX < MAX_WALK_SPEED) && (PLAYER.SpdX > -MAX_WALK_SPEED)) {
+            if ((COLLISION_WIDE_MAP[tileindexL] != 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) {
+                PLAYER.SpdX = -MAX_CRAWL_SPEED;
+            } else if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)) {
+                PLAYER.SpdX = MAX_CRAWL_SPEED;
+            }
+        }
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x00) && (COLLISION_WIDE_MAP[tileindexR] == 0x00)) {
             PLAYER.SpdX = 0;
             x_Adjust = FALSE;
         }
@@ -168,7 +171,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
 
         //IF WALK SPEED IS LESS THAN MAX, MAKE HIS JUMP ABILITY ON CORNERS A BIT MORE RESTRICTED
         if ((PLAYER.SpdX < MAX_WALK_SPEED) && (PLAYER.SpdX > -MAX_WALK_SPEED)) {
-            if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
+            if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
             } else {
                 if (!Drop) {
                     Crouch = Launch = FALSE;
@@ -195,14 +198,8 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                     }
                 }
             }
-            if (PLAYER.direction == DIR_RIGHT) {
-                if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] != 0x02)) {
-                    x_Adjust = TRUE;
-                }
-            } else if (PLAYER.direction == DIR_LEFT) {
-                if ((COLLISION_WIDE_MAP[tileindexR] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] != 0x02)) {
-                    x_Adjust = TRUE;
-                }
+            if ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexC] == 0x02) || (COLLISION_WIDE_MAP[tileindexR] == 0x02)) {
+                x_Adjust = TRUE;
             }
         }
     }
@@ -491,7 +488,7 @@ void main() {
             }
         }
         // if (joy & J_B) {
-        //     printf("Crouch=%u\n", Crouch);
+        //     printf("SpdX=%d\n", PLAYER.SpdX);
         // }
         //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
         if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
