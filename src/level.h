@@ -21,7 +21,6 @@ typedef struct Variables
     UINT16 camera_tiles_x;
     UINT16 camera_tiles_y;
     UBYTE joy;
-
     UBYTE sliding;
     UBYTE fading;
     INT8 slide_x;
@@ -37,7 +36,5 @@ typedef struct Variables
     UINT8 level_map_height;
     const UINT8 *level_map_data;
     enum Cam camera_style;
-
     UINT8 level_map_bank;
-
 } Variables;

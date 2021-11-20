@@ -1,9 +1,11 @@
 #include "camera.h"
-
+#include "level.h"
 #include "scene.h"
 
 Variables bkg;
 extern UBYTE joy;
+//SUBMAP-7
+Variables current_bkg;
 
 void set_camera() {
 
