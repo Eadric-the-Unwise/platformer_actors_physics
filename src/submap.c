@@ -8,6 +8,7 @@
 
 extern Variables bkg;
 
+
 void init_submap() {
     HIDE_BKG;
     bkg.redraw = TRUE;
