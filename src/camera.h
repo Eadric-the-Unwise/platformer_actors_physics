@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 #include "level.h"
-#include "submap.h"
+
 
 void set_camera();
 void render_camera(UBYTE playerx, INT16 camx);

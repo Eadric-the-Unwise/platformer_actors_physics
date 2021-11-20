@@ -34,7 +34,7 @@ void main() {
     Drop_timer = 16;
     canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCrouch_Ftimer = 8;  //TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
-    init_submap();
+    init_level1();
     load_level(&level1);
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
     // switch on display after everything is ready
@@ -252,7 +252,7 @@ void main() {
                 if (active_actors[i].ON == TRUE) {
             DISPLAY_OFF;
             Spawn = TRUE;
-            init_submap();
+            init_level1();
             load_level(&level1);
             DISPLAY_ON;
                 }
