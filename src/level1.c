@@ -8,7 +8,6 @@
 #include "../res/tiles/vertical_platform_V1.h"
 extern Variables bkg;
 // void move_arrows();
-void render_level1();
 
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
@@ -178,22 +177,3 @@ void render_level1() {
     }
 }
 
-//SUBMAP-7 
-const Variables level1_submap = {
-    .redraw = TRUE;
-    .sliding = FALSE;
-    .camera_max_y = (BRICK_WIDE_MAPHeight - 18) * 8;
-    .camera_max_x = (BRICK_WIDE_MAPWidth - 20) * 8;
-    .camera_tiles_x = BRICK_WIDE_MAPWidth * 8;
-    .camera_tiles_y = BRICK_WIDE_MAPHeight * 8;
-    .camera_x = TO_COORDS(.camera_max_x);
-    .camera_y = 0;
-    .old_camera_x = .camera_x;
-    .old_camera_y = .camera_y;
-    .map_pos_x = (UBYTE)(.camera_x >> 7u);
-    .map_pos_y = (UBYTE)(.camera_y >> 3u);
-    .old_map_pos_x = .old_map_pos_y = 255;
-    .old_camera_x = .camera_x;
-    .old_camera_y = .camera_y;
-    .camera_style = horizontal_cam;
-}
