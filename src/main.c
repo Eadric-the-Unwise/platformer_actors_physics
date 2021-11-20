@@ -132,6 +132,7 @@ void main() {
             UBYTE px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
+            
             if (Crouch) {
                 check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
             }
@@ -185,20 +186,30 @@ void main() {
             }
         }
 
+    if (PLAYER.SpdY != 0){
+            UBYTE px, py;
+            px = TO_PIXELS(PLAYER.x);
+            py = TO_PIXELS(PLAYER.y);
         //Y-AXIS COLLISION CHECK (ADD NEGATIVE AND POSITIVE IFS SO THE LOOP ONLY CHECKS 1 FOR Y AND 1 FOR X MOVEMENT)
         if (PLAYER.SpdY > 0) {
-            check_UD(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) + 1, TO_PIXELS(bkg.camera_x));
+            check_UD(px, py + 1, TO_PIXELS(bkg.camera_x));
 
         } else if (PLAYER.SpdY < 0) {
-            check_UD(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y) - 25, TO_PIXELS(bkg.camera_x));
+            check_UD(px, py - 25, TO_PIXELS(bkg.camera_x));
         }
+    }
+    if (PLAYER.SpdX != 0){
+            UBYTE px, py;
+            px = TO_PIXELS(PLAYER.x);
+            py = TO_PIXELS(PLAYER.y);
         //IF MOVING RIGHT
         if (PLAYER.SpdX > 0) {
-            check_LR(TO_PIXELS(PLAYER.x) + 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+            check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
             //IF MOVING LEFT
         } else if (PLAYER.SpdX < 0) {
-            check_LR(TO_PIXELS(PLAYER.x) - 1, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+            check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
         }
+    }
 
         //PERHAPS REPLACE THIS WITH A NEW SEPARATE FUNCTION CALLED check_C();
         if ((Crouch) && (!canCrouch)) {
@@ -218,13 +229,6 @@ void main() {
 
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
 
-        // if (joy & J_B) {
-        //     printf("SpdX=%d\n", PLAYER.SpdX);
-        // }
-        //LATER CHANGE THIS TO COLLISION TILE RESET/DEATH
-        if ((TO_PIXELS(PLAYER.y) > 241) && (TO_PIXELS(PLAYER.y) < 249)) {
-            PLAYER.y = TO_COORDS(50);
-        }
         // COPIED FROM DINO COLLISIONS
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             //[y][x]
