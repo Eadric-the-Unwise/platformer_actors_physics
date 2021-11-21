@@ -2,6 +2,7 @@
 #include <gbdk/metasprites.h>
 #include <stdio.h>
 
+#include "../res/tiles/brick_small_collision.h"
 #include "../res/tiles/brick_wide_collision.h"
 #include "../res/tiles/brick_wide_map.h"
 #include "../res/tiles/brick_wide_tiles.h"
