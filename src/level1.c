@@ -1,6 +1,4 @@
 #include "level1.h"
-#include "camera.h"
-#include "scene.h"
 
 #include <gb/gb.h>
 #include <stdlib.h>
@@ -8,6 +6,8 @@
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/enemy_arrow.h"
 #include "../res/tiles/vertical_platform_V1.h"
+#include "camera.h"
+#include "scene.h"
 extern Variables bkg;
 // void move_arrows();
 
@@ -116,7 +116,7 @@ const actor_t level1_actors[5] = {
 const level_t level1 = {
     .actors = level1_actors,
     .actor_count = 5,
-    .animate_hook = render_level1  // function that put life into the scene
+    .animate_hook = anim_level1  // function that put life into the scene
 };
 
 // void move_arrows() {
@@ -136,7 +136,7 @@ const level_t level1 = {
 //         current_actor++;
 //     }
 // }
-void render_level1() {
+void anim_level1() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  //The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
@@ -179,8 +179,6 @@ void render_level1() {
     }
 }
 
-
-
 void init_level1() {
     HIDE_BKG;
     bkg.redraw = TRUE;
@@ -195,12 +193,12 @@ void init_level1() {
     bkg.old_camera_y = bkg.camera_y;
     bkg.map_pos_x = (UBYTE)(bkg.camera_x >> 7u);
     bkg.map_pos_y = (UBYTE)(bkg.camera_y >> 3u);
-//CHANGE THE TILE COUNT AS YOU ADD TILES TO THE BKG TILE_SET
-    set_bkg_data_nonbanked(0, 4, BRICK_WIDE_TILES, BRICK_WIDE_TILESBank);
+    //CHANGE THE TILE COUNT AS YOU ADD TILES TO THE BKG TILE_SET
+    set_bkg_data_nonbanked(0, 4, BRICK_WIDE_TILES, BANK(BRICK_WIDE_TILES));
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
 
-    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, BRICK_WIDE_MAP, BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPBank);
-    set_level(BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPHeight, BRICK_WIDE_MAP, BRICK_WIDE_MAPBank);
+    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, BRICK_WIDE_MAP, BRICK_WIDE_MAPWidth, BANK(BRICK_WIDE_MAP));
+    set_level(BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPHeight, BRICK_WIDE_MAP, BANK(BRICK_WIDE_MAP));
 
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;

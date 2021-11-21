@@ -1,6 +1,6 @@
 /*
 
- COLLISION_WIDE_MAP.H
+ BRICK_WIDE_COLLISION.H
 
  Map Include File.
 
@@ -18,10 +18,10 @@
 
 */
 
-#define COLLISION_WIDE_MAPWidth 100
-#define COLLISION_WIDE_MAPHeight 18
-#define COLLISION_WIDE_MAPBank 0
+#define BRICK_WIDE_COLLISIONWidth 100
+#define BRICK_WIDE_COLLISIONHeight 18
+#define BRICK_WIDE_COLLISIONBank 0
 
-extern unsigned char COLLISION_WIDE_MAP[];
+extern unsigned char BRICK_WIDE_COLLISION[];
 
-/* End of COLLISION_WIDE_MAP.H */
+/* End of BRICK_WIDE_COLLISION.H */

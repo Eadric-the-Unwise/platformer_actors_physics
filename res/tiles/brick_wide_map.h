@@ -6,7 +6,7 @@
 
  Info:
    Section       : 
-   Bank          : 0
+   Bank          : ?
    Map size      : 100 x 18
    Tile set      : dk_large bricks.gbr
    Plane count   : 1 plane (8 bits)
@@ -20,8 +20,9 @@
 
 #define BRICK_WIDE_MAPWidth 100
 #define BRICK_WIDE_MAPHeight 18
-#define BRICK_WIDE_MAPBank 0
+// #define BRICK_WIDE_MAPBank 0
 
+extern const void __bank_BRICK_WIDE_MAP;
 extern unsigned char BRICK_WIDE_MAP[];
 
 /* End of BRICK_WIDE_MAP.H */

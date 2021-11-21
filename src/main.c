@@ -2,15 +2,15 @@
 #include <gbdk/metasprites.h>
 #include <stdio.h>
 
+#include "../res/tiles/brick_wide_collision.h"
 #include "../res/tiles/brick_wide_map.h"
 #include "../res/tiles/brick_wide_tiles.h"
-#include "../res/tiles/collision_wide_map.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/enemy_arrow.h"
+#include "camera.h"
 #include "collisions.h"
 #include "level1.h"
 #include "level2.h"
-#include "camera.h"
 #include "scene.h"
 
 UBYTE joy, last_joy;
@@ -54,7 +54,7 @@ void main() {
                     if (joy & J_DOWN) {
                         canCrouch_timer = 1;
                     }
-                    check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
+                    check_LR(px - 1, py, TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
                     if (canCrouch) {
@@ -85,7 +85,7 @@ void main() {
                     if (joy & J_DOWN) {
                         canCrouch_timer = 1;
                     }
-                    check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
+                    check_LR(px + 1, py, TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
                     if (canCrouch) {
@@ -132,12 +132,12 @@ void main() {
             UBYTE px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-            
+
             if (Crouch) {
-                check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
+                check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
             }
             //CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
-            check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
+            check_J(px, py - 25, TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
         }
         if (Drop) {
             Drop_timer -= 1;
@@ -186,42 +186,42 @@ void main() {
             }
         }
 
-    if (PLAYER.SpdY != 0){
+        if (PLAYER.SpdY != 0) {
             UBYTE px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-        //Y-AXIS COLLISION CHECK (ADD NEGATIVE AND POSITIVE IFS SO THE LOOP ONLY CHECKS 1 FOR Y AND 1 FOR X MOVEMENT)
-        if (PLAYER.SpdY > 0) {
-            check_UD(px, py + 1, TO_PIXELS(bkg.camera_x));
+            //Y-AXIS COLLISION CHECK (ADD NEGATIVE AND POSITIVE IFS SO THE LOOP ONLY CHECKS 1 FOR Y AND 1 FOR X MOVEMENT)
+            if (PLAYER.SpdY > 0) {
+                check_UD(px, py + 1, TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
 
-        } else if (PLAYER.SpdY < 0) {
-            check_UD(px, py - 25, TO_PIXELS(bkg.camera_x));
+            } else if (PLAYER.SpdY < 0) {
+                check_UD(px, py - 25, TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
+            }
         }
-    }
-    if (PLAYER.SpdX != 0){
+        if (PLAYER.SpdX != 0) {
             UBYTE px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-        //IF MOVING RIGHT
-        if (PLAYER.SpdX > 0) {
-            check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
-            //IF MOVING LEFT
-        } else if (PLAYER.SpdX < 0) {
-            check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
+            //IF MOVING RIGHT
+            if (PLAYER.SpdX > 0) {
+                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
+                //IF MOVING LEFT
+            } else if (PLAYER.SpdX < 0) {
+                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
+            }
         }
-    }
 
         //PERHAPS REPLACE THIS WITH A NEW SEPARATE FUNCTION CALLED check_C();
         if ((Crouch) && (!canCrouch)) {
             if (!(joy & J_DOWN)) {
-                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
             }
         }
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 switch_idle();
-                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x), BRICK_WIDE_COLLISION, BRICK_WIDE_COLLISIONWidth);
             }
         }
         // update PLAYER absolute posiiton
@@ -238,7 +238,7 @@ void main() {
             py = TO_PIXELS(PLAYER.y);
             ax = TO_PIXELS(active_actors[i].x);
             ay = TO_PIXELS(active_actors[i].y);
-            
+
             PTR_y = py - (PLAYER.h - PLAYER.h_offset);  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract
             PTR_x = px + PLAYER.x_offset;               //TR x
             PBL_y = py + PLAYER.y_offset;               //BL y
@@ -250,11 +250,11 @@ void main() {
 
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].ON == TRUE) {
-            DISPLAY_OFF;
-            Spawn = TRUE;
-            init_level1();
-            load_level(&level1);
-            DISPLAY_ON;
+                    DISPLAY_OFF;
+                    Spawn = TRUE;
+                    init_level1();
+                    load_level(&level1);
+                    DISPLAY_ON;
                 }
             }
         }
