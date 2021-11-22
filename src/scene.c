@@ -5,6 +5,7 @@
 
 #include "level.h"
 extern Variables bkg;
+UBYTE dir, last_dir;
 
 // array of avaliable actors
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
@@ -59,13 +60,20 @@ void load_level(const level_t *level) {
 }
 
 //calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
-static uint8_t animation_timer = 6;
+uint8_t animation_timer = 6;
 void render_actors() {
     actor_t *current_actor = active_actors;
-    animation_timer -= 1;
-    if (animation_timer == 0) {
-        animation_timer = 6;
+    last_dir = dir;
+    dir = PLAYER.direction;
+    if (dir != last_dir || animation_timer == 0) {
+        if (PLAYER.direction == 10 || PLAYER.direction == 11) {
+            animation_timer = 4;
+        } else {
+            animation_timer = 6;
+        }
     }
+    animation_timer -= 1;
+
     // draw each metasprite
     direction_e current_direction;
     UINT8 hiwater = 0;  //OAM Sprite hiwater
@@ -120,34 +128,34 @@ void render_actors() {
     // hide rest of the hardware sprites
     for (UINT8 i = hiwater; i < 40u; i++) shadow_OAM[i].y = 0;
 }
-void switch_down() {
-    switch (PLAYER.direction) {
-        case DIR_LEFT:
-            SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-            break;
-        case DIR_IDLE_L:
-            SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-            break;
-        case DIR_DOWN_L:
-            SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-            break;
-        case DIR_CRAWL_L:
-            SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-            break;
-        case DIR_RIGHT:
-            SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-            break;
-        case DIR_IDLE_R:
-            SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-            break;
-        case DIR_DOWN_R:
-            SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-            break;
-        case DIR_CRAWL_R:
-            SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-            break;
-    }
-}
+// void switch_down() {
+//     switch (PLAYER.direction) {
+//         case DIR_LEFT:
+//             SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+//             break;
+//         case DIR_IDLE_L:
+//             SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+//             break;
+//         case DIR_DOWN_L:
+//             SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+//             break;
+//         case DIR_CRAWL_L:
+//             SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+//             break;
+//         case DIR_RIGHT:
+//             SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+//             break;
+//         case DIR_IDLE_R:
+//             SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+//             break;
+//         case DIR_DOWN_R:
+//             SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+//             break;
+//         case DIR_CRAWL_R:
+//             SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+//             break;
+//     }
+// }
 void switch_jump() {
     switch (PLAYER.direction) {
         case DIR_IDLE_L:
@@ -176,81 +184,81 @@ void switch_jump() {
             break;
     }
 }
-void switch_idle() {
-    switch (PLAYER.last_direction) {
-        case DIR_LEFT:
-            if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            }
-            break;
-        case DIR_IDLE_L:
-            if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            }
-            break;
-        case DIR_JUMP_L:
-            if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            }
-            break;
-        case DIR_DOWN_L:
-            if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            }
-            break;
-        case DIR_CRAWL_L:
-            if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            }
-            break;
+// void switch_idle() {
+//     switch (PLAYER.last_direction) {
+//         case DIR_LEFT:
+//             if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             }
+//             break;
+//         case DIR_IDLE_L:
+//             if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             }
+//             break;
+//         case DIR_JUMP_L:
+//             if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             }
+//             break;
+//         case DIR_DOWN_L:
+//             if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             }
+//             break;
+//         case DIR_CRAWL_L:
+//             if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_CRAWL_R)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             }
+//             break;
 
-        case DIR_RIGHT:
-            if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            }
-            break;
-        case DIR_IDLE_R:
-            if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            }
-            break;
-        case DIR_JUMP_R:
-            if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            }
-            break;
-        case DIR_DOWN_R:
-            if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            }
-            break;
-        case DIR_CRAWL_R:
-            if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
-                SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
-            } else {
-                SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
-            }
-            break;
-    }
-}
+//         case DIR_RIGHT:
+//             if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             }
+//             break;
+//         case DIR_IDLE_R:
+//             if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             }
+//             break;
+//         case DIR_JUMP_R:
+//             if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             }
+//             break;
+//         case DIR_DOWN_R:
+//             if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             }
+//             break;
+//         case DIR_CRAWL_R:
+//             if ((PLAYER.direction == DIR_LEFT) || (PLAYER.direction == DIR_JUMP_L) || (PLAYER.direction == DIR_CRAWL_L)) {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+//             } else {
+//                 SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+//             }
+//             break;
+//     }
+// }
 void switch_land() {
     if (PLAYER.direction == DIR_JUMP_R) {
         SetActorDirection(&PLAYER, DIR_LAND_R, 0);
@@ -259,10 +267,10 @@ void switch_land() {
     }
 }
 
-void switch_crawl() {
-    if (PLAYER.direction == DIR_CRAWL_R) {
-        SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
-    } else if (PLAYER.direction == DIR_CRAWL_L) {
-        SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
-    }
-}
+// void switch_crawl() {
+//     if (PLAYER.direction == DIR_CRAWL_R) {
+//         SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
+//     } else if (PLAYER.direction == DIR_CRAWL_L) {
+//         SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+//     }
+// }

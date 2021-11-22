@@ -15,6 +15,8 @@
 
 UBYTE joy, last_joy;
 extern Variables bkg;
+extern uint8_t animation_timer;
+
 // uint8_t shadow_scx = 0, shadow_scy = 0;
 
 /******************************/
@@ -44,6 +46,7 @@ void main() {
         // ---------------------------------------------
         // process joystic input
         last_joy = joy;
+
         joy = joypad();
         if (!Spawn) {
             UBYTE px, py;
@@ -54,7 +57,7 @@ void main() {
                     if (joy & J_DOWN) {
                         canCrouch_timer = 1;
                     }
-                    check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
+                    // check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
                     if (canCrouch) {
@@ -85,7 +88,7 @@ void main() {
                     if (joy & J_DOWN) {
                         canCrouch_timer = 1;
                     }
-                    check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
+                    // check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
                     if (canCrouch) {
@@ -118,9 +121,9 @@ void main() {
             PLAYER.h_offset = 24;
         }
         // DOWN while standing still
-        if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
-            switch_down();
-        }
+        // if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
+        //     switch_down();
+        // }
         //IF PLAYER IS FREE FALLING FOR ANY REASON
         if (PLAYER.SpdY != 0) {
             Jump = TRUE;
@@ -204,10 +207,10 @@ void main() {
             py = TO_PIXELS(PLAYER.y);
             //IF MOVING RIGHT
             if (PLAYER.SpdX > 0) {
-                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
+                // check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
                 //IF MOVING LEFT
             } else if (PLAYER.SpdX < 0) {
-                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
+                // check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
             }
         }
 
@@ -220,10 +223,11 @@ void main() {
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-                switch_idle();
+                // switch_idle();
                 check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
             }
         }
+
         // update PLAYER absolute posiiton
         PLAYER.y += PLAYER.SpdY;
 
