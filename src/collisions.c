@@ -3,7 +3,6 @@
 UBYTE Spawn, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
 UBYTE canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
-
 extern UBYTE joy;
 
 void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
@@ -44,9 +43,9 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRT] == 0x01) || (COLLISION_WIDE_MAP[tileindexLD] == 0x02) || (COLLISION_WIDE_MAP[tileindexLC] == 0x02) || (COLLISION_WIDE_MAP[tileindexLT] == 0x02) || (COLLISION_WIDE_MAP[tileindexRD] == 0x02) || (COLLISION_WIDE_MAP[tileindexRC] == 0x02) || (COLLISION_WIDE_MAP[tileindexRT] == 0x02)) {
             if (!x_Adjust) {
                 PLAYER.SpdX = 0;
-                if (!Jump) {
-                    switch_idle_jump();  //NOT SURE IF NEEDED
-                }
+                // if (!Jump) {
+                //     switch_land();  //NOT SURE IF NEEDED
+                // }
             }
         }
         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x00) && (COLLISION_WIDE_MAP[tileindexRC] == 0x00) && (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
@@ -83,7 +82,7 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         }
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x00) && (COLLISION_WIDE_MAP[tileindexR] == 0x00)) {
             if (PLAYER.SpdX != MAX_WALK_SPEED && PLAYER.SpdX != -MAX_WALK_SPEED && (!(joy & J_LEFT)) && (!(joy & J_RIGHT))) {
-            PLAYER.SpdX = 0;
+                PLAYER.SpdX = 0;
             }
             x_Adjust = FALSE;
         }
@@ -95,7 +94,7 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
                 Spawn = Jump = FALSE;
-                switch_idle_jump();
+                switch_land();
             }
         }
     } else if (PLAYER.SpdY < 0) {
@@ -125,7 +124,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
 
-    tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx; 
+    tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;
     tileindexSC = COLLISION_WIDE_MAPWidth * index_y + indexSCx;
     tileindexSR = COLLISION_WIDE_MAPWidth * index_y + indexSRx;
 

@@ -127,8 +127,11 @@ const metasprite_t detective_large_metasprite14[] = {
 const metasprite_t detective_large_metasprite15[] = {
     {-16, -4, 12, 0}, {0, 8, 14, 0}, {16, -16, 142, 0}, {0, 8, 144, 0}, {0, 8, 146, 0}, {metasprite_end}};
 
-const metasprite_t* const detective_large_metasprites[16] = {
-    detective_large_metasprite0, detective_large_metasprite1, detective_large_metasprite2, detective_large_metasprite3, detective_large_metasprite4, detective_large_metasprite5, detective_large_metasprite6, detective_large_metasprite7, detective_large_metasprite8, detective_large_metasprite9, detective_large_metasprite10, detective_large_metasprite11, detective_large_metasprite12, detective_large_metasprite13, detective_large_metasprite14, detective_large_metasprite15};
+const metasprite_t detective_large_metasprite16[] = {
+    {-16, -12, 0, 0}, {0, 8, 2, 0}, {0, 8, 4, 0}, {16, -16, 6, 0}, {0, 8, 8, 0}, {0, 8, 10, 0}, {metasprite_end}};
+
+const metasprite_t* const detective_large_metasprites[17] = {
+    detective_large_metasprite0, detective_large_metasprite1, detective_large_metasprite2, detective_large_metasprite3, detective_large_metasprite4, detective_large_metasprite5, detective_large_metasprite6, detective_large_metasprite7, detective_large_metasprite8, detective_large_metasprite9, detective_large_metasprite10, detective_large_metasprite11, detective_large_metasprite12, detective_large_metasprite13, detective_large_metasprite14, detective_large_metasprite15, detective_large_metasprite16};
 const metasprite_t* const detective_walk_left[] = {
     detective_large_metasprite5, detective_large_metasprite5, detective_large_metasprite6, detective_large_metasprite7, detective_large_metasprite8, detective_large_metasprite8,
     detective_large_metasprite9, detective_large_metasprite10,
@@ -146,6 +149,10 @@ const metasprite_t* const detective_crawl_left[] = {
 const metasprite_t* const detective_jump[] = {
     detective_large_metasprite11, detective_large_metasprite11, detective_large_metasprite12,
     detective_large_metasprite13,
+    NULL};
+
+const metasprite_t* const detective_land[] = {
+    detective_large_metasprite14, detective_large_metasprite15, detective_large_metasprite16,
     NULL};
 
 const metasprite_t* const detective_stand[] = {

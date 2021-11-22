@@ -39,6 +39,8 @@ typedef enum {
     DIR_IDLE_R,
     DIR_JUMP_L,
     DIR_JUMP_R,
+    DIR_LAND_L,
+    DIR_LAND_R,
 } direction_e;
 
 typedef enum {
@@ -75,8 +77,8 @@ typedef struct actor_t {
     const UINT8 *tile_data;
 
     // animation description
-    const metasprite_t **animations[10];
-    anim_loop_e animations_props[10];
+    const metasprite_t **animations[12];
+    anim_loop_e animations_props[12];
     UINT8 animation_phase;
     UBYTE copy;
     UBYTE ON;
@@ -100,7 +102,7 @@ void render_actors();
 void switch_down();
 void switch_jump();
 void switch_idle();
-void switch_idle_jump();
+void switch_land();
 void switch_crawl();
 
 //fuction body is inlined into the code
