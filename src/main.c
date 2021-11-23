@@ -27,7 +27,7 @@ void main() {
     BGP_REG = 0xE4;
     OBP0_REG = 0xE4;
     OBP1_REG = 0xE1;
-    SPRITES_8x16;
+    SPRITES_8x16;  //MUST be 8x16 or 8x8. Can change in different scenes only
     SHOW_BKG;
     SHOW_SPRITES;
 
@@ -129,8 +129,6 @@ void main() {
             Jump = TRUE;
             Crouch = FALSE;
             switch_jump();
-
-
         }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {

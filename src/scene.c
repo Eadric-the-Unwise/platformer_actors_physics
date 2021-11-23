@@ -67,7 +67,7 @@ void render_actors() {
     dir = PLAYER.direction;
     if (dir != last_dir || animation_timer == 0) {
         if (PLAYER.direction == 10 || PLAYER.direction == 11) {
-            animation_timer = 3;
+            animation_timer = 6;
         } else {
             animation_timer = 6;
         }
@@ -140,10 +140,10 @@ void switch_jump() {
         SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
     } else {
         SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
-    }  
+    }
 }
 void switch_idle() {
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L){
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L) {
         SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
     } else {
         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
