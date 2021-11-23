@@ -5,6 +5,7 @@
 
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/enemy_arrow.h"
+#include "../res/tiles/NPC_electric.h"
 #include "../res/tiles/vertical_platform_V1.h"
 extern Variables bkg;
 // void move_arrows();
@@ -46,8 +47,8 @@ const actor_t level1_actors[5] = {
      .tile_count = (sizeof(enemy_arrow_data) >> 4),
      .tile_index = 0,
      .tile_data = enemy_arrow_data,
-     .animations = {enemy_arrow_left, enemy_arrow_left, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animations = {enemy_arrow_left, enemy_arrow_left},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = FALSE},
     //2 NPC PATROL
@@ -67,8 +68,8 @@ const actor_t level1_actors[5] = {
      .tile_data = enemy_arrow_data,
      .patrol_timer = 45,
      .patrol_reset = 45,
-     .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animations = {enemy_arrow_left, enemy_arrow_right},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = FALSE},
     //3 NPC WALK
@@ -76,20 +77,20 @@ const actor_t level1_actors[5] = {
      .y = TO_COORDS(136),
      .SpdX = 7,
      .SpdY = 0,
-     .w = enemy_arrow_WIDTH,
-     .h = enemy_arrow_HEIGHT / 2,
+     .w = NPC_electric_WIDTH,
+     .h = NPC_electric_HEIGHT / 2,
      .w_offset = 10,
      .x_offset = -2,
      .y_offset = 8,
      .direction = DIR_RIGHT,
      .NPC_type = WALK,
-     .tile_count = (sizeof(enemy_arrow_data) >> 4),
+     .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
-     .tile_data = enemy_arrow_data,
-     .animations = {enemy_arrow_left, enemy_arrow_right, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .tile_data = NPC_electric_data,
+     .animations = {NPC_electric_animation, NPC_electric_animation},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
-     .copy = TRUE},
+     .copy = FALSE},
     //4 ELEVATOR
     {.x = TO_COORDS(-464 + (vertical_platform_V1_WIDTH - 16)),
      .y = TO_COORDS(72 + 16),
@@ -107,8 +108,8 @@ const actor_t level1_actors[5] = {
      .tile_data = vertical_platform_V1_data,
      .patrol_timer = 80,
      .patrol_reset = 80,
-     .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animations = {elevator_frame, elevator_frame},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = FALSE}};
 
