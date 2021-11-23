@@ -13,3 +13,4 @@ extern const metasprite_t* const detective_crawl_left[];
 extern const metasprite_t* const detective_stand[];
 extern const metasprite_t* const detective_jump[];
 extern const metasprite_t* const detective_land[];
+extern const metasprite_t* const detective_drop[];

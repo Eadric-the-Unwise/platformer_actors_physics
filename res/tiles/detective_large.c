@@ -156,3 +156,8 @@ const metasprite_t* const detective_land[] = {
 
 const metasprite_t* const detective_stand[] = {
     detective_large_metasprite14, NULL};
+
+const metasprite_t* const detective_drop[] = {
+    detective_large_metasprite15, detective_large_metasprite11,
+    detective_large_metasprite12,
+    NULL};

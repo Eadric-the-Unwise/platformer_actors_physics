@@ -5,6 +5,8 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
 
+#include "collisions.h"  //Drop
+
 #define MAX_ACTIVE_ACTORS 8
 #define ACTOR_DETECTIVE 0
 #define ACTOR_FIRST_NPC 1
@@ -41,6 +43,8 @@ typedef enum {
     DIR_JUMP_R,
     DIR_LAND_L,
     DIR_LAND_R,
+    DIR_DROP_L,
+    DIR_DROP_R,
 } direction_e;
 
 typedef enum {
@@ -77,8 +81,8 @@ typedef struct actor_t {
     const UINT8 *tile_data;
 
     // animation description
-    const metasprite_t **animations[12];
-    anim_loop_e animations_props[12];
+    const metasprite_t **animations[14];
+    anim_loop_e animations_props[14];
     UINT8 animation_phase;
     UBYTE copy;
     UBYTE ON;

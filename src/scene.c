@@ -88,7 +88,7 @@ void render_actors() {
                 //PLAYER THEORETICALLY WILL ALWAYS LOAD BECAUSE PLAYER.x - PLAYER.x = 0//
                 if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -100) {
                     current_actor->ON = TRUE;
-                    if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R)) {
+                    if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R)) {
                         hiwater += move_metasprite_vflip(
                             current_animation[current_actor->animation_phase],
                             current_actor->tile_index,
@@ -136,10 +136,18 @@ void switch_down() {
     }
 }
 void switch_jump() {
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L) {
-        SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_DROP_L) {
+        if (!Drop) {
+            SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
+        } else {
+            SetActorDirection(&PLAYER, DIR_DROP_L, 0);
+        }
     } else {
-        SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+        if (!Drop) {
+            SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
+        } else {
+            SetActorDirection(&PLAYER, DIR_DROP_R, 0);
+        }
     }
 }
 void switch_idle() {
