@@ -5,60 +5,60 @@ UBYTE canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 extern UBYTE joy;
 
-// void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
-//     UINT16 indexDy, indexCy, indexTy, index_Lx, index_Rx, indexCamx, tileindexLD, tileindexLC, tileindexLT, tileindexRD, tileindexRC, tileindexRT;
+void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+    UINT16 indexDy, indexCy, indexTy, index_Lx, index_Rx, indexCamx, tileindexLD, tileindexLC, tileindexLT, tileindexRD, tileindexRC, tileindexRT;
 
-//     indexCamx = camera_x;
-//     indexDy = (newplayery - 1) / 8;
-//     indexCy = (newplayery - 16) / 8;
-//     indexTy = (newplayery - 24) / 8;
-//     index_Lx = ((newplayerx - 16) + indexCamx) / 8;
-//     index_Rx = ((newplayerx - 1) + indexCamx) / 8;
-//     //LEFT INDEX
-//     tileindexLD = COLLISION_WIDE_MAPWidth * indexDy + index_Lx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-//     tileindexLC = COLLISION_WIDE_MAPWidth * indexCy + index_Lx;
-//     tileindexLT = COLLISION_WIDE_MAPWidth * indexTy + index_Lx;
-//     //RIGHT INDEX
-//     tileindexRD = COLLISION_WIDE_MAPWidth * indexDy + index_Rx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-//     tileindexRC = COLLISION_WIDE_MAPWidth * indexCy + index_Rx;
-//     tileindexRT = COLLISION_WIDE_MAPWidth * indexTy + index_Rx;
+    indexCamx = camera_x;
+    indexDy = (newplayery - 1) / 8;
+    indexCy = (newplayery - 16) / 8;
+    indexTy = (newplayery - 24) / 8;
+    index_Lx = ((newplayerx - 16) + indexCamx) / 8;
+    index_Rx = ((newplayerx - 1) + indexCamx) / 8;
+    //LEFT INDEX
+    tileindexLD = COLLISION_WIDE_MAPWidth * indexDy + index_Lx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexLC = COLLISION_WIDE_MAPWidth * indexCy + index_Lx;
+    tileindexLT = COLLISION_WIDE_MAPWidth * indexTy + index_Lx;
+    //RIGHT INDEX
+    tileindexRD = COLLISION_WIDE_MAPWidth * indexDy + index_Rx;  //MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexRC = COLLISION_WIDE_MAPWidth * indexCy + index_Rx;
+    tileindexRT = COLLISION_WIDE_MAPWidth * indexTy + index_Rx;
 
-//     if (Crouch) {
-//         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01)) {
-//             if (!Jump) {
-//                 PLAYER.SpdX = 0;
-//                 // switch_crawl();
-//             }
-//         }
-//         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x00) && (COLLISION_WIDE_MAP[tileindexRC] == 0x00) && (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
-//             if (canCrouch_timer == 1) {
-//                 canCrouch = TRUE;
-//                 Crouch = TRUE;
-//                 // canCrouch = FALSE;
-//                 canCrouch_timer = 10;
-//             }
-//             canCrouch_timer -= 1;
-//         }
-//     } else if (!Crouch) {
-//         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRT] == 0x01) || (COLLISION_WIDE_MAP[tileindexLD] == 0x02) || (COLLISION_WIDE_MAP[tileindexLC] == 0x02) || (COLLISION_WIDE_MAP[tileindexLT] == 0x02) || (COLLISION_WIDE_MAP[tileindexRD] == 0x02) || (COLLISION_WIDE_MAP[tileindexRC] == 0x02) || (COLLISION_WIDE_MAP[tileindexRT] == 0x02)) {
-//             if (!x_Adjust) {
-//                 PLAYER.SpdX = 0;
-//                 // if (!Jump) {
-//                 //     switch_land();  //NOT SURE IF NEEDED
-//                 // }
-//             }
-//         }
-//         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x00) && (COLLISION_WIDE_MAP[tileindexRC] == 0x00) && (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
-//             if (canCrouch_timer == 1) {
-//                 canCrouch = TRUE;
-//                 Crouch = TRUE;
-//                 // canCrouch = FALSE;
-//                 canCrouch_timer = 10;
-//             }
-//             canCrouch_timer -= 1;
-//         }
-//     }
-// }
+    if (Crouch) {
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01)) {
+            if (!Jump) {
+                PLAYER.SpdX = 0;
+                switch_crawl();
+            }
+        }
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x00) && (COLLISION_WIDE_MAP[tileindexRC] == 0x00) && (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
+            if (canCrouch_timer == 1) {
+                canCrouch = TRUE;
+                Crouch = TRUE;
+                // canCrouch = FALSE;
+                canCrouch_timer = 10;
+            }
+            canCrouch_timer -= 1;
+        }
+    } else if (!Crouch) {
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRT] == 0x01) || (COLLISION_WIDE_MAP[tileindexLD] == 0x02) || (COLLISION_WIDE_MAP[tileindexLC] == 0x02) || (COLLISION_WIDE_MAP[tileindexLT] == 0x02) || (COLLISION_WIDE_MAP[tileindexRD] == 0x02) || (COLLISION_WIDE_MAP[tileindexRC] == 0x02) || (COLLISION_WIDE_MAP[tileindexRT] == 0x02)) {
+            if (!x_Adjust) {
+                PLAYER.SpdX = 0;
+                // if (!Jump) {
+                //     switch_land();  //NOT SURE IF NEEDED
+                // }
+            }
+        }
+        if ((COLLISION_WIDE_MAP[tileindexLD] == 0x00) && (COLLISION_WIDE_MAP[tileindexLC] == 0x00) && (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x00) && (COLLISION_WIDE_MAP[tileindexRC] == 0x00) && (COLLISION_WIDE_MAP[tileindexRT] == 0x01)) {
+            if (canCrouch_timer == 1) {
+                canCrouch = TRUE;
+                Crouch = TRUE;
+                // canCrouch = FALSE;
+                canCrouch_timer = 10;
+            }
+            canCrouch_timer -= 1;
+        }
+    }
+}
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
