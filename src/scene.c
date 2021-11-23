@@ -67,7 +67,7 @@ void render_actors() {
     dir = PLAYER.direction;
     if (dir != last_dir || animation_timer == 0) {
         if (PLAYER.direction == 10 || PLAYER.direction == 11) {
-            animation_timer = 4;
+            animation_timer = 3;
         } else {
             animation_timer = 6;
         }

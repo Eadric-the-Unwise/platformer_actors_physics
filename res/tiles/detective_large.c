@@ -152,7 +152,7 @@ const metasprite_t* const detective_jump[] = {
     NULL};
 
 const metasprite_t* const detective_land[] = {
-    detective_large_metasprite14, detective_large_metasprite15, detective_large_metasprite15, detective_large_metasprite16,
+    detective_large_metasprite14, detective_large_metasprite16,
     NULL};
 
 const metasprite_t* const detective_stand[] = {
