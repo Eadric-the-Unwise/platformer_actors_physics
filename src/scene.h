@@ -69,7 +69,7 @@ typedef struct actor_t {
     UINT8 w_offset;
     UINT8 h_offset;
     INT8 x_offset;
-    UINT8 y_offset;
+    INT8 y_offset;
     direction_e direction;
     direction_e last_direction;
     NPC_type_e NPC_type;

@@ -117,9 +117,7 @@ void main() {
         if ((joy & J_DOWN) && !(Jump)) {
             Crouch = TRUE;
         }
-        if (Crouch) {
-            PLAYER.h_offset = 24;
-        }
+
         // DOWN while standing still
         if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
             switch_down();
@@ -232,7 +230,17 @@ void main() {
         PLAYER.y += PLAYER.SpdY;
 
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
-
+        //WE NEED TO MAKE THE NPCs collisions more of a square, then determine the PLAYER's box relevant to his animation (perhaps the values change on DIR change to match the pixels)
+        if (Crouch) {
+            PLAYER.h_offset = 32;
+        } else {
+            PLAYER.h_offset = 24;
+        }
+        if (PLAYER.SpdY > 0){
+            PLAYER.y_offset = -10;
+        } else {
+            PLAYER.y_offset = 8;
+        }
         // COPIED FROM DINO COLLISIONS
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             //[y][x]
@@ -243,14 +251,14 @@ void main() {
             ax = TO_PIXELS(active_actors[i].x);
             ay = TO_PIXELS(active_actors[i].y);
 
-            PTR_y = py - (PLAYER.h - PLAYER.h_offset);  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract
-            PTR_x = px + PLAYER.x_offset;               //TR x
-            PBL_y = py + PLAYER.y_offset;               //BL y
-            PBL_x = px - (PLAYER.w - PLAYER.x_offset);  //BL x
-            NTR_y = ay - active_actors[i].h;
-            NTR_x = ax + active_actors[i].x_offset;
-            NBL_y = ay + active_actors[i].y_offset;
-            NBL_x = ax - (active_actors[i].w - active_actors[i].w_offset);
+            PTR_y = py - (PLAYER.h - PLAYER.h_offset);  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract - 5
+            PTR_x = px + 6;     //TR x
+            PBL_y = py + PLAYER.y_offset; //BL y
+            PBL_x = px - (16);  //BL x
+            NTR_y = ay - 16;//TR y
+            NTR_x = ax + active_actors[i].x_offset;//TR x
+            NBL_y = ay + active_actors[i].y_offset; //BL y
+            NBL_x = ax - (active_actors[i].w - active_actors[i].w_offset); //BL x
 
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].ON == TRUE) {
