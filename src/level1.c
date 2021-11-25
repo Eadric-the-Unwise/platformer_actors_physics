@@ -21,7 +21,7 @@ const actor_t level1_actors[5] = {
      .SpdY = -16,
      .w = detective_large_WIDTH,
      .h = detective_large_HEIGHT,
-     .h_offset = 5,
+     .h_offset = 7,
      .x_offset = 6,
      .y_offset = 16,
      .direction = DIR_JUMP_L,
@@ -53,7 +53,7 @@ const actor_t level1_actors[5] = {
      .copy = FALSE},
     //2 NPC
     {.x = TO_COORDS(-80),
-     .y = TO_COORDS(76),
+     .y = TO_COORDS(73),
      .SpdX = 7,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -177,7 +177,7 @@ void render_level1() {
     }
     //WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
         if (Crouch) { //CROUCH HITBOX
-            PLAYER.h_offset = -3;
+            PLAYER.h_offset = -2;
             PLAYER.x_offset = 8;
             PLAYER.y_offset = 16;
         } 
@@ -187,7 +187,7 @@ void render_level1() {
             PLAYER.y_offset = 6;
         }
         else if ((!Crouch) && (!Jump)) { //STAND AND WALKING HITBOX
-            PLAYER.h_offset = 5;
+            PLAYER.h_offset = 7;
             PLAYER.x_offset = 6;
             PLAYER.y_offset = 16;
         }
