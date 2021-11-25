@@ -237,8 +237,8 @@ void main() {
             PLAYER.h_offset = 24;
         }
         if (PLAYER.SpdY > 0){
-            PLAYER.y_offset = -10;
-        } else {
+            PLAYER.y_offset = -12;
+        } else if (PLAYER.SpdY < 0){
             PLAYER.y_offset = 8;
         }
         // COPIED FROM DINO COLLISIONS
@@ -250,15 +250,15 @@ void main() {
             py = TO_PIXELS(PLAYER.y);
             ax = TO_PIXELS(active_actors[i].x);
             ay = TO_PIXELS(active_actors[i].y);
-
-            PTR_y = py - (PLAYER.h - PLAYER.h_offset);  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract - 5
+//THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
+            PTR_y = py - 5;  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract - 5
             PTR_x = px + 6;     //TR x
-            PBL_y = py + PLAYER.y_offset; //BL y
-            PBL_x = px - (16);  //BL x
-            NTR_y = ay - 16;//TR y
-            NTR_x = ax + active_actors[i].x_offset;//TR x
-            NBL_y = ay + active_actors[i].y_offset; //BL y
-            NBL_x = ax - (active_actors[i].w - active_actors[i].w_offset); //BL x
+            PBL_y = py + 16; //BL y
+            PBL_x = px - 6;  //BL x
+            NTR_y = ay - 6;//TR y
+            NTR_x = ax + 6;//TR x
+            NBL_y = ay + 6; //BL y
+            NBL_x = ax - 6; //BL x
 
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].ON == TRUE) {
