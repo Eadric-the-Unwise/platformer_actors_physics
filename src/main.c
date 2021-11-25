@@ -230,18 +230,23 @@ void main() {
         PLAYER.y += PLAYER.SpdY;
 
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
-        //WE NEED TO MAKE THE NPCs collisions more of a square, then determine the PLAYER's box relevant to his animation (perhaps the values change on DIR change to match the pixels)
-        if (Crouch) {
-            PLAYER.h_offset = 32;
-        } else {
-            PLAYER.h_offset = 24;
+//WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
+        if (Crouch) { //CROUCH HITBOX
+            PLAYER.h_offset = -3;
+            PLAYER.x_offset = 8;
+            PLAYER.y_offset = 16;
+        } 
+        else if (PLAYER.SpdY != 0){ //JUMP AND FALLING HITBOX
+            PLAYER.h_offset = 11;
+            PLAYER.x_offset = 6;
+            PLAYER.y_offset = 6;
         }
-        if (PLAYER.SpdY > 0){
-            PLAYER.y_offset = -12;
-        } else if (PLAYER.SpdY < 0){
-            PLAYER.y_offset = 8;
-        }
-        // COPIED FROM DINO COLLISIONS
+        else if ((!Crouch) && (!Jump)) { //STAND AND WALKING HITBOX
+            PLAYER.h_offset = 5;
+            PLAYER.x_offset = 6;
+            PLAYER.y_offset = 16;
+        }   
+        //CHECK LANDING HOTBOX TIMING
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             //[y][x]
             UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
@@ -251,14 +256,14 @@ void main() {
             ax = TO_PIXELS(active_actors[i].x);
             ay = TO_PIXELS(active_actors[i].y);
 //THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
-            PTR_y = py - 5;  //TR y the top tile of PLAYER is 16 but only 8 or so are actually visible pixels, hence we subtract - 5
-            PTR_x = px + 6;     //TR x
-            PBL_y = py + 16; //BL y
-            PBL_x = px - 6;  //BL x
-            NTR_y = ay - 6;//TR y
-            NTR_x = ax + 6;//TR x
-            NBL_y = ay + 6; //BL y
-            NBL_x = ax - 6; //BL x
+            PTR_y = py - PLAYER.h_offset;//TR y
+            PTR_x = px + PLAYER.x_offset;//TR x
+            PBL_y = py + PLAYER.y_offset;//BL y
+            PBL_x = px - PLAYER.x_offset;//BL x
+            NTR_y = ay - active_actors[i].y_offset;//TR y
+            NTR_x = ax + active_actors[i].x_offset;//TR x
+            NBL_y = ay + active_actors[i].y_offset; //BL y
+            NBL_x = ax - active_actors[i].x_offset; //BL x
 
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].ON == TRUE) {
@@ -268,6 +273,8 @@ void main() {
                     load_level(&level1);
                     DISPLAY_ON;
                 }
+            } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x02U) {
+                //insert elevator check here
             }
         }
 
