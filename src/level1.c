@@ -175,4 +175,20 @@ void render_level1() {
         }
         current_actor++;
     }
+    //WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
+        if (Crouch) { //CROUCH HITBOX
+            PLAYER.h_offset = -3;
+            PLAYER.x_offset = 8;
+            PLAYER.y_offset = 16;
+        } 
+        else if (PLAYER.SpdY != 0){ //JUMP AND FALLING HITBOX
+            PLAYER.h_offset = 11;
+            PLAYER.x_offset = 6;
+            PLAYER.y_offset = 6;
+        }
+        else if ((!Crouch) && (!Jump)) { //STAND AND WALKING HITBOX
+            PLAYER.h_offset = 5;
+            PLAYER.x_offset = 6;
+            PLAYER.y_offset = 16;
+        }
 }
