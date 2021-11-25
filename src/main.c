@@ -276,7 +276,7 @@ void main() {
 
         } else {
             wait_vbl_done();
+            refresh_OAM();
         }
-        refresh_OAM();
     }
 }
