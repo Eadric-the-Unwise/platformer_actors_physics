@@ -233,7 +233,27 @@ void main() {
 
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
    
-        //CHECK LANDING HOTBOX TIMING
+
+
+        // call level animation hook (if any), that makes other actors move (and interact in future)
+        if (animate_level) animate_level();
+
+        // render all actors on screen
+
+        if (bkg.redraw) {
+            wait_vbl_done();
+            bkg.redraw = FALSE;
+            refresh_OAM();
+            set_camera();
+
+        } else {
+            wait_vbl_done();
+            refresh_OAM();
+        }
+
+
+
+                //CHECK LANDING HOTBOX TIMING
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             //[y][x]
             UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
@@ -263,22 +283,6 @@ void main() {
             } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x02U) {
                 //insert elevator check here
             }
-        }
-
-        // call level animation hook (if any), that makes other actors move (and interact in future)
-        if (animate_level) animate_level();
-
-        // render all actors on screen
-        render_actors();
-        if (bkg.redraw) {
-            wait_vbl_done();
-            bkg.redraw = FALSE;
-            refresh_OAM();
-            set_camera();
-
-        } else {
-            wait_vbl_done();
-            refresh_OAM();
-        }
-    }
+        }         render_actors();
+    }   
 }
