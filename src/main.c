@@ -221,8 +221,10 @@ void main() {
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
+                if (!(joy & J_LEFT) && !(joy & J_RIGHT)){
                 switch_idle();
                 check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                }
             }
         }
 

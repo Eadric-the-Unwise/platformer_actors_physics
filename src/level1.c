@@ -13,7 +13,7 @@ void render_level1();
 
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[5] = {
+const actor_t level1_actors[6] = {
     //0 PLAYER
     {.x = TO_COORDS(136),
      .y = TO_COORDS(-8),
@@ -33,8 +33,8 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE},
     //1 NPC
-    {.x = TO_COORDS(16),
-     .y = TO_COORDS(164),
+    {.x = TO_COORDS(-16),
+     .y = TO_COORDS(148),
      .SpdX = 7,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -52,8 +52,8 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE},
     //2 NPC
-    {.x = TO_COORDS(-80),
-     .y = TO_COORDS(73),
+    {.x = TO_COORDS(-60),
+     .y = TO_COORDS(84),
      .SpdX = 7,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -71,7 +71,7 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     //3
-    {.x = TO_COORDS(-140),
+    {.x = TO_COORDS(96),
      .y = TO_COORDS(132),
      .SpdX = 12,
      .SpdY = 0,
@@ -82,8 +82,8 @@ const actor_t level1_actors[5] = {
      .y_offset = 6,
      .direction = DIR_RIGHT,
      .NPC_type = PATROL,
-     .patrol_timer = 160,
-     .patrol_reset = 160,
+     .patrol_timer = 1,
+     .patrol_reset = 120,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -92,9 +92,9 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     //4
-    {.x = TO_COORDS(-140),
-     .y = TO_COORDS(52),
-     .SpdX = 7,
+    {.x = TO_COORDS(8),
+     .y = TO_COORDS(68),
+     .SpdX = 12,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
      .h = NPC_electric_HEIGHT,
@@ -102,18 +102,41 @@ const actor_t level1_actors[5] = {
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_RIGHT,
-     .NPC_type = WALK,
+     .NPC_type = PATROL,
+     .patrol_timer = 120,
+     .patrol_reset = 120,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
      .animations = {NPC_electric_animation, NPC_electric_animation},
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
-     .copy = TRUE}};
+     .copy = TRUE},
+         // ELEVATOR
+    {.x = TO_COORDS(-162),
+     .y = TO_COORDS(88),
+     .SpdX = 0,
+     .SpdY = 16,
+     .w = vertical_platform_V1_WIDTH,
+     .h = vertical_platform_V1_HEIGHT,
+     .w_offset = 16,
+     .x_offset = vertical_platform_V1_WIDTH / 2,
+     .y_offset = vertical_platform_V1_HEIGHT / 2,
+     .direction = DIR_RIGHT,
+     .NPC_type = ELEVATOR,
+     .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
+     .tile_index = 0,
+     .tile_data = vertical_platform_V1_data,
+     .patrol_timer = 120,
+     .patrol_reset = 120,
+     .animations = {elevator_frame, elevator_frame},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animation_phase = 0,
+     .copy = FALSE}};
 
 const level_t level1 = {
     .actors = level1_actors,
-    .actor_count = 5,
+    .actor_count = 6,
     .animate_hook = render_level1  // function that put life into the scene
 };
 
@@ -170,8 +193,15 @@ void render_level1() {
                 current_actor->patrol_timer = current_actor->patrol_reset;
             }
         } else if (current_actor->NPC_type == WALK) {
-            if (TO_PIXELS(current_actor->x) >= -40)
+            INT16 actor_x = TO_PIXELS(current_actor->x);
+        //NEED TO CALCULATE THE BKG.MAPS X POSITION RELATIVE TO THE SPAWN POSITION
+            // if (actor_x > 160){
+            //         current_actor->x= -60;
+            //         current_actor->ON = TRUE;
+            //     }
+            if (actor_x >= -40){
                 current_actor->x += current_actor->SpdX;
+            }
         }
         current_actor++;
     }

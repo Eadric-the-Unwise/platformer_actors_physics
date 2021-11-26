@@ -21,6 +21,5 @@ const metasprite_t NPC_electric_metasprite1[] = {
 const metasprite_t* const NPC_electric_metasprites[2] = {
 	NPC_electric_metasprite0, NPC_electric_metasprite1
 };
-
 const metasprite_t* const NPC_electric_animation[] = {
     NPC_electric_metasprite0, NPC_electric_metasprite1, NULL};
