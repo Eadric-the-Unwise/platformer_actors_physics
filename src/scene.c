@@ -86,7 +86,7 @@ void render_actors() {
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
                 //PLAYER THEORETICALLY WILL ALWAYS LOAD BECAUSE PLAYER.x - PLAYER.x = 0//
-                if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -80) {
+                if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -60) {
                     current_actor->ON = TRUE;
                     if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R)) {
                         hiwater += move_metasprite_vflip(
