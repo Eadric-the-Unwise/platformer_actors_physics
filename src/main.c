@@ -57,7 +57,6 @@ void main() {
                     if (joy & J_DOWN) {
                         canCrouch_timer = 1;
                     }
-                    check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
                     if (canCrouch) {
@@ -88,7 +87,6 @@ void main() {
                     if (joy & J_DOWN) {
                         canCrouch_timer = 1;
                     }
-                    check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
                 }
                 if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
                     if (canCrouch) {
