@@ -66,10 +66,10 @@ typedef struct actor_t {
     INT16 SpdY;
     INT8 w;
     INT8 h;
-    INT8 w_offset; //x - value (only needed if sprite hitbox is not evenly centered, otherwise just use x_offset for both + and -)
-    INT8 h_offset; //y - value
+    INT8 w_offset;  //x - value (only needed if sprite hitbox is not evenly centered, otherwise just use x_offset for both + and -)
+    INT8 h_offset;  //y - value
     INT8 x_offset;
-    INT8 y_offset;//y + value
+    INT8 y_offset;  //y + value
     direction_e direction;
     direction_e last_direction;
     NPC_type_e NPC_type;

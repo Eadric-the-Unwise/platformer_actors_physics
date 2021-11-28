@@ -17,6 +17,7 @@
 UBYTE joy, last_joy;
 UBYTE current_elevator, CE_x;
 UBYTE Attach;
+UBYTE px, py;
 extern Variables bkg;
 extern uint8_t animation_timer;
 
@@ -261,15 +262,13 @@ void main() {
             wait_vbl_done();
             refresh_OAM();
         }
-
+        px = TO_PIXELS(PLAYER.x);
+        py = TO_PIXELS(PLAYER.y);
         //CHECK LANDING HOTBOX TIMING
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             //[y][x]
             UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
-            UBYTE px, py, ax, ay;
-            //MOVE THE PLAYER BIT SHIFT ABOVE THIS LOOP (currently running 5x)
-            px = TO_PIXELS(PLAYER.x);
-            py = TO_PIXELS(PLAYER.y);
+            UBYTE ax, ay;
             ax = TO_PIXELS(active_actors[i].x);
             ay = TO_PIXELS(active_actors[i].y);
             //THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
