@@ -219,9 +219,9 @@ void main() {
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-                if (!(joy & J_LEFT) && !(joy & J_RIGHT)){
-                switch_idle();
-                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                    switch_idle();
+                    check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
                 }
             }
         }
@@ -230,8 +230,6 @@ void main() {
         PLAYER.y += PLAYER.SpdY;
 
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
-   
-
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
@@ -249,9 +247,7 @@ void main() {
             refresh_OAM();
         }
 
-
-
-                //CHECK LANDING HOTBOX TIMING
+        //CHECK LANDING HOTBOX TIMING
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             //[y][x]
             UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
@@ -260,27 +256,35 @@ void main() {
             py = TO_PIXELS(PLAYER.y);
             ax = TO_PIXELS(active_actors[i].x);
             ay = TO_PIXELS(active_actors[i].y);
-//THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
-            PTR_y = py - PLAYER.h_offset;//TR y
-            PTR_x = px + PLAYER.x_offset;//TR x
-            PBL_y = py + PLAYER.y_offset;//BL y
-            PBL_x = px - PLAYER.x_offset;//BL x
-            NTR_y = ay - active_actors[i].y_offset;//TR y
-            NTR_x = ax + active_actors[i].x_offset;//TR x
-            NBL_y = ay + active_actors[i].y_offset; //BL y
-            NBL_x = ax - active_actors[i].x_offset; //BL x
+            //THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
+            PTR_y = py - PLAYER.h_offset;            //TR y
+            PTR_x = px + PLAYER.x_offset;            //TR x
+            PBL_y = py + PLAYER.y_offset;            //BL y
+            PBL_x = px - PLAYER.x_offset;            //BL x
+            NTR_y = ay - active_actors[i].y_offset;  //TR y
+            NTR_x = ax + active_actors[i].x_offset;  //TR x
+            NBL_y = ay + active_actors[i].y_offset;  //BL y
+            NBL_x = ax - active_actors[i].x_offset;  //BL x
 
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
-                if (active_actors[i].ON == TRUE) {
-                    DISPLAY_OFF;
-                    Spawn = TRUE;
-                    init_submap();
-                    load_level(&level1);
-                    DISPLAY_ON;
+                if (active_actors[i].NPC_type != ELEVATOR) {
+                    if (active_actors[i].ON == TRUE) {
+                        DISPLAY_OFF;
+                        Spawn = TRUE;
+                        init_submap();
+                        load_level(&level1);
+                        DISPLAY_ON;
+                    }
+                } else if (active_actors[i].NPC_type == ELEVATOR) {
+                    if (active_actors[i].ON == TRUE) {
+                        PLAYER.SpdY = 0;
+                        PLAYER.y = active_actors[i].y - TO_COORDS(24);
+                        Spawn = Jump = FALSE;
+                        switch_land();
+                    }
                 }
-            } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x02U) {
-                //insert elevator check here
             }
-        }         render_actors();
-    }   
+        }
+        render_actors();
+    }
 }
