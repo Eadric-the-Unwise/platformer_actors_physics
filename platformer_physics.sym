@@ -176,8 +176,8 @@
 00:3AE8 _NPC_electric_metasprites
 00:3AEC _NPC_electric_animation
 00:3AF2 _vertical_platform_V1_data
-00:3B32 _vertical_platform_V1_metaspritet
-00:3B4E _vertical_platform_V1_metaspritet
+00:3B32 _vertical_platform_V1_metaspritev
+00:3B4E _vertical_platform_V1_metaspritev
 00:3B50 _elevator_frame
 00:3B54 ___hide_metasprite
 00:3B74 ___move_metasprite

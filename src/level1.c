@@ -52,7 +52,7 @@ const actor_t level1_actors[6] = {
      .animation_phase = 0,
      .copy = FALSE},
     //2 NPC
-    {.x = TO_COORDS(-60),
+    {.x = TO_COORDS(-160),
      .y = TO_COORDS(84),
      .SpdX = 7,
      .SpdY = 0,
@@ -70,8 +70,29 @@ const actor_t level1_actors[6] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = TRUE},
-    //3
-    {.x = TO_COORDS(96),
+    //TOP PATROL
+    {.x = TO_COORDS(56),
+     .y = TO_COORDS(68),
+     .SpdX = -12,
+     .SpdY = 0,
+     .w = NPC_electric_WIDTH,
+     .h = NPC_electric_HEIGHT,
+     .w_offset = 10,
+     .x_offset = 6,
+     .y_offset = 6,
+     .direction = DIR_LEFT,
+     .NPC_type = PATROL,
+     .patrol_timer = 60,
+     .patrol_reset = 120,
+     .tile_count = (sizeof(NPC_electric_data) >> 4),
+     .tile_index = 0,
+     .tile_data = NPC_electric_data,
+     .animations = {NPC_electric_animation, NPC_electric_animation},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animation_phase = 0,
+     .copy = TRUE},
+    //BOTTOM PATROL
+    {.x = TO_COORDS(56),
      .y = TO_COORDS(132),
      .SpdX = 12,
      .SpdY = 0,
@@ -82,7 +103,7 @@ const actor_t level1_actors[6] = {
      .y_offset = 6,
      .direction = DIR_RIGHT,
      .NPC_type = PATROL,
-     .patrol_timer = 1,
+     .patrol_timer = 60,
      .patrol_reset = 120,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
@@ -91,30 +112,9 @@ const actor_t level1_actors[6] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = TRUE},
-    //4
-    {.x = TO_COORDS(8),
-     .y = TO_COORDS(68),
-     .SpdX = 12,
-     .SpdY = 0,
-     .w = NPC_electric_WIDTH,
-     .h = NPC_electric_HEIGHT,
-     .w_offset = 10,
-     .x_offset = 6,
-     .y_offset = 6,
-     .direction = DIR_RIGHT,
-     .NPC_type = PATROL,
-     .patrol_timer = 120,
-     .patrol_reset = 120,
-     .tile_count = (sizeof(NPC_electric_data) >> 4),
-     .tile_index = 0,
-     .tile_data = NPC_electric_data,
-     .animations = {NPC_electric_animation, NPC_electric_animation},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
-     .animation_phase = 0,
-     .copy = TRUE},
-         // ELEVATOR
+    // ELEVATOR
     {.x = TO_COORDS(-210),
-     .y = TO_COORDS(72),
+     .y = TO_COORDS(104),
      .SpdX = 0,
      .SpdY = 16,
      .w = vertical_platform_V1_WIDTH,
@@ -127,8 +127,8 @@ const actor_t level1_actors[6] = {
      .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
      .tile_index = 0,
      .tile_data = vertical_platform_V1_data,
-     .patrol_timer = 96,
-     .patrol_reset = 96,
+     .patrol_timer = 64,
+     .patrol_reset = 64,
      .animations = {elevator_frame, elevator_frame},
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
@@ -194,31 +194,29 @@ void render_level1() {
             }
         } else if (current_actor->NPC_type == WALK) {
             INT16 actor_x = TO_PIXELS(current_actor->x);
-        //NEED TO CALCULATE THE BKG.MAPS X POSITION RELATIVE TO THE SPAWN POSITION
+            //NEED TO CALCULATE THE BKG.MAPS X POSITION RELATIVE TO THE SPAWN POSITION
             // if (actor_x > 160){
             //         current_actor->x= -60;
             //         current_actor->ON = TRUE;
             //     }
-            if (actor_x >= -40){
+            if (actor_x >= -40) {
                 current_actor->x += current_actor->SpdX;
             }
         }
         current_actor++;
     }
     //WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
-        if (Crouch) { //CROUCH HITBOX
-            PLAYER.h_offset = -2;
-            PLAYER.x_offset = 8;
-            PLAYER.y_offset = 16;
-        } 
-        else if (PLAYER.SpdY != 0){ //JUMP AND FALLING HITBOX
-            PLAYER.h_offset = 11;
-            PLAYER.x_offset = 6;
-            PLAYER.y_offset = 6;
-        }
-        else if ((!Crouch) && (!Jump)) { //STAND AND WALKING HITBOX
-            PLAYER.h_offset = 7;
-            PLAYER.x_offset = 6;
-            PLAYER.y_offset = 16;
-        }
+    if (Crouch) {  //CROUCH HITBOX
+        PLAYER.h_offset = -2;
+        PLAYER.x_offset = 8;
+        PLAYER.y_offset = 16;
+    } else if (PLAYER.SpdY != 0) {  //JUMP AND FALLING HITBOX
+        PLAYER.h_offset = 11;
+        PLAYER.x_offset = 6;
+        PLAYER.y_offset = 6;
+    } else if ((!Crouch) && (!Jump)) {  //STAND AND WALKING HITBOX
+        PLAYER.h_offset = 7;
+        PLAYER.x_offset = 6;
+        PLAYER.y_offset = 16;
+    }
 }
