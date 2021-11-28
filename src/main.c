@@ -7,6 +7,7 @@
 #include "../res/tiles/collision_wide_map.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/enemy_arrow.h"
+#include "../res/tiles/vertical_platform_V1.h"
 #include "camera.h"
 #include "collisions.h"
 #include "level1.h"
@@ -14,6 +15,8 @@
 #include "scene.h"
 
 UBYTE joy, last_joy;
+UBYTE current_elevator, CE_x;
+UBYTE Attach;
 extern Variables bkg;
 extern uint8_t animation_timer;
 
@@ -31,7 +34,7 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    Jump = Gravity = Crouch = canCrouch = Drop = x_Adjust = Launch = Shooting = FALSE;
+    Attach = Jump = Gravity = Crouch = canCrouch = Drop = x_Adjust = Launch = Shooting = FALSE;
     Spawn = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
@@ -164,6 +167,7 @@ void main() {
         // ---------------------------------------------
         // WORLD PHYSICS:
         // GRAVITY
+
         if (Gravity) {
             PLAYER.SpdY += GRAVITY;
             if (PLAYER.SpdY > MAX_FALL_SPEED) {
@@ -227,14 +231,25 @@ void main() {
         }
 
         // update PLAYER absolute posiiton
-        PLAYER.y += PLAYER.SpdY;
-
+        if (!Attach) {
+            PLAYER.y += PLAYER.SpdY;
+        }
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
 
-        // render all actors on screen
+        if (Attach) {
+            if ((TO_PIXELS(PLAYER.x) - PLAYER.x_offset) > ((TO_PIXELS(active_actors[current_elevator].x) + vertical_platform_V1_PIVOT_X))) {
+                Attach = FALSE;
+                Gravity = TRUE;
+            } else {
+                PLAYER.SpdY = 0;
+                PLAYER.y = active_actors[current_elevator].y - TO_COORDS(24);
+                Gravity = Spawn = Jump = FALSE;
+                switch_land();
+            }
+        }
 
         if (bkg.redraw) {
             wait_vbl_done();
@@ -252,6 +267,7 @@ void main() {
             //[y][x]
             UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
             UBYTE px, py, ax, ay;
+            //MOVE THE PLAYER BIT SHIFT ABOVE THIS LOOP (currently running 5x)
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
             ax = TO_PIXELS(active_actors[i].x);
@@ -277,16 +293,14 @@ void main() {
                     }
                 } else if (active_actors[i].NPC_type == ELEVATOR) {
                     if (active_actors[i].ON == TRUE) {
-                        PLAYER.SpdY = 0;
-                        PLAYER.y = active_actors[i].y - TO_COORDS(24);
-                        Spawn = Jump = FALSE;
-                        if (active_actors[i].SpdY > 0) {
-                        }
-                        switch_land();
+                        Attach = TRUE;
+                        Gravity = FALSE;
+                        current_elevator = i;
                     }
                 }
             }
         }
+        // render all actors on screen
         render_actors();
     }
 }
