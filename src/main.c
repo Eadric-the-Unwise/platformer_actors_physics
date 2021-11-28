@@ -247,17 +247,6 @@ void main() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
-        if (Attach) {
-            if ((px - PLAYER.x_offset) > (TO_PIXELS(active_actors[current_elevator].x) + (active_actors[current_elevator].w / 2))) {
-                Attach = FALSE;
-                Gravity = TRUE;
-            } else {
-                PLAYER.SpdY = 0;
-                PLAYER.y = active_actors[current_elevator].y - TO_COORDS(((active_actors[current_elevator].h + PLAYER.h) / 2));
-                Gravity = Spawn = Jump = FALSE;
-                switch_land();
-            }
-        }
         // Change to IDLE state when not moving
         if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
@@ -299,6 +288,23 @@ void main() {
                         Attach = TRUE;
                         Gravity = FALSE;
                         current_elevator = i;
+                    }
+                }
+            }
+            if (Attach) {
+                if (i == current_elevator) {
+                    if ((PBL_x > NTR_x) || (PTR_x < NBL_x)) {
+                        Attach = FALSE;
+                        Gravity = TRUE;
+                    } else {
+                        PLAYER.SpdY = 0;
+                        PLAYER.y = TO_COORDS(NTR_y - (PLAYER.h / 2));
+                        if (Jump) {
+                            switch_land();
+                        } else if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                            switch_idle();
+                        }
+                        Gravity = Spawn = Jump = FALSE;
                     }
                 }
             }
