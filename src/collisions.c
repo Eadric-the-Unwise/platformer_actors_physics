@@ -101,6 +101,10 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
             PLAYER.SpdY = 0;
         }
+    } else if (PLAYER.SpdY == 0) {
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x00) || (COLLISION_WIDE_MAP[tileindexC] == 0x00) || (COLLISION_WIDE_MAP[tileindexR] == 0x00)) {
+            Gravity = TRUE;
+        }
     }
 }
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS

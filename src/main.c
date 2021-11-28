@@ -164,6 +164,9 @@ void main() {
         if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
             canCrouch_timer = 10;
         }
+        if (PLAYER.SpdY == 0) {
+            check_UD(px, py + 1, TO_PIXELS(bkg.camera_x));
+        }
         // ---------------------------------------------
         // ---------------------------------------------
         // WORLD PHYSICS:
@@ -221,15 +224,6 @@ void main() {
                 check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
             }
         }
-        // Change to IDLE state when not moving
-        if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
-            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-                    switch_idle();
-                    check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
-                }
-            }
-        }
 
         // update PLAYER absolute posiiton
         if (!Attach) {
@@ -239,18 +233,6 @@ void main() {
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
         if (animate_level) animate_level();
-
-        if (Attach) {
-            if ((TO_PIXELS(PLAYER.x) - PLAYER.x_offset) > ((TO_PIXELS(active_actors[current_elevator].x) + vertical_platform_V1_PIVOT_X))) {
-                Attach = FALSE;
-                Gravity = TRUE;
-            } else {
-                PLAYER.SpdY = 0;
-                PLAYER.y = active_actors[current_elevator].y - TO_COORDS(24);
-                Gravity = Spawn = Jump = FALSE;
-                switch_land();
-            }
-        }
 
         if (bkg.redraw) {
             wait_vbl_done();
@@ -264,6 +246,28 @@ void main() {
         }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
+
+        if (Attach) {
+            if ((px - PLAYER.x_offset) > (TO_PIXELS(active_actors[current_elevator].x) + (active_actors[current_elevator].w / 2))) {
+                Attach = FALSE;
+                Gravity = TRUE;
+            } else {
+                PLAYER.SpdY = 0;
+                PLAYER.y = active_actors[current_elevator].y - TO_COORDS(((active_actors[current_elevator].h + PLAYER.h) / 2));
+                Gravity = Spawn = Jump = FALSE;
+                switch_land();
+            }
+        }
+        // Change to IDLE state when not moving
+        if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
+            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
+                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                    switch_idle();
+                    check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                }
+            }
+        }
+
         //CHECK LANDING HOTBOX TIMING
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
             //[y][x]
