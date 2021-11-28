@@ -2,7 +2,7 @@
 #include "../res/tiles/collision_wide_map.h"
 #include "scene.h"
 
-extern UBYTE Spawn, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
+extern UBYTE Spawn, Jump, Gravity, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
 extern UBYTE canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x);

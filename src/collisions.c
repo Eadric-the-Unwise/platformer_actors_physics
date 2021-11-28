@@ -1,6 +1,6 @@
 #include "collisions.h"
 
-UBYTE Spawn, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
+UBYTE Spawn, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
 UBYTE canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 extern UBYTE joy;
@@ -43,8 +43,8 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
         if ((COLLISION_WIDE_MAP[tileindexLD] == 0x01) || (COLLISION_WIDE_MAP[tileindexLC] == 0x01) || (COLLISION_WIDE_MAP[tileindexLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRD] == 0x01) || (COLLISION_WIDE_MAP[tileindexRC] == 0x01) || (COLLISION_WIDE_MAP[tileindexRT] == 0x01) || (COLLISION_WIDE_MAP[tileindexLD] == 0x02) || (COLLISION_WIDE_MAP[tileindexLC] == 0x02) || (COLLISION_WIDE_MAP[tileindexLT] == 0x02) || (COLLISION_WIDE_MAP[tileindexRD] == 0x02) || (COLLISION_WIDE_MAP[tileindexRC] == 0x02) || (COLLISION_WIDE_MAP[tileindexRT] == 0x02)) {
             if (!x_Adjust) {
                 PLAYER.SpdX = 0;
-                if (!Jump){
-                switch_idle();
+                if (!Jump) {
+                    switch_idle();
                 }
             }
         }
@@ -93,7 +93,7 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
-                Spawn = Jump = FALSE;
+                Spawn = Jump = Gravity = FALSE;
                 switch_land();
             }
         }
@@ -208,7 +208,7 @@ void check_Drop(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
 
     if ((COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03)) {
-        Drop = TRUE;
+        Drop = Gravity = TRUE;
     }
 }
 //CHECK CROUCH
