@@ -4,6 +4,7 @@ UBYTE Spawn, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
 UBYTE canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 extern UBYTE joy;
+extern UBYTE Attach;
 
 void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     UINT16 indexDy, indexCy, indexTy, index_Lx, index_Rx, indexCamx, tileindexLD, tileindexLC, tileindexLT, tileindexRD, tileindexRC, tileindexRT;
@@ -144,6 +145,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                 if (!Jump) {
                     PLAYER.SpdY = JUMP_IMPULSE;
                     Jump = x_Adjust = TRUE;
+                    Attach = FALSE;
                     switch_jump();
                 }
             }
@@ -158,6 +160,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                     if (!Jump) {
                         PLAYER.SpdY = JUMP_IMPULSE;
                         Jump = TRUE;
+                        Attach = FALSE;
                         switch_jump();
                     }
                 }
@@ -174,6 +177,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                         if (!Jump) {
                             PLAYER.SpdY = JUMP_IMPULSE;
                             Jump = TRUE;
+                            Attach = FALSE;
                             switch_jump();
                         }
                     }
@@ -186,6 +190,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
                         Crouch = Launch = FALSE;
                         if (!Jump) {
                             PLAYER.SpdY = JUMP_IMPULSE;
+                            Attach = FALSE;
                             Jump = TRUE;
                             switch_jump();
                         }
