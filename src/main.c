@@ -127,13 +127,8 @@ void main() {
                 }
             }
         }
-        if ((joy & J_DOWN) && !(Jump)) {
+        if ((joy & J_DOWN) && (PLAYER.SpdY == 0)) {
             Crouch = TRUE;
-        }
-
-        // DOWN while standing still
-        if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
-            switch_down();
         }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
@@ -170,6 +165,7 @@ void main() {
         if (PLAYER.SpdY == 0) {
             check_UD(px, py + 1, TO_PIXELS(bkg.camera_x));
         }
+
         // ---------------------------------------------
         // ---------------------------------------------
         // WORLD PHYSICS:
@@ -315,7 +311,10 @@ void main() {
                 }
             }
         }
-
+        // DOWN while standing still
+        if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
+            switch_down();
+        }
         // render all actors on screen
         render_actors();
     }
