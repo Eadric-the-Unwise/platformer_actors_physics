@@ -31,7 +31,7 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    Jump = Crouch = canCrouch = Drop = x_Adjust = Launch = Shooting = FALSE;
+    Jump = Gravity = Crouch = canCrouch = Drop = x_Adjust = Launch = Shooting = FALSE;
     Spawn = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
@@ -120,12 +120,6 @@ void main() {
         if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (!Jump)) {
             switch_down();
         }
-        //IF PLAYER IS FREE FALLING FOR ANY REASON
-        if (PLAYER.SpdY != 0) {
-            Jump = TRUE;
-            Crouch = FALSE;
-            switch_jump();
-        }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             UBYTE px, py;
@@ -137,6 +131,12 @@ void main() {
             }
             //CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
             check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
+        }
+        //IF PLAYER IS FREE FALLING FOR ANY REASON
+        if (PLAYER.SpdY != 0) {
+            Jump = Gravity = TRUE;
+            Crouch = FALSE;
+            switch_jump();
         }
         if (Drop) {
             Drop_timer -= 1;
@@ -164,12 +164,12 @@ void main() {
         // ---------------------------------------------
         // WORLD PHYSICS:
         // GRAVITY
-
-        PLAYER.SpdY += GRAVITY;
-        if (PLAYER.SpdY > MAX_FALL_SPEED) {
-            PLAYER.SpdY = MAX_FALL_SPEED;
+        if (Gravity) {
+            PLAYER.SpdY += GRAVITY;
+            if (PLAYER.SpdY > MAX_FALL_SPEED) {
+                PLAYER.SpdY = MAX_FALL_SPEED;
+            }
         }
-
         if (PLAYER.SpdX < 0) {
             if (PLAYER.SpdX != -MAX_WALK_SPEED) {
                 PLAYER.SpdX += FRICTION;
@@ -280,6 +280,8 @@ void main() {
                         PLAYER.SpdY = 0;
                         PLAYER.y = active_actors[i].y - TO_COORDS(24);
                         Spawn = Jump = FALSE;
+                        if (active_actors[i].SpdY > 0) {
+                        }
                         switch_land();
                     }
                 }
