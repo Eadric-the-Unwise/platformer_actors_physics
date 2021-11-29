@@ -15,8 +15,8 @@
 #include "scene.h"
 
 UBYTE joy, last_joy;
-UBYTE current_elevator, CE_x;
-UBYTE Attach;
+UBYTE current_elevator;
+UBYTE Attach, Collide_x;
 UBYTE px, py;
 extern Variables bkg;
 extern uint8_t animation_timer;
@@ -46,7 +46,7 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    Attach = Jump = Gravity = Crouch = canCrouch = Drop = x_Adjust = Launch = Shooting = FALSE;
+    Attach = Jump = Gravity = Crouch = canCrouch = Drop = x_Adjust = Collide_x = Launch = Shooting = FALSE;
     Spawn = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
@@ -228,6 +228,7 @@ void main() {
         if (!Attach) {
             PLAYER.y += PLAYER.SpdY;
         }
+        //+- PLAYER.SpdX
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
 
         // call level animation hook (if any), that makes other actors move (and interact in future)
@@ -284,9 +285,14 @@ void main() {
                     }
                 } else if (active_actors[i].NPC_type == ELEVATOR) {
                     if (active_actors[i].ON == TRUE) {
-                        Attach = TRUE;
-                        Gravity = FALSE;
-                        current_elevator = i;
+                        if (PBL_x > NTR_x - 2)  //is not on top of elevator
+                        {
+                            Collide_x = TRUE;
+                        } else if (PBL_y < NTR_y) {
+                            Attach = TRUE;
+                            Gravity = FALSE;
+                            current_elevator = i;
+                        }
                     }
                 }
             }
