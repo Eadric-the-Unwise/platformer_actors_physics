@@ -5,7 +5,17 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
 
+#include "../res/tiles/brick_wide_map.h"
+#include "../res/tiles/brick_wide_tiles.h"
+#include "../res/tiles/collision_wide_map.h"
+#include "../res/tiles/detective_large.h"
+#include "../res/tiles/enemy_arrow.h"
+#include "../res/tiles/vertical_platform_V1.h"
+#include "camera.h"
+#include "collisions.h"
 #include "collisions.h"  //Drop
+#include "level1.h"
+#include "level2.h"
 
 #define MAX_ACTIVE_ACTORS 8
 #define ACTOR_DETECTIVE 0
@@ -108,6 +118,7 @@ void switch_jump();
 void switch_idle();
 void switch_land();
 void switch_crawl();
+void jump();
 
 //fuction body is inlined into the code
 inline void SetActorDirection(actor_t *actor, direction_e dir, UBYTE phase) {

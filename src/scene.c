@@ -150,6 +150,16 @@ void switch_jump() {
         }
     }
 }
+void jump() {
+    UBYTE px, py;
+    px = TO_PIXELS(PLAYER.x);
+    py = TO_PIXELS(PLAYER.y);
+    if (Crouch) {
+        check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
+    }
+    //CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
+    check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
+}
 void switch_idle() {
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L) {
         SetActorDirection(&PLAYER, DIR_IDLE_L, 0);

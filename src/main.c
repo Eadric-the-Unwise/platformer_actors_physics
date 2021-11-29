@@ -2,37 +2,14 @@
 #include <gbdk/metasprites.h>
 #include <stdio.h>
 
-#include "../res/tiles/brick_wide_map.h"
-#include "../res/tiles/brick_wide_tiles.h"
-#include "../res/tiles/collision_wide_map.h"
-#include "../res/tiles/detective_large.h"
-#include "../res/tiles/enemy_arrow.h"
-#include "../res/tiles/vertical_platform_V1.h"
-#include "camera.h"
-#include "collisions.h"
-#include "level1.h"
-#include "level2.h"
 #include "scene.h"
 
 UBYTE joy, last_joy;
 UBYTE current_elevator;
-UBYTE Attach, Collide_x;
+UBYTE Attach, x_Collide, y_Collide;
 UBYTE px, py;
 extern Variables bkg;
 extern uint8_t animation_timer;
-
-void jump() {
-    UBYTE px, py;
-    px = TO_PIXELS(PLAYER.x);
-    py = TO_PIXELS(PLAYER.y);
-    if (Crouch) {
-        check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
-    }
-    //CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
-    check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
-}
-
-// uint8_t shadow_scx = 0, shadow_scy = 0;
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -46,7 +23,7 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    Attach = Jump = Gravity = Crouch = canCrouch = Drop = x_Adjust = Collide_x = Launch = Shooting = FALSE;
+    Attach = Jump = Gravity = Crouch = canCrouch = Drop = x_Adjust = x_Collide = y_Collide = Launch = Shooting = FALSE;
     Spawn = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
@@ -59,7 +36,6 @@ void main() {
     last_joy = joy = 0;
     while (TRUE) {  // main loop runs at 60fps
         // ---------------------------------------------
-        // process joystic input
         last_joy = joy;
 
         joy = joypad();
@@ -167,7 +143,6 @@ void main() {
         }
 
         // ---------------------------------------------
-        // ---------------------------------------------
         // WORLD PHYSICS:
         // GRAVITY
 
@@ -196,7 +171,7 @@ void main() {
             UBYTE px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-            //Y-AXIS COLLISION CHECK (ADD NEGATIVE AND POSITIVE IFS SO THE LOOP ONLY CHECKS 1 FOR Y AND 1 FOR X MOVEMENT)
+            //Y-AXIS COLLISION CHECK
             if (PLAYER.SpdY > 0) {
                 check_UD(px, py + 1, TO_PIXELS(bkg.camera_x));
 
@@ -217,7 +192,6 @@ void main() {
             }
         }
 
-        //PERHAPS REPLACE THIS WITH A NEW SEPARATE FUNCTION CALLED check_C();
         if ((Crouch) && (!canCrouch)) {
             if (!(joy & J_DOWN)) {
                 check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
@@ -231,7 +205,7 @@ void main() {
         //+- PLAYER.SpdX
         render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
 
-        // call level animation hook (if any), that makes other actors move (and interact in future)
+        // call level animation hook (if any)
         if (animate_level) animate_level();
 
         if (bkg.redraw) {
@@ -285,15 +259,23 @@ void main() {
                     }
                 } else if (active_actors[i].NPC_type == ELEVATOR) {
                     if (active_actors[i].ON == TRUE) {
-                        if (PBL_x > NTR_x - 2)  //is not on top of elevator
+                        if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  //is not on top of elevator
                         {
-                            Collide_x = TRUE;
-                        } else if (PBL_y < NTR_y) {
+                            x_Collide = TRUE;
+                        }
+                        // else if (PTR_y > NBL_y - 8) {
+                        //     y_Collide = TRUE;
+                        // }
+                        else if (PBL_y < NTR_y + 8) {
                             Attach = TRUE;
                             Gravity = FALSE;
                             current_elevator = i;
                         }
                     }
+                }
+            } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
+                if (x_Collide) {
+                    x_Collide = FALSE;
                 }
             }
             if (Attach) {
@@ -318,9 +300,9 @@ void main() {
             }
         }
         // DOWN while standing still
-        if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
-            switch_down();
-        }
+        // if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
+        //     switch_down();
+        // }
         // render all actors on screen
         render_actors();
     }

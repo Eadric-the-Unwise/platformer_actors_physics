@@ -11,3 +11,4 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x);
 void check_Drop(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x);
 void check_C(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x);
 BOOLEAN overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x);
+void jump();
