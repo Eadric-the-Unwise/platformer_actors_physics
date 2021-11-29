@@ -222,14 +222,14 @@ void main() {
         py = TO_PIXELS(PLAYER.y);
 
         // Change to IDLE state when not moving
-        if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
-            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-                    switch_idle();
-                    check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
-                }
-            }
-        }
+        // if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
+        //     if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
+        //         if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+        //             switch_idle();
+        //             check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+        //         }
+        //     }
+        // }
 
         //CHECK LANDING HOTBOX TIMING
         for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
@@ -262,14 +262,12 @@ void main() {
                         if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  //is not on top of elevator
                         {
                             x_Collide = TRUE;
-                        }
-                        // else if (PTR_y > NBL_y - 8) {
-                        //     y_Collide = TRUE;
-                        // }
-                        else if (PBL_y < NTR_y + 8) {
+                        } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
                             Attach = TRUE;
                             Gravity = FALSE;
                             current_elevator = i;
+                        } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
+                            y_Collide = TRUE;
                         }
                     }
                 }
