@@ -5,11 +5,10 @@
 #include "scene.h"
 
 UBYTE joy, last_joy;
-UBYTE current_elevator;
-UBYTE Attach, x_Collide, y_Collide;
 UBYTE px, py;
 extern Variables bkg;
 extern uint8_t animation_timer;
+extern UBYTE Attach;
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -23,7 +22,7 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
 
-    Attach = Jump = Gravity = Crouch = canCrouch = Drop = x_Adjust = x_Collide = y_Collide = Launch = Shooting = FALSE;
+    Jump = Gravity = Crouch = canCrouch = Drop = Launch = Shooting = FALSE;
     Spawn = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
@@ -222,85 +221,20 @@ void main() {
         py = TO_PIXELS(PLAYER.y);
 
         // Change to IDLE state when not moving
-        // if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
-        //     if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-        //         if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-        //             switch_idle();
-        //             check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
-        //         }
-        //     }
-        // }
-
-        //CHECK LANDING HOTBOX TIMING
-        for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
-            //[y][x]
-            UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
-            UBYTE ax, ay;
-            ax = TO_PIXELS(active_actors[i].x);
-            ay = TO_PIXELS(active_actors[i].y);
-            //THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
-            PTR_y = py - PLAYER.h_offset;            //TR y
-            PTR_x = px + PLAYER.x_offset;            //TR x
-            PBL_y = py + PLAYER.y_offset;            //BL y
-            PBL_x = px - PLAYER.x_offset;            //BL x
-            NTR_y = ay - active_actors[i].y_offset;  //TR y
-            NTR_x = ax + active_actors[i].x_offset;  //TR x
-            NBL_y = ay + active_actors[i].y_offset;  //BL y
-            NBL_x = ax - active_actors[i].x_offset;  //BL x
-
-            if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
-                if (active_actors[i].NPC_type != ELEVATOR) {
-                    if (active_actors[i].ON == TRUE) {
-                        DISPLAY_OFF;
-                        Spawn = TRUE;
-                        init_submap();
-                        load_level(&level1);
-                        DISPLAY_ON;
-                    }
-                } else if (active_actors[i].NPC_type == ELEVATOR) {
-                    if (active_actors[i].ON == TRUE) {
-                        if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  //is not on top of elevator
-                        {
-                            x_Collide = TRUE;
-                        } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
-                            Attach = TRUE;
-                            Gravity = FALSE;
-                            current_elevator = i;
-                        } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
-                            y_Collide = TRUE;
-                        }
-                    }
-                }
-            } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
-                if (x_Collide) {
-                    x_Collide = FALSE;
-                }
-            }
-            if (Attach) {
-                if (i == current_elevator) {
-                    if ((PBL_x > NTR_x) || (PTR_x < NBL_x)) {
-                        Attach = FALSE;
-                        Gravity = TRUE;
-                    } else {
-                        PLAYER.SpdY = 0;
-                        PLAYER.y = TO_COORDS(NTR_y - (PLAYER.h / 2));
-                        if (Jump) {
-                            switch_land();
-                        } else if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-                            switch_idle();
-                        }
-                        Gravity = Spawn = Jump = FALSE;
-                    }
-                }
-                if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
-                    jump();
+        if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
+            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
+                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                    switch_idle();
+                    check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
                 }
             }
         }
+        npc_collisions_level1();
+
         // DOWN while standing still
-        // if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
-        //     switch_down();
-        // }
+        if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
+            switch_down();
+        }
         // render all actors on screen
         render_actors();
     }

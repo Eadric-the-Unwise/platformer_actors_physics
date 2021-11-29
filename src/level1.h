@@ -5,3 +5,5 @@
 
 extern const struct actor_t level1_actors[6];
 extern const struct level_t level1;
+void npc_collisions_level1();
+void render_level1();

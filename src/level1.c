@@ -1,3 +1,4 @@
+#pragma bank 255
 #include "level1.h"
 
 #include <gb/gb.h>
@@ -8,8 +9,10 @@
 #include "../res/tiles/enemy_arrow.h"
 #include "../res/tiles/vertical_platform_V1.h"
 extern Variables bkg;
-// void move_arrows();
-void render_level1();
+extern UBYTE px, py;
+extern UBYTE joy, last_joy;
+UBYTE Attach, x_Collide, y_Collide;
+UBYTE current_elevator;
 
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
@@ -116,7 +119,7 @@ const actor_t level1_actors[6] = {
     {.x = TO_COORDS(-210),
      .y = TO_COORDS(104),
      .SpdX = 0,
-     .SpdY = 4,  //16
+     .SpdY = 16,
      .w = vertical_platform_V1_WIDTH,
      .h = vertical_platform_V1_HEIGHT,
      .w_offset = 16,
@@ -140,23 +143,6 @@ const level_t level1 = {
     .animate_hook = render_level1  // function that put life into the scene
 };
 
-// void move_arrows() {
-//     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  //The Detective is currently active_actors[0], so active_actors[1] and above are enemies
-
-//     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
-//         current_actor->x += current_actor->SpdX;
-//         current_actor->y += current_actor->SpdY;
-
-//         if (current_actor->x < TO_COORDS(17)) {
-//             SetActorDirection(current_actor, DIR_RIGHT, 0);
-//             current_actor->SpdX = abs(current_actor->SpdX);
-//         } else if (current_actor->x > TO_COORDS(159)) {
-//             SetActorDirection(current_actor, DIR_LEFT, 0);
-//             current_actor->SpdX = -abs(current_actor->SpdX);
-//         }
-//         current_actor++;
-//     }
-// }
 void render_level1() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  //The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
@@ -218,5 +204,74 @@ void render_level1() {
         PLAYER.h_offset = 7;
         PLAYER.x_offset = 6;
         PLAYER.y_offset = 16;
+    }
+}
+
+void npc_collisions_level1() {
+    //CHECK LANDING HOTBOX TIMING
+    for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
+        //[y][x]
+        UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
+        UBYTE ax, ay;
+        ax = TO_PIXELS(active_actors[i].x);
+        ay = TO_PIXELS(active_actors[i].y);
+        //THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
+        PTR_y = py - PLAYER.h_offset;            //TR y
+        PTR_x = px + PLAYER.x_offset;            //TR x
+        PBL_y = py + PLAYER.y_offset;            //BL y
+        PBL_x = px - PLAYER.x_offset;            //BL x
+        NTR_y = ay - active_actors[i].y_offset;  //TR y
+        NTR_x = ax + active_actors[i].x_offset;  //TR x
+        NBL_y = ay + active_actors[i].y_offset;  //BL y
+        NBL_x = ax - active_actors[i].x_offset;  //BL x
+
+        if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
+            if (active_actors[i].NPC_type != ELEVATOR) {
+                if (active_actors[i].ON == TRUE) {
+                    DISPLAY_OFF;
+                    Spawn = TRUE;
+                    init_submap();
+                    load_level(&level1);
+                    DISPLAY_ON;
+                }
+            } else if (active_actors[i].NPC_type == ELEVATOR) {
+                if (active_actors[i].ON == TRUE) {
+                    if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  //is not on top of elevator
+                    {
+                        x_Collide = TRUE;
+                    } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
+                        Attach = TRUE;
+                        Gravity = FALSE;
+                        current_elevator = i;
+                    } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
+                        y_Collide = TRUE;
+                    }
+                }
+            }
+        } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
+            if (x_Collide) {
+                x_Collide = FALSE;
+            }
+        }
+        if (Attach) {
+            if (i == current_elevator) {
+                if ((PBL_x > NTR_x) || (PTR_x < NBL_x)) {
+                    Attach = FALSE;
+                    Gravity = TRUE;
+                } else {
+                    PLAYER.SpdY = 0;
+                    PLAYER.y = TO_COORDS(NTR_y - (PLAYER.h / 2));
+                    if (Jump) {
+                        switch_land();
+                    } else if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                        switch_idle();
+                    }
+                    Gravity = Spawn = Jump = FALSE;
+                }
+            }
+            if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
+                jump();
+            }
+        }
     }
 }
