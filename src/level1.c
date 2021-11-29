@@ -16,7 +16,7 @@ UBYTE current_elevator;
 
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[6] = {
+const actor_t level1_actors[7] = {
     //0 PLAYER
     {.x = TO_COORDS(136),
      .y = TO_COORDS(-8),
@@ -116,7 +116,7 @@ const actor_t level1_actors[6] = {
      .animation_phase = 0,
      .copy = TRUE},
     // ELEVATOR
-    {.x = TO_COORDS(-210),
+    {.x = TO_COORDS(-218),
      .y = TO_COORDS(104),
      .SpdX = 0,
      .SpdY = 16,
@@ -135,11 +135,31 @@ const actor_t level1_actors[6] = {
      .animations = {elevator_frame, elevator_frame},
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
-     .copy = FALSE}};
+     .copy = FALSE},
+    {.x = TO_COORDS(-298),
+     .y = TO_COORDS(88),
+     .SpdX = 0,
+     .SpdY = 12,
+     .w = vertical_platform_V1_WIDTH,
+     .h = vertical_platform_V1_HEIGHT,
+     .w_offset = 16,
+     .x_offset = vertical_platform_V1_WIDTH / 2,
+     .y_offset = vertical_platform_V1_HEIGHT / 2,
+     .direction = DIR_RIGHT,
+     .NPC_type = ELEVATOR,
+     .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
+     .tile_index = 0,
+     .tile_data = vertical_platform_V1_data,
+     .patrol_timer = 1,
+     .patrol_reset = 64,
+     .animations = {elevator_frame, elevator_frame},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animation_phase = 0,
+     .copy = TRUE}};
 
 const level_t level1 = {
     .actors = level1_actors,
-    .actor_count = 6,
+    .actor_count = 7,
     .animate_hook = render_level1  // function that put life into the scene
 };
 
