@@ -9,10 +9,10 @@
 #include "../res/tiles/enemy_arrow.h"
 #include "../res/tiles/vertical_platform_V1.h"
 extern Variables bkg;
-extern UBYTE px, py;
-extern UBYTE joy, last_joy;
-UBYTE Attach, x_Collide, y_Collide;
-UBYTE current_elevator;
+extern UINT8 px, py;
+extern UINT8 joy, last_joy;
+UINT8 Attach, x_Collide, y_Collide;
+UINT8 current_elevator;
 
 //CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
@@ -229,10 +229,10 @@ void render_level1() {
 
 void npc_collisions_level1() {
     //CHECK LANDING HOTBOX TIMING
-    for (UBYTE i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
+    for (UINT8 i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
         //[y][x]
         UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
-        UBYTE ax, ay;
+        UINT8 ax, ay;
         ax = TO_PIXELS(active_actors[i].x);
         ay = TO_PIXELS(active_actors[i].y);
         //THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN

@@ -40,6 +40,20 @@
 //if last_joy and J_A both equal 1, XOR = 0.
 #define CHANGED_BUTTONS (last_joy ^ joy)
 
+//from scene.c
+extern actor_t active_actors[MAX_ACTIVE_ACTORS];
+extern animate_level_t animate_level;
+extern UINT8 active_actors_count;
+
+void load_level(const level_t *level);
+void render_actors();
+void switch_down();
+void switch_jump();
+void switch_idle();
+void switch_land();
+void switch_crawl();
+void jump();
+
 typedef enum {
     DIR_LEFT,
     DIR_RIGHT,
@@ -80,22 +94,27 @@ typedef struct actor_t {
     INT8 h_offset;  //y - value
     INT8 x_offset;
     INT8 y_offset;  //y + value
+
+    //direction
     direction_e direction;
     direction_e last_direction;
+
+    //NPC type
     NPC_type_e NPC_type;
+
     // tiledata related
     UINT8 tile_count;
     UINT8 tile_index;
-    UINT16 patrol_timer;
-    UINT16 patrol_reset;
-    const UINT8 *tile_data;
+    UINT8 patrol_timer;
+    UINT8 patrol_reset;
+    const UINT8 *tile_data;  //const variables cannot be manipulated. Initialized only ONCE
 
     // animation description
-    const metasprite_t **animations[14];
-    anim_loop_e animations_props[14];
-    UINT8 animation_phase;
-    UBYTE copy;
-    UBYTE ON;
+    const metasprite_t **animations[14];  //list all DIRs in level's actors struct, up to max of [this value]
+    anim_loop_e animations_props[14];     //equivilent to above DIRs to define whether they loop or play ONCE
+    UINT8 animation_phase;                //frame of metasprite animation loop
+    UINT8 copy;                           //if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
+    UINT8 ON;                             //if disabled, the NPC will hide_metasprite();
 } actor_t;
 
 typedef void (*animate_level_t)();
@@ -106,27 +125,12 @@ typedef struct level_t {
     animate_level_t animate_hook;
 } level_t;
 
-extern actor_t active_actors[MAX_ACTIVE_ACTORS];
-extern animate_level_t animate_level;
-
-extern UINT8 active_actors_count;
-
-void load_level(const level_t *level);
-void render_actors();
-void switch_down();
-void switch_jump();
-void switch_idle();
-void switch_land();
-void switch_crawl();
-void jump();
-
 //fuction body is inlined into the code
-inline void SetActorDirection(actor_t *actor, direction_e dir, UBYTE phase) {
+inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase) {
     if (actor->direction != dir) {
         actor->last_direction = actor->direction;
         actor->direction = dir;
         actor->animation_phase = phase;
     }
 }
-
 #endif

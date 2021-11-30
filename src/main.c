@@ -4,11 +4,11 @@
 
 #include "scene.h"
 
-UBYTE joy, last_joy;
-UBYTE px, py;
+UINT8 joy, last_joy;
+UINT8 px, py;
 extern Variables bkg;
 extern uint8_t animation_timer;
-extern UBYTE Attach;
+extern UINT8 Attach;
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -39,7 +39,7 @@ void main() {
 
         joy = joypad();
         if (!Spawn) {
-            UBYTE px, py;
+            UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
             if (joy & J_LEFT) {
@@ -167,7 +167,7 @@ void main() {
         }
 
         if (PLAYER.SpdY != 0) {
-            UBYTE px, py;
+            UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
             //Y-AXIS COLLISION CHECK
@@ -179,7 +179,7 @@ void main() {
             }
         }
         if (PLAYER.SpdX != 0) {
-            UBYTE px, py;
+            UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
             //IF MOVING RIGHT

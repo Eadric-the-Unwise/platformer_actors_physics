@@ -1,12 +1,12 @@
 #include "collisions.h"
 
-UBYTE Spawn, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
-UBYTE canCrouch_timer, canCrouch_Ftimer, Drop_timer;
+UINT8 Spawn, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
+UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
-extern UBYTE joy;
-extern UBYTE Attach, x_Collide, y_Collide;
+extern UINT8 joy;
+extern UINT8 Attach, x_Collide, y_Collide;
 
-void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexDy, indexCy, indexTy, index_Lx, index_Rx, indexCamx, tileindexLD, tileindexLC, tileindexLT, tileindexRD, tileindexRC, tileindexRT;
 
     indexCamx = camera_x;
@@ -61,7 +61,7 @@ void check_LR(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     }
 }
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
-void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
     indexCamx = camera_x;
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
@@ -91,7 +91,7 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     if (PLAYER.SpdY > 0) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03)) {
             if (!Drop) {
-                UBYTE ty = (TO_PIXELS(PLAYER.y) / 8);
+                UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
                 Spawn = Jump = y_Collide = Gravity = FALSE;
@@ -110,7 +110,7 @@ void check_UD(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     }
 }
 //TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
-void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, indexSLx, indexSCx, indexSRx, index_y, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
     //CL = Crouch Left CC = Crouch Center CR = Crouch Right
     indexCamx = camera_x;
@@ -205,7 +205,7 @@ void check_J(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     }
 }
 
-void check_Drop(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+void check_Drop(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
     indexCamx = camera_x;
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
@@ -222,7 +222,7 @@ void check_Drop(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
     }
 }
 //CHECK CROUCH
-void check_C(UBYTE newplayerx, UBYTE newplayery, INT16 camera_x) {
+void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexCLx, indexCCx, indexCRx, indexSLx, indexSRx, index_y, indexCamx, tileindexCL, tileindexCC, tileindexCT, tileindexSL, tileindexSR;
 
     indexCamx = camera_x;

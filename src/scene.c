@@ -5,7 +5,7 @@
 
 #include "level.h"
 extern Variables bkg;
-UBYTE dir, last_dir;
+UINT8 dir, last_dir;
 
 // array of avaliable actors
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
@@ -151,7 +151,7 @@ void switch_jump() {
     }
 }
 void jump() {
-    UBYTE px, py;
+    UINT8 px, py;
     px = TO_PIXELS(PLAYER.x);
     py = TO_PIXELS(PLAYER.y);
     if (Crouch) {

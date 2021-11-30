@@ -3,35 +3,33 @@
 //pragma once is a stronger method to ifndef <-> endif
 //it makes sure that the header file is only included once
 #pragma once
-#include <stdio.h>
 #include <gb/drawing.h>
+#include <stdio.h>
 
-enum Cam
-{
+enum Cam {
     vertical_cam,
     horizontal_cam,
     platforming_cam,
     scroll_cam
 };
 
-typedef struct Variables
-{
+typedef struct Variables {
     UINT16 camera_max_y;
     UINT16 camera_max_x;
     UINT16 camera_tiles_x;
     UINT16 camera_tiles_y;
-    UBYTE joy;
+    UINT8 joy;
 
-    UBYTE sliding;
-    UBYTE fading;
+    UINT8 sliding;
+    UINT8 fading;
     INT8 slide_x;
     INT8 slide_y;
     // current and old positions of the camera in pixels
-    WORD camera_x, camera_y, old_camera_x, old_camera_y;
+    INT16 camera_x, camera_y, old_camera_x, old_camera_y;
     // current and old position of the map in tiles
-    UBYTE map_pos_x, map_pos_y, old_map_pos_x, old_map_pos_y;
+    UINT8 map_pos_x, map_pos_y, old_map_pos_x, old_map_pos_y;
     // redraw flag, indicates that camera position was changed
-    UBYTE redraw;
+    UINT8 redraw;
     //below PROVIDED BY TOXA IN DISCORD //
     UINT8 level_map_width;
     UINT8 level_map_height;
