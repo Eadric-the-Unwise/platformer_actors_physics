@@ -40,20 +40,6 @@
 //if last_joy and J_A both equal 1, XOR = 0.
 #define CHANGED_BUTTONS (last_joy ^ joy)
 
-//from scene.c
-extern actor_t active_actors[MAX_ACTIVE_ACTORS];
-extern animate_level_t animate_level;
-extern UINT8 active_actors_count;
-
-void load_level(const level_t *level);
-void render_actors();
-void switch_down();
-void switch_jump();
-void switch_idle();
-void switch_land();
-void switch_crawl();
-void jump();
-
 typedef enum {
     DIR_LEFT,
     DIR_RIGHT,
@@ -125,6 +111,20 @@ typedef struct level_t {
     animate_level_t animate_hook;
 } level_t;
 
+//from scene.c
+extern actor_t active_actors[MAX_ACTIVE_ACTORS];
+extern animate_level_t animate_level;
+extern UINT8 active_actors_count;
+
+void load_level(const level_t *level);
+void render_actors();
+void switch_down();
+void switch_jump();
+void switch_idle();
+void switch_land();
+void switch_crawl();
+void jump();
+
 //fuction body is inlined into the code
 inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase) {
     if (actor->direction != dir) {
@@ -133,4 +133,5 @@ inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase) {
         actor->animation_phase = phase;
     }
 }
+
 #endif
