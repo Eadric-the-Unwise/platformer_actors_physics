@@ -42,7 +42,8 @@ const actor_t level1_actors[7] = {
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
      .h = NPC_electric_HEIGHT,
-     .w_offset = 10,
+     .x_pivot = NPC_electric_PIVOT_X,
+     .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_RIGHT,
@@ -61,7 +62,8 @@ const actor_t level1_actors[7] = {
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
      .h = NPC_electric_HEIGHT,
-     .w_offset = 10,
+     .x_pivot = NPC_electric_PIVOT_X,
+     .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_RIGHT,
@@ -80,7 +82,8 @@ const actor_t level1_actors[7] = {
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
      .h = NPC_electric_HEIGHT,
-     .w_offset = 10,
+     .x_pivot = NPC_electric_PIVOT_X,
+     .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_LEFT,
@@ -101,7 +104,8 @@ const actor_t level1_actors[7] = {
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
      .h = NPC_electric_HEIGHT,
-     .w_offset = 10,
+     .x_pivot = NPC_electric_PIVOT_X,
+     .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_RIGHT,
@@ -122,18 +126,19 @@ const actor_t level1_actors[7] = {
      .SpdY = 16,
      .w = vertical_platform_V1_WIDTH,
      .h = vertical_platform_V1_HEIGHT,
-     .w_offset = 16,
-     .x_offset = vertical_platform_V1_WIDTH / 2,
-     .y_offset = vertical_platform_V1_HEIGHT / 2,
-     .direction = DIR_RIGHT,
+     .x_pivot = vertical_platform_V1_PIVOT_X,
+     .y_pivot = vertical_platform_V1_PIVOT_Y,
+     .x_offset = vertical_platform_V1_PIVOT_X,
+     .y_offset = vertical_platform_V1_PIVOT_Y,
+     .direction = DIR_DOWN,
      .NPC_type = ELEVATOR,
      .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
      .tile_index = 0,
      .tile_data = vertical_platform_V1_data,
      .patrol_timer = 64,
      .patrol_reset = 64,
-     .animations = {elevator_frame, elevator_frame},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
+     .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
      .copy = FALSE},
     {.x = TO_COORDS(-298),
@@ -142,18 +147,19 @@ const actor_t level1_actors[7] = {
      .SpdY = 12,
      .w = vertical_platform_V1_WIDTH,
      .h = vertical_platform_V1_HEIGHT,
-     .w_offset = 16,
-     .x_offset = vertical_platform_V1_WIDTH / 2,
-     .y_offset = vertical_platform_V1_HEIGHT / 2,
-     .direction = DIR_RIGHT,
+     .x_pivot = vertical_platform_V1_PIVOT_X,
+     .y_pivot = vertical_platform_V1_PIVOT_Y,
+     .x_offset = vertical_platform_V1_PIVOT_X,
+     .y_offset = vertical_platform_V1_PIVOT_Y,
+     .direction = DIR_DOWN,
      .NPC_type = ELEVATOR,
      .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
      .tile_index = 0,
      .tile_data = vertical_platform_V1_data,
      .patrol_timer = 1,
      .patrol_reset = 64,
-     .animations = {elevator_frame, elevator_frame},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
+     .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
      .copy = TRUE}};
 
@@ -189,12 +195,12 @@ void render_level1() {
             current_actor->patrol_timer--;
             current_actor->y += current_actor->SpdY;
 
-            if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
-                SetActorDirection(current_actor, DIR_RIGHT, 0);
+            if ((current_actor->direction == DIR_UP) && (current_actor->patrol_timer == 0)) {
+                SetActorDirection(current_actor, DIR_DOWN, 0);
                 current_actor->SpdY = abs(current_actor->SpdY);
                 current_actor->patrol_timer = current_actor->patrol_reset;
-            } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
-                SetActorDirection(current_actor, DIR_LEFT, 0);
+            } else if ((current_actor->direction == DIR_DOWN) && (current_actor->patrol_timer == 0)) {
+                SetActorDirection(current_actor, DIR_UP, 0);
                 current_actor->SpdY = -abs(current_actor->SpdY);
                 current_actor->patrol_timer = current_actor->patrol_reset;
             }

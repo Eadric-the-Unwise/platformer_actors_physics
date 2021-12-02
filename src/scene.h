@@ -55,6 +55,8 @@ typedef enum {
     DIR_LAND_R,
     DIR_DROP_L,
     DIR_DROP_R,
+    DIR_UP,
+    DIR_DOWN,
 } direction_e;
 
 typedef enum {
@@ -76,7 +78,8 @@ typedef struct actor_t {
     INT16 SpdY;
     INT8 w;
     INT8 h;
-    INT8 w_offset;  //x - value (only needed if sprite hitbox is not evenly centered, otherwise just use x_offset for both + and -)
+    INT8 x_pivot;
+    INT8 y_pivot;
     INT8 h_offset;  //y - value
     INT8 x_offset;
     INT8 y_offset;  //y + value
@@ -96,8 +99,8 @@ typedef struct actor_t {
     const UINT8 *tile_data;  //const variables cannot be manipulated. Initialized only ONCE
 
     // animation description
-    const metasprite_t **animations[14];  //list all DIRs in level's actors struct, up to max of [this value]
-    anim_loop_e animations_props[14];     //equivilent to above DIRs to define whether they loop or play ONCE
+    const metasprite_t **animations[116];  //list all DIRs in level's actors struct, up to max of [this value]
+    anim_loop_e animations_props[16];     //equivilent to above DIRs to define whether they loop or play ONCE
     UINT8 animation_phase;                //frame of metasprite animation loop
     UINT8 copy;                           //if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
     UINT8 ON;                             //if disabled, the NPC will hide_metasprite();

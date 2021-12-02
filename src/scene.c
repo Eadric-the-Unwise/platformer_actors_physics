@@ -34,7 +34,8 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         current_actor->SpdY = actor->SpdY;
         current_actor->w = actor->w;
         current_actor->h = actor->h;
-        current_actor->w_offset = actor->w_offset;
+        current_actor->x_pivot = actor->x_pivot;
+        current_actor->y_pivot = actor->y_pivot;
         current_actor->h_offset = actor->h_offset;
         current_actor->x_offset = actor->x_offset;
         current_actor->y_offset = actor->y_offset;
@@ -80,13 +81,13 @@ void render_actors() {
     for (UINT8 i = active_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
         INT16 PLAYER_x = TO_PIXELS(PLAYER.x);
         INT16 current_actor_x = TO_PIXELS(current_actor->x);
-        INT16 NPC_PLAYER_Offset = (PLAYER_x - current_actor_x);
+        INT16 NPC_PLAYER_Offset = PLAYER_x - (current_actor_x - current_actor->x_pivot);
         current_direction = current_actor->direction;
         const metasprite_t **current_animation = current_actor->animations[current_direction];
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
                 //PLAYER THEORETICALLY WILL ALWAYS LOAD BECAUSE PLAYER.x - PLAYER.x = 0//
-                if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -60) {
+                if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -54) {
                     current_actor->ON = TRUE;
                     if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R)) {
                         hiwater += move_metasprite_vflip(
