@@ -191,7 +191,7 @@ void anim_level1() {
         if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
             current_actor->x -= PLAYER.SpdX;
         }
-        if (current_actor->RENDER == TRUE && current_actor->KILL != TRUE) {
+        if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {
             if (current_actor->NPC_type == PATROL) {
                 current_actor->patrol_timer--;
                 current_actor->x += current_actor->SpdX;
@@ -228,7 +228,6 @@ void anim_level1() {
                     current_actor->KILL = TRUE;
                 }
             }
-        } else if (current_actor->RENDER == FALSE) {
         }
         ptr++;
         current_actor = &active_actors[*ptr];
