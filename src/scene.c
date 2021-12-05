@@ -46,7 +46,9 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations));  // copy array of 5 pointers to animation phases
         memcpy(current_actor->animations_props, actor->animations_props, sizeof(actor->animations_props));
         current_actor->animation_phase = actor->animation_phase;
+        current_actor->RENDER = actor->RENDER;
         current_actor->ON = actor->ON;
+        current_actor->KILL = actor->KILL;
         hiwater += actor->tile_count;
         current_actor++;
         actor++;
@@ -87,26 +89,29 @@ void render_actors() {
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
                 // PLAYER THEORETICALLY WILL ALWAYS LOAD BECAUSE PLAYER.x - PLAYER.x = 0//
-                if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -54 && current_actor->ON == TRUE) {
-                    if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R)) {
-                        hiwater += move_metasprite_vflip(
-                            current_animation[current_actor->animation_phase],
-                            current_actor->tile_index,
-                            hiwater,
-                            TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                if (current_actor->RENDER == TRUE) {
+                    if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -54 && current_actor->KILL != TRUE) {
+                        current_actor->ON = TRUE;
+                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R)) {
+                            hiwater += move_metasprite_vflip(
+                                current_animation[current_actor->animation_phase],
+                                current_actor->tile_index,
+                                hiwater,
+                                TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                        } else {
+                            hiwater += move_metasprite(
+                                current_animation[current_actor->animation_phase],
+                                current_actor->tile_index,
+                                hiwater,
+                                TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                        }
                     } else {
-                        hiwater += move_metasprite(
+                        // hiwater -= current_actor->metasprite_count;
+                        current_actor->ON = FALSE;
+                        hide_metasprite(
                             current_animation[current_actor->animation_phase],
-                            current_actor->tile_index,
-                            hiwater,
-                            TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                            hiwater);
                     }
-                } else {
-                    // hiwater -= current_actor->metasprite_count;
-                    hide_metasprite(
-                        current_animation[current_actor->animation_phase],
-                        hiwater);
-                    current_actor->ON = FALSE;
                 }
             }
             // process actor animation

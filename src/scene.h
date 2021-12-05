@@ -1,5 +1,5 @@
 #ifndef __SCENE_H__
-//prevents the includes from being called twice
+// prevents the includes from being called twice
 #define __SCENE_H__
 
 #include <gb/gb.h>
@@ -27,7 +27,7 @@
 
 #define TO_COORDS(A) ((A) << 4)
 #define TO_PIXELS(A) ((A) >> 4)
-#define TO_TILES(A) ((A) >> (4 + 3))  //4 is "subpixels to pixels" and 3 is "pixels to tiles".
+#define TO_TILES(A) ((A) >> (4 + 3))  // 4 is "subpixels to pixels" and 3 is "pixels to tiles".
 
 #define GRAVITY 4
 #define FRICTION 2
@@ -37,7 +37,7 @@
 #define MAX_WALK_SPEED 16
 #define MAX_CRAWL_SPEED 10
 #define MAX_FALL_SPEED 64
-//if last_joy and J_A both equal 1, XOR = 0.
+// if last_joy and J_A both equal 1, XOR = 0.
 #define CHANGED_BUTTONS (last_joy ^ joy)
 
 typedef enum {
@@ -80,15 +80,15 @@ typedef struct actor_t {
     INT8 h;
     INT8 x_pivot;
     INT8 y_pivot;
-    INT8 h_offset;  //y - value
+    INT8 h_offset;  // y - value
     INT8 x_offset;
-    INT8 y_offset;  //y + value
+    INT8 y_offset;  // y + value
 
-    //direction
+    // direction
     direction_e direction;
     direction_e last_direction;
 
-    //NPC type
+    // NPC type
     NPC_type_e NPC_type;
 
     // tiledata related
@@ -96,14 +96,16 @@ typedef struct actor_t {
     UINT8 tile_index;
     UINT8 patrol_timer;
     UINT8 patrol_reset;
-    const UINT8 *tile_data;  //const variables cannot be manipulated. Initialized only ONCE
+    const UINT8 *tile_data;  // const variables cannot be manipulated. Initialized only ONCE
 
     // animation description
-    const metasprite_t **animations[116];  //list all DIRs in level's actors struct, up to max of [this value]
-    anim_loop_e animations_props[16];     //equivilent to above DIRs to define whether they loop or play ONCE
-    UINT8 animation_phase;                //frame of metasprite animation loop
-    UINT8 copy;                           //if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
-    UINT8 ON;                             //if disabled, the NPC will hide_metasprite();
+    const metasprite_t **animations[116];  // list all DIRs in level's actors struct, up to max of [this value]
+    anim_loop_e animations_props[16];      // equivilent to above DIRs to define whether they loop or play ONCE
+    UINT8 animation_phase;                 // frame of metasprite animation loop
+    UINT8 copy;
+    UINT8 RENDER;  // if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
+    UINT8 ON;
+    UINT8 KILL;  // if disabled, the NPC will hide_metasprite();
 } actor_t;
 
 typedef void (*animate_level_t)();
@@ -114,7 +116,7 @@ typedef struct level_t {
     animate_level_t animate_hook;
 } level_t;
 
-//from scene.c
+// from scene.c
 extern actor_t active_actors[MAX_ACTIVE_ACTORS];
 extern animate_level_t animate_level;
 extern UINT8 active_actors_count;
@@ -128,7 +130,7 @@ void switch_land();
 void switch_crawl();
 void jump();
 
-//fuction body is inlined into the code
+// fuction body is inlined into the code
 inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase) {
     if (actor->direction != dir) {
         actor->last_direction = actor->direction;

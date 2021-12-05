@@ -35,6 +35,7 @@ const actor_t level1_actors[7] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE,
+     .RENDER = TRUE,
      .ON = TRUE},
     // 1 NPC
     {.x = TO_COORDS(-24),
@@ -57,7 +58,7 @@ const actor_t level1_actors[7] = {
      .animation_phase = 0,
      .copy = FALSE},
     // 2 NPC
-    {.x = TO_COORDS(-168),
+    {.x = TO_COORDS(-80),
      .y = TO_COORDS(116),
      .SpdX = 7,
      .SpdY = 0,
@@ -121,7 +122,7 @@ const actor_t level1_actors[7] = {
      .animation_phase = 0,
      .copy = TRUE},
     // ELEVATOR
-    {.x = TO_COORDS(-218),
+    {.x = TO_COORDS(-40),
      .y = TO_COORDS(104),
      .SpdX = 0,
      .SpdY = 16,
@@ -142,7 +143,7 @@ const actor_t level1_actors[7] = {
      .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
      .copy = FALSE},
-    {.x = TO_COORDS(-298),
+    {.x = TO_COORDS(-120),
      .y = TO_COORDS(88),
      .SpdX = 0,
      .SpdY = 12,
@@ -174,29 +175,15 @@ void anim_level1() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     UINT16 camera_x = TO_PIXELS(bkg.camera_x);
     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
-        if ((camera_x > 0) && (camera_x <= bkg.camera_max_x)) {
-            if ((camera_x < bkg.camera_max_x) && (camera_x >= 480)) {
-                active_actors[1].ON = TRUE;
-                active_actors[2].ON = TRUE;
-                active_actors[3].ON = TRUE;
-                active_actors[4].ON = TRUE;
-                active_actors[5].ON = FALSE;
-                active_actors[6].ON = FALSE;
+        if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
+            if (current_actor->RENDER) {
+                current_actor->x -= PLAYER.SpdX;
             }
-        } else if ((camera_x <= 479) && (camera_x >= 0)) {
-            active_actors[1].ON = FALSE;
-            active_actors[2].ON = FALSE;
-            active_actors[3].ON = FALSE;
-            active_actors[4].ON = FALSE;
-            active_actors[5].ON = TRUE;
-            active_actors[6].ON = TRUE;
         }
-        if (current_actor->ON == TRUE) {
-            current_actor->x -= PLAYER.SpdX;
+        if (current_actor->RENDER == TRUE && current_actor->KILL != TRUE) {
             if (current_actor->NPC_type == PATROL) {
                 current_actor->patrol_timer--;
                 current_actor->x += current_actor->SpdX;
-
                 if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
                     SetActorDirection(current_actor, DIR_RIGHT, 0);
                     current_actor->SpdX = abs(current_actor->SpdX);
@@ -222,15 +209,44 @@ void anim_level1() {
                 }
             } else if (current_actor->NPC_type == WALK) {
                 INT16 actor_x = TO_PIXELS(current_actor->x);
-                // NEED TO CALCULATE THE BKG.MAPS X POSITION RELATIVE TO THE SPAWN POSITION
-                //  if (actor_x > 160){
-                //          current_actor->x= -60;
-                //          current_actor->ON = TRUE;
-                //      }
-                if (actor_x >= -40) {
+
+                if ((actor_x >= -40) && (actor_x <= 200)) {
                     current_actor->x += current_actor->SpdX;
                 }
+                if (actor_x > 196) {
+                    current_actor->KILL = TRUE;
+                }
             }
+        } else if (current_actor->ON == FALSE) {
+        }
+        if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {
+            active_actors[1].RENDER = TRUE;
+            active_actors[2].RENDER = TRUE;
+            active_actors[3].RENDER = TRUE;
+            active_actors[4].RENDER = TRUE;
+            active_actors[5].RENDER = FALSE;
+            active_actors[6].RENDER = FALSE;
+        } else if ((camera_x > 320) && (camera_x < 480)) {
+            active_actors[1].RENDER = TRUE;
+            active_actors[2].RENDER = TRUE;
+            active_actors[3].RENDER = FALSE;
+            active_actors[4].RENDER = FALSE;
+            active_actors[5].RENDER = TRUE;
+            active_actors[6].RENDER = TRUE;
+        } else if ((camera_x > 160) && (camera_x < 320)) {
+            active_actors[1].RENDER = FALSE;
+            active_actors[2].RENDER = FALSE;
+            active_actors[3].RENDER = FALSE;
+            active_actors[4].RENDER = FALSE;
+            active_actors[5].RENDER = TRUE;
+            active_actors[6].RENDER = TRUE;
+        } else if ((camera_x > 0) && (camera_x < 160)) {
+            active_actors[1].RENDER = FALSE;
+            active_actors[2].RENDER = FALSE;
+            active_actors[3].RENDER = FALSE;
+            active_actors[4].RENDER = FALSE;
+            active_actors[5].RENDER = FALSE;
+            active_actors[6].RENDER = FALSE;
         }
         current_actor++;
     }
@@ -258,6 +274,7 @@ void npc_collisions_level1() {
         UINT8 ax, ay;
         ax = TO_PIXELS(active_actors[i].x);
         ay = TO_PIXELS(active_actors[i].y);
+        INT16 NPC_PLAYER_Offset = px - (ax - active_actors[i].x_pivot);
         // THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
         PTR_y = py - PLAYER.h_offset;            // TR y
         PTR_x = px + PLAYER.x_offset;            // TR x
@@ -267,29 +284,25 @@ void npc_collisions_level1() {
         NTR_x = ax + active_actors[i].x_offset;  // TR x
         NBL_y = ay + active_actors[i].y_offset;  // BL y
         NBL_x = ax - active_actors[i].x_offset;  // BL x
-
-        if (active_actors[i].ON == TRUE) {
+        if (active_actors[i].ON && active_actors[i].KILL != TRUE) {
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].NPC_type != ELEVATOR) {
-                    if (active_actors[i].ON == TRUE) {
-                        DISPLAY_OFF;
-                        Spawn = TRUE;
-                        init_submap();
-                        load_level(&level1);
-                        DISPLAY_ON;
-                    }
+                    DISPLAY_OFF;
+                    Spawn = TRUE;
+                    init_submap();
+                    load_level(&level1);
+                    DISPLAY_ON;
+
                 } else if (active_actors[i].NPC_type == ELEVATOR) {
-                    if (active_actors[i].ON == TRUE) {
-                        if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
-                        {
-                            x_Collide = TRUE;
-                        } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
-                            Attach = TRUE;
-                            Gravity = FALSE;
-                            current_elevator = i;
-                        } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
-                            y_Collide = TRUE;
-                        }
+                    if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
+                    {
+                        x_Collide = TRUE;
+                    } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
+                        Attach = TRUE;
+                        Gravity = FALSE;
+                        current_elevator = i;
+                    } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
+                        y_Collide = TRUE;
                     }
                 }
             } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
@@ -297,6 +310,8 @@ void npc_collisions_level1() {
                     x_Collide = FALSE;
                 }
             }
+
+        } else {
         }
         if (Attach) {
             if (i == current_elevator) {
