@@ -119,7 +119,7 @@ typedef struct level_t {
 // from scene.c
 extern actor_t active_actors[MAX_ACTIVE_ACTORS];
 extern animate_level_t animate_level;
-extern UINT8 active_actors_count;
+extern UINT8 total_actors_count;
 
 void load_level(const level_t *level);
 void render_actors();

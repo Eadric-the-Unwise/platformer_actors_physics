@@ -175,12 +175,48 @@ const level_t level1 = {
 
 void anim_level1() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
+    actor_t *false_actor = &active_actors[5];                  // TOTAL ACTORS MINUS 1
     UINT16 camera_x = TO_PIXELS(bkg.camera_x);
-    for (UINT8 i = active_actors_count - 1; i != 0; i--) {
+    UINT8 active_actors_count = 0;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+    UINT8 last_actor = total_actors_count - 1;
+    if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {
+        // active_actors[1].RENDER = TRUE;
+        // active_actors[2].RENDER = TRUE;
+        // active_actors[3].RENDER = TRUE;
+        // active_actors[4].RENDER = FALSE;
+        // active_actors[5].RENDER = FALSE;
+        active_actors_count = 3;
+
+    } else if ((camera_x >= 320) && (camera_x < 480)) {
+        //     active_actors[1].RENDER = FALSE;
+        //     active_actors[2].RENDER = FALSE;
+        //     active_actors[3].RENDER = TRUE;
+        //     active_actors[4].RENDER = TRUE;
+        //     active_actors[5].RENDER = TRUE;
+        active_actors_count = 3;
+        current_actor += 2;
+    } else if ((camera_x >= 160) && (camera_x < 320)) {
+        //     active_actors[1].RENDER = FALSE;
+        //     active_actors[2].RENDER = FALSE;
+        //     active_actors[3].RENDER = FALSE;
+        //     active_actors[4].RENDER = TRUE;
+        //     active_actors[5].RENDER = TRUE;
+        active_actors_count = 2;
+        current_actor += 3;
+    } else if ((camera_x >= 0) && (camera_x < 160)) {
+        //     //     active_actors[1].RENDER = FALSE;
+        //     //     active_actors[2].RENDER = FALSE;
+        //     //     active_actors[3].RENDER = FALSE;
+        //     //     active_actors[4].RENDER = FALSE;
+        //     //     active_actors[5].RENDER = TRUE;
+        active_actors_count = 1;
+        current_actor += 4;
+    }
+
+    for (UINT8 i = active_actors_count; i != 0; i--) {
+        current_actor->RENDER = TRUE;
         if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
-            if (current_actor->RENDER) {
-                current_actor->x -= PLAYER.SpdX;
-            }
+            current_actor->x -= PLAYER.SpdX;
         }
         if (current_actor->RENDER == TRUE && current_actor->KILL != TRUE) {
             if (current_actor->NPC_type == PATROL) {
@@ -221,36 +257,12 @@ void anim_level1() {
             }
         } else if (current_actor->ON == FALSE) {
         }
-        if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {
-            active_actors[1].RENDER = TRUE;
-            active_actors[2].RENDER = TRUE;
-            active_actors[3].RENDER = TRUE;
-            active_actors[4].RENDER = FALSE;
-            active_actors[5].RENDER = FALSE;
-
-        } else if ((camera_x > 320) && (camera_x < 480)) {
-            active_actors[1].RENDER = FALSE;
-            active_actors[2].RENDER = FALSE;
-            active_actors[3].RENDER = TRUE;
-            active_actors[4].RENDER = TRUE;
-            active_actors[5].RENDER = TRUE;
-
-        } else if ((camera_x > 160) && (camera_x < 320)) {
-            active_actors[1].RENDER = FALSE;
-            active_actors[2].RENDER = FALSE;
-            active_actors[3].RENDER = FALSE;
-            active_actors[4].RENDER = TRUE;
-            active_actors[5].RENDER = TRUE;
-
-        } else if ((camera_x > 0) && (camera_x < 160)) {
-            active_actors[1].RENDER = FALSE;
-            active_actors[2].RENDER = FALSE;
-            active_actors[3].RENDER = FALSE;
-            active_actors[4].RENDER = FALSE;
-            active_actors[5].RENDER = TRUE;
-        }
         current_actor++;
     }
+    // for (UINT8 i = last_actor - active_actors_count; i != 0; i--) {
+    //     false_actor->RENDER = FALSE;
+    //     false_actor--;
+    // }
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
     if (Crouch) {  // CROUCH HITBOX
         PLAYER.h_offset = -2;
@@ -269,7 +281,7 @@ void anim_level1() {
 
 void npc_collisions_level1() {
     // CHECK LANDING HOTBOX TIMING
-    for (UINT8 i = ACTOR_FIRST_NPC; i != (active_actors_count); i++) {
+    for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++) {
         //[y][x]
         UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
         UINT8 ax, ay;

@@ -60,9 +60,9 @@ const level_t level2 = {
     .animate_hook = animate_level2};
 
 void animate_level2() {
-    actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  //The Detective is currently active_actors[0], so active_actors[1] and above are enemies
+    actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
-    for (UINT8 i = active_actors_count - 1; i != 0; i--) {
+    for (UINT8 i = total_actors_count - 1; i != 0; i--) {
         current_actor->x += current_actor->SpdX;
         current_actor->y += current_actor->SpdY;
 

@@ -9,7 +9,7 @@ UINT8 dir, last_dir;
 
 // array of avaliable actors
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
-UINT8 active_actors_count;                 // amount of actors that are currently active
+UINT8 total_actors_count;                  // amount of actors that are currently active
 
 animate_level_t animate_level = NULL;  // level animation function
 
@@ -53,7 +53,7 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         current_actor++;
         actor++;
     }
-    active_actors_count = actors_count;  // copies from ROM to RAM
+    total_actors_count = actors_count;  // copies from ROM to RAM
 }
 
 void load_level(const level_t *level) {
@@ -80,7 +80,7 @@ void render_actors() {
     // draw each metasprite
     direction_e current_direction;
     UINT8 hiwater = 0;  // OAM Sprite hiwater
-    for (UINT8 i = active_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
+    for (UINT8 i = total_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
         UINT16 camera_x = TO_PIXELS(bkg.camera_x);
         INT16 actor_x = TO_PIXELS(current_actor->x);
         INT16 NPC_xOffset = actor_x - (current_actor->x_pivot + 8);
@@ -108,6 +108,7 @@ void render_actors() {
                     } else {
                         // hiwater -= current_actor->metasprite_count;
                         current_actor->ON = FALSE;
+                        current_actor->RENDER = FALSE;
                         hide_metasprite(
                             current_animation[current_actor->animation_phase],
                             hiwater);
