@@ -108,7 +108,7 @@ void render_actors() {
                     } else {
                         // hiwater -= current_actor->metasprite_count;
                         current_actor->ON = FALSE;
-                        current_actor->RENDER = FALSE;
+                        // current_actor->RENDER = FALSE;
                         hide_metasprite(
                             current_animation[current_actor->animation_phase],
                             hiwater);

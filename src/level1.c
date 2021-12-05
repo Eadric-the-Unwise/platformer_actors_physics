@@ -37,27 +37,6 @@ const actor_t level1_actors[6] = {
      .copy = FALSE,
      .RENDER = TRUE,
      .ON = TRUE},
-    // 1 NPC
-    // {.x = TO_COORDS(-24),
-    //  .y = TO_COORDS(148),
-    //  .SpdX = 7,
-    //  .SpdY = 0,
-    //  .w = NPC_electric_WIDTH,
-    //  .h = NPC_electric_HEIGHT,
-    //  .x_pivot = NPC_electric_PIVOT_X,
-    //  .y_pivot = NPC_electric_PIVOT_Y,
-    //  .x_offset = 6,
-    //  .y_offset = 6,
-    //  .direction = DIR_RIGHT,
-    //  .NPC_type = PISTOL,
-    //  .tile_count = (sizeof(NPC_electric_data) >> 4),
-    //  .tile_index = 0,
-    //  .tile_data = NPC_electric_data,
-    //  .animations = {NPC_electric_animation, NPC_electric_animation},
-    //  .animations_props = {ANIM_LOOP, ANIM_LOOP},
-    //  .animation_phase = 0,
-    //  .copy = FALSE},
-
     // 1 TOP PATROL
     {.x = TO_COORDS(56),
      .y = TO_COORDS(68),
@@ -148,7 +127,7 @@ const actor_t level1_actors[6] = {
     {.x = TO_COORDS(-140),
      .y = TO_COORDS(136),
      .SpdX = 0,
-     .SpdY = 12,
+     .SpdY = 4,
      .w = vertical_platform_V1_WIDTH,
      .h = vertical_platform_V1_HEIGHT,
      .x_pivot = vertical_platform_V1_PIVOT_X,
@@ -161,7 +140,7 @@ const actor_t level1_actors[6] = {
      .tile_index = 0,
      .tile_data = vertical_platform_V1_data,
      .patrol_timer = 1,
-     .patrol_reset = 96,
+     .patrol_reset = 160,
      .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
      .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
@@ -179,47 +158,31 @@ UINT8 cam3[2] = {4, 5};
 UINT8 cam4[1] = {5};
 
 void anim_level1() {
-    UINT8 *ptr;
-    actor_t *false_actor = &active_actors[5];
+    UINT8 *ptr = NULL;  // simply = NULL to bypass compiler error lol
+
     // TOTAL ACTORS MINUS 1
     UINT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 active_actors_count = 0;  // the amount of actors in 160px window, the first actor to load current_actor pointer
     UINT8 last_actor = total_actors_count - 1;
-    if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {
-        // active_actors[1].RENDER = TRUE;
-        // active_actors[2].RENDER = TRUE;
-        // active_actors[3].RENDER = TRUE;
-        // active_actors[4].RENDER = FALSE;
-        // active_actors[5].RENDER = FALSE;
-        active_actors_count = 3;
-        ptr = &cam1[0];
+    actor_t *false_actor = &active_actors[last_actor];
 
-    } else if ((camera_x >= 320) && (camera_x < 480)) {
-        //     active_actors[1].RENDER = FALSE;
-        //     active_actors[2].RENDER = FALSE;
-        //     active_actors[3].RENDER = TRUE;
-        //     active_actors[4].RENDER = TRUE;
-        //     active_actors[5].RENDER = TRUE;
-        active_actors_count = 3;
-        ptr = &cam2[0];
-    } else if ((camera_x >= 160) && (camera_x < 320)) {
-        //     active_actors[1].RENDER = FALSE;
-        //     active_actors[2].RENDER = FALSE;
-        //     active_actors[3].RENDER = FALSE;
-        //     active_actors[4].RENDER = TRUE;
-        //     active_actors[5].RENDER = TRUE;
-        active_actors_count = 2;
-        ptr = &cam3[0];
-    } else if (camera_x >= 0 && camera_x < 160) {
-        //     //     active_actors[1].RENDER = FALSE;
-        //     //     active_actors[2].RENDER = FALSE;
-        //     //     active_actors[3].RENDER = FALSE;
-        //     //     active_actors[4].RENDER = FALSE;
-        //     //     active_actors[5].RENDER = TRUE;
-        active_actors_count = 1;
-        ptr = &cam4[0];
+    for (UINT8 x = total_actors_count - 1; x != 0; x--) {
+        actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
+        current_actor->RENDER = FALSE;
     }
-
+    if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {
+        active_actors_count = 3;
+        ptr = cam1;
+    } else if ((camera_x >= 320) && (camera_x < 480)) {
+        active_actors_count = 3;
+        ptr = cam2;
+    } else if ((camera_x >= 160) && (camera_x < 320)) {
+        active_actors_count = 2;
+        ptr = cam3;
+    } else if (camera_x < 160) {
+        active_actors_count = 1;
+        ptr = cam4;
+    }
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
     for (UINT8 i = active_actors_count; i != 0; i--) {
@@ -269,10 +232,7 @@ void anim_level1() {
         ptr++;
         current_actor = &active_actors[*ptr];
     }
-    // for (UINT8 i = last_actor - active_actors_count; i != 0; i--) {
-    //     false_actor->RENDER = FALSE;
-    //     false_actor--;
-    // }
+
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
     if (Crouch) {  // CROUCH HITBOX
         PLAYER.h_offset = -2;
