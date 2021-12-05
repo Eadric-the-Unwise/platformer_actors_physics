@@ -81,16 +81,16 @@ void render_actors() {
     direction_e current_direction;
     UINT8 hiwater = 0;  // OAM Sprite hiwater
     for (UINT8 i = active_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
-        INT16 PLAYER_x = TO_PIXELS(PLAYER.x);
-        INT16 current_actor_x = TO_PIXELS(current_actor->x);
-        INT16 NPC_PLAYER_Offset = PLAYER_x - (current_actor_x - current_actor->x_pivot);
+        UINT16 camera_x = TO_PIXELS(bkg.camera_x);
+        INT16 actor_x = TO_PIXELS(current_actor->x);
+        INT16 NPC_xOffset = actor_x - (current_actor->x_pivot + 8);
         current_direction = current_actor->direction;
         const metasprite_t **current_animation = current_actor->animations[current_direction];
         if (current_animation != NULL) {
             if (current_animation[current_actor->animation_phase] != NULL) {
                 // PLAYER THEORETICALLY WILL ALWAYS LOAD BECAUSE PLAYER.x - PLAYER.x = 0//
                 if (current_actor->RENDER == TRUE) {
-                    if (NPC_PLAYER_Offset <= 160 && NPC_PLAYER_Offset >= -54 && current_actor->KILL != TRUE) {
+                    if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE) {
                         current_actor->ON = TRUE;
                         if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R)) {
                             hiwater += move_metasprite_vflip(

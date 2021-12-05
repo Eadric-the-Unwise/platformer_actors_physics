@@ -16,7 +16,7 @@ UINT8 current_elevator;
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[7] = {
+const actor_t level1_actors[6] = {
     // 0 PLAYER
     {.x = TO_COORDS(136),
      .y = TO_COORDS(-8),
@@ -38,46 +38,27 @@ const actor_t level1_actors[7] = {
      .RENDER = TRUE,
      .ON = TRUE},
     // 1 NPC
-    {.x = TO_COORDS(-24),
-     .y = TO_COORDS(148),
-     .SpdX = 7,
-     .SpdY = 0,
-     .w = NPC_electric_WIDTH,
-     .h = NPC_electric_HEIGHT,
-     .x_pivot = NPC_electric_PIVOT_X,
-     .y_pivot = NPC_electric_PIVOT_Y,
-     .x_offset = 6,
-     .y_offset = 6,
-     .direction = DIR_RIGHT,
-     .NPC_type = PISTOL,
-     .tile_count = (sizeof(NPC_electric_data) >> 4),
-     .tile_index = 0,
-     .tile_data = NPC_electric_data,
-     .animations = {NPC_electric_animation, NPC_electric_animation},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
-     .animation_phase = 0,
-     .copy = FALSE},
-    // 2 NPC
-    {.x = TO_COORDS(-80),
-     .y = TO_COORDS(116),
-     .SpdX = 7,
-     .SpdY = 0,
-     .w = NPC_electric_WIDTH,
-     .h = NPC_electric_HEIGHT,
-     .x_pivot = NPC_electric_PIVOT_X,
-     .y_pivot = NPC_electric_PIVOT_Y,
-     .x_offset = 6,
-     .y_offset = 6,
-     .direction = DIR_RIGHT,
-     .NPC_type = WALK,
-     .tile_count = (sizeof(NPC_electric_data) >> 4),
-     .tile_index = 0,
-     .tile_data = NPC_electric_data,
-     .animations = {NPC_electric_animation, NPC_electric_animation},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
-     .animation_phase = 0,
-     .copy = TRUE},
-    // TOP PATROL
+    // {.x = TO_COORDS(-24),
+    //  .y = TO_COORDS(148),
+    //  .SpdX = 7,
+    //  .SpdY = 0,
+    //  .w = NPC_electric_WIDTH,
+    //  .h = NPC_electric_HEIGHT,
+    //  .x_pivot = NPC_electric_PIVOT_X,
+    //  .y_pivot = NPC_electric_PIVOT_Y,
+    //  .x_offset = 6,
+    //  .y_offset = 6,
+    //  .direction = DIR_RIGHT,
+    //  .NPC_type = PISTOL,
+    //  .tile_count = (sizeof(NPC_electric_data) >> 4),
+    //  .tile_index = 0,
+    //  .tile_data = NPC_electric_data,
+    //  .animations = {NPC_electric_animation, NPC_electric_animation},
+    //  .animations_props = {ANIM_LOOP, ANIM_LOOP},
+    //  .animation_phase = 0,
+    //  .copy = FALSE},
+
+    // 1 TOP PATROL
     {.x = TO_COORDS(56),
      .y = TO_COORDS(68),
      .SpdX = -12,
@@ -98,8 +79,8 @@ const actor_t level1_actors[7] = {
      .animations = {NPC_electric_animation, NPC_electric_animation},
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
-     .copy = TRUE},
-    // BOTTOM PATROL
+     .copy = FALSE},
+    // 2 BOTTOM PATROL
     {.x = TO_COORDS(56),
      .y = TO_COORDS(132),
      .SpdX = 12,
@@ -121,8 +102,28 @@ const actor_t level1_actors[7] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = TRUE},
-    // ELEVATOR
-    {.x = TO_COORDS(-40),
+    // 3 WALK
+    {.x = TO_COORDS(-144),
+     .y = TO_COORDS(116),
+     .SpdX = 8,
+     .SpdY = 0,
+     .w = NPC_electric_WIDTH,
+     .h = NPC_electric_HEIGHT,
+     .x_pivot = NPC_electric_PIVOT_X,
+     .y_pivot = NPC_electric_PIVOT_Y,
+     .x_offset = 6,
+     .y_offset = 6,
+     .direction = DIR_RIGHT,
+     .NPC_type = WALK,
+     .tile_count = (sizeof(NPC_electric_data) >> 4),
+     .tile_index = 0,
+     .tile_data = NPC_electric_data,
+     .animations = {NPC_electric_animation, NPC_electric_animation},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animation_phase = 0,
+     .copy = TRUE},
+    // 4 ELEVATOR RIGHT
+    {.x = TO_COORDS(-60),
      .y = TO_COORDS(104),
      .SpdX = 0,
      .SpdY = 16,
@@ -143,8 +144,9 @@ const actor_t level1_actors[7] = {
      .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
      .copy = FALSE},
-    {.x = TO_COORDS(-120),
-     .y = TO_COORDS(88),
+    // 5 ELEVATOR LEFT
+    {.x = TO_COORDS(-140),
+     .y = TO_COORDS(136),
      .SpdX = 0,
      .SpdY = 12,
      .w = vertical_platform_V1_WIDTH,
@@ -159,7 +161,7 @@ const actor_t level1_actors[7] = {
      .tile_index = 0,
      .tile_data = vertical_platform_V1_data,
      .patrol_timer = 1,
-     .patrol_reset = 64,
+     .patrol_reset = 96,
      .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
      .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
@@ -167,7 +169,7 @@ const actor_t level1_actors[7] = {
 
 const level_t level1 = {
     .actors = level1_actors,
-    .actor_count = 7,
+    .actor_count = 6,
     .animate_hook = anim_level1  // function that put life into the scene
 };
 
@@ -210,7 +212,7 @@ void anim_level1() {
             } else if (current_actor->NPC_type == WALK) {
                 INT16 actor_x = TO_PIXELS(current_actor->x);
 
-                if ((actor_x >= -40) && (actor_x <= 200)) {
+                if ((actor_x >= -32) && (actor_x <= 200)) {
                     current_actor->x += current_actor->SpdX;
                 }
                 if (actor_x > 196) {
@@ -223,30 +225,29 @@ void anim_level1() {
             active_actors[1].RENDER = TRUE;
             active_actors[2].RENDER = TRUE;
             active_actors[3].RENDER = TRUE;
-            active_actors[4].RENDER = TRUE;
-            active_actors[5].RENDER = FALSE;
-            active_actors[6].RENDER = FALSE;
-        } else if ((camera_x > 320) && (camera_x < 480)) {
-            active_actors[1].RENDER = TRUE;
-            active_actors[2].RENDER = TRUE;
-            active_actors[3].RENDER = FALSE;
             active_actors[4].RENDER = FALSE;
+            active_actors[5].RENDER = FALSE;
+
+        } else if ((camera_x > 320) && (camera_x < 480)) {
+            active_actors[1].RENDER = FALSE;
+            active_actors[2].RENDER = FALSE;
+            active_actors[3].RENDER = TRUE;
+            active_actors[4].RENDER = TRUE;
             active_actors[5].RENDER = TRUE;
-            active_actors[6].RENDER = TRUE;
+
         } else if ((camera_x > 160) && (camera_x < 320)) {
             active_actors[1].RENDER = FALSE;
             active_actors[2].RENDER = FALSE;
             active_actors[3].RENDER = FALSE;
-            active_actors[4].RENDER = FALSE;
+            active_actors[4].RENDER = TRUE;
             active_actors[5].RENDER = TRUE;
-            active_actors[6].RENDER = TRUE;
+
         } else if ((camera_x > 0) && (camera_x < 160)) {
             active_actors[1].RENDER = FALSE;
             active_actors[2].RENDER = FALSE;
             active_actors[3].RENDER = FALSE;
             active_actors[4].RENDER = FALSE;
-            active_actors[5].RENDER = FALSE;
-            active_actors[6].RENDER = FALSE;
+            active_actors[5].RENDER = TRUE;
         }
         current_actor++;
     }
