@@ -16,7 +16,7 @@ UINT8 current_elevator;
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[5] = {
+const actor_t level1_actors[7] = {
     // 0 PLAYER
     {.x = TO_COORDS(136),
      .y = TO_COORDS(-8),
@@ -34,7 +34,8 @@ const actor_t level1_actors[5] = {
      .animations = {detective_walk_left, detective_walk_left, detective_crouch, detective_crouch, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_jump, detective_jump, detective_land, detective_land, detective_drop, detective_drop},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
-     .copy = FALSE},
+     .copy = FALSE,
+     .ON = TRUE},
     // 1 NPC
     {.x = TO_COORDS(-24),
      .y = TO_COORDS(148),
@@ -118,103 +119,117 @@ const actor_t level1_actors[5] = {
      .animations = {NPC_electric_animation, NPC_electric_animation},
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
-     .copy = TRUE}
-    //  ,
-    // // ELEVATOR
-    // {.x = TO_COORDS(-218),
-    //  .y = TO_COORDS(104),
-    //  .SpdX = 0,
-    //  .SpdY = 16,
-    //  .w = vertical_platform_V1_WIDTH,
-    //  .h = vertical_platform_V1_HEIGHT,
-    //  .x_pivot = vertical_platform_V1_PIVOT_X,
-    //  .y_pivot = vertical_platform_V1_PIVOT_Y,
-    //  .x_offset = vertical_platform_V1_PIVOT_X,
-    //  .y_offset = vertical_platform_V1_PIVOT_Y,
-    //  .direction = DIR_DOWN,
-    //  .NPC_type = ELEVATOR,
-    //  .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
-    //  .tile_index = 0,
-    //  .tile_data = vertical_platform_V1_data,
-    //  .patrol_timer = 64,
-    //  .patrol_reset = 64,
-    //  .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
-    //  .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-    //  .animation_phase = 0,
-    //  .copy = FALSE},
-    // {.x = TO_COORDS(-298),
-    //  .y = TO_COORDS(88),
-    //  .SpdX = 0,
-    //  .SpdY = 12,
-    //  .w = vertical_platform_V1_WIDTH,
-    //  .h = vertical_platform_V1_HEIGHT,
-    //  .x_pivot = vertical_platform_V1_PIVOT_X,
-    //  .y_pivot = vertical_platform_V1_PIVOT_Y,
-    //  .x_offset = vertical_platform_V1_PIVOT_X,
-    //  .y_offset = vertical_platform_V1_PIVOT_Y,
-    //  .direction = DIR_DOWN,
-    //  .NPC_type = ELEVATOR,
-    //  .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
-    //  .tile_index = 0,
-    //  .tile_data = vertical_platform_V1_data,
-    //  .patrol_timer = 1,
-    //  .patrol_reset = 64,
-    //  .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
-    //  .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-    //  .animation_phase = 0,
-    //  .copy = TRUE}
-};
+     .copy = TRUE},
+    // ELEVATOR
+    {.x = TO_COORDS(-218),
+     .y = TO_COORDS(104),
+     .SpdX = 0,
+     .SpdY = 16,
+     .w = vertical_platform_V1_WIDTH,
+     .h = vertical_platform_V1_HEIGHT,
+     .x_pivot = vertical_platform_V1_PIVOT_X,
+     .y_pivot = vertical_platform_V1_PIVOT_Y,
+     .x_offset = vertical_platform_V1_PIVOT_X,
+     .y_offset = vertical_platform_V1_PIVOT_Y,
+     .direction = DIR_DOWN,
+     .NPC_type = ELEVATOR,
+     .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
+     .tile_index = 0,
+     .tile_data = vertical_platform_V1_data,
+     .patrol_timer = 64,
+     .patrol_reset = 64,
+     .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
+     .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+     .animation_phase = 0,
+     .copy = FALSE},
+    {.x = TO_COORDS(-298),
+     .y = TO_COORDS(88),
+     .SpdX = 0,
+     .SpdY = 12,
+     .w = vertical_platform_V1_WIDTH,
+     .h = vertical_platform_V1_HEIGHT,
+     .x_pivot = vertical_platform_V1_PIVOT_X,
+     .y_pivot = vertical_platform_V1_PIVOT_Y,
+     .x_offset = vertical_platform_V1_PIVOT_X,
+     .y_offset = vertical_platform_V1_PIVOT_Y,
+     .direction = DIR_DOWN,
+     .NPC_type = ELEVATOR,
+     .tile_count = (sizeof(vertical_platform_V1_data) >> 4),
+     .tile_index = 0,
+     .tile_data = vertical_platform_V1_data,
+     .patrol_timer = 1,
+     .patrol_reset = 64,
+     .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
+     .animations_props = {ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+     .animation_phase = 0,
+     .copy = TRUE}};
 
 const level_t level1 = {
     .actors = level1_actors,
-    .actor_count = 5,
-    .animate_hook = render_level1  // function that put life into the scene
+    .actor_count = 7,
+    .animate_hook = anim_level1  // function that put life into the scene
 };
 
-void render_level1() {
+void anim_level1() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
-
+    UINT16 camera_x = TO_PIXELS(bkg.camera_x);
     for (UINT8 i = active_actors_count - 1; i != 0; i--) {
-        if ((TO_PIXELS(bkg.camera_x) > 0) && (TO_PIXELS(bkg.camera_x) < bkg.camera_max_x)) {
-            current_actor->x -= PLAYER.SpdX;
+        if ((camera_x > 0) && (camera_x <= bkg.camera_max_x)) {
+            if ((camera_x < bkg.camera_max_x) && (camera_x >= 480)) {
+                active_actors[1].ON = TRUE;
+                active_actors[2].ON = TRUE;
+                active_actors[3].ON = TRUE;
+                active_actors[4].ON = TRUE;
+                active_actors[5].ON = FALSE;
+                active_actors[6].ON = FALSE;
+            }
+        } else if ((camera_x <= 479) && (camera_x >= 0)) {
+            active_actors[1].ON = FALSE;
+            active_actors[2].ON = FALSE;
+            active_actors[3].ON = FALSE;
+            active_actors[4].ON = FALSE;
+            active_actors[5].ON = TRUE;
+            active_actors[6].ON = TRUE;
         }
-
-        if (current_actor->NPC_type == PATROL) {
-            current_actor->patrol_timer--;
-            current_actor->x += current_actor->SpdX;
-
-            if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
-                SetActorDirection(current_actor, DIR_RIGHT, 0);
-                current_actor->SpdX = abs(current_actor->SpdX);
-                current_actor->patrol_timer = current_actor->patrol_reset;
-            } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
-                SetActorDirection(current_actor, DIR_LEFT, 0);
-                current_actor->SpdX = -abs(current_actor->SpdX);
-                current_actor->patrol_timer = current_actor->patrol_reset;
-            }
-
-        } else if (current_actor->NPC_type == ELEVATOR) {
-            current_actor->patrol_timer--;
-            current_actor->y += current_actor->SpdY;
-
-            if ((current_actor->direction == DIR_UP) && (current_actor->patrol_timer == 0)) {
-                SetActorDirection(current_actor, DIR_DOWN, 0);
-                current_actor->SpdY = abs(current_actor->SpdY);
-                current_actor->patrol_timer = current_actor->patrol_reset;
-            } else if ((current_actor->direction == DIR_DOWN) && (current_actor->patrol_timer == 0)) {
-                SetActorDirection(current_actor, DIR_UP, 0);
-                current_actor->SpdY = -abs(current_actor->SpdY);
-                current_actor->patrol_timer = current_actor->patrol_reset;
-            }
-        } else if (current_actor->NPC_type == WALK) {
-            INT16 actor_x = TO_PIXELS(current_actor->x);
-            // NEED TO CALCULATE THE BKG.MAPS X POSITION RELATIVE TO THE SPAWN POSITION
-            //  if (actor_x > 160){
-            //          current_actor->x= -60;
-            //          current_actor->ON = TRUE;
-            //      }
-            if (actor_x >= -40) {
+        if (current_actor->ON == TRUE) {
+            current_actor->x -= PLAYER.SpdX;
+            if (current_actor->NPC_type == PATROL) {
+                current_actor->patrol_timer--;
                 current_actor->x += current_actor->SpdX;
+
+                if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
+                    SetActorDirection(current_actor, DIR_RIGHT, 0);
+                    current_actor->SpdX = abs(current_actor->SpdX);
+                    current_actor->patrol_timer = current_actor->patrol_reset;
+                } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
+                    SetActorDirection(current_actor, DIR_LEFT, 0);
+                    current_actor->SpdX = -abs(current_actor->SpdX);
+                    current_actor->patrol_timer = current_actor->patrol_reset;
+                }
+
+            } else if (current_actor->NPC_type == ELEVATOR) {
+                current_actor->patrol_timer--;
+                current_actor->y += current_actor->SpdY;
+
+                if ((current_actor->direction == DIR_UP) && (current_actor->patrol_timer == 0)) {
+                    SetActorDirection(current_actor, DIR_DOWN, 0);
+                    current_actor->SpdY = abs(current_actor->SpdY);
+                    current_actor->patrol_timer = current_actor->patrol_reset;
+                } else if ((current_actor->direction == DIR_DOWN) && (current_actor->patrol_timer == 0)) {
+                    SetActorDirection(current_actor, DIR_UP, 0);
+                    current_actor->SpdY = -abs(current_actor->SpdY);
+                    current_actor->patrol_timer = current_actor->patrol_reset;
+                }
+            } else if (current_actor->NPC_type == WALK) {
+                INT16 actor_x = TO_PIXELS(current_actor->x);
+                // NEED TO CALCULATE THE BKG.MAPS X POSITION RELATIVE TO THE SPAWN POSITION
+                //  if (actor_x > 160){
+                //          current_actor->x= -60;
+                //          current_actor->ON = TRUE;
+                //      }
+                if (actor_x >= -40) {
+                    current_actor->x += current_actor->SpdX;
+                }
             }
         }
         current_actor++;
@@ -253,32 +268,34 @@ void npc_collisions_level1() {
         NBL_y = ay + active_actors[i].y_offset;  // BL y
         NBL_x = ax - active_actors[i].x_offset;  // BL x
 
-        if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
-            if (active_actors[i].NPC_type != ELEVATOR) {
-                if (active_actors[i].ON == TRUE) {
-                    DISPLAY_OFF;
-                    Spawn = TRUE;
-                    init_submap();
-                    load_level(&level1);
-                    DISPLAY_ON;
-                }
-            } else if (active_actors[i].NPC_type == ELEVATOR) {
-                if (active_actors[i].ON == TRUE) {
-                    if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
-                    {
-                        x_Collide = TRUE;
-                    } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
-                        Attach = TRUE;
-                        Gravity = FALSE;
-                        current_elevator = i;
-                    } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
-                        y_Collide = TRUE;
+        if (active_actors[i].ON == TRUE) {
+            if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
+                if (active_actors[i].NPC_type != ELEVATOR) {
+                    if (active_actors[i].ON == TRUE) {
+                        DISPLAY_OFF;
+                        Spawn = TRUE;
+                        init_submap();
+                        load_level(&level1);
+                        DISPLAY_ON;
+                    }
+                } else if (active_actors[i].NPC_type == ELEVATOR) {
+                    if (active_actors[i].ON == TRUE) {
+                        if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
+                        {
+                            x_Collide = TRUE;
+                        } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
+                            Attach = TRUE;
+                            Gravity = FALSE;
+                            current_elevator = i;
+                        } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
+                            y_Collide = TRUE;
+                        }
                     }
                 }
-            }
-        } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
-            if (x_Collide) {
-                x_Collide = FALSE;
+            } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
+                if (x_Collide) {
+                    x_Collide = FALSE;
+                }
             }
         }
         if (Attach) {
