@@ -142,7 +142,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexCL] == 0x01) || (COLLISION_WIDE_MAP[tileindexCC] == 0x01) || (COLLISION_WIDE_MAP[tileindexCR] == 0x01)) {
         } else {
             if (!Drop) {
-                Crouch = Launch = FALSE;
+                Crouch = canCrouch = Launch = FALSE;
                 if (!Jump) {
                     PLAYER.SpdY = JUMP_IMPULSE;
                     Jump = x_Adjust = TRUE;
@@ -157,7 +157,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
             } else {
                 if (!Drop) {
-                    Crouch = Launch = FALSE;
+                    Crouch = canCrouch = Launch = FALSE;
                     if (!Jump) {
                         PLAYER.SpdY = JUMP_IMPULSE;
                         Jump = TRUE;
@@ -174,7 +174,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexR] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
                 } else {
                     if (!Drop) {
-                        Crouch = Launch = FALSE;
+                        Crouch = canCrouch = Launch = FALSE;
                         if (!Jump) {
                             PLAYER.SpdY = JUMP_IMPULSE;
                             Jump = TRUE;
@@ -188,7 +188,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
                 } else {
                     if (!Drop) {
-                        Crouch = Launch = FALSE;
+                        Crouch = canCrouch = Launch = FALSE;
                         if (!Jump) {
                             PLAYER.SpdY = JUMP_IMPULSE;
                             Attach = FALSE;
@@ -223,37 +223,32 @@ void check_Drop(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // CHECK CROUCH
 void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexCLx, indexCCx, indexCRx, indexSLx, indexSRx, index_y, indexCamx, tileindexCL, tileindexCC, tileindexCT, tileindexSL, tileindexSR;
+    UINT16 indexSLx, indexSRx, index_y, indexCamx, tileindexSL, tileindexSR;
 
     indexCamx = camera_x;
-    // CROUCH VALUES
-    indexCLx = ((newplayerx - 14) + indexCamx) / 8;
-    indexCCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexCRx = ((newplayerx - 3) + indexCamx) / 8;
+
     // STANDING VALUES (CHECK TO PUSH PLAYER LEFT OR RIGHT IF HEAD IS IN A COLLISION)
     indexSLx = ((newplayerx - 16) + indexCamx) / 8;
     indexSRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - 20) / 8;
 
-    tileindexCL = COLLISION_WIDE_MAPWidth * index_y + indexCLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexCC = COLLISION_WIDE_MAPWidth * index_y + indexCCx;
-    tileindexCT = COLLISION_WIDE_MAPWidth * index_y + indexCRx;
     // STANDING
     tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;
     tileindexSR = COLLISION_WIDE_MAPWidth * index_y + indexSRx;
 
     if (Crouch) {
-        if ((COLLISION_WIDE_MAP[tileindexCL] == 0x01) || (COLLISION_WIDE_MAP[tileindexCC] == 0x01) || (COLLISION_WIDE_MAP[tileindexCT] == 0x01)) {
+        if ((COLLISION_WIDE_MAP[tileindexSL] == 0x01) || (COLLISION_WIDE_MAP[tileindexSR] == 0x01)) {
         } else {
             Crouch = FALSE;
         }
-    } else if (!Crouch) {
-        if (COLLISION_WIDE_MAP[tileindexSR] == 0x01) {
-            PLAYER.SpdX -= MAX_CRAWL_SPEED;
-        } else if (COLLISION_WIDE_MAP[tileindexSL] == 0x01) {
-            PLAYER.SpdX += MAX_CRAWL_SPEED;
-        }
     }
+    // else if (!Crouch) {
+    //     if (COLLISION_WIDE_MAP[tileindexSR] == 0x01) {
+    //         PLAYER.SpdX -= MAX_CRAWL_SPEED;
+    //     } else if (COLLISION_WIDE_MAP[tileindexSL] == 0x01) {
+    //         PLAYER.SpdX += MAX_CRAWL_SPEED;
+    //     }
+    // }
 }
 
 // LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
