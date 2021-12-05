@@ -18,15 +18,15 @@ void main() {
     BGP_REG = 0xE4;
     OBP0_REG = 0xE4;
     OBP1_REG = 0xE1;
-    SPRITES_8x16;  //MUST be 8x16 or 8x8. Can change in different scenes only
+    SPRITES_8x16;  // MUST be 8x16 or 8x8. Can change in different scenes only
     SHOW_BKG;
     SHOW_SPRITES;
 
     Jump = Gravity = Crouch = canCrouch = Drop = Launch = Shooting = FALSE;
     Spawn = TRUE;
     Drop_timer = 16;
-    canCrouch_timer = 10;  //LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
-    canCrouch_Ftimer = 8;  //TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
+    canCrouch_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
+    canCrouch_Ftimer = 8;  // TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
     init_submap();
     load_level(&level1);
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
@@ -109,7 +109,7 @@ void main() {
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             jump();
         }
-        //IF PLAYER IS FREE FALLING FOR ANY REASON
+        // IF PLAYER IS FREE FALLING FOR ANY REASON
         if (PLAYER.SpdY != 0) {
             Jump = Gravity = TRUE;
             Crouch = FALSE;
@@ -170,7 +170,7 @@ void main() {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-            //Y-AXIS COLLISION CHECK
+            // Y-AXIS COLLISION CHECK
             if (PLAYER.SpdY > 0) {
                 check_UD(px, py + 1, TO_PIXELS(bkg.camera_x));
 
@@ -182,10 +182,10 @@ void main() {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-            //IF MOVING RIGHT
+            // IF MOVING RIGHT
             if (PLAYER.SpdX > 0) {
                 check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
-                //IF MOVING LEFT
+                // IF MOVING LEFT
             } else if (PLAYER.SpdX < 0) {
                 check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
             }
@@ -229,7 +229,7 @@ void main() {
                 }
             }
         }
-        npc_collisions_level1();
+        if (collide_level) collide_level();
 
         // DOWN while standing still
         if ((Crouch) && (!canCrouch) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {

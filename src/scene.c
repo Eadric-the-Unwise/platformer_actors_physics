@@ -12,6 +12,7 @@ actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working st
 UINT8 total_actors_count;                  // amount of actors that are currently active
 
 animate_level_t animate_level = NULL;  // level animation function
+collide_level_t collide_level = NULL;  // level animation function
 
 /******************************/
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS
@@ -60,6 +61,7 @@ void load_level(const level_t *level) {
     if (level == NULL) return;
     load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
     animate_level = level->animate_hook;
+    collide_level = level->collide_hook;
 }
 
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value

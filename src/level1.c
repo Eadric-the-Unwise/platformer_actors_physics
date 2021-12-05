@@ -58,7 +58,8 @@ const actor_t level1_actors[6] = {
      .animations = {NPC_electric_animation, NPC_electric_animation},
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
-     .copy = FALSE},
+     .copy = FALSE,
+     .ON = TRUE},
     // 2 BOTTOM PATROL
     {.x = TO_COORDS(56),
      .y = TO_COORDS(132),
@@ -149,8 +150,8 @@ const actor_t level1_actors[6] = {
 const level_t level1 = {
     .actors = level1_actors,
     .actor_count = 6,
-    .animate_hook = anim_level1  // function that put life into the scene
-};
+    .animate_hook = anim_level1,  // function that put life into the scene
+    .collide_hook = npc_collisions_level1};
 
 UINT8 cam1[3] = {1, 2, 3};
 UINT8 cam2[3] = {3, 4, 5};
@@ -163,12 +164,11 @@ void anim_level1() {
     // TOTAL ACTORS MINUS 1
     UINT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 active_actors_count = 0;  // the amount of actors in 160px window, the first actor to load current_actor pointer
-    UINT8 last_actor = total_actors_count - 1;
-    actor_t *false_actor = &active_actors[last_actor];
 
     for (UINT8 x = total_actors_count - 1; x != 0; x--) {
-        actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
-        current_actor->RENDER = FALSE;
+        actor_t *erase_actor = &active_actors[ACTOR_FIRST_NPC];
+        erase_actor->RENDER = FALSE;
+        // erase_actor->ON = FALSE;
     }
     if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {
         active_actors_count = 3;
@@ -187,6 +187,7 @@ void anim_level1() {
 
     for (UINT8 i = active_actors_count; i != 0; i--) {
         current_actor->RENDER = TRUE;
+
         if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
             current_actor->x -= PLAYER.SpdX;
         }
@@ -227,7 +228,7 @@ void anim_level1() {
                     current_actor->KILL = TRUE;
                 }
             }
-        } else if (current_actor->ON == FALSE) {
+        } else if (current_actor->RENDER == FALSE) {
         }
         ptr++;
         current_actor = &active_actors[*ptr];
@@ -267,7 +268,7 @@ void npc_collisions_level1() {
         NTR_x = ax + active_actors[i].x_offset;  // TR x
         NBL_y = ay + active_actors[i].y_offset;  // BL y
         NBL_x = ax - active_actors[i].x_offset;  // BL x
-        if (active_actors[i].ON && active_actors[i].KILL != TRUE) {
+        if (active_actors[i].ON && active_actors[i].KILL == NULL) {
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].NPC_type != ELEVATOR) {
                     DISPLAY_OFF;
