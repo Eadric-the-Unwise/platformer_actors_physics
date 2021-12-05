@@ -173,9 +173,15 @@ const level_t level1 = {
     .animate_hook = anim_level1  // function that put life into the scene
 };
 
+UINT8 cam1[3] = {1, 2, 3};
+UINT8 cam2[3] = {3, 4, 5};
+UINT8 cam3[2] = {4, 5};
+UINT8 cam4[1] = {5};
+
 void anim_level1() {
-    actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
-    actor_t *false_actor = &active_actors[5];                  // TOTAL ACTORS MINUS 1
+    UINT8 *ptr;
+    actor_t *false_actor = &active_actors[5];
+    // TOTAL ACTORS MINUS 1
     UINT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 active_actors_count = 0;  // the amount of actors in 160px window, the first actor to load current_actor pointer
     UINT8 last_actor = total_actors_count - 1;
@@ -186,6 +192,7 @@ void anim_level1() {
         // active_actors[4].RENDER = FALSE;
         // active_actors[5].RENDER = FALSE;
         active_actors_count = 3;
+        ptr = &cam1[0];
 
     } else if ((camera_x >= 320) && (camera_x < 480)) {
         //     active_actors[1].RENDER = FALSE;
@@ -194,7 +201,7 @@ void anim_level1() {
         //     active_actors[4].RENDER = TRUE;
         //     active_actors[5].RENDER = TRUE;
         active_actors_count = 3;
-        current_actor += 2;
+        ptr = &cam2[0];
     } else if ((camera_x >= 160) && (camera_x < 320)) {
         //     active_actors[1].RENDER = FALSE;
         //     active_actors[2].RENDER = FALSE;
@@ -202,16 +209,18 @@ void anim_level1() {
         //     active_actors[4].RENDER = TRUE;
         //     active_actors[5].RENDER = TRUE;
         active_actors_count = 2;
-        current_actor += 3;
-    } else if ((camera_x >= 0) && (camera_x < 160)) {
+        ptr = &cam3[0];
+    } else if (camera_x >= 0 && camera_x < 160) {
         //     //     active_actors[1].RENDER = FALSE;
         //     //     active_actors[2].RENDER = FALSE;
         //     //     active_actors[3].RENDER = FALSE;
         //     //     active_actors[4].RENDER = FALSE;
         //     //     active_actors[5].RENDER = TRUE;
         active_actors_count = 1;
-        current_actor += 4;
+        ptr = &cam4[0];
     }
+
+    actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
     for (UINT8 i = active_actors_count; i != 0; i--) {
         current_actor->RENDER = TRUE;
@@ -257,7 +266,8 @@ void anim_level1() {
             }
         } else if (current_actor->ON == FALSE) {
         }
-        current_actor++;
+        ptr++;
+        current_actor = &active_actors[*ptr];
     }
     // for (UINT8 i = last_actor - active_actors_count; i != 0; i--) {
     //     false_actor->RENDER = FALSE;
