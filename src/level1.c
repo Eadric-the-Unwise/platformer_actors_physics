@@ -19,7 +19,7 @@ UINT8 current_elevator;
 const actor_t level1_actors[6] = {
     // 0 PLAYER
     {.x = TO_COORDS(136),
-     .y = TO_COORDS(0),
+     .y = TO_COORDS(-8),
      .SpdX = 0,
      .SpdY = -16,
      .w = detective_large_WIDTH,
@@ -332,7 +332,7 @@ void npc_collisions_level1() {
                     } else if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
                         switch_idle();
                     }
-                    Gravity = Spawn = Jump = FALSE;
+                    Gravity = Jump = FALSE;
                 }
             }
             if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {

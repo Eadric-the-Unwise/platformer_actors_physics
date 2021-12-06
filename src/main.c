@@ -23,10 +23,9 @@ void main() {
     SPRITES_8x16;  // MUST be 8x16 or 8x8. Can change in different scenes only
     SHOW_BKG;
     SHOW_SPRITES;
-    Spawn = TRUE;
     current_stage = &level1;
 
-    GAMEOVER = Jump = Gravity = Crouch = canCrouch = Drop = Launch = Shooting = FALSE;
+    GAMEOVER = Attach = Jump = Gravity = Crouch = canCrouch = Drop = Launch = Shooting = FALSE;
     Drop_timer = 16;
     canCrouch_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCrouch_Ftimer = 8;  // TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
@@ -35,6 +34,7 @@ void main() {
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
     // switch on display after everything is ready
     DISPLAY_ON;
+    Spawn = TRUE;
     last_joy = joy = 0;
     while (TRUE) {  // main loop runs at 60fps
         // ---------------------------------------------
