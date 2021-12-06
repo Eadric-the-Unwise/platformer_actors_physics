@@ -13,6 +13,7 @@ UINT8 total_actors_count;                  // amount of actors that are currentl
 
 animate_level_t animate_level = NULL;  // level animation function
 collide_level_t collide_level = NULL;  // level animation function
+load_submap_t load_submap = NULL;
 
 /******************************/
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS
@@ -60,6 +61,7 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
 void load_level(const level_t *level) {
     if (level == NULL) return;
     load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
+    load_submap = level->submap_hook;
     animate_level = level->animate_hook;
     collide_level = level->collide_hook;
 }

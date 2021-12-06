@@ -148,6 +148,7 @@ const actor_t level1_actors[6] = {
      .copy = TRUE}};
 
 const level_t level1 = {
+    .submap_hook = init_submap,
     .actors = level1_actors,
     .actor_count = 6,
     .animate_hook = anim_level1,  // function that put life into the scene
@@ -300,7 +301,7 @@ void npc_collisions_level1() {
                 if (active_actors[i].NPC_type != ELEVATOR) {
                     DISPLAY_OFF;
                     Spawn = TRUE;
-                    init_submap();
+                    if (load_submap) load_submap();
                     load_level(&level1);
                     DISPLAY_ON;
 

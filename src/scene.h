@@ -110,8 +110,10 @@ typedef struct actor_t {
 
 typedef void (*animate_level_t)();
 typedef void (*collide_level_t)();
+typedef void (*load_submap_t)();
 
 typedef struct level_t {
+    load_submap_t submap_hook;
     const actor_t *actors;
     UINT8 actor_count;
     animate_level_t animate_hook;
@@ -122,6 +124,7 @@ typedef struct level_t {
 extern actor_t active_actors[MAX_ACTIVE_ACTORS];
 extern animate_level_t animate_level;
 extern collide_level_t collide_level;
+extern load_submap_t load_submap;
 extern UINT8 total_actors_count;
 
 void load_level(const level_t *level);

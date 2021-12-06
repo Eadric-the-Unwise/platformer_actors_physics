@@ -109,6 +109,7 @@ void main() {
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             jump();
         }
+
         // IF PLAYER IS FREE FALLING FOR ANY REASON
         if (PLAYER.SpdY != 0) {
             Jump = Gravity = TRUE;
