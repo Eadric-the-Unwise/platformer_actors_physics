@@ -261,7 +261,10 @@ void anim_level1() {
         ptr++;
         current_actor = &active_actors[*ptr];
     }
+}
 
+void npc_collisions_level1() {
+    // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
     if (Crouch) {  // CROUCH HITBOX
         PLAYER.h_offset = -2;
@@ -276,10 +279,6 @@ void anim_level1() {
         PLAYER.x_offset = 6;
         PLAYER.y_offset = 16;
     }
-}
-
-void npc_collisions_level1() {
-    // CHECK LANDING HOTBOX TIMING
     for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++) {
         //[y][x]
         UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
