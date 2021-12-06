@@ -19,9 +19,9 @@ UINT8 current_elevator;
 const actor_t level1_actors[6] = {
     // 0 PLAYER
     {.x = TO_COORDS(136),
-     .y = TO_COORDS(-8),
+     .y = TO_COORDS(16),
      .SpdX = 0,
-     .SpdY = -16,
+     .SpdY = 16,
      .w = detective_large_WIDTH,
      .h = detective_large_HEIGHT,
      .h_offset = 7,
@@ -33,7 +33,7 @@ const actor_t level1_actors[6] = {
      .tile_data = detective_large_data,
      .animations = {detective_walk_left, detective_walk_left, detective_crouch, detective_crouch, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_jump, detective_jump, detective_land, detective_land, detective_drop, detective_drop},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-     .animation_phase = 0,
+     .animation_phase = 3,
      .copy = FALSE,
      .RENDER = TRUE,
      .ON = TRUE},
