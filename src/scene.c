@@ -109,7 +109,7 @@ void render_actors() {
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
                         }
                     } else {
-                        // current_actor->ON = FALSE;
+                        current_actor->ON = FALSE;
                         // current_actor->RENDER = FALSE;
                         hide_metasprite(
                             current_animation[current_actor->animation_phase],

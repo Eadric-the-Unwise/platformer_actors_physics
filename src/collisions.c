@@ -5,6 +5,7 @@ UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 extern UINT8 joy;
 extern UINT8 Attach, x_Collide, y_Collide;
+extern const level_t *current_stage;
 
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexDy, indexCy, indexTy, index_Lx, index_Rx, indexCamx, tileindexLD, tileindexLC, tileindexLT, tileindexRD, tileindexRC, tileindexRT;
@@ -59,6 +60,14 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             canCrouch_timer -= 1;
         }
     }
+    if ((COLLISION_WIDE_MAP[tileindexLD] == 0x04) || (COLLISION_WIDE_MAP[tileindexLC] == 0x04) || (COLLISION_WIDE_MAP[tileindexLT] == 0x04) || (COLLISION_WIDE_MAP[tileindexRD] == 0x04) || (COLLISION_WIDE_MAP[tileindexRC] == 0x04) || (COLLISION_WIDE_MAP[tileindexRT] == 0x04)) {
+        DISPLAY_OFF;
+        Spawn = TRUE;
+        load_level(current_stage);
+        if (load_submap) load_submap();
+        render_actors();
+        DISPLAY_ON;
+    }
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -97,11 +106,25 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 Spawn = Jump = y_Collide = Gravity = FALSE;
                 switch_land();
             }
+        } else if ((COLLISION_WIDE_MAP[tileindexL] == 0x04) || (COLLISION_WIDE_MAP[tileindexC] == 0x04) || (COLLISION_WIDE_MAP[tileindexR] == 0x04)) {
+            DISPLAY_OFF;
+            Spawn = TRUE;
+            load_level(current_stage);
+            if (load_submap) load_submap();
+            render_actors();
+            DISPLAY_ON;
         }
     } else if (PLAYER.SpdY < 0) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (y_Collide)) {
             PLAYER.SpdY = 0;
             Gravity = TRUE;
+        } else if ((COLLISION_WIDE_MAP[tileindexL] == 0x04) || (COLLISION_WIDE_MAP[tileindexC] == 0x04) || (COLLISION_WIDE_MAP[tileindexR] == 0x04)) {
+            DISPLAY_OFF;
+            Spawn = TRUE;
+            load_level(current_stage);
+            if (load_submap) load_submap();
+            render_actors();
+            DISPLAY_ON;
         }
     } else if (PLAYER.SpdY == 0) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x00) || (COLLISION_WIDE_MAP[tileindexC] == 0x00) || (COLLISION_WIDE_MAP[tileindexR] == 0x00) || (y_Collide)) {
