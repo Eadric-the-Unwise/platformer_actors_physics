@@ -89,9 +89,8 @@ void render_actors() {
         current_direction = current_actor->direction;
         const metasprite_t **current_animation = current_actor->animations[current_direction];
         if (current_animation != NULL) {
-            if (current_animation[current_actor->animation_phase] != NULL) {
-                // PLAYER THEORETICALLY WILL ALWAYS LOAD BECAUSE PLAYER.x - PLAYER.x = 0//
-                if (current_actor->RENDER == TRUE) {
+            if (current_actor->RENDER == TRUE) {
+                if (current_animation[current_actor->animation_phase] != NULL) {
                     if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE) {
                         current_actor->ON = TRUE;
                         if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R)) {
@@ -108,27 +107,28 @@ void render_actors() {
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
                         }
                     } else {
-                        // hiwater -= current_actor->metasprite_count;
-                        current_actor->ON = FALSE;
+                        // current_actor->ON = FALSE;
                         // current_actor->RENDER = FALSE;
                         hide_metasprite(
                             current_animation[current_actor->animation_phase],
                             hiwater);
                     }
                 }
-            }
-            // process actor animation
-            if (animation_timer == 1) {
-                current_actor->animation_phase++;
-                // check for the last animation frame
-                if (current_animation[current_actor->animation_phase] == NULL) {
-                    // check for loop of animation
-                    if (current_actor->animations_props[current_actor->direction] == ANIM_LOOP) {
-                        current_actor->animation_phase = 0;  // loop animation back from frame[0]
-                    } else {
-                        current_actor->animation_phase--;  // stick to last animation frame
+                // process actor animation
+                if (animation_timer == 1) {
+                    current_actor->animation_phase++;
+                    // check for the last animation frame
+                    if (current_animation[current_actor->animation_phase] == NULL) {
+                        // check for loop of animation
+                        if (current_actor->animations_props[current_actor->direction] == ANIM_LOOP) {
+                            current_actor->animation_phase = 0;  // loop animation back from frame[0]
+                        } else {
+                            current_actor->animation_phase--;  // stick to last animation frame
+                        }
                     }
                 }
+            } else {
+                current_actor->ON = FALSE;
             }
         }
         current_actor++;

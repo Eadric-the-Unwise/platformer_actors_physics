@@ -50,8 +50,8 @@ const actor_t level1_actors[6] = {
      .y_offset = 6,
      .direction = DIR_LEFT,
      .NPC_type = PATROL,
-     .patrol_timer = 60,
-     .patrol_reset = 120,
+     .patrol_timer = 52,
+     .patrol_reset = 104,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -73,8 +73,8 @@ const actor_t level1_actors[6] = {
      .y_offset = 6,
      .direction = DIR_RIGHT,
      .NPC_type = PATROL,
-     .patrol_timer = 60,
-     .patrol_reset = 120,
+     .patrol_timer = 52,
+     .patrol_reset = 104,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -157,35 +157,63 @@ UINT8 cam1[3] = {1, 2, 3};
 UINT8 cam2[3] = {3, 4, 5};
 UINT8 cam3[2] = {4, 5};
 UINT8 cam4[1] = {5};
+#define CAM1_COUNT 3
+#define CAM2_COUNT 3
+#define CAM3_COUNT 2
+#define CAM4_COUNT 1
 
 void anim_level1() {
-    UINT8 *ptr = NULL;  // simply = NULL to bypass compiler error lol
+    UINT8 *ptr = NULL;   // pointer // simply = NULL to bypass compiler error lol
+    UINT8 *pptr = NULL;  // previous pointer
+    UINT8 *nptr = NULL;  // next pointer
 
-    // TOTAL ACTORS MINUS 1
     UINT16 camera_x = TO_PIXELS(bkg.camera_x);
-    UINT8 active_actors_count = 0;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+    UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+    UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
+    UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
-    for (UINT8 x = total_actors_count - 1; x != 0; x--) {
-        actor_t *erase_actor = &active_actors[ACTOR_FIRST_NPC];
-        erase_actor->RENDER = FALSE;
-        // erase_actor->ON = FALSE;
-    }
-    if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {
-        active_actors_count = 3;
+    if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {  // CAM1
+        active_actors_count = CAM1_COUNT;
+        next_actors_count = CAM2_COUNT;
         ptr = cam1;
-    } else if ((camera_x >= 320) && (camera_x < 480)) {
-        active_actors_count = 3;
+        nptr = cam2;
+    } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
+        prev_actors_count = CAM1_COUNT;
+        active_actors_count = CAM2_COUNT;
+        next_actors_count = CAM3_COUNT;
+        pptr = cam1;
         ptr = cam2;
-    } else if ((camera_x >= 160) && (camera_x < 320)) {
-        active_actors_count = 2;
+        nptr = cam3;
+    } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
+        prev_actors_count = CAM2_COUNT;
+        active_actors_count = CAM3_COUNT;
+        next_actors_count = CAM4_COUNT;
+        pptr = cam2;
         ptr = cam3;
-    } else if (camera_x < 160) {
-        active_actors_count = 1;
+        nptr = cam4;
+    } else if (camera_x < 160) {  // CAM4
+        prev_actors_count = CAM3_COUNT;
+        active_actors_count = CAM4_COUNT;
+        pptr = cam3;
         ptr = cam4;
     }
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
+    actor_t *prev_actor = &active_actors[*pptr];
+    actor_t *next_actor = &active_actors[*nptr];
 
-    for (UINT8 i = active_actors_count; i != 0; i--) {
+    for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF ADJACENT SPRITES
+        prev_actor->RENDER = FALSE;
+        // prev_actor->ON = FALSE;
+        pptr++;
+        prev_actor = &active_actors[*pptr];
+    }
+    for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF ADJACENT SPRITES
+        next_actor->RENDER = FALSE;
+        // next_actor->ON = FALSE;
+        nptr++;
+        next_actor = &active_actors[*nptr];
+    }
+    for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT CAM SPRITES
         current_actor->RENDER = TRUE;
 
         if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)

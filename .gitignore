@@ -5,5 +5,5 @@ bin/
 *.png
 *.txt
 *.gbr
-# *.gbm
+*.gbm
 /unused
