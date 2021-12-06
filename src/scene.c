@@ -192,3 +192,13 @@ void switch_crawl() {
         SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
     }
 }
+
+void gameover() {
+    GAMEOVER = FALSE;
+    DISPLAY_OFF;
+    Spawn = TRUE;
+    load_level(current_stage);
+    if (load_submap) load_submap();
+    render_actors();
+    DISPLAY_ON;
+}

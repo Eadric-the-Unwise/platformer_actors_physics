@@ -299,12 +299,7 @@ void npc_collisions_level1() {
         if (active_actors[i].ON && active_actors[i].KILL == NULL) {
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
                 if (active_actors[i].NPC_type != ELEVATOR) {
-                    DISPLAY_OFF;
-                    Spawn = TRUE;
-                    if (load_submap) load_submap();
-                    load_level(&level1);
-                    DISPLAY_ON;
-
+                    GAMEOVER = TRUE;
                 } else if (active_actors[i].NPC_type == ELEVATOR) {
                     if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
                     {

@@ -6,6 +6,7 @@
 
 UINT8 joy, last_joy;
 UINT8 px, py;
+UINT8 GAMEOVER;
 extern Variables bkg;
 extern uint8_t animation_timer;
 extern UINT8 Attach;
@@ -27,7 +28,7 @@ void main() {
     if (load_submap) load_submap();
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 
-    Jump = Gravity = Crouch = canCrouch = Drop = Launch = Shooting = FALSE;
+    GAMEOVER = Jump = Gravity = Crouch = canCrouch = Drop = Launch = Shooting = FALSE;
     Spawn = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
@@ -240,5 +241,8 @@ void main() {
         }
         // render all actors on screen
         render_actors();
+        if (GAMEOVER) {
+            gameover();
+        }
     }
 }

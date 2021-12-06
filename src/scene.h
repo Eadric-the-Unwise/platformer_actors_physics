@@ -127,6 +127,7 @@ extern collide_level_t collide_level;
 extern load_submap_t load_submap;
 extern UINT8 total_actors_count;
 
+extern const level_t *current_stage;
 void load_level(const level_t *level);
 void render_actors();
 void switch_down();
@@ -135,6 +136,8 @@ void switch_idle();
 void switch_land();
 void switch_crawl();
 void jump();
+void gameover();
+extern UINT8 GAMEOVER;
 
 // fuction body is inlined into the code
 inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase) {
