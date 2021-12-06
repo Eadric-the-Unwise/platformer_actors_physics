@@ -148,7 +148,7 @@ const actor_t level1_actors[6] = {
      .copy = TRUE}};
 
 const level_t level1 = {
-    .submap_hook = init_submap,
+    .submap_hook = init_submap,  // call this in collision
     .actors = level1_actors,
     .actor_count = 6,
     .animate_hook = anim_level1,  // function that put life into the scene
