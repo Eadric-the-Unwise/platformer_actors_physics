@@ -201,26 +201,26 @@ void anim_level1() {
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
 
-    for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF ADJACENT SPRITES
+    for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF SPRITES
         prev_actor->RENDER = FALSE;
         // prev_actor->ON = FALSE;
         pptr++;
         prev_actor = &active_actors[*pptr];
     }
-    for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF ADJACENT SPRITES
+    for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF NEXT SET OF SPRITES
         next_actor->RENDER = FALSE;
         // next_actor->ON = FALSE;
         nptr++;
         next_actor = &active_actors[*nptr];
     }
-    for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT CAM SPRITES
+    for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT SET OF SPRITES
         current_actor->RENDER = TRUE;
 
         if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
             current_actor->x -= PLAYER.SpdX;
         }
-        if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {
-            if (current_actor->NPC_type == PATROL) {
+        if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {  // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
+            if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
                 current_actor->patrol_timer--;
                 current_actor->x += current_actor->SpdX;
                 if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
@@ -233,7 +233,7 @@ void anim_level1() {
                     current_actor->patrol_timer = current_actor->patrol_reset;
                 }
 
-            } else if (current_actor->NPC_type == ELEVATOR) {
+            } else if (current_actor->NPC_type == ELEVATOR) {  // ELEVATORS
                 current_actor->patrol_timer--;
                 current_actor->y += current_actor->SpdY;
 
@@ -246,14 +246,14 @@ void anim_level1() {
                     current_actor->SpdY = -abs(current_actor->SpdY);
                     current_actor->patrol_timer = current_actor->patrol_reset;
                 }
-            } else if (current_actor->NPC_type == WALK) {
+            } else if (current_actor->NPC_type == WALK) {  // WALK NPCS WALK STRAIGHT AHEAD
                 INT16 actor_x = TO_PIXELS(current_actor->x);
 
                 if ((actor_x >= -32) && (actor_x <= 200)) {
                     current_actor->x += current_actor->SpdX;
                 }
                 if (actor_x > 196) {
-                    current_actor->KILL = TRUE;
+                    current_actor->KILL = TRUE;  // KILL NPC IS HE GOES OFF SCREEN TO THE RIGHT TOO FAR
                 }
             }
         }
