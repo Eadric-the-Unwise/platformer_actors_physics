@@ -332,7 +332,7 @@ void npc_collisions_level1() {
                     } else if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
                         switch_idle();
                     }
-                    Gravity = Jump = FALSE;
+                    Spawn = Gravity = Jump = FALSE;
                 }
             }
             if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {

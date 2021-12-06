@@ -15,8 +15,8 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     indexTy = (newplayery - 24) / 8;
     index_Lx = ((newplayerx - 16) + indexCamx) / 8;
     index_Rx = ((newplayerx - 1) + indexCamx) / 8;
-    index_kLx = ((newplayerx - 13) + indexCamx) / 8;  // SPIKE KILL CHECK
-    index_kRx = ((newplayerx - 5) + indexCamx) / 8;   // SPIKE KILL CHECK
+    index_kLx = ((newplayerx - 14) + indexCamx) / 8;  // SPIKE KILL CHECK
+    index_kRx = ((newplayerx - 3) + indexCamx) / 8;   // SPIKE KILL CHECK
     // LEFT INDEX
     tileindexLD = COLLISION_WIDE_MAPWidth * indexDy + index_Lx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexLC = COLLISION_WIDE_MAPWidth * indexCy + index_Lx;
