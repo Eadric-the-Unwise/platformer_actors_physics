@@ -26,16 +26,16 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000005  l__HEADER |    00000006  l__HEADER |    00000007  l__HEADER
      00000008  l__HEADER |    0000000C  l__GSINIT |    00000030  l__HEADER
      0000004F  l__HEADER |    00000082  l__HEADER |    00000200  s__CODE  
-     0000025A  l__HOME   |    000008FF  l__DATA   |    00000F25  l__INITIA
-     00000F25  l__INITIA |    00001DF8  l__CODE_1 |    00002000  _rROMB0  
+     0000025A  l__HOME   |    000008FF  l__DATA   |    00001061  l__INITIA
+     00001061  l__INITIA |    00001DF8  l__CODE_1 |    00002000  _rROMB0  
      00002AEA  l__CODE   |    00002CEA  s__HOME   |    00002F44  s__BASE  
      00002F44  s__CODE_0 |    00002F44  s__INITIA |    00002F44  s__LIT   
-     00003000  _rROMB1   |    00003E69  s__GSINIT |    00003E75  s__GSFINA
+     00003000  _rROMB1   |    00003FA5  s__GSINIT |    00003FB1  s__GSFINA
      00004000  _rRAMB    |    00008000  __VRAM    |    00008000  __VRAM800
      00008800  __VRAM880 |    00009000  __VRAM900 |    00009800  __SCRN0  
      00009C00  __SCRN1   |    0000A000  __SRAM    |    0000C000  __RAM    
      0000C000  _shadow_O |    0000C0A0  s__DATA   |    0000C99F  s__BSS   
-     0000C99F  s__INITIA |    0000D000  __RAMBANK |    0000D8C4  s__HEAP  
+     0000C99F  s__INITIA |    0000D000  __RAMBANK |    0000DA00  s__HEAP  
      0000E000  .STACK    |    0000FE00  __OAMRAM  |    0000FF00  _P1_REG  
      0000FF00  __IO      |    0000FF01  _SB_REG   |    0000FF02  _SC_REG  
      0000FF04  _DIV_REG  |    0000FF05  _TIMA_REG |    0000FF06  _TMA_REG 
@@ -280,7 +280,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           00002F44    00000F25 =        3877. bytes (REL,CON)
+_INITIALIZER           00002F44    00001061 =        4193. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -289,17 +289,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                00003E69    0000000C =          12. bytes (REL,CON)
+_GSINIT                00003FA5    0000000C =          12. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00003E69  gsinit   
+     00003FA5  gsinit   
 ASxxxx Linker V03.00 + NoICE + sdld,  page 25.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               00003E75    00000001 =           1. bytes (REL,CON)
+_GSFINAL               00003FB1    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -329,15 +329,15 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZED           0000C99F    00000F25 =        3877. bytes (REL,CON)
+_INITIALIZED           0000C99F    00001061 =        4193. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      0000C99F  _cam1     |    0000C9A2  _cam2     |    0000C9A5  _cam3    
      0000C9A7  _cam4     |    0000C9A8  _animate_ |    0000C9AA  _collide_
      0000C9AC  _load_sub |    0000C9AE  _animatio |    0000C9AF  _BRICK_WI
-     0000D0B7  _BRICK_WI |    0000D0F7  _COLLISIO |    0000D863  _STAGE_DR
-     0000D8C3  ___render
+     0000D0B7  _BRICK_WI |    0000D0F7  _COLLISIO |    0000D98F  _STAGE_DR
+     0000D9FF  ___render
 ASxxxx Linker V03.00 + NoICE + sdld,  page 28.
 Hexadecimal  [32-Bits]
 
@@ -378,35 +378,35 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc137960.rel
+C:\Users\User\AppData\Local\Temp/lcc14320.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc137961.rel
+C:\Users\User\AppData\Local\Temp/lcc14321.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc137962.rel
+C:\Users\User\AppData\Local\Temp/lcc14322.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc137963.rel
+C:\Users\User\AppData\Local\Temp/lcc14323.rel
                                           [ level2 ]
-C:\Users\User\AppData\Local\Temp/lcc137964.rel
+C:\Users\User\AppData\Local\Temp/lcc14324.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc137965.rel
+C:\Users\User\AppData\Local\Temp/lcc14325.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc137966.rel
+C:\Users\User\AppData\Local\Temp/lcc14326.rel
                                           [ submap ]
-C:\Users\User\AppData\Local\Temp/lcc137967.rel
+C:\Users\User\AppData\Local\Temp/lcc14327.rel
                                           [ brick_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc137968.rel
+C:\Users\User\AppData\Local\Temp/lcc14328.rel
                                           [ brick_wide_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc137969.rel
+C:\Users\User\AppData\Local\Temp/lcc14329.rel
                                           [ collision_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc1379610.rel
+C:\Users\User\AppData\Local\Temp/lcc143210.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc1379611.rel
+C:\Users\User\AppData\Local\Temp/lcc143211.rel
                                           [ enemy_arrow ]
-C:\Users\User\AppData\Local\Temp/lcc1379612.rel
+C:\Users\User\AppData\Local\Temp/lcc143212.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc1379613.rel
+C:\Users\User\AppData\Local\Temp/lcc143213.rel
                                           [ stage_drop_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc1379614.rel
+C:\Users\User\AppData\Local\Temp/lcc143214.rel
                                           [ vertical_platform_V1 ]
 
 

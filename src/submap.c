@@ -21,7 +21,7 @@ void init_submap() {
     bkg.map_pos_x = (UINT8)(bkg.camera_x >> 7u);
     bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
     // CHANGE THE TILE COUNT AS YOU ADD TILES TO THE BKG TILE_SET
-    set_bkg_data_nonbanked(0, 6, STAGE_DROP_TILES, STAGE_DROP_TILESBank);
+    set_bkg_data_nonbanked(0, 7, STAGE_DROP_TILES, STAGE_DROP_TILESBank);
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
 
     set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, BRICK_WIDE_MAP, BRICK_WIDE_MAPWidth, BRICK_WIDE_MAPBank);
