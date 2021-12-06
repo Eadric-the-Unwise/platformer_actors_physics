@@ -75,20 +75,20 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index_y, index_ky, indexCamx, tileindexL, tileindexC, tileindexR, tileindexkL, tileindexkC, tileindexkR;
+    UINT16 indexLx, indexCx, indexRx, index_y, index_dy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexdL, tileindexdC, tileindexdR;
     indexCamx = camera_x;
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - 1) / 8;
-    index_ky = (newplayery - 8) / 8;  // KILL SPIKE CHECK
+    index_dy = (newplayery - 8) / 8;  // when falling down
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
-    tileindexkL = COLLISION_WIDE_MAPWidth * index_ky + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexkC = COLLISION_WIDE_MAPWidth * index_ky + indexCx;
-    tileindexkR = COLLISION_WIDE_MAPWidth * index_ky + indexRx;
+    tileindexdL = COLLISION_WIDE_MAPWidth * index_dy + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexdC = COLLISION_WIDE_MAPWidth * index_dy + indexCx;
+    tileindexdR = COLLISION_WIDE_MAPWidth * index_dy + indexRx;
     // IF THE CHARACTER IS STANDING UNDER AN 0x02 COLLISION CORNER AND CLIPS, ADJUST HIS X UNTIL HE IS SAFELY OUTSIDE OF THE COLLISION WALL OF TILES
     if (x_Adjust) {
         if ((PLAYER.SpdX < MAX_WALK_SPEED) && (PLAYER.SpdX > -MAX_WALK_SPEED)) {
@@ -114,11 +114,11 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 Spawn = Jump = y_Collide = Gravity = FALSE;
                 switch_land();
             }
-        } else if ((COLLISION_WIDE_MAP[tileindexkL] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkR] == 0x04)) {
+        } else if ((COLLISION_WIDE_MAP[tileindexdL] == 0x04) || (COLLISION_WIDE_MAP[tileindexdC] == 0x04) || (COLLISION_WIDE_MAP[tileindexdR] == 0x04)) {
             GAMEOVER = TRUE;
         }
     } else if (PLAYER.SpdY < 0) {
-        if ((COLLISION_WIDE_MAP[tileindexkL] == 0x01) || (COLLISION_WIDE_MAP[tileindexkC] == 0x01) || (COLLISION_WIDE_MAP[tileindexkR] == 0x01) || (y_Collide)) {
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (y_Collide)) {
             PLAYER.SpdY = 0;
             Gravity = TRUE;
         } else if ((COLLISION_WIDE_MAP[tileindexL] == 0x04) || (COLLISION_WIDE_MAP[tileindexC] == 0x04) || (COLLISION_WIDE_MAP[tileindexR] == 0x04)) {

@@ -194,11 +194,11 @@ void switch_crawl() {
 }
 
 void gameover() {
-    GAMEOVER = FALSE;
     DISPLAY_OFF;
     Spawn = TRUE;
     load_level(current_stage);
     if (load_submap) load_submap();
     render_actors();
+    GAMEOVER = FALSE;
     DISPLAY_ON;
 }

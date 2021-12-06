@@ -19,7 +19,7 @@ UINT8 current_elevator;
 const actor_t level1_actors[6] = {
     // 0 PLAYER
     {.x = TO_COORDS(136),
-     .y = TO_COORDS(-8),
+     .y = TO_COORDS(0),
      .SpdX = 0,
      .SpdY = -16,
      .w = detective_large_WIDTH,

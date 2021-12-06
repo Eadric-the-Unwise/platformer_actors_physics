@@ -23,16 +23,16 @@ void main() {
     SPRITES_8x16;  // MUST be 8x16 or 8x8. Can change in different scenes only
     SHOW_BKG;
     SHOW_SPRITES;
+    Spawn = TRUE;
     current_stage = &level1;
-    load_level(current_stage);
-    if (load_submap) load_submap();
-    actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 
     GAMEOVER = Jump = Gravity = Crouch = canCrouch = Drop = Launch = Shooting = FALSE;
-    Spawn = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCrouch_Ftimer = 8;  // TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
+    load_level(current_stage);
+    if (load_submap) load_submap();
+    actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
     // switch on display after everything is ready
     DISPLAY_ON;
     last_joy = joy = 0;

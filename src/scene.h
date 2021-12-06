@@ -13,7 +13,6 @@
 #include "../res/tiles/vertical_platform_V1.h"
 #include "camera.h"
 #include "collisions.h"
-#include "collisions.h"  //Drop
 #include "level1.h"
 #include "level2.h"
 
