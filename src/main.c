@@ -9,6 +9,7 @@ UINT8 px, py;
 extern Variables bkg;
 extern uint8_t animation_timer;
 extern UINT8 Attach;
+const level_t *current_stage;
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -21,14 +22,15 @@ void main() {
     SPRITES_8x16;  // MUST be 8x16 or 8x8. Can change in different scenes only
     SHOW_BKG;
     SHOW_SPRITES;
+    current_stage = &level1;
 
     Jump = Gravity = Crouch = canCrouch = Drop = Launch = Shooting = FALSE;
     Spawn = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCrouch_Ftimer = 8;  // TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
-    init_submap();
-    load_level(&level1);
+    load_level(current_stage);
+    if (load_submap) load_submap();
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
     // switch on display after everything is ready
     DISPLAY_ON;
