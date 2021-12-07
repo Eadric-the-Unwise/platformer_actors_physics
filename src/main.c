@@ -150,9 +150,19 @@ void main() {
         // GRAVITY
 
         if (Gravity) {
+            if (Ladder){
+                            if (PLAYER.SpdY < 0) {
+                PLAYER.SpdY += GRAVITY;
+            } else if (PLAYER.SpdY > 0) {
+                PLAYER.SpdY -= GRAVITY;
+            } 
+            }else {
+                PLAYER.SpdY += GRAVITY;
+            
             PLAYER.SpdY += GRAVITY;
             if (PLAYER.SpdY > MAX_FALL_SPEED) {
                 PLAYER.SpdY = MAX_FALL_SPEED;
+                }
             }
         }
         if (PLAYER.SpdX < 0) {
