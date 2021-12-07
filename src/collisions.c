@@ -137,6 +137,13 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) || ((joy & J_DOWN) && (!Jump))) {
             if (!Ladder) {
                 Ladder = TRUE;
+                if ((COLLISION_WIDE_MAP[tileindexL] == 0x05)) {
+                    UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
+                    PLAYER.x = TO_COORDS(tx * 8);
+                } else if ((COLLISION_WIDE_MAP[tileindexR] == 0x05)) {
+                    UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
+                    PLAYER.x = TO_COORDS((tx * 8) + 8);
+                }
             }
         }
     } else {
