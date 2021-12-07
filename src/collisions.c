@@ -129,11 +129,11 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Gravity = TRUE;
         }
     }
-    if ((COLLISION_WIDE_MAP[tileindexL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexR] == 0x05)){
-       if (joy & J_UP) {
-            Ladder = TRUE;
-        }
-    }
+    // if ((COLLISION_WIDE_MAP[tileindexL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexR] == 0x05)){
+    //    if (joy & J_UP) {
+    //         Ladder = TRUE;
+    //     }
+    // }
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
