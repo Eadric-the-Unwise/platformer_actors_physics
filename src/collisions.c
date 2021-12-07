@@ -133,12 +133,16 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
     }
     if ((COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexC9] == 0x05)) {
-        if (joy & J_UP) {
+        if ((joy & J_UP) || (joy & J_DOWN)) {
             if (!Ladder) {
                 Ladder = TRUE;
             }
             if (Ladder) {
-                PLAYER.SpdY = -12;
+                if (joy & J_UP) {
+                    PLAYER.SpdY = -12;
+                } else if (joy & J_DOWN) {
+                    PLAYER.SpdY = 12;
+                }
             }
         }
     } else {
