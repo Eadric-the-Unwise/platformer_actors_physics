@@ -7,6 +7,7 @@ UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 extern UINT8 joy, last_joy;
 extern UINT8 Attach, x_Collide, y_Collide;
 
+// THESE COLLISIONS ARE SET ON SINGLE PIXELS, MEANING FINDING THE CENTER IS A CHALLENGE (AS OPPOSED TO NPC COLLISIONS WHICH ARE PERFECTLY CENTRED)
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexDy, indexCy, indexTy, index_Lx, index_Rx, index_kLx, index_kRx, indexCamx, tileindexLD, tileindexLC, tileindexLT, tileindexRD, tileindexRC, tileindexRT, tileindexkLD, tileindexkLC, tileindexkLT, tileindexkRD, tileindexkRC, tileindexkRT;
     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
@@ -132,7 +133,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Gravity = TRUE;
         }
     }
-    if ((COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexC9] == 0x05)) {
+    if ((COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexC9] == 0x05)) {  // LADDER VERTICAL MOVEMENT
         if (((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) || ((joy & J_DOWN) && (!Jump))) {
             if (!Ladder) {
                 Ladder = TRUE;

@@ -68,7 +68,7 @@ void main() {
                         PLAYER.SpdX -= WALK_VELOCITY;
                     } else
                         PLAYER.SpdX = -MAX_CRAWL_SPEED;
-                } else if (!(Crouch)) {
+                } else if ((!Crouch) && (!Ladder)) {
                     if (PLAYER.SpdX > -MAX_WALK_SPEED) {
                         PLAYER.SpdX -= WALK_VELOCITY;
                     } else
@@ -97,7 +97,7 @@ void main() {
                         PLAYER.SpdX += WALK_VELOCITY;
                     } else
                         PLAYER.SpdX = MAX_CRAWL_SPEED;
-                } else if (!(Crouch)) {
+                } else if ((!Crouch) && (!Ladder)) {
                     if (PLAYER.SpdX < MAX_WALK_SPEED) {
                         PLAYER.SpdX += WALK_VELOCITY;
                     } else
