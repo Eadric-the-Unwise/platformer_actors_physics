@@ -108,6 +108,9 @@ void main() {
         if ((joy & J_DOWN) && (PLAYER.SpdY == 0)) {
             Crouch = TRUE;
         }
+        if (joy & J_UP){
+            check_UD(px, py, TO_PIXELS(bkg.camera_x));
+        }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             jump();
