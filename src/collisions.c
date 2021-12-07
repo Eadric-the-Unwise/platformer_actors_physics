@@ -4,7 +4,7 @@
 UINT8 Spawn, Ladder, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
 UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
-extern UINT8 joy;
+extern UINT8 joy, last_joy;
 extern UINT8 Attach, x_Collide, y_Collide;
 
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -133,20 +133,20 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
     }
     if ((COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexC9] == 0x05)) {
-        if ((joy & J_UP) || (joy & J_DOWN)) {
+        if (((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) || ((joy & J_DOWN) && (!Jump))) {
             if (!Ladder) {
                 Ladder = TRUE;
-            }
-            if (Ladder) {
-                if (joy & J_UP) {
-                    PLAYER.SpdY = -12;
-                } else if (joy & J_DOWN) {
-                    PLAYER.SpdY = 12;
-                }
             }
         }
     } else {
         Ladder = FALSE;
+    }
+    if (Ladder) {
+        if (joy & J_UP) {
+            PLAYER.SpdY = -12;
+        } else if (joy & J_DOWN) {
+            PLAYER.SpdY = 12;
+        }
     }
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS

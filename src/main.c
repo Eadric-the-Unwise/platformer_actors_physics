@@ -41,7 +41,7 @@ void main() {
         last_joy = joy;
 
         joy = joypad();
-        if ((!Spawn) && (!Ladder)) {
+        if (!Spawn) {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
