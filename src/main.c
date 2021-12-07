@@ -108,9 +108,6 @@ void main() {
         if ((joy & J_DOWN) && (PLAYER.SpdY == 0)) {
             Crouch = TRUE;
         }
-        if (joy & J_UP){
-            check_UD(px, py, TO_PIXELS(bkg.camera_x));
-        }
 
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
             jump();
@@ -197,10 +194,16 @@ void main() {
                 check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
             }
         }
+        px = TO_PIXELS(PLAYER.x);
+        py = TO_PIXELS(PLAYER.y);
+
+        if (joy & J_UP){
+            check_UD(px, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+        }
 
         if ((Crouch) && (!canCrouch)) {
             if (!(joy & J_DOWN)) {
-                check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                check_C(px, py, TO_PIXELS(bkg.camera_x));
             }
         }
 
@@ -209,7 +212,7 @@ void main() {
             PLAYER.y += PLAYER.SpdY;
         }
         //+- PLAYER.SpdX
-        render_camera(TO_PIXELS(PLAYER.x), TO_PIXELS(bkg.camera_x));
+        render_camera(px, TO_PIXELS(bkg.camera_x));
 
         // call level animation hook (if any)
         if (animate_level) animate_level();
@@ -232,7 +235,7 @@ void main() {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
                     switch_idle();
-                    check_C(TO_PIXELS(PLAYER.x), TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                    check_C(px, py, TO_PIXELS(bkg.camera_x));
                 }
             }
         }
