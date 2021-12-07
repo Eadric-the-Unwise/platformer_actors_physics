@@ -1,6 +1,6 @@
 #include "collisions.h"
 
-UINT8 Spawn, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
+UINT8 Spawn, Ladder, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
 UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 extern UINT8 joy;
@@ -127,6 +127,14 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     } else if (PLAYER.SpdY == 0) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x00) || (COLLISION_WIDE_MAP[tileindexC] == 0x00) || (COLLISION_WIDE_MAP[tileindexR] == 0x00) || (y_Collide)) {
             Gravity = TRUE;
+        }
+    }
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexR] == 0x05)){
+       if (joy & J_UP) {
+            if (!Ladder){
+                Ladder = TRUE;
+                PLAYER.SpdY = -16;
+            }
         }
     }
 }
