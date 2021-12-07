@@ -205,7 +205,7 @@ void main() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
-        if ((joy & J_UP) || (joy & J_DOWN)) {
+        if ((joy & J_UP) || (joy & J_DOWN) && (!Crouch)) {
             check_UD(px, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
         }
 
