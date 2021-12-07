@@ -76,16 +76,18 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index_y, index_ky, indexCamx, tileindexL, tileindexC, tileindexR, tileindexkL, tileindexkC, tileindexkR;
+    UINT16 indexLx, indexCx, indexCx9, indexRx, index_y, index_ky, indexCamx, tileindexL, tileindexC, tileindexC9, tileindexR, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
+    indexCx9 = ((newplayerx - 9) + indexCamx) / 8;
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - 1) / 8;
     index_ky = (newplayery - 8) / 8;  // KILL SPIKE CHECK
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
+    tileindexC9 = COLLISION_WIDE_MAPWidth * index_y + indexCx9;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
     tileindexkL = COLLISION_WIDE_MAPWidth * index_ky + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexkC = COLLISION_WIDE_MAPWidth * index_ky + indexCx;
@@ -130,12 +132,13 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Gravity = TRUE;
         }
     }
-    if ((COLLISION_WIDE_MAP[tileindexL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexR] == 0x05)){
-       if (joy & J_UP) {
-            if (!Ladder){
-            Ladder = TRUE;}
-            if (Ladder){
-                PLAYER.SpdY = -16;
+    if ((COLLISION_WIDE_MAP[tileindexC] == 0x05) || (COLLISION_WIDE_MAP[tileindexC9] == 0x05)) {
+        if (joy & J_UP) {
+            if (!Ladder) {
+                Ladder = TRUE;
+            }
+            if (Ladder) {
+                PLAYER.SpdY = -12;
             }
         }
     } else {

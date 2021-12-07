@@ -164,6 +164,9 @@ void jump() {
     UINT8 px, py;
     px = TO_PIXELS(PLAYER.x);
     py = TO_PIXELS(PLAYER.y);
+    if (Ladder) {
+        Ladder = FALSE;
+    }
     if (Crouch) {
         check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
     }

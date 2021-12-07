@@ -41,7 +41,7 @@ void main() {
         last_joy = joy;
 
         joy = joypad();
-        if (!Spawn) {
+        if ((!Spawn) && (!Ladder)) {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
@@ -150,18 +150,16 @@ void main() {
         // GRAVITY
 
         if (Gravity) {
-            if (Ladder){
-                            if (PLAYER.SpdY < 0) {
+            if (Ladder) {
+                if (PLAYER.SpdY < 0) {
+                    PLAYER.SpdY += GRAVITY;
+                } else if (PLAYER.SpdY > 0) {
+                    PLAYER.SpdY -= GRAVITY;
+                }
+            } else {
                 PLAYER.SpdY += GRAVITY;
-            } else if (PLAYER.SpdY > 0) {
-                PLAYER.SpdY -= GRAVITY;
-            } 
-            }else {
-                PLAYER.SpdY += GRAVITY;
-            
-            PLAYER.SpdY += GRAVITY;
-            if (PLAYER.SpdY > MAX_FALL_SPEED) {
-                PLAYER.SpdY = MAX_FALL_SPEED;
+                if (PLAYER.SpdY > MAX_FALL_SPEED) {
+                    PLAYER.SpdY = MAX_FALL_SPEED;
                 }
             }
         }
@@ -207,7 +205,7 @@ void main() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
-        if (joy & J_UP){
+        if ((joy & J_UP) || (joy & J_DOWN)) {
             check_UD(px, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
         }
 
