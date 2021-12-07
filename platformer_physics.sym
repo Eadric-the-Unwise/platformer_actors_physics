@@ -281,6 +281,6 @@
 01:5D8C _NPC_electric_metasprites
 01:5D90 _NPC_electric_animation
 01:5D96 _vertical_platform_V1_data
-01:5DD6 _vertical_platform_V1_metaspritev
-01:5DF2 _vertical_platform_V1_metaspritev
+01:5DD6 _vertical_platform_V1_metaspriteu
+01:5DF2 _vertical_platform_V1_metaspriteu
 01:5DF4 _elevator_frame
