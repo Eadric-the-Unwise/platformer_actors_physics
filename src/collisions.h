@@ -2,7 +2,7 @@
 #include "../res/tiles/collision_wide_map.h"
 #include "scene.h"
 
-extern UINT8 Spawn, Ladder, Jump, Gravity, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
+extern UINT8 Spawn, Ladder, Ladder_Release, Jump, Gravity, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
 extern UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
