@@ -117,7 +117,9 @@ void main() {
         if (PLAYER.SpdY != 0) {
             Jump = Gravity = TRUE;
             Crouch = FALSE;
+            if (!Ladder){
             switch_jump();
+            }
         }
         if (Drop) {
             Drop_timer -= 1;
@@ -205,9 +207,12 @@ void main() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
-        if ((joy & J_UP) || (joy & J_DOWN) && (!Crouch)) {
+//LADDER CHECK
+//WE NEED THIS TO ONLY BE CALLED WHEN STANDING NEAR A LADDER, OTHERWISE IT GETS CALLED EACH LOOP AND SLOWS GAME DOWN
+            if ((joy & J_UP) || (joy & J_DOWN) && (!Crouch)) {
             check_UD(px, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
-        }
+            }
+        
 
         if ((Crouch) && (!canCrouch)) {
             if (!(joy & J_DOWN)) {

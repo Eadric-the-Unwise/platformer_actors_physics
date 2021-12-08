@@ -135,13 +135,14 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Gravity = TRUE;
         }
     }
+
 //CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
     // if (Ladder_Release){
     //     if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
     //     Ladder_Release = FALSE;
     //     }
     // }
-
+if (!Spawn){
     if ((COLLISION_WIDE_MAP[tileindexC6] == 0x05) && (COLLISION_WIDE_MAP[tileindexL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC9] == 0x05) && (COLLISION_WIDE_MAP[tileindexR] == 0x05)) {  // LADDER VERTICAL MOVEMENT
         if ((joy & J_UP) || (joy & J_DOWN) && (!Jump)) {
             if (!Ladder) {
@@ -162,7 +163,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         // Ladder_Release = FALSE;
     }
     if (Ladder) {
-
+    PLAYER.direction = DIR_IDLE_L;
                 if ((COLLISION_WIDE_MAP[tileindexL] == 0x05)) {
                     UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
                     PLAYER.x = TO_COORDS(tx * 8);
@@ -177,6 +178,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             PLAYER.SpdY = 12;
         }
               PLAYER.SpdX = 0;
+        }
     }
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
@@ -211,9 +213,12 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     if (Ladder){
         if (joy & J_LEFT){
         PLAYER.SpdX = -MAX_WALK_SPEED;
+            PLAYER.SpdY = -48;
+        } else         if (joy & J_RIGHT){
+        PLAYER.SpdX = MAX_WALK_SPEED;
+            PLAYER.SpdY = -48;
         }
-
-    PLAYER.SpdY = -48;
+    Ladder = FALSE;
     Jump = TRUE;
     switch_jump();
     }
