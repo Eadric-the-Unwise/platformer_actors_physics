@@ -6,15 +6,18 @@ UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 extern UINT8 joy, last_joy;
 extern UINT8 Attach, x_Collide, y_Collide;
+UINT8 LR_Offset_X, LR_Offset_kX;
 
 // THESE COLLISIONS ARE SET ON SINGLE PIXELS, MEANING FINDING THE CENTER IS A CHALLENGE (AS OPPOSED TO NPC COLLISIONS WHICH ARE PERFECTLY CENTRED)
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexDy, indexCy, indexTy, index_x, index_kLx, index_kRx, indexCamx, tileindexD, tileindexC, tileindexT, tileindexkLD, tileindexkLC, tileindexkLT, tileindexkRD, tileindexkRC, tileindexkRT;
-    UINT8 Offset_X = NULL;
+    UINT16 indexDy, indexCy, indexTy, index_x, index_kx, indexCamx, tileindexD, tileindexC, tileindexT, tileindexkD, tileindexkC, tileindexkT;
+;
     if (joy & J_LEFT){
-        Offset_X = 16;
+        LR_Offset_X = 16;
+        LR_Offset_kX = 14;
     } else if (joy & J_RIGHT){
-        Offset_X = 1;
+        LR_Offset_X = 1;
+        LR_Offset_kX = 3;
     }
     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
     indexCamx = camera_x;
@@ -22,27 +25,25 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     indexCy = (newplayery - 16) / 8; //CENTER Y AXIS
     indexDy = (newplayery - 1) / 8; // BOTTOM Y AXIS
 
-    // index_Lx = ((newplayerx - 16) + indexCamx) / 8;
-    // index_Rx = ((newplayerx - 1) + indexCamx) / 8;
-    index_x = ((newplayerx - Offset_X) + indexCamx) / 8;
-    index_kLx = ((newplayerx - 14) + indexCamx) / 8;  // SPIKE KILL CHECK
-    index_kRx = ((newplayerx - 3) + indexCamx) / 8;   // SPIKE KILL CHECK
-    // LEFT INDEX
-    tileindexD = COLLISION_WIDE_MAPWidth * indexDy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexC = COLLISION_WIDE_MAPWidth * indexCy + index_x;
+    index_x = ((newplayerx - LR_Offset_X) + indexCamx) / 8;
+    index_kx = ((newplayerx - LR_Offset_kX) + indexCamx) / 8;  // SPIKE KILL CHECK
+    // index_kLx = ((newplayerx - 14) + indexCamx) / 8;  // SPIKE KILL CHECK
+    // index_kRx = ((newplayerx - 3) + indexCamx) / 8;   // SPIKE KILL CHECK
+    // REGULAR INDEX
+    // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexT = COLLISION_WIDE_MAPWidth * indexTy + index_x;
-    // RIGHT INDEX
-    // tileindexRD = COLLISION_WIDE_MAPWidth * indexDy + index_Rx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    // tileindexRC = COLLISION_WIDE_MAPWidth * indexCy + index_Rx;
-    // tileindexRT = COLLISION_WIDE_MAPWidth * indexTy + index_Rx;
-    // KILL LEFT INDEX
-    tileindexkLD = COLLISION_WIDE_MAPWidth * indexDy + index_kLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexkLC = COLLISION_WIDE_MAPWidth * indexCy + index_kLx;
-    tileindexkLT = COLLISION_WIDE_MAPWidth * indexTy + index_kLx;
+    tileindexC = COLLISION_WIDE_MAPWidth * indexCy + index_x;
+    tileindexD = COLLISION_WIDE_MAPWidth * indexDy + index_x;  
+
+    // KILL COLLISION INDEX
+    tileindexkT = COLLISION_WIDE_MAPWidth * indexTy + index_kx; // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexkC = COLLISION_WIDE_MAPWidth * indexCy + index_kx;
+    tileindexkD = COLLISION_WIDE_MAPWidth * indexDy + index_kx;  
+
     // KILL RIGHT INDEX
-    tileindexkRD = COLLISION_WIDE_MAPWidth * indexDy + index_kRx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexkRC = COLLISION_WIDE_MAPWidth * indexCy + index_kRx;
-    tileindexkRT = COLLISION_WIDE_MAPWidth * indexTy + index_kRx;
+    // tileindexkRD = COLLISION_WIDE_MAPWidth * indexDy + index_kRx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    // tileindexkRC = COLLISION_WIDE_MAPWidth * indexCy + index_kRx;
+    // tileindexkRT = COLLISION_WIDE_MAPWidth * indexTy + index_kRx;
 
     if (Crouch) {
         if ((COLLISION_WIDE_MAP[tileindexD] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexD] == 0x02) || (COLLISION_WIDE_MAP[tileindexC] == 0x02)) {
@@ -79,7 +80,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             canCrouch_timer -= 1;
         }
     }
-    if ((COLLISION_WIDE_MAP[tileindexkLD] == 0x04) || (COLLISION_WIDE_MAP[tileindexkLC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkLT] == 0x04) || (COLLISION_WIDE_MAP[tileindexkRD] == 0x04) || (COLLISION_WIDE_MAP[tileindexkRC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkRT] == 0x04)) {
+    if ((COLLISION_WIDE_MAP[tileindexkD] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkT] == 0x04)) {
         GAMEOVER = TRUE;
     }
 }

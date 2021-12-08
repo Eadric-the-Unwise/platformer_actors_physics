@@ -196,13 +196,13 @@ void main() {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-            // IF MOVING RIGHT
+
             if (PLAYER.SpdX > 0) {
-                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));
-                // IF MOVING LEFT
+                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));    // IF MOVING RIGHT
+              
             } else if (PLAYER.SpdX < 0) {
-                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));
-            }
+                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));   // IF MOVING LEFT
+            }   
         }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
