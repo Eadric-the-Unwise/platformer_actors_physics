@@ -51,7 +51,7 @@ void main() {
                         canCrouch_timer = 1;
                     }
                 }
-                if ((!Jump) && !(joy & (J_DOWN)) && (!Crouch)) {
+                if ((!Jump) && !(joy & J_DOWN) && (!Crouch)) {
                     if (canCrouch) {
                         SetActorDirection(&PLAYER, DIR_CRAWL_L, PLAYER.animation_phase);
                     } else {
@@ -81,7 +81,7 @@ void main() {
                         canCrouch_timer = 1;
                     }
                 }
-                if ((!Jump) && !(joy & (J_DOWN)) && !(Crouch)) {
+                if ((!Jump) && !(joy & J_DOWN) && !(Crouch)) {
                     if (canCrouch) {
                         SetActorDirection(&PLAYER, DIR_CRAWL_R, PLAYER.animation_phase);
                     } else {
@@ -210,7 +210,9 @@ void main() {
 //LADDER CHECK
 //WE NEED THIS TO ONLY BE CALLED WHEN STANDING NEAR A LADDER, OTHERWISE IT GETS CALLED EACH LOOP AND SLOWS GAME DOWN
             if ((joy & J_UP) || (joy & J_DOWN) && (!Crouch)) {
-            check_UD(px, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                        if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                        check_UD(px, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x));
+                        }
             }
         
 
