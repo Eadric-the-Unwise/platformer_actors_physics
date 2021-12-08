@@ -136,25 +136,25 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
     }
 //CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
-    if (Ladder_Release){
-        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
-        Ladder_Release = FALSE;
-        }
-    }
+    // if (Ladder_Release){
+    //     if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+    //     Ladder_Release = FALSE;
+    //     }
+    // }
 
     if ((COLLISION_WIDE_MAP[tileindexC6] == 0x05) && (COLLISION_WIDE_MAP[tileindexL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC9] == 0x05) && (COLLISION_WIDE_MAP[tileindexR] == 0x05)) {  // LADDER VERTICAL MOVEMENT
         if ((joy & J_UP) || (joy & J_DOWN) && (!Jump)) {
             if (!Ladder) {
-                if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
-                    if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+                // if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
+                //     if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
                         Ladder = TRUE;
-                    }
-                } else {
+                    // }
+                // } else {
 
-                    if (!Ladder_Release){
-                    Ladder = TRUE;  // allows you to Ladder when walking up to the ladder while holding J_UP
-                    } 
-                }
+                    // if (!Ladder_Release){
+                    // Ladder = TRUE;  // allows you to Ladder when walking up to the ladder while holding J_UP
+                    // } 
+                // }
             }
         }
     } else {
@@ -207,6 +207,17 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexCL = COLLISION_WIDE_MAPWidth * index_Cy + indexLx;
     tileindexCC = COLLISION_WIDE_MAPWidth * index_Cy + indexCx;
     tileindexCR = COLLISION_WIDE_MAPWidth * index_Cy + indexRx;
+
+    if (Ladder){
+        if (joy & J_LEFT){
+        PLAYER.SpdX = -MAX_WALK_SPEED;
+        }
+
+    PLAYER.SpdY = -48;
+    Jump = TRUE;
+    switch_jump();
+    }
+
 
     if (Crouch) {
         if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexCL] == 0x01) || (COLLISION_WIDE_MAP[tileindexCC] == 0x01) || (COLLISION_WIDE_MAP[tileindexCR] == 0x01)) {
