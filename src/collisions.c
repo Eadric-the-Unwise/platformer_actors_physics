@@ -168,16 +168,16 @@ if (!Spawn){
     if ((COLLISION_WIDE_MAP[tileindexC6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC10] == 0x05) && (COLLISION_WIDE_MAP[tileindexLR] == 0x05)) {  // LADDER VERTICAL MOVEMENT
         if ((joy & J_UP) || (joy & J_DOWN) && (!Jump)) {
             if (!Ladder) {
-                // if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
-                //     if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
-                Ladder = TRUE;
-                    // }
-                // } else {
-
+                if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
+                    if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+                    Ladder = TRUE;
+                    }
+                } 
+                else {
                     // if (!Ladder_Release){
-                    // Ladder = TRUE;  // allows you to Ladder when walking up to the ladder while holding J_UP
+                    Ladder = TRUE;  // allows you to Ladder when walking up to the ladder while holding J_UP
                     // } 
-                // }
+                }
             }
         }
     } else {
@@ -186,10 +186,10 @@ if (!Spawn){
     }
     if (Ladder) {
     PLAYER.direction = DIR_IDLE_L;
-        if ((COLLISION_WIDE_MAP[tileindexL] == 0x05)) {
+        if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05)) {
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
             PLAYER.x = TO_COORDS(tx * 8);
-        } else if ((COLLISION_WIDE_MAP[tileindexR] == 0x05)) {
+        } else if ((COLLISION_WIDE_MAP[tileindexLR] == 0x05)) {
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
             PLAYER.x = TO_COORDS((tx * 8) + 8);  // if on left tile of ladder
         }
