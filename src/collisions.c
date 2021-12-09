@@ -185,6 +185,7 @@ if (!Spawn){
         // Ladder_Release = FALSE;
     }
     if (Ladder) {
+        Crouch = FALSE;
     PLAYER.direction = DIR_IDLE_L;
         if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05)) {
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
