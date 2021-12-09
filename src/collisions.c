@@ -83,8 +83,8 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     indexCamx = camera_x;
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexC6 = ((newplayerx - 6) + indexCamx) / 8;
     indexC10 = ((newplayerx - 10) + indexCamx) / 8;
+    indexC6 = ((newplayerx - 6) + indexCamx) / 8;
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - 1) / 8;
     index_ky = (newplayery - 8) / 8;  // KILL SPIKE CHECK
