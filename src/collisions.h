@@ -7,7 +7,6 @@ extern UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
-void check_Ladder(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
 void check_Drop(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
 void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
