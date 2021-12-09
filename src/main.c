@@ -194,7 +194,7 @@ void main() {
 
         // Y-AXIS COLLISION CHECK / /LADDER CHECK
         check_UD(px, py, TO_PIXELS(bkg.camera_x));
-
+        check_Ladder(px, py, TO_PIXELS(bkg.camera_x));
         if ((Crouch) && (!canCrouch)) {
             if (!(joy & J_DOWN)) {
                 check_C(px, py, TO_PIXELS(bkg.camera_x));

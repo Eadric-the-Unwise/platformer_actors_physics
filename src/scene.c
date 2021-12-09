@@ -171,7 +171,7 @@ void jump() {
     check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
 }
 void switch_idle() {
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L) {
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L) {
         SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
     } else {
         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);

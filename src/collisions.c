@@ -1,4 +1,3 @@
-#pragma bank 255
 #include "collisions.h"
 
 UINT8 Spawn, Ladder, Ladder_Release, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
@@ -194,7 +193,7 @@ void check_Ladder(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
         if (Ladder) {
             Ladder_Release = Crouch = FALSE;
-            PLAYER.direction = DIR_IDLE_L;
+            switch_idle();
             if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05)) {
                 UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
                 PLAYER.x = TO_COORDS(tx * 8);
