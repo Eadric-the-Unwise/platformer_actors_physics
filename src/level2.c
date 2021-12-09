@@ -1,3 +1,4 @@
+#pragma bank 255
 #include "level2.h"
 
 #include <gb/gb.h>

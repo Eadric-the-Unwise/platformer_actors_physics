@@ -117,8 +117,8 @@ void main() {
         if (PLAYER.SpdY != 0) {
             Jump = Gravity = TRUE;
             Crouch = FALSE;
-            if (!Ladder){
-            switch_jump();
+            if (!Ladder) {
+                switch_jump();
             }
         }
         if (Drop) {
@@ -176,31 +176,31 @@ void main() {
                 PLAYER.SpdX -= FRICTION;
             }
         }
-    
+
         if (PLAYER.SpdX != 0) {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
 
             if (PLAYER.SpdX > 0) {
-                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));    // IF MOVING RIGHT
-              
+                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING RIGHT
+
             } else if (PLAYER.SpdX < 0) {
-                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));   // IF MOVING LEFT
-            }   
+                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
+            }
         }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
-        
-            // Y-AXIS COLLISION CHECK / /LADDER CHECK
+
+        // Y-AXIS COLLISION CHECK / /LADDER CHECK
         check_UD(px, py, TO_PIXELS(bkg.camera_x));
-        
+
         if ((Crouch) && (!canCrouch)) {
             if (!(joy & J_DOWN)) {
                 check_C(px, py, TO_PIXELS(bkg.camera_x));
             }
         }
-        
+
         // update PLAYER absolute posiiton
         if (!Attach) {
             PLAYER.y += PLAYER.SpdY;
