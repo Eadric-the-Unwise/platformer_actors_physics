@@ -143,9 +143,6 @@ void main() {
         if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
             canCrouch_timer = 10;
         }
-        if (PLAYER.SpdY == 0) {
-            check_UD(px, py + 1, TO_PIXELS(bkg.camera_x));
-        }
 
         // ---------------------------------------------
         // WORLD PHYSICS:
@@ -180,18 +177,13 @@ void main() {
             }
         }
 
-        if (PLAYER.SpdY != 0) {
-            UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
             // Y-AXIS COLLISION CHECK
-            if (PLAYER.SpdY > 0) {
-                check_UD(px, py + 1, TO_PIXELS(bkg.camera_x));
 
-            } else if (PLAYER.SpdY < 0) {
-                check_UD(px, py - 25, TO_PIXELS(bkg.camera_x));
-            }
-        }
+            check_UD(px, py, TO_PIXELS(bkg.camera_x));
+    
+        
         if (PLAYER.SpdX != 0) {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
@@ -209,11 +201,11 @@ void main() {
 
 //LADDER CHECK
 //WE NEED THIS TO ONLY BE CALLED WHEN STANDING NEAR A LADDER, OTHERWISE IT GETS CALLED EACH LOOP AND SLOWS GAME DOWN
-            if ((joy & J_UP) || (joy & J_DOWN) && (!Crouch)) { //? AND (!Jump) ??? This would allow for it to only be called when standing still, 
-                        if (!(joy & J_LEFT) && !(joy & J_RIGHT)) { // and when you jump or move L/R, the check will be handled inside of there.
-                        check_UD(px, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x)); //Once we add Y_Offsets, we may no longer need +1 and -1 in func calls
-                        }                                                            //we likely can just adjust each offset scenario to be +1 or -1. Let's see, though...
-            }
+        if ((joy & J_UP) || (joy & J_DOWN) && (!Crouch)) { //? AND (!Jump) ??? This would allow for it to only be called when standing still, 
+            if (!(joy & J_LEFT) && !(joy & J_RIGHT)) { // and when you jump or move L/R, the check will be handled inside of there.
+            check_UD(px, TO_PIXELS(PLAYER.y), TO_PIXELS(bkg.camera_x)); //Once we add Y_Offsets, we may no longer need +1 and -1 in func calls
+            }                                                            //we likely can just adjust each offset scenario to be +1 or -1. Let's see, though...
+        }
         
 
         if ((Crouch) && (!canCrouch)) {

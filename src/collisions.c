@@ -7,6 +7,7 @@ UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 extern UINT8 joy, last_joy;
 extern UINT8 Attach, x_Collide, y_Collide;
 UINT8 LR_Offset_X, LR_Offset_kX;
+UINT8 UP_Offset_Y, UP_Offset_kY;
 
 // THESE COLLISIONS ARE SET ON SINGLE PIXELS, MEANING FINDING THE CENTER IS A CHALLENGE (AS OPPOSED TO NPC COLLISIONS WHICH ARE PERFECTLY CENTRED)
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -81,13 +82,23 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexC6, indexC10, indexRx, index_y, index_ky, indexCamx, tileindexL, tileindexC, tileindexC6, tileindexC10, tileindexR, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
+
+    if (PLAYER.SpdY >= 0) {
+            UP_Offset_Y = 0;
+            UP_Offset_kY = 9;
+
+    } else if (PLAYER.SpdY < 0) {
+            UP_Offset_Y = 26;
+            UP_Offset_kY = 33;
+    }
+
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
     indexC10 = ((newplayerx - 10) + indexCamx) / 8;
     indexC6 = ((newplayerx - 6) + indexCamx) / 8;
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
-    index_y = (newplayery - 1) / 8;
-    index_ky = (newplayery - 8) / 8;  // KILL SPIKE CHECK
+    index_y = (newplayery - UP_Offset_Y) / 8;
+    index_ky = (newplayery - UP_Offset_kY) / 8;  // KILL SPIKE CHECK
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
