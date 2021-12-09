@@ -80,13 +80,13 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexC6, indexC10, indexRx, index_y, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLL, tileindexLC, tileindexLR, tileindexC6, tileindexC10, tileindexkL, tileindexkC, tileindexkR;
+    UINT16 indexCamx, indexLx, indexCx, indexRx, index_y, index_ky, tileindexL, tileindexC, tileindexR, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
 
     if (PLAYER.SpdY >= 0) {
         UD_Offset_Y = 0;
         UD_Offset_kY = 9;
-        UD_Offset_LY = 1;
+        // UD_Offset_LY = 1;
 
     } else if (PLAYER.SpdY < 0) {
         UD_Offset_Y = 26;
@@ -96,23 +96,13 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexC10 = ((newplayerx - 10) + indexCamx) / 8;  // LADDER X CENTER OFFSETS
-    indexC6 = ((newplayerx - 6) + indexCamx) / 8;    // LADDER X CENTER OFFSETS
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - UD_Offset_Y) / 8;
     index_ky = (newplayery - UD_Offset_kY) / 8;  // KILL SPIKE CHECK
-    index_Ly = (newplayery - UD_Offset_LY) / 8;  // LADDER COLLISION CHECK
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
-
-    tileindexLL = COLLISION_WIDE_MAPWidth * index_Ly + indexLx;  // LADDER Y
-    tileindexLC = COLLISION_WIDE_MAPWidth * index_Ly + indexCx;  // LADDER Y
-    tileindexLR = COLLISION_WIDE_MAPWidth * index_Ly + indexRx;  // LADDER Y
-
-    tileindexC6 = COLLISION_WIDE_MAPWidth * index_Ly + indexC6;    // OFFSET FOR LADDER CENTER
-    tileindexC10 = COLLISION_WIDE_MAPWidth * index_Ly + indexC10;  // OFFSET FOR LADDER CENTER
 
     tileindexkL = COLLISION_WIDE_MAPWidth * index_ky + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexkC = COLLISION_WIDE_MAPWidth * index_ky + indexCx;
@@ -157,6 +147,26 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Gravity = TRUE;
         }
     }
+}
+void check_Ladder(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+    UINT16 indexCamx, indexLx, indexRx, tileindexLL, tileindexLR, indexC6, indexC10, tileindexC6, tileindexC10, index_Ly;
+    indexCamx = camera_x;
+    if (PLAYER.SpdY >= 0) {
+        UD_Offset_LY = 1;
+    }
+    // else if (PLAYER.SpdY < 0) {
+    //     // UD_Offset_LY = 2;
+    // }
+
+    indexC10 = ((newplayerx - 10) + indexCamx) / 8;  // LADDER X CENTER OFFSETS
+    indexC6 = ((newplayerx - 6) + indexCamx) / 8;    // LADDER X CENTER OFFSETS
+    index_Ly = (newplayery - UD_Offset_LY) / 8;      // LADDER COLLISION CHECK
+    indexLx = ((newplayerx - 16) + indexCamx) / 8;
+    indexRx = ((newplayerx - 1) + indexCamx) / 8;
+    tileindexLL = COLLISION_WIDE_MAPWidth * index_Ly + indexLx;    // LADDER Y
+    tileindexLR = COLLISION_WIDE_MAPWidth * index_Ly + indexRx;    // LADDER Y
+    tileindexC6 = COLLISION_WIDE_MAPWidth * index_Ly + indexC6;    // OFFSET FOR LADDER CENTER
+    tileindexC10 = COLLISION_WIDE_MAPWidth * index_Ly + indexC10;  // OFFSET FOR LADDER CENTER
 
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
     if (Ladder_Release) {
