@@ -77,43 +77,52 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     if ((COLLISION_WIDE_MAP[tileindexkD] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkT] == 0x04)) {
         GAMEOVER = TRUE;
     }
-
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexC6, indexC10, indexRx, index_y, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLL, tileindexLC, tileindexLR, tileindexC6, tileindexC10, tileindexkL, tileindexkC, tileindexkR;
+    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLT, tileindexCT, tileindexRT, tileindexLB, tileindexCB, tileindexRB, tileindexLL, tileindexLC, tileindexLR, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
 
     if (PLAYER.SpdY >= 0) {
         UD_Offset_Y = 0;
         UD_Offset_kY = 9;
-        UD_Offset_LY = 8;
+        UD_Offset_LY = 12;
 
     } else if (PLAYER.SpdY < 0) {
         UD_Offset_Y = 26;
         UD_Offset_kY = 33;
-        UD_Offset_LY = 4;
+        UD_Offset_LY = 12;
     }
 
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
-    indexC10 = ((newplayerx - 10) + indexCamx) / 8;  // LADDER X CENTER OFFSETS
-    indexC6 = ((newplayerx - 6) + indexCamx) / 8;    // LADDER X CENTER OFFSETS
+    index10 = ((newplayerx - 10) + indexCamx) / 8;  // LADDER X CENTER OFFSETS
+    index6 = ((newplayerx - 6) + indexCamx) / 8;    // LADDER X CENTER OFFSETS
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - UD_Offset_Y) / 8;
+    index_Ty = (newplayery - 26) / 8;
+    index_By = (newplayery) / 8;
     index_ky = (newplayery - UD_Offset_kY) / 8;  // KILL SPIKE CHECK
     index_Ly = (newplayery - UD_Offset_LY) / 8;  // LADDER COLLISION CHECK
+    // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // THESE ARE USED MOSTLY FOR BASIC COLLISION CHECKS (NOT LADDERS)
+    tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;  // AS THEY FLUCTUATE DEPENDING ON THE SPD OF THE PLAYER
+    tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;  // LADDERS REQUIRE HARDSET TOP AND BOTTOM AND CENTER ROWS OF X, SEE BELOW
 
-    tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
-    tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
+    tileindexLL = COLLISION_WIDE_MAPWidth * index_By + indexLx;  // LADDER CENTER Y
+    tileindexLC = COLLISION_WIDE_MAPWidth * index_By + indexCx;  // LADDER CENTER Y
+    tileindexLR = COLLISION_WIDE_MAPWidth * index_By + indexRx;  // LADDER CENTER Y
 
-    tileindexLL = COLLISION_WIDE_MAPWidth * index_Ly + indexLx;  // LADDER Y
-    tileindexLC = COLLISION_WIDE_MAPWidth * index_Ly + indexCx;  // LADDER Y
-    tileindexLR = COLLISION_WIDE_MAPWidth * index_Ly + indexRx;  // LADDER Y
+    tileindexLT = COLLISION_WIDE_MAPWidth * index_Ty + indexLx;  // TOP Y
+    tileindexCT = COLLISION_WIDE_MAPWidth * index_Ty + indexCx;  // TOP Y
+    tileindexRT = COLLISION_WIDE_MAPWidth * index_Ty + indexRx;  // TOP Y
 
-    tileindexC6 = COLLISION_WIDE_MAPWidth * index_Ly + indexC6;    // OFFSET FOR LADDER CENTER
-    tileindexC10 = COLLISION_WIDE_MAPWidth * index_Ly + indexC10;  // OFFSET FOR LADDER CENTER
+    tileindexLB = COLLISION_WIDE_MAPWidth * index_By + indexLx;  // BOT Y
+    tileindexCB = COLLISION_WIDE_MAPWidth * index_By + indexCx;  // BOT Y
+    tileindexRB = COLLISION_WIDE_MAPWidth * index_By + indexRx;  // BOT Y
+
+    tileindex6 = COLLISION_WIDE_MAPWidth * index_Ly + index6;    // OFFSET FOR LADDER X "CENTER"
+    tileindex10 = COLLISION_WIDE_MAPWidth * index_Ly + index10;  // OFFSET FOR LADDER X "CENTER"
 
     tileindexkL = COLLISION_WIDE_MAPWidth * index_ky + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexkC = COLLISION_WIDE_MAPWidth * index_ky + indexCx;
@@ -161,27 +170,26 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     // ********** ALL LADDER CHECKS BELOW THIS LINE **********
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
     if (Ladder_Release) {
-        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN) && (!Jump) || (COLLISION_WIDE_MAP[tileindexC6] != 0x05) || (COLLISION_WIDE_MAP[tileindexC10] != 0x05)) {
+        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN) && (!Jump) || (COLLISION_WIDE_MAP[tileindex6] != 0x05) || (COLLISION_WIDE_MAP[tileindex10] != 0x05)) {
             Ladder_Release = FALSE;
         }
     }
     if (!Spawn) {
-        if (PLAYER.SpdY >= 0){ //IF WALKING OR LANDING ONTO THE TOP OF A LADDER (NOT JUMP UPWARDS FROM UNDERNEATH)
-            if ((COLLISION_WIDE_MAP[tileindexL] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] != 0x05)){
-                if (joy & J_DOWN) { //IF PRESS DOWN WHILE STANDING ON TOP OF A LADDER
-                Ladder = TRUE;
+        if (!Ladder) {
+            if ((COLLISION_WIDE_MAP[tileindexLB] == 0x05) && (COLLISION_WIDE_MAP[tileindexLT] != 0x05)) {  // IF YOU ARE STANDING ON TOP OF A LADDER (NOT JUMP UPWARDS FROM UNDERNEATH)
+                if (joy & J_DOWN) {                                                                        // IF PRESS DOWN WHILE STANDING ON TOP OF A LADDER
+                    Ladder = TRUE;
                 } else {
-                UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
-                PLAYER.y = TO_COORDS(ty * 8);
-                PLAYER.SpdY = 0;
-                Spawn = Jump = y_Collide = Gravity = FALSE;
-                switch_land();
+                    UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
+                    PLAYER.y = TO_COORDS(ty * 8);
+                    PLAYER.SpdY = 0;
+                    Spawn = Jump = y_Collide = Gravity = FALSE;
+                    switch_land();
                 }
             }
-
         }
 
-        if ((COLLISION_WIDE_MAP[tileindexC6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC10] == 0x05) && (COLLISION_WIDE_MAP[tileindexLR] == 0x05) || (COLLISION_WIDE_MAP[tileindexC] == 0x05)) {  // LADDER VERTICAL MOVEMENT
+        if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexLR] == 0x05) || (COLLISION_WIDE_MAP[tileindexC] == 0x05)) {  // LADDER VERTICAL MOVEMENT
             if ((joy & J_UP) || (joy & J_DOWN) && (!Jump)) {
                 if (!Ladder) {
                     if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
@@ -195,8 +203,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     }
                 }
             }
-        } else {
-            Ladder = FALSE;
         }
         if (Ladder) {
             Crouch = FALSE;
@@ -215,6 +221,13 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 PLAYER.SpdY = 12;
             }
             PLAYER.SpdX = 0;
+            if ((COLLISION_WIDE_MAP[tileindexLT] != 0x05) && (COLLISION_WIDE_MAP[tileindexLB] != 0x05)) {
+                UINT8 ty = ((TO_PIXELS(PLAYER.y) + 8) / 8);
+                PLAYER.y = TO_COORDS(ty * 8);
+                PLAYER.SpdY = 0;
+                Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
+                switch_idle();
+            }
         }
     }
 }
@@ -255,9 +268,6 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             PLAYER.SpdX = MAX_WALK_SPEED;
             PLAYER.SpdY = -48;
         }
-        //  else {
-        //     Ladder_Release = TRUE;
-        // }
         Ladder = FALSE;
         Jump = Ladder_Release = TRUE;
         switch_jump();
