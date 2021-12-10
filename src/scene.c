@@ -5,6 +5,7 @@
 
 #include "level.h"
 extern Variables bkg;
+extern UINT8 y_Collide;
 UINT8 dir, last_dir;
 
 // array of avaliable actors
@@ -170,6 +171,15 @@ void jump() {
     // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
     check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
 }
+void land(){
+                UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
+                PLAYER.y = TO_COORDS(ty * 8);
+                PLAYER.SpdY = 0;
+                Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
+                switch_land();
+                
+} 
+
 void switch_idle() {
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L) {
         SetActorDirection(&PLAYER, DIR_IDLE_L, 0);

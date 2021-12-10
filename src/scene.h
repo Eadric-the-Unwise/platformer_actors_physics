@@ -135,6 +135,7 @@ void switch_idle();
 void switch_land();
 void switch_crawl();
 void jump();
+void land();
 void gameover();
 extern UINT8 GAMEOVER;
 
