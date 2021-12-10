@@ -160,15 +160,9 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
     // ********** ALL LADDER CHECKS BELOW THIS LINE **********
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
-    // if (Ladder_Release) {
-    //     if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN) && (!Jump)) {
-    //         Ladder_Release = FALSE;
-    //     }
-    // }
     if (Ladder_Release) {
-        if ((COLLISION_WIDE_MAP[tileindexC6] == 0x05) || (COLLISION_WIDE_MAP[tileindexC10] == 0x05)) {
-        } else {
-           Ladder_Release = FALSE; 
+        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN) && (!Jump) || (COLLISION_WIDE_MAP[tileindexC6] != 0x05) || (COLLISION_WIDE_MAP[tileindexC10] != 0x05)) {
+            Ladder_Release = FALSE;
         }
     }
     if (!Spawn) {
