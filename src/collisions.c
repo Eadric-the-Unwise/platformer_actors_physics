@@ -239,11 +239,12 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         } else if (joy & J_RIGHT) {
             PLAYER.SpdX = MAX_WALK_SPEED;
             PLAYER.SpdY = -48;
-        } else {
-            Ladder_Release = TRUE;
         }
+        //  else {
+        //     Ladder_Release = TRUE;
+        // }
         Ladder = FALSE;
-        Jump = TRUE;
+        Jump = Ladder_Release = TRUE;
         switch_jump();
     }
 
