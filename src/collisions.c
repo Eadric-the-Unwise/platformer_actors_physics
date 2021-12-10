@@ -235,12 +235,16 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (joy & J_LEFT) {
             PLAYER.SpdX = -MAX_WALK_SPEED;
             PLAYER.SpdY = -48;
+            Ladder_Release = FALSE;
         } else if (joy & J_RIGHT) {
             PLAYER.SpdX = MAX_WALK_SPEED;
             PLAYER.SpdY = -48;
+            Ladder_Release = FALSE;
+        } else {
+            Ladder_Release = TRUE;
         }
         Ladder = FALSE;
-        Jump = Ladder_Release = TRUE;
+        Jump = TRUE;
         switch_jump();
     }
 
