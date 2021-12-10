@@ -77,6 +77,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     if ((COLLISION_WIDE_MAP[tileindexkD] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkT] == 0x04)) {
         GAMEOVER = TRUE;
     }
+
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -86,12 +87,12 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     if (PLAYER.SpdY >= 0) {
         UD_Offset_Y = 0;
         UD_Offset_kY = 9;
-        UD_Offset_LY = 1;
+        UD_Offset_LY = 8;
 
     } else if (PLAYER.SpdY < 0) {
         UD_Offset_Y = 26;
         UD_Offset_kY = 33;
-        // UD_Offset_LY = 2;
+        UD_Offset_LY = 26;
     }
 
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
@@ -159,9 +160,15 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
     // ********** ALL LADDER CHECKS BELOW THIS LINE **********
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
+    // if (Ladder_Release) {
+    //     if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN) && (!Jump)) {
+    //         Ladder_Release = FALSE;
+    //     }
+    // }
     if (Ladder_Release) {
-        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN) && (!Jump)) {
-            Ladder_Release = FALSE;
+        if ((COLLISION_WIDE_MAP[tileindexC6] == 0x05) || (COLLISION_WIDE_MAP[tileindexC10] == 0x05)) {
+        } else {
+           Ladder_Release = FALSE; 
         }
     }
     if (!Spawn) {
@@ -235,11 +242,9 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (joy & J_LEFT) {
             PLAYER.SpdX = -MAX_WALK_SPEED;
             PLAYER.SpdY = -48;
-            Ladder_Release = FALSE;
         } else if (joy & J_RIGHT) {
             PLAYER.SpdX = MAX_WALK_SPEED;
             PLAYER.SpdY = -48;
-            Ladder_Release = FALSE;
         } else {
             Ladder_Release = TRUE;
         }
