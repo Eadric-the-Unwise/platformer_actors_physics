@@ -92,7 +92,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     } else if (PLAYER.SpdY < 0) {
         UD_Offset_Y = 26;
         UD_Offset_kY = 33;
-        UD_Offset_LY = 26;
+        UD_Offset_LY = 8;
     }
 
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
