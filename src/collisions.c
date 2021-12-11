@@ -91,7 +91,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     } else if (PLAYER.SpdY < 0) {
         UD_Offset_Y = 26;
         UD_Offset_kY = 33;
-        UD_Offset_LY = 26;
+        UD_Offset_LY = 12;
     }
 
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
@@ -150,6 +150,10 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
                 Spawn = Jump = y_Collide = Gravity = FALSE;
+                if (Ladder){
+                    Ladder = FALSE;
+                    Ladder_Release = TRUE;
+                }
                 switch_land();
             }
         } else if ((COLLISION_WIDE_MAP[tileindexkL] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkR] == 0x04)) {
@@ -203,7 +207,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     }
                 }
             } else {
-                Ladder = FALSE;
+                // Ladder = FALSE;
             }
         }
         if (Ladder) {
