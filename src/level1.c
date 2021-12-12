@@ -19,7 +19,7 @@ UINT8 current_elevator;
 const actor_t level1_actors[6] = {
     // 0 PLAYER
     {.x = TO_COORDS(136),
-     .y = TO_COORDS(-16),
+     .y = TO_COORDS(16),
      .SpdX = 0,
      .SpdY = 16,
      .w = detective_large_WIDTH,
@@ -48,15 +48,15 @@ const actor_t level1_actors[6] = {
      .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
-     .direction = DIR_RIGHT,
+     .direction = DIR_DOWN,
      .NPC_type = PATROL,
      .patrol_timer = 78,
      .patrol_reset = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
-     .animations = {NPC_electric_animation, NPC_electric_animation},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NPC_electric_animation, NPC_electric_animation},
+     .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = FALSE,
      .ON = TRUE},
@@ -71,21 +71,21 @@ const actor_t level1_actors[6] = {
      .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
-     .direction = DIR_LEFT,
+     .direction = DIR_UP,
      .NPC_type = PATROL,
      .patrol_timer = 78,
      .patrol_reset = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
-     .animations = {NPC_electric_animation, NPC_electric_animation},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animations = {elevator_frame, elevator_frame, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NPC_electric_animation, NPC_electric_animation},
+     .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = TRUE},
     // 3 WALK
     {.x = TO_COORDS(-144),
      .y = TO_COORDS(116),
-     .SpdX = 6,
+     .SpdX = 8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
      .h = NPC_electric_HEIGHT,
@@ -93,7 +93,7 @@ const actor_t level1_actors[6] = {
      .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
-     .direction = DIR_RIGHT,
+     .direction = DIR_LEFT,
      .NPC_type = WALK,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
@@ -106,7 +106,7 @@ const actor_t level1_actors[6] = {
     {.x = TO_COORDS(-60),
      .y = TO_COORDS(104),
      .SpdX = 0,
-     .SpdY = 16,
+     .SpdY = 8,
      .w = vertical_platform_V1_WIDTH,
      .h = vertical_platform_V1_HEIGHT,
      .x_pivot = vertical_platform_V1_PIVOT_X,
@@ -128,7 +128,7 @@ const actor_t level1_actors[6] = {
     {.x = TO_COORDS(-140),
      .y = TO_COORDS(136),
      .SpdX = 0,
-     .SpdY = 4,
+     .SpdY = 8,
      .w = vertical_platform_V1_WIDTH,
      .h = vertical_platform_V1_HEIGHT,
      .x_pivot = vertical_platform_V1_PIVOT_X,
@@ -224,12 +224,12 @@ void anim_level1() {
             if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
                 current_actor->patrol_timer--;
                 current_actor->x += current_actor->SpdX;
-                if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0)) {
-                    SetActorDirection(current_actor, DIR_RIGHT, 0);
+                if ((current_actor->direction == DIR_UP) && (current_actor->patrol_timer == 0)) {
+                    SetActorDirection(current_actor, DIR_DOWN, 0);
                     current_actor->SpdX = abs(current_actor->SpdX);
                     current_actor->patrol_timer = current_actor->patrol_reset;
-                } else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0)) {
-                    SetActorDirection(current_actor, DIR_LEFT, 0);
+                } else if ((current_actor->direction == DIR_DOWN) && (current_actor->patrol_timer == 0)) {
+                    SetActorDirection(current_actor, DIR_UP, 0);
                     current_actor->SpdX = -abs(current_actor->SpdX);
                     current_actor->patrol_timer = current_actor->patrol_reset;
                 }

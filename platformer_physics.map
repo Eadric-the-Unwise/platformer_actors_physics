@@ -27,7 +27,7 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000008  l__HEADER |    0000000C  l__GSINIT |    00000030  l__HEADER
      0000004F  l__HEADER |    00000082  l__HEADER |    00000200  s__CODE  
      0000025A  l__HOME   |    00000906  l__DATA   |    000010A1  l__INITIA
-     000010A1  l__INITIA |    00002000  _rROMB0   |    000023BF  l__CODE_1
+     000010A1  l__INITIA |    00002000  _rROMB0   |    000023D0  l__CODE_1
      000026F1  l__CODE   |    000028F1  s__HOME   |    00002B4B  s__BASE  
      00002B4B  s__CODE_0 |    00002B4B  s__INITIA |    00002B4B  s__LIT   
      00003000  _rROMB1   |    00003BEC  s__GSINIT |    00003BF8  s__GSFINA
@@ -355,61 +355,61 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_1                00014000    000023BF =        9151. bytes (REL,CON)
+_CODE_1                00014000    000023D0 =        9168. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00014000  _anim_lev |    000145AD  _level1_a |    00014C2B  _level1  
-     00014C34  _npc_coll |    00014F86  _animate_ |    000150F0  _level2_a
-     00015544  _level2   |    0001554D  _init_sub |    00015661  _detectiv
-     00015FC1  _detectiv |    00015FD9  _detectiv |    00015FF1  _detectiv
-     0001600D  _detectiv |    00016025  _detectiv |    00016041  _detectiv
-     0001605D  _detectiv |    00016079  _detectiv |    00016095  _detectiv
-     000160B1  _detectiv |    000160CD  _detectiv |    000160E9  _detectiv
-     00016105  _detectiv |    00016121  _detectiv |    0001613D  _detectiv
-     00016159  _detectiv |    00016171  _detectiv |    00016191  _detectiv
-     000161A3  _detectiv |    000161A7  _detectiv |    000161B1  _detectiv
-     000161BB  _detectiv |    000161C1  _detectiv |    000161C5  _detectiv
-     000161CD  _enemy_ar |    0001628D  _enemy_ar |    00016299  _enemy_ar
-     000162A5  _enemy_ar |    000162B1  _enemy_ar |    000162B5  _enemy_ar
-     000162BB  _NPC_elec |    0001633B  _NPC_elec |    00016347  _NPC_elec
-     00016353  _NPC_elec |    00016357  _NPC_elec |    0001635D  _vertical
-     0001639D  _vertical |    000163B9  _vertical |    000163BB  _elevator
+     00014000  _anim_lev |    000145BE  _level1_a |    00014C3C  _level1  
+     00014C45  _npc_coll |    00014F97  _animate_ |    00015101  _level2_a
+     00015555  _level2   |    0001555E  _init_sub |    00015672  _detectiv
+     00015FD2  _detectiv |    00015FEA  _detectiv |    00016002  _detectiv
+     0001601E  _detectiv |    00016036  _detectiv |    00016052  _detectiv
+     0001606E  _detectiv |    0001608A  _detectiv |    000160A6  _detectiv
+     000160C2  _detectiv |    000160DE  _detectiv |    000160FA  _detectiv
+     00016116  _detectiv |    00016132  _detectiv |    0001614E  _detectiv
+     0001616A  _detectiv |    00016182  _detectiv |    000161A2  _detectiv
+     000161B4  _detectiv |    000161B8  _detectiv |    000161C2  _detectiv
+     000161CC  _detectiv |    000161D2  _detectiv |    000161D6  _detectiv
+     000161DE  _enemy_ar |    0001629E  _enemy_ar |    000162AA  _enemy_ar
+     000162B6  _enemy_ar |    000162C2  _enemy_ar |    000162C6  _enemy_ar
+     000162CC  _NPC_elec |    0001634C  _NPC_elec |    00016358  _NPC_elec
+     00016364  _NPC_elec |    00016368  _NPC_elec |    0001636E  _vertical
+     000163AE  _vertical |    000163CA  _vertical |    000163CC  _elevator
 ASxxxx Linker V03.00 + NoICE + sdld,  page 30.
 
 Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc126760.rel
+C:\Users\User\AppData\Local\Temp/lcc77760.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc126761.rel
+C:\Users\User\AppData\Local\Temp/lcc77761.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc126762.rel
+C:\Users\User\AppData\Local\Temp/lcc77762.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc126763.rel
+C:\Users\User\AppData\Local\Temp/lcc77763.rel
                                           [ level2 ]
-C:\Users\User\AppData\Local\Temp/lcc126764.rel
+C:\Users\User\AppData\Local\Temp/lcc77764.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc126765.rel
+C:\Users\User\AppData\Local\Temp/lcc77765.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc126766.rel
+C:\Users\User\AppData\Local\Temp/lcc77766.rel
                                           [ submap ]
-C:\Users\User\AppData\Local\Temp/lcc126767.rel
+C:\Users\User\AppData\Local\Temp/lcc77767.rel
                                           [ brick_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc126768.rel
+C:\Users\User\AppData\Local\Temp/lcc77768.rel
                                           [ brick_wide_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc126769.rel
+C:\Users\User\AppData\Local\Temp/lcc77769.rel
                                           [ collision_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc1267610.rel
+C:\Users\User\AppData\Local\Temp/lcc777610.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc1267611.rel
+C:\Users\User\AppData\Local\Temp/lcc777611.rel
                                           [ enemy_arrow ]
-C:\Users\User\AppData\Local\Temp/lcc1267612.rel
+C:\Users\User\AppData\Local\Temp/lcc777612.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc1267613.rel
+C:\Users\User\AppData\Local\Temp/lcc777613.rel
                                           [ stage_drop_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc1267614.rel
+C:\Users\User\AppData\Local\Temp/lcc777614.rel
                                           [ vertical_platform_V1 ]
 
 
