@@ -209,7 +209,8 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
         if (Ladder) {
             // Crouch = FALSE;
-            switch_idle();
+            // SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
+            switch_ladder();
             if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05)) {
                 UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
                 PLAYER.x = TO_COORDS(tx * 8);

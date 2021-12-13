@@ -96,7 +96,7 @@ void render_actors() {
                 if (current_animation[current_actor->animation_phase] != NULL) {
                     if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE) {
                         current_actor->ON = TRUE;
-                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R)) {
+                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R)) {
                             hiwater += move_metasprite_vflip(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,
@@ -171,20 +171,26 @@ void jump() {
     // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
     check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
 }
-void land(){
-                UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
-                PLAYER.y = TO_COORDS(ty * 8);
-                PLAYER.SpdY = 0;
-                Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
-                switch_land();
-                
-} 
+void land() {
+    UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
+    PLAYER.y = TO_COORDS(ty * 8);
+    PLAYER.SpdY = 0;
+    Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
+    switch_land();
+}
 
 void switch_idle() {
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L) {
         SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
     } else {
         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+    }
+}
+void switch_ladder() {
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L) {
+        SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
+    } else {
+        SetActorDirection(&PLAYER, DIR_LADDER_R, 0);
     }
 }
 void switch_land() {
