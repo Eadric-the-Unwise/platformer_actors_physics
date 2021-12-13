@@ -275,6 +275,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 PLAYER.SpdY = -48;
             }
         } else if (joy & J_RIGHT) {
+            PLAYER.direction = DIR_LADDER_R;
             PLAYER.SpdX = MAX_WALK_SPEED;
             if (!(joy & J_DOWN)) {
                 PLAYER.SpdY = -48;
