@@ -18,7 +18,7 @@ UINT8 current_elevator;
 //.w and .h are adjusted for COLLISION functions
 const actor_t level1_actors[6] = {
     // 0 PLAYER
-    {.x = TO_COORDS(136),
+    {.x = TO_COORDS(144),
      .y = TO_COORDS(16),
      .SpdX = 0,
      .SpdY = 16,
