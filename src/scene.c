@@ -187,10 +187,18 @@ void switch_idle() {
     }
 }
 void switch_ladder() {
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L) {
+    PLAYER.patrol_timer--;
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_LADDER_L) {
         SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
     } else {
         SetActorDirection(&PLAYER, DIR_LADDER_R, 0);
+    }
+    if (PLAYER.direction == DIR_LADDER_L && PLAYER.patrol_timer == 0) {
+        SetActorDirection(&PLAYER, DIR_LADDER_R, 0);
+        PLAYER.patrol_timer = PLAYER.patrol_reset;
+    } else if (PLAYER.direction == DIR_LADDER_R && PLAYER.patrol_timer == 0) {
+        SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
+        PLAYER.patrol_timer = PLAYER.patrol_reset;
     }
 }
 void switch_land() {
