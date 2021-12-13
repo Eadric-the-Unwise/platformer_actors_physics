@@ -210,7 +210,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (Ladder) {
             // Crouch = FALSE;
             // SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
-            switch_ladder();
             if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05)) {
                 UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
                 PLAYER.x = TO_COORDS(tx * 8);
@@ -221,8 +220,10 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
             if (joy & J_UP) {
                 PLAYER.SpdY = -12;
+                switch_ladder();
             } else if (joy & J_DOWN) {
                 PLAYER.SpdY = 12;
+                switch_ladder();
             }
             PLAYER.SpdX = 0;
             // if ((COLLISION_WIDE_MAP[tileindexLT] != 0x05) && (COLLISION_WIDE_MAP[tileindexLB] != 0x05)) {
@@ -268,11 +269,16 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
     if (Ladder) {
         if (joy & J_LEFT) {
+            PLAYER.direction = DIR_LADDER_L;
             PLAYER.SpdX = -MAX_WALK_SPEED;
-            PLAYER.SpdY = -48;
+            if (!(joy & J_DOWN)) {
+                PLAYER.SpdY = -48;
+            }
         } else if (joy & J_RIGHT) {
             PLAYER.SpdX = MAX_WALK_SPEED;
-            PLAYER.SpdY = -48;
+            if (!(joy & J_DOWN)) {
+                PLAYER.SpdY = -48;
+            }
         }
         Ladder = FALSE;
         Jump = Ladder_Release = TRUE;
