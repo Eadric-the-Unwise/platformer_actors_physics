@@ -105,7 +105,7 @@ void main() {
                 }
             }
         }
-        if ((joy & J_DOWN) && (PLAYER.SpdY == 0)) {
+        if ((joy & J_DOWN) && (!Jump)) {
             Crouch = TRUE;
         }
 

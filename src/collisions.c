@@ -64,6 +64,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
             }
         }
+        if (!Jump){
         if ((COLLISION_WIDE_MAP[tileindexD] == 0x00) && (COLLISION_WIDE_MAP[tileindexC] == 0x00) && (COLLISION_WIDE_MAP[tileindexT] == 0x01)) {
             if (canCrouch_timer == 1) {
                 canCrouch = TRUE;
@@ -72,6 +73,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 canCrouch_timer = 10;
             }
             canCrouch_timer -= 1;
+        }
         }
     }
     if ((COLLISION_WIDE_MAP[tileindexkD] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkT] == 0x04)) {
