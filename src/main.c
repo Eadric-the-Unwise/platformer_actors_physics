@@ -241,8 +241,8 @@ void main() {
         }
         // render all actors on screen
         render_actors();
-        if (GAMEOVER) {
-            gameover();
-        }
+        // if (GAMEOVER) {
+        //     gameover();
+        // }
     }
 }
