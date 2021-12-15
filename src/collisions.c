@@ -111,13 +111,11 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
     if (Ladder) {
         if (joy & J_LEFT) {
-            PLAYER.direction = DIR_LADDER_L;
             PLAYER.SpdX = -MAX_WALK_SPEED;
             if (!(joy & J_DOWN)) {
                 PLAYER.SpdY = -48;
             }
         } else if (joy & J_RIGHT) {
-            PLAYER.direction = DIR_LADDER_R;
             PLAYER.SpdX = MAX_WALK_SPEED;
             if (!(joy & J_DOWN)) {
                 PLAYER.SpdY = -48;
@@ -260,6 +258,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             x_Adjust = FALSE;
         }
     }
+    if (!Ladder){
     if (PLAYER.SpdY > 0) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindexL] == 0x06) && (!Spawn) || (COLLISION_WIDE_MAP[tileindexC] == 0x06) && (!Spawn) || (COLLISION_WIDE_MAP[tileindexR] == 0x06) && (!Spawn)) {
             if (!Drop) {
@@ -284,6 +283,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x00) || (COLLISION_WIDE_MAP[tileindexC] == 0x00) || (COLLISION_WIDE_MAP[tileindexR] == 0x00) || (y_Collide)) {
             Gravity = TRUE;
         }
+    }
     }
     // ********** ALL LADDER CHECKS BELOW THIS LINE **********
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
@@ -341,6 +341,14 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 switch_ladder();
             }
             PLAYER.SpdX = 0;
+        if (!(joy & J_UP) && !(joy & J_DOWN)){
+            if (joy & J_LEFT) {
+            PLAYER.direction = DIR_LADDER_L;
+            } else if (joy & J_RIGHT) {
+            PLAYER.direction = DIR_LADDER_R;
+            }   
+        }
+
             // if ((COLLISION_WIDE_MAP[tileindexLT] != 0x05) && (COLLISION_WIDE_MAP[tileindexLB] != 0x05)) {
             //     UINT8 ty = ((TO_PIXELS(PLAYER.y) + 8) / 8);
             //     PLAYER.y = TO_COORDS(ty * 8);
