@@ -3,7 +3,7 @@
 // Use switch(); functions instead
 UINT8 Spawn, Ladder, Ladder_Release, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust;
 UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
-
+// Release_timer
 extern UINT8 joy, last_joy;
 extern UINT8 Attach, x_Collide, y_Collide;
 UINT8 LR_Offset_X, LR_Offset_kX;
@@ -349,6 +349,19 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             //     switch_idle();
             // } else if ((COLLISION_WIDE_MAP[tileindexLL] != 0x05) && (COLLISION_WIDE_MAP[tileindexLB] != 0x05)) {
             //     Ladder = FALSE;
+            // }
+
+            //LADDER RELEASE WHEN HOLDING L/R
+            // if (!(joy & J_UP) && !(joy & J_DOWN)){
+            //     if ((joy & J_LEFT) || (joy & J_RIGHT)) {
+            // Release_timer --;
+            //     }
+            // }
+            // if (Release_timer == 1){
+            // Ladder = FALSE;
+            // Jump = Ladder_Release = TRUE;
+            // switch_jump();
+            // Release_timer = 20;
             // }
         }
     }

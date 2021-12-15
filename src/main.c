@@ -28,6 +28,7 @@ void main() {
     GAMEOVER = Attach = Ladder = Ladder_Release = Jump = Gravity = Crouch = canCrouch = Drop = FALSE;
     Drop_timer = 16;
     canCrouch_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
+    // Release_timer = 20;
     canCrouch_Ftimer = 8;  // TURN canCrouch TO FALSE WHEN REACH COUNTDOWN
     load_level(current_stage);
     if (load_submap) load_submap();
@@ -142,6 +143,7 @@ void main() {
         }
         if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
             canCrouch_timer = 10;
+            // Release_timer = 20;
         }
 
         // ---------------------------------------------
