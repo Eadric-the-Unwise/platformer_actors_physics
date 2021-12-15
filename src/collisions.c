@@ -1,7 +1,7 @@
 #include "collisions.h"
 // FOR SOME REASNON, SETTING PLAYER.direction or SetActorDirection causes inaccessible VRAM bug.
 // Use switch(); functions instead
-UINT8 Spawn, Ladder, Ladder_Release, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust, Launch, Shooting;
+UINT8 Spawn, Ladder, Ladder_Release, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust;
 UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 
 extern UINT8 joy, last_joy;
@@ -133,7 +133,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexCL] == 0x01) || (COLLISION_WIDE_MAP[tileindexCC] == 0x01) || (COLLISION_WIDE_MAP[tileindexCR] == 0x01)) {
         } else {
             if (!Drop) {
-                Crouch = canCrouch = Launch = FALSE;
+                Crouch = canCrouch = FALSE;
                 if (!Jump) {
                     PLAYER.SpdY = JUMP_IMPULSE;
                     Jump = x_Adjust = TRUE;
@@ -148,7 +148,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
             } else {
                 if (!Drop) {
-                    Crouch = canCrouch = Launch = FALSE;
+                    Crouch = canCrouch = FALSE;
                     if (!Jump) {
                         PLAYER.SpdY = JUMP_IMPULSE;
                         Jump = TRUE;
@@ -165,7 +165,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexR] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
                 } else {
                     if (!Drop) {
-                        Crouch = canCrouch = Launch = FALSE;
+                        Crouch = canCrouch = FALSE;
                         if (!Jump) {
                             PLAYER.SpdY = JUMP_IMPULSE;
                             Jump = TRUE;
@@ -179,7 +179,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
                 } else {
                     if (!Drop) {
-                        Crouch = canCrouch = Launch = FALSE;
+                        Crouch = canCrouch = FALSE;
                         if (!Jump) {
                             PLAYER.SpdY = JUMP_IMPULSE;
                             Attach = FALSE;
@@ -325,8 +325,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
         }
         if (Ladder) {
-            // Crouch = FALSE;
-            // SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
             if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05)) {
                 UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
                 PLAYER.x = TO_COORDS(tx * 8);
