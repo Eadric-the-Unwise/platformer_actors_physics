@@ -258,7 +258,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             x_Adjust = FALSE;
         }
     }
-    if (!Ladder){
+    // if (!Ladder){
     if (PLAYER.SpdY > 0) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindexL] == 0x06) && (!Spawn) || (COLLISION_WIDE_MAP[tileindexC] == 0x06) && (!Spawn) || (COLLISION_WIDE_MAP[tileindexR] == 0x06) && (!Spawn)) {
             if (!Drop) {
@@ -284,7 +284,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Gravity = TRUE;
         }
     }
-    }
+    // }
     // ********** ALL LADDER CHECKS BELOW THIS LINE **********
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
     if (Ladder_Release) {
@@ -348,6 +348,15 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             PLAYER.direction = DIR_LADDER_R;
             }   
         }
+        //REACH TOP OF LADDER, SWITCH TO STANDING ON TOP OF LADDER
+        if (COLLISION_WIDE_MAP[tileindexLL] == 0x00) {
+                UINT8 ty = ((TO_PIXELS(PLAYER.y) - 8) / 8);
+                PLAYER.y = TO_COORDS(ty * 8);
+                PLAYER.SpdY = 0;
+                Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
+                switch_idle();
+        }
+
 
             // if ((COLLISION_WIDE_MAP[tileindexLT] != 0x05) && (COLLISION_WIDE_MAP[tileindexLB] != 0x05)) {
             //     UINT8 ty = ((TO_PIXELS(PLAYER.y) + 8) / 8);
