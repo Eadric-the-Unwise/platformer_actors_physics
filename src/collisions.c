@@ -1,3 +1,4 @@
+#pragma bank 255
 #include "collisions.h"
 // FOR SOME REASNON, SETTING PLAYER.direction or SetActorDirection causes inaccessible VRAM bug.
 // Use switch(); functions instead
@@ -333,26 +334,30 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {  
             if (joy & J_DOWN){
                 LEFT_RIGHT();
+                switch_ladder();
                 Ladder = TRUE;
+
             }
             }
         }
         if (Ladder) {
+                            Crouch = FALSE;
+
+
+            UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
             if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexLB] == 0x06) ) {
-                UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
                 PLAYER.x = TO_COORDS(tx * 8);
             } else if ((COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindexRB] == 0x06)) {
-                UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
                 PLAYER.x = TO_COORDS((tx * 8) + 8);  // if on left side of ladder
             }
-
-            if (joy & J_UP) {
+                                    if (joy & J_UP) {
                 PLAYER.SpdY = -12;
                 switch_ladder();
             } else if (joy & J_DOWN) {
                 PLAYER.SpdY = 12;
                 switch_ladder();
             }
+
             PLAYER.SpdX = 0;
         if (!(joy & J_UP) && !(joy & J_DOWN)){
             if (joy & J_LEFT) {
@@ -366,12 +371,14 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }   
         }
         //REACH TOP OF LADDER, SWITCH TO STANDING ON TOP OF LADDER
-        if (COLLISION_WIDE_MAP[tileindexLB] == 0x00) {
-                UINT8 ty = ((TO_PIXELS(PLAYER.y)) / 8);
-                PLAYER.y = TO_COORDS(ty * 8);
+        if (PLAYER.SpdY <= 0){
+            if (COLLISION_WIDE_MAP[tileindexCB] == 0x00) {
+                UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
+                PLAYER.y = TO_COORDS(tiley * 8);
                 PLAYER.SpdY = 0;
                 Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
                 // switch_idle();
+            }
         }
 
 
