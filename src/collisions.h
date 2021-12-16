@@ -3,6 +3,7 @@
 #include "scene.h"
 
 extern UINT8 Spawn, Ladder, Ladder_Release, Jump, Gravity, Crouch, canCrouch, Drop, x_Adjust;
+extern UINT8 LEFT, RIGHT;
 extern UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 //Release_timer
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);

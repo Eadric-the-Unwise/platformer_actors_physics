@@ -147,7 +147,7 @@ void switch_down() {
     }
 }
 void switch_jump() {
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_DROP_L || PLAYER.direction == DIR_LADDER_L) {
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_DROP_L || (LEFT)) {
         if (!Drop) {
             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
         } else {
@@ -163,7 +163,7 @@ void switch_jump() {
 }
 
 void switch_idle() {
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_LADDER_L) {
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || (LEFT)) {
         SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
     } else {
         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
@@ -185,9 +185,9 @@ void switch_ladder() {
     }
 }
 void switch_land() {
-    if (PLAYER.direction == DIR_JUMP_R || PLAYER.direction == DIR_LADDER_R) {
+    if (PLAYER.direction == DIR_JUMP_R || (RIGHT)) {
         SetActorDirection(&PLAYER, DIR_LAND_R, 0);
-    } else if (PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LADDER_L) {
+    } else if (PLAYER.direction == DIR_JUMP_L || (LEFT)) {
         SetActorDirection(&PLAYER, DIR_LAND_L, 0);
     }
 }
@@ -197,6 +197,16 @@ void switch_crawl() {
         SetActorDirection(&PLAYER, DIR_DOWN_R, 0);
     } else if (PLAYER.direction == DIR_CRAWL_L) {
         SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
+    }
+}
+//DETERMINES WHETHER HE WILL EXIT LADDER FACING RIGHT OR LEFT
+void LEFT_RIGHT(){
+    if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_IDLE_R) || (PLAYER.direction == DIR_DOWN_R) || (PLAYER.direction == DIR_CRAWL_R) || (PLAYER.direction == DIR_LAND_R) || (PLAYER.direction == DIR_DROP_R) || (PLAYER.direction == DIR_LADDER_R)) {
+    RIGHT = TRUE;
+    LEFT = FALSE;}
+    else {
+        LEFT = TRUE;
+        RIGHT = FALSE;
     }
 }
 

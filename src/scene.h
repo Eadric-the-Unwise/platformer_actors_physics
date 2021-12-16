@@ -136,6 +136,7 @@ void switch_idle();
 void switch_land();
 void switch_crawl();
 void switch_ladder();
+void LEFT_RIGHT();
 void jump();
 void land();
 void gameover();

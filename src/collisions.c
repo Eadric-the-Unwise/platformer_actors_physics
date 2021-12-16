@@ -2,6 +2,7 @@
 // FOR SOME REASNON, SETTING PLAYER.direction or SetActorDirection causes inaccessible VRAM bug.
 // Use switch(); functions instead
 UINT8 Spawn, Ladder, Ladder_Release, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust;
+UINT8 LEFT, RIGHT;
 UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
 // Release_timer
 extern UINT8 joy, last_joy;
@@ -195,7 +196,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLT, tileindexCT, tileindexRT, tileindexLB, tileindexCB, tileindexRB, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
+    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLT, tileindexCT, tileindexRT, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
 
     if (PLAYER.SpdY >= 0) {
@@ -235,6 +236,8 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexLB = COLLISION_WIDE_MAPWidth * index_By + indexLx;  // BOT Y
     tileindexCB = COLLISION_WIDE_MAPWidth * index_By + indexCx;  // BOT Y
     tileindexRB = COLLISION_WIDE_MAPWidth * index_By + indexRx;  // BOT Y
+    tileindex6B = COLLISION_WIDE_MAPWidth * index_By + index6;
+    tileindex10B = COLLISION_WIDE_MAPWidth * index_By + index10;
 
     tileindex6 = COLLISION_WIDE_MAPWidth * index_Ly + index6;    // OFFSET FOR LADDER X "CENTER"
     tileindex10 = COLLISION_WIDE_MAPWidth * index_Ly + index10;  // OFFSET FOR LADDER X "CENTER"
@@ -313,20 +316,25 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
                         if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
                             Ladder = TRUE;
+                            LEFT_RIGHT();
                         }
                     } else {
                         if (!Ladder_Release) {
                             Ladder = TRUE;  // allows you to Ladder when walking up to the ladder while holding J_UP
+                            LEFT_RIGHT();
                         }
                     }
                 }
             } else {
                 // Ladder = FALSE;
             }
-        }
-        if ((COLLISION_WIDE_MAP[tileindexLB] == 0x06) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06) || (COLLISION_WIDE_MAP[tileindexRB] == 0x06)){
+        }   
+        if (!Ladder) { //IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
+        if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {  
             if (joy & J_DOWN){
+                LEFT_RIGHT();
                 Ladder = TRUE;
+            }
             }
         }
         if (Ladder) {
@@ -349,8 +357,12 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (!(joy & J_UP) && !(joy & J_DOWN)){
             if (joy & J_LEFT) {
             PLAYER.direction = DIR_LADDER_L;
+            LEFT = TRUE;
+            RIGHT = FALSE;
             } else if (joy & J_RIGHT) {
             PLAYER.direction = DIR_LADDER_R;
+            RIGHT = TRUE;
+            LEFT = FALSE;
             }   
         }
         //REACH TOP OF LADDER, SWITCH TO STANDING ON TOP OF LADDER
@@ -385,6 +397,14 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             // switch_jump();
             // Release_timer = 20;
             // }
+        } 
+        else if (!Ladder){
+        if ((LEFT) || (RIGHT)) {
+                if ((joy & J_LEFT) || (joy & J_RIGHT)) {
+                LEFT = FALSE;
+                RIGHT = FALSE;
+                }  
+            }
         }
     }
 }
