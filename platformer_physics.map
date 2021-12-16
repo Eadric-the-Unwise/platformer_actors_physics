@@ -28,9 +28,9 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      0000004F  l__HEADER |    00000082  l__HEADER |    00000200  s__CODE  
      0000025A  l__HOME   |    00000914  l__DATA   |    000010A1  l__INITIA
      000010A1  l__INITIA |    00002000  _rROMB0   |    000024CD  l__CODE_1
-     0000295A  l__CODE   |    00002B5A  s__HOME   |    00002DB4  s__BASE  
-     00002DB4  s__CODE_0 |    00002DB4  s__INITIA |    00002DB4  s__LIT   
-     00003000  _rROMB1   |    00003E55  s__GSINIT |    00003E61  s__GSFINA
+     0000295C  l__CODE   |    00002B5C  s__HOME   |    00002DB6  s__BASE  
+     00002DB6  s__CODE_0 |    00002DB6  s__INITIA |    00002DB6  s__LIT   
+     00003000  _rROMB1   |    00003E57  s__GSINIT |    00003E63  s__GSFINA
      00004000  _rRAMB    |    00008000  __VRAM    |    00008000  __VRAM800
      00008800  __VRAM880 |    00009000  __VRAM900 |    00009800  __SCRN0  
      00009C00  __SCRN1   |    0000A000  __SRAM    |    0000C000  __RAM    
@@ -72,20 +72,20 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE                  00000200    0000295A =       10586. bytes (REL,CON)
+_CODE                  00000200    0000295C =       10588. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      00000200  _set_came |    00000500  _set_leve |    00000549  _render_c
      0000064F  _performa |    0000065C  _check_LR |    0000098E  _check_J 
-     00000E67  _check_UD |    00001714  _check_Dr |    000017E6  _check_C 
-     000018AB  _overlap  |    00001977  _main     |    0000203A  _load_sce
-     000022F6  _load_lev |    0000233F  _render_a |    00002711  _switch_d
-     00002755  _switch_j |    000027D7  _jump     |    00002853  _land    
-     000028B2  _switch_i |    000028F6  _switch_l |    000029A2  _switch_l
-     000029DD  _switch_c |    00002A18  _gameover |    00002A4C  ___hide_m
-     00002A6C  ___move_m |    00002AA4  ___move_m |    00002AE0  ___move_m
-     00002B1C  ___move_m
+     00000E67  _check_UD |    00001711  _check_Dr |    000017E3  _check_C 
+     000018A8  _overlap  |    00001974  _main     |    00002037  _load_sce
+     000022F3  _load_lev |    0000233C  _render_a |    0000270E  _switch_d
+     00002752  _switch_j |    000027D4  _switch_i |    0000281C  _switch_l
+     000028C8  _switch_l |    00002904  _switch_c |    0000293F  _jump    
+     000029BB  _land     |    00002A1A  _gameover |    00002A4E  ___hide_m
+     00002A6E  ___move_m |    00002AA6  ___move_m |    00002AE2  ___move_m
+     00002B1E  ___move_m
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -260,27 +260,27 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_HOME                  00002B5A    0000025A =         602. bytes (REL,CON)
+_HOME                  00002B5C    0000025A =         602. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00002B5A  .memset_s |    00002B63  .memcpy_s |    00002B80  .remove_V
-     00002B83  .remove_i |    00002BA0  .add_VBL  |    00002BA3  .add_int 
-     00002BAE  .wait_vbl |    00002BAE  _wait_vbl |    00002BBE  .display_
-     00002BBE  _display_ |    00002BD6  _remove_V |    00002BE1  _add_VBL 
-     00002BEC  _set_bkg_ |    00002C11  _set_bkg_ |    00002C40  _abs     
-     00002C4F  _set_tile |    00002C54  _set_bkg_ |    00002C54  _set_win_
-     00002C5C  _set_spri |    00002C8C  _set_bkg_ |    00002CD0  .set_xy_w
-     00002CD9  .set_xy_b |    00002CE8  .set_xy_s |    00002D2E  .padup   
-     00002D2E  _waitpadu |    00002D3E  .jpad     |    00002D3E  _joypad  
-     00002D66  _waitpad  |    00002D69  .wait_pad |    00002D70  ___sdcc_c
-     00002D71  ___memcpy |    00002D71  _memcpy  
+     00002B5C  .memset_s |    00002B65  .memcpy_s |    00002B82  .remove_V
+     00002B85  .remove_i |    00002BA2  .add_VBL  |    00002BA5  .add_int 
+     00002BB0  .wait_vbl |    00002BB0  _wait_vbl |    00002BC0  .display_
+     00002BC0  _display_ |    00002BD8  _remove_V |    00002BE3  _add_VBL 
+     00002BEE  _set_bkg_ |    00002C13  _set_bkg_ |    00002C42  _abs     
+     00002C51  _set_tile |    00002C56  _set_bkg_ |    00002C56  _set_win_
+     00002C5E  _set_spri |    00002C8E  _set_bkg_ |    00002CD2  .set_xy_w
+     00002CDB  .set_xy_b |    00002CEA  .set_xy_s |    00002D30  .padup   
+     00002D30  _waitpadu |    00002D40  .jpad     |    00002D40  _joypad  
+     00002D68  _waitpad  |    00002D6B  .wait_pad |    00002D72  ___sdcc_c
+     00002D73  ___memcpy |    00002D73  _memcpy  
 ASxxxx Linker V03.00 + NoICE + sdld,  page 23.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           00002DB4    000010A1 =        4257. bytes (REL,CON)
+_INITIALIZER           00002DB6    000010A1 =        4257. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -289,17 +289,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                00003E55    0000000C =          12. bytes (REL,CON)
+_GSINIT                00003E57    0000000C =          12. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00003E55  gsinit   
+     00003E57  gsinit   
 ASxxxx Linker V03.00 + NoICE + sdld,  page 25.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               00003E61    00000001 =           1. bytes (REL,CON)
+_GSFINAL               00003E63    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -382,35 +382,35 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38880.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119160.rel
                                           [ camera ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38881.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119161.rel
                                           [ collisions ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38882.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119162.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38883.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119163.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38884.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119164.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38885.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119165.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38886.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119166.rel
                                           [ submap ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38887.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119167.rel
                                           [ brick_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38888.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119168.rel
                                           [ brick_wide_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc38889.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc119169.rel
                                           [ collision_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc388810.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1191610.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc388811.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1191611.rel
                                           [ enemy_arrow ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc388812.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1191612.rel
                                           [ NPC_electric ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc388813.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1191613.rel
                                           [ stage_drop_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc388814.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1191614.rel
                                           [ vertical_platform_V1 ]
 
 

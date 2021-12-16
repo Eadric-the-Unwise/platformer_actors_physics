@@ -359,7 +359,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
                 Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
-                switch_idle();
+                // switch_idle();
         }
 
 
