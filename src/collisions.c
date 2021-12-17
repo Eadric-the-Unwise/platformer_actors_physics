@@ -120,7 +120,13 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexCC = COLLISION_WIDE_MAPWidth * index_Cy + indexCx;
     tileindexCR = COLLISION_WIDE_MAPWidth * index_Cy + indexRx;
 
-    if (Ladder) {
+
+    if (!Ladder){ //RESET LADDER RELEASE IF JUMPING FROM THE GROUND TO ALLOW GRABBING WHEN SPDY = 0
+        if (Ladder_Release){
+            Ladder_Release = FALSE;
+        }
+    }
+    else {
         if (joy & J_LEFT) {
             if ((COLLISION_WIDE_MAP[tileindexLLU] == 0x01) || (COLLISION_WIDE_MAP[tileindexLLC] == 0x01)) {
             } else {
@@ -139,14 +145,9 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
         }
         Ladder = FALSE;
-        Jump = Ladder_Release = TRUE;
+        Jump = Gravity = Ladder_Release = TRUE;
         switch_jump();
     } 
-    else if (!Ladder){
-        if (Ladder_Release){
-            Ladder_Release = FALSE;
-        }
-    }
 
     if (Crouch) {
         // THIS IS CAUSING A BUG WHEN YOU CROUCH JUMP INTO AN 0X01 WALL COLLISION. WE MUST RESTRICT THIS EVEN FURTHER
@@ -289,7 +290,12 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
-                Spawn = Jump = Ladder = y_Collide = Gravity = FALSE;
+                Spawn = Jump = y_Collide = Gravity = FALSE;
+                if (Ladder){
+                    if (COLLISION_WIDE_MAP[tileindexC] == 0x01){
+                    Ladder = FALSE;
+                    }
+                }
                 switch_land();
             }
         } else if ((COLLISION_WIDE_MAP[tileindexkL] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkR] == 0x04)) {
@@ -331,17 +337,19 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 //             }
                 //         }
                 // }
-                if ((Jump) && PLAYER.SpdY == 0){
+                if ((Jump) && PLAYER.SpdY == 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)){
                     if (!Ladder_Release) {
                     Ladder = TRUE;
                     LEFT_RIGHT();
                     switch_ladder();
+                    
                     }
                 } else if (!Jump){
                     if (!Ladder_Release){
                     Ladder = TRUE;
                     LEFT_RIGHT();
                     switch_ladder();
+                    // PLAYER.SpdY -= 2;
                     }
                 } 
             }
