@@ -25,7 +25,8 @@ void main() {
     SHOW_SPRITES;
     current_stage = &level1;
 
-    GAMEOVER = LEFT = RIGHT = Attach = Ladder = Ladder_Release = Jump = Gravity = Crouch = canCrouch = Drop = FALSE;
+    GAMEOVER = LEFT = RIGHT = Attach = Ladder = Gravity = Crouch = canCrouch = Drop = FALSE;
+    Jump = Ladder_Release = TRUE;
     Drop_timer = 16;
     canCrouch_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     // Release_timer = 20;
@@ -227,7 +228,7 @@ void main() {
         py = TO_PIXELS(PLAYER.y);
 
         // Change to IDLE state when not moving
-        if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R)) {
+        if ((!Jump) && (!Crouch) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!Ladder)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
                     switch_idle();

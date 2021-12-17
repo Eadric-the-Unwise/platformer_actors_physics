@@ -141,7 +141,8 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         Ladder = FALSE;
         Jump = Ladder_Release = TRUE;
         switch_jump();
-    } else if (!Ladder){
+    } 
+    else if (!Ladder){
         if (Ladder_Release){
             Ladder_Release = FALSE;
         }
