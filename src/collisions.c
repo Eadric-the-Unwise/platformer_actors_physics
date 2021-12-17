@@ -141,6 +141,10 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         Ladder = FALSE;
         Jump = Ladder_Release = TRUE;
         switch_jump();
+    } else if (!Ladder){
+        if (Ladder_Release){
+            Ladder_Release = FALSE;
+        }
     }
 
     if (Crouch) {
@@ -285,7 +289,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
                 Spawn = Jump = Ladder = y_Collide = Gravity = FALSE;
-                // Ladder_Release = TRUE;
                 switch_land();
             }
         } else if ((COLLISION_WIDE_MAP[tileindexkL] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkR] == 0x04)) {
