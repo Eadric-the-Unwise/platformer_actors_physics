@@ -281,7 +281,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             x_Adjust = FALSE;
         }
     }
-    // if (!Ladder){
+
     if (PLAYER.SpdY > 0) {
         if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindexL] == 0x06) && (!Spawn) && (!Ladder) || (COLLISION_WIDE_MAP[tileindexC] == 0x06) && (!Spawn) && (!Ladder) || (COLLISION_WIDE_MAP[tileindexR] == 0x06) && (!Spawn) && (!Ladder)) {
             if (!Drop) {
@@ -306,7 +306,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Gravity = TRUE;
         }
     }
-    //}
     // ********** ALL LADDER CHECKS BELOW THIS LINE **********
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
     if (Ladder_Release) {
@@ -316,36 +315,42 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
     if (!Spawn) {
         if (!Ladder) {
-        if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05)) {  // LADDER VERTICAL MOVEMENT
-            if ((joy & J_UP) || (joy & J_DOWN) && (!Jump) && (!Crouch)) {
+            if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05)) {  // LADDER VERTICAL MOVEMENT
+                // if ((joy & J_UP) || (joy & J_DOWN) && (!Jump) && (!Crouch)) {
 
-                    if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
-                        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
-                            Ladder = TRUE;
-                            LEFT_RIGHT();
-                        }
-                    } else {
-                        if (!Ladder_Release) {
-                            Ladder = TRUE;  // allows you to Ladder when walking up to the ladder while holding J_UP
-                            LEFT_RIGHT();
-                        }
-                    }
-            }
-            if ((Jump) && PLAYER.SpdY == 0){
-            if (!Ladder_Release) {
-            Ladder = TRUE;
-            LEFT_RIGHT();
-            switch_ladder();
-            }
-        }
-        }
-
-         // IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
-        if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {
-                if (joy & J_DOWN) {
+                //         if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
+                //             if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+                //                 Ladder = TRUE;
+                //                 LEFT_RIGHT();
+                //             }
+                //         } else {
+                //             if (!Ladder_Release) {
+                //                 Ladder = TRUE;  // allows you to Ladder when walking up to the ladder while holding J_UP
+                //                 LEFT_RIGHT();
+                //             }
+                //         }
+                // }
+                if ((Jump) && PLAYER.SpdY == 0){
+                    if (!Ladder_Release) {
+                    Ladder = TRUE;
                     LEFT_RIGHT();
                     switch_ladder();
+                    }
+                } else if (!Jump){
+                    if (!Ladder_Release){
                     Ladder = TRUE;
+                    LEFT_RIGHT();
+                    switch_ladder();
+                    }
+                } 
+            }
+
+            // IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
+            if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {
+                if (joy & J_DOWN) {
+                        LEFT_RIGHT();
+                        switch_ladder();
+                        Ladder = TRUE;
                 }
             }
         }
