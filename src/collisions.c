@@ -312,14 +312,27 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
     }
     if (!Spawn) {
+        // if ((!Ladder) && (!Ladder_Release)) {
+        //     if ((COLLISION_WIDE_MAP[tileindexLB] == 0x05) && (COLLISION_WIDE_MAP[tileindexLT] != 0x05)) {  // IF YOU ARE STANDING ON TOP OF A LADDER (NOT JUMP UPWARDS FROM UNDERNEATH)
+        //         if (joy & J_DOWN) {                                                                        // IF PRESS DOWN WHILE STANDING ON TOP OF A LADDER
+        //             Ladder = TRUE;
+        //         } else {
+        //             UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
+        //             PLAYER.y = TO_COORDS(ty * 8);
+        //             PLAYER.SpdY = 0;
+        //             Spawn = Jump = y_Collide = Gravity = FALSE;
+        //             switch_land();
+        //         }
+        //     }
+        // }
+
         if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindexC] == 0x05)) {  // LADDER VERTICAL MOVEMENT
-            if ((joy & J_UP) || (joy & J_DOWN) && (!Jump) && (!Crouch) || (Jump) && PLAYER.SpdY == 0) {
+            if ((joy & J_UP) || (joy & J_DOWN) && (!Jump) && (!Crouch)) {
                 if (!Ladder) {
                     if (PLAYER.SpdX == 0) {  // prevents looping Ladder when you release with J_A
-                        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (Jump) && (PLAYER.SpdY == 0)) {
+                        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
                             Ladder = TRUE;
                             LEFT_RIGHT();
-                            switch_ladder();
                         }
                     } else {
                         if (!Ladder_Release) {
@@ -380,6 +393,29 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     // switch_idle();
                 }
             }
+
+            // if ((COLLISION_WIDE_MAP[tileindexLT] != 0x05) && (COLLISION_WIDE_MAP[tileindexLB] != 0x05)) {
+            //     UINT8 ty = ((TO_PIXELS(PLAYER.y) + 8) / 8);
+            //     PLAYER.y = TO_COORDS(ty * 8);
+            //     PLAYER.SpdY = 0;
+            //     Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
+            //     switch_idle();
+            // } else if ((COLLISION_WIDE_MAP[tileindexLL] != 0x05) && (COLLISION_WIDE_MAP[tileindexLB] != 0x05)) {
+            //     Ladder = FALSE;
+            // }
+
+            // LADDER RELEASE WHEN HOLDING L/R
+            //  if (!(joy & J_UP) && !(joy & J_DOWN)){
+            //      if ((joy & J_LEFT) || (joy & J_RIGHT)) {
+            //  Release_timer --;
+            //      }
+            //  }
+            //  if (Release_timer == 1){
+            //  Ladder = FALSE;
+            //  Jump = Ladder_Release = TRUE;
+            //  switch_jump();
+            //  Release_timer = 20;
+            //  }
         } else if (!Ladder) {
             if ((LEFT) || (RIGHT)) {
                 if ((joy & J_LEFT) || (joy & J_RIGHT)) {
