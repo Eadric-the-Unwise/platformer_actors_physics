@@ -84,7 +84,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, indexLLx, indexRLx, indexSLx, indexSCx, indexSRx, index_y, index_Ly, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLLU, tileindexLLC, tileindexRLU, tileindexRLC, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
+    UINT16 indexLx, indexCx, indexRx, indexLLx, indexRLx, indexSLx, indexSCx, indexSRx, index_y, index_Ly, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLLU, tileindexRLU, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
     // CL = Crouch Left CC = Crouch Center CR = Crouch Right
     indexCamx = camera_x;
 
@@ -100,17 +100,15 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     indexSRx = ((newplayerx - 5) + indexCamx) / 8;
 
     index_y = (newplayery - 1) / 8;
-    index_Ly = (newplayery + 12) / 8;
+    index_Ly = (newplayery + 1) / 8;
     index_Cy = (newplayery + 7) / 8;
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
     // LADDER LEFT/RIGHT
-    tileindexLLU = COLLISION_WIDE_MAPWidth * index_y + indexLLx;
-    tileindexLLC = COLLISION_WIDE_MAPWidth * index_Ly + indexLLx;
-    tileindexRLU = COLLISION_WIDE_MAPWidth * index_y + indexRLx;
-    tileindexRLC = COLLISION_WIDE_MAPWidth * index_Ly + indexRLx;
+    tileindexLLU = COLLISION_WIDE_MAPWidth * index_Ly + indexLLx;
+    tileindexRLU = COLLISION_WIDE_MAPWidth * index_Ly + indexRLx;
     // STANDING 0X02 FORGIVENESS
     tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;
     tileindexSC = COLLISION_WIDE_MAPWidth * index_y + indexSCx;
@@ -128,7 +126,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
     else { //IF LADDER
         if (joy & J_LEFT) {
-            if ((COLLISION_WIDE_MAP[tileindexLLU] == 0x01) || (COLLISION_WIDE_MAP[tileindexLLC] == 0x01)) {
+            if (COLLISION_WIDE_MAP[tileindexLLU] == 0x01) {
             } else {
                 PLAYER.SpdX = -MAX_WALK_SPEED;
                 if (!(joy & J_DOWN)) {
@@ -136,7 +134,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
             }
         } else if (joy & J_RIGHT) {
-            if ((COLLISION_WIDE_MAP[tileindexRLU] == 0x01) || (COLLISION_WIDE_MAP[tileindexRLC] == 0x01)) {
+            if (COLLISION_WIDE_MAP[tileindexRLU] == 0x01) {
             } else {
                 PLAYER.SpdX = MAX_WALK_SPEED;
                 if (!(joy & J_DOWN)) {
