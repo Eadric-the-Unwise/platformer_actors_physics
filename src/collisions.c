@@ -224,7 +224,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     if (PLAYER.SpdY >= 0) {
         UD_Offset_Y = 0;
         UD_Offset_kY = 9;
-        UD_Offset_LY = 8;
+        UD_Offset_LY = 12;
 
     } else if (PLAYER.SpdY < 0) {
         UD_Offset_Y = 26;
@@ -346,12 +346,13 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     }
                 } else if (!Jump){
                     if (!Ladder_Release){
+                        if (joy & J_UP) {
                     Ladder = TRUE;
                     LEFT_RIGHT();
                     switch_ladder();
                     // PLAYER.SpdY -= 2;
                     }
-                } 
+                } }
             }
 
             // IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
@@ -375,19 +376,27 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (joy & J_UP) {
                 PLAYER.SpdY = -12;
                 switch_ladder();
+                // if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+                //     PLAYER.patrol_timer = 0;
+                // }
             } else if (joy & J_DOWN) {
                 PLAYER.SpdY = 12;
                 switch_ladder();
+                //     if ((CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN)) {
+                //     PLAYER.patrol_timer = 0;
+                // }
             }
 
             PLAYER.SpdX = 0;
             if (!(joy & J_UP) && !(joy & J_DOWN)) {
                 if (joy & J_LEFT) {
                     PLAYER.direction = DIR_LADDER_L;
+                    PLAYER.patrol_timer = 1;
                     LEFT = TRUE;
                     RIGHT = FALSE;
                 } else if (joy & J_RIGHT) {
                     PLAYER.direction = DIR_LADDER_R;
+                    PLAYER.patrol_timer = 1;
                     RIGHT = TRUE;
                     LEFT = FALSE;
                 }

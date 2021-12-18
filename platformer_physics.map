@@ -30,7 +30,7 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      000010A1  l__INITIA |    0000169E  l__CODE   |    0000189E  s__HOME  
      00001AF8  s__BASE   |    00001AF8  s__CODE_0 |    00001AF8  s__INITIA
      00001AF8  s__LIT    |    00002000  _rROMB0   |    00002B99  s__GSINIT
-     00002BA5  s__GSFINA |    00003000  _rROMB1   |    00003A65  l__CODE_1
+     00002BA5  s__GSFINA |    00003000  _rROMB1   |    00003A78  l__CODE_1
      00004000  _rRAMB    |    00008000  __VRAM    |    00008000  __VRAM800
      00008800  __VRAM880 |    00009000  __VRAM900 |    00009800  __SCRN0  
      00009C00  __SCRN1   |    0000A000  __SRAM    |    0000C000  __RAM    
@@ -354,64 +354,64 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_1                00014000    00003A65 =       14949. bytes (REL,CON)
+_CODE_1                00014000    00003A78 =       14968. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      00014000  _check_LR |    00014332  _check_J  |    0001491A  _check_UD
-     00015335  _check_Dr |    00015407  _check_C  |    000154CC  _overlap 
-     00015598  _anim_lev |    00015B5C  _level1_a |    000161E6  _level1  
-     000161EF  _npc_coll |    00016542  _animate_ |    000166AC  _level2_a
-     00016B08  _level2   |    00016B11  _init_sub |    00016C25  _detectiv
-     00017645  _detectiv |    0001765D  _detectiv |    00017675  _detectiv
-     00017691  _detectiv |    000176A9  _detectiv |    000176C5  _detectiv
-     000176E1  _detectiv |    000176FD  _detectiv |    00017719  _detectiv
-     00017735  _detectiv |    00017751  _detectiv |    0001776D  _detectiv
-     00017789  _detectiv |    000177A5  _detectiv |    000177C1  _detectiv
-     000177DD  _detectiv |    000177F5  _detectiv |    00017811  _detectiv
-     00017833  _detectiv |    00017845  _detectiv |    00017849  _detectiv
-     00017853  _detectiv |    0001785D  _detectiv |    00017863  _detectiv
-     00017867  _detectiv |    0001786F  _detectiv |    00017873  _enemy_ar
-     00017933  _enemy_ar |    0001793F  _enemy_ar |    0001794B  _enemy_ar
-     00017957  _enemy_ar |    0001795B  _enemy_ar |    00017961  _NPC_elec
-     000179E1  _NPC_elec |    000179ED  _NPC_elec |    000179F9  _NPC_elec
-     000179FD  _NPC_elec |    00017A03  _vertical |    00017A43  _vertical
-     00017A5F  _vertical |    00017A61  _elevator
+     00015348  _check_Dr |    0001541A  _check_C  |    000154DF  _overlap 
+     000155AB  _anim_lev |    00015B6F  _level1_a |    000161F9  _level1  
+     00016202  _npc_coll |    00016555  _animate_ |    000166BF  _level2_a
+     00016B1B  _level2   |    00016B24  _init_sub |    00016C38  _detectiv
+     00017658  _detectiv |    00017670  _detectiv |    00017688  _detectiv
+     000176A4  _detectiv |    000176BC  _detectiv |    000176D8  _detectiv
+     000176F4  _detectiv |    00017710  _detectiv |    0001772C  _detectiv
+     00017748  _detectiv |    00017764  _detectiv |    00017780  _detectiv
+     0001779C  _detectiv |    000177B8  _detectiv |    000177D4  _detectiv
+     000177F0  _detectiv |    00017808  _detectiv |    00017824  _detectiv
+     00017846  _detectiv |    00017858  _detectiv |    0001785C  _detectiv
+     00017866  _detectiv |    00017870  _detectiv |    00017876  _detectiv
+     0001787A  _detectiv |    00017882  _detectiv |    00017886  _enemy_ar
+     00017946  _enemy_ar |    00017952  _enemy_ar |    0001795E  _enemy_ar
+     0001796A  _enemy_ar |    0001796E  _enemy_ar |    00017974  _NPC_elec
+     000179F4  _NPC_elec |    00017A00  _NPC_elec |    00017A0C  _NPC_elec
+     00017A10  _NPC_elec |    00017A16  _vertical |    00017A56  _vertical
+     00017A72  _vertical |    00017A74  _elevator
 ASxxxx Linker V03.00 + NoICE + sdld,  page 30.
 
 Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92320.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192360.rel
                                           [ camera ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92321.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192361.rel
                                           [ collisions ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92322.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192362.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92323.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192363.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92324.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192364.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92325.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192365.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92326.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192366.rel
                                           [ submap ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92327.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192367.rel
                                           [ brick_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92328.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192368.rel
                                           [ brick_wide_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc92329.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc192369.rel
                                           [ collision_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc923210.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1923610.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc923211.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1923611.rel
                                           [ enemy_arrow ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc923212.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1923612.rel
                                           [ NPC_electric ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc923213.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1923613.rel
                                           [ stage_drop_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc923214.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1923614.rel
                                           [ vertical_platform_V1 ]
 
 
