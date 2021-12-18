@@ -126,7 +126,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Ladder_Release = FALSE;
         }
     }
-    else {
+    else { //IF LADDER
         if (joy & J_LEFT) {
             if ((COLLISION_WIDE_MAP[tileindexLLU] == 0x01) || (COLLISION_WIDE_MAP[tileindexLLC] == 0x01)) {
             } else {
@@ -224,7 +224,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     if (PLAYER.SpdY >= 0) {
         UD_Offset_Y = 0;
         UD_Offset_kY = 9;
-        UD_Offset_LY = 12;
+        UD_Offset_LY = 8;
 
     } else if (PLAYER.SpdY < 0) {
         UD_Offset_Y = 26;
@@ -300,7 +300,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
         } else if ((COLLISION_WIDE_MAP[tileindexkL] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkR] == 0x04)) {
             GAMEOVER = TRUE;
-        }
+        } 
     } else if (PLAYER.SpdY < 0) {
         if ((COLLISION_WIDE_MAP[tileindexkL] == 0x01) || (COLLISION_WIDE_MAP[tileindexkC] == 0x01) || (COLLISION_WIDE_MAP[tileindexkR] == 0x01) || (y_Collide)) {
             PLAYER.SpdY = 0;
@@ -394,13 +394,19 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
             // REACH TOP OF LADDER, SWITCH TO STANDING ON TOP OF LADDER
             if (PLAYER.SpdY <= 0) {
-                if (COLLISION_WIDE_MAP[tileindexCB] == 0x00) {
+                if (COLLISION_WIDE_MAP[tileindexCB] == 0x06) {
                     UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
                     PLAYER.y = TO_COORDS(tiley * 8);
                     PLAYER.SpdY = 0;
                     Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
                     // switch_idle();
                 }
+            } else if (PLAYER.SpdY > 0){
+            if (COLLISION_WIDE_MAP[tileindexLB] == 0x00){
+                    Ladder = FALSE;
+        Jump = Gravity = Ladder_Release = TRUE;
+        switch_jump();
+            }
             }
         } else if (!Ladder) {
             if ((LEFT) || (RIGHT)) {
