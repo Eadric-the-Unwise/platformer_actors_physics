@@ -390,19 +390,23 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
 
             PLAYER.SpdX = 0;
-            if (!(joy & J_UP) && !(joy & J_DOWN)) {
-                if (joy & J_LEFT) {
-                    PLAYER.direction = DIR_LADDER_L;
-                    PLAYER.patrol_timer = 1;
+
+            if (joy & J_LEFT) {
                     LEFT = TRUE;
                     RIGHT = FALSE;
-                } else if (joy & J_RIGHT) {
+                    if (!(joy & J_UP) && !(joy & J_DOWN)) {
+                    PLAYER.direction = DIR_LADDER_L;
+                    PLAYER.patrol_timer = 1;
+                    }
+            } else if (joy & J_RIGHT) {
+                    LEFT = FALSE;
+                    RIGHT = TRUE;
+                    if (!(joy & J_UP) && !(joy & J_DOWN)) {
                     PLAYER.direction = DIR_LADDER_R;
                     PLAYER.patrol_timer = 1;
-                    RIGHT = TRUE;
-                    LEFT = FALSE;
-                }
+                    }
             }
+            
             // REACH TOP OF LADDER, SWITCH TO STANDING ON TOP OF LADDER
             if (PLAYER.SpdY <= 0) {
                 if (COLLISION_WIDE_MAP[tileindexCB] == 0x06) {
