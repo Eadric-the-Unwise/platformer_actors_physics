@@ -337,7 +337,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 //             }
                 //         }
                 // }
-                if ((Jump) && PLAYER.SpdY == 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)){
+                if ((Jump) && PLAYER.SpdY == 0 || (Jump) && (CHANGED_BUTTONS & J_UP) && (joy & J_UP)){
                     if (!Ladder_Release) {
                     Ladder = TRUE;
                     LEFT_RIGHT();
@@ -346,11 +346,16 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     }
                 } else if (!Jump){
                     if (!Ladder_Release){
+                        if (COLLISION_WIDE_MAP[tileindexCT] == 0x07){
                         if (joy & J_UP) {
-                    Ladder = TRUE;
-                    LEFT_RIGHT();
-                    switch_ladder();
-                    // PLAYER.SpdY -= 2;
+                        Ladder = TRUE;
+                        LEFT_RIGHT();
+                        switch_ladder();
+                        } 
+                    } else {
+                        Ladder = TRUE;
+                        LEFT_RIGHT();
+                        switch_ladder();
                     }
                 } }
             }
@@ -366,7 +371,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
         if (Ladder) {
             Crouch = FALSE;
-
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
             if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexLB] == 0x06)) {
                 PLAYER.x = TO_COORDS(tx * 8);
