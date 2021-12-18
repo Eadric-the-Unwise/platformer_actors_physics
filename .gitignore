@@ -4,6 +4,6 @@ bin/
 *.sav
 *.png
 *.txt
-# *.gbr
-# *.gbm
+*.gbr
+*.gbm
 /unused
