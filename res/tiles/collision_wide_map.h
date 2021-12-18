@@ -7,7 +7,7 @@
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 100 x 22
+   Map size      : 100 x 23
    Tile set      : basic_collisions.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -19,7 +19,7 @@
 */
 
 #define COLLISION_WIDE_MAPWidth 100
-#define COLLISION_WIDE_MAPHeight 22
+#define COLLISION_WIDE_MAPHeight 23
 #define COLLISION_WIDE_MAPBank 0
 
 extern unsigned char COLLISION_WIDE_MAP[];

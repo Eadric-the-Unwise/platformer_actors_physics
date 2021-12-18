@@ -199,12 +199,12 @@ void switch_crawl() {
         SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
     }
 }
-//DETERMINES WHETHER HE WILL EXIT LADDER FACING RIGHT OR LEFT
-void LEFT_RIGHT(){
+// DETERMINES WHETHER HE WILL EXIT LADDER FACING RIGHT OR LEFT
+void LEFT_RIGHT() {
     if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_IDLE_R) || (PLAYER.direction == DIR_DOWN_R) || (PLAYER.direction == DIR_CRAWL_R) || (PLAYER.direction == DIR_LAND_R) || (PLAYER.direction == DIR_DROP_R) || (PLAYER.direction == DIR_LADDER_R)) {
-    RIGHT = TRUE;
-    LEFT = FALSE;}
-    else {
+        RIGHT = TRUE;
+        LEFT = FALSE;
+    } else {
         LEFT = TRUE;
         RIGHT = FALSE;
     }
@@ -231,6 +231,8 @@ void land() {
 void gameover() {
     DISPLAY_OFF;
     Spawn = TRUE;
+    GAMEOVER = LEFT = RIGHT = Ladder = Crouch = canCrouch = Drop = FALSE;
+    Jump = Ladder_Release = TRUE;
     load_level(current_stage);
     if (load_submap) load_submap();
     render_actors();

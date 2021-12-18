@@ -243,7 +243,7 @@ void main() {
             switch_down();
         }
         // render all actors on screen
-        //MAY WANT TO BRING THE BKG.REDRAW DOWN INTO HERE AND DON'T RENDER ACTORS UNDER WAIT_BVL_DONE
+        // MAY WANT TO BRING THE BKG.REDRAW DOWN INTO HERE AND DON'T RENDER ACTORS UNDER WAIT_BVL_DONE
         render_actors();
         if (GAMEOVER) {
             gameover();
