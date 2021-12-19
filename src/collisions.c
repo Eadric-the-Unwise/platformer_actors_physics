@@ -320,8 +320,8 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (!Ladder) {
             // LADDER VERTICAL MOVEMENT
             if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05)) {
-                if (Jump){
-                    if (PLAYER.SpdX == 0){
+                if (Jump) {
+                    if (PLAYER.SpdX == 0) {
                         if (PLAYER.SpdY == 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
                             if (!Ladder_Release) {
                                 Ladder = TRUE;
@@ -329,10 +329,10 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                                 switch_ladder();
                             }
                         }
-                    } else if (PLAYER.SpdX != 0){
+                    } else if (PLAYER.SpdX != 0) {
                         if (PLAYER.SpdY <= 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
                             if (!Ladder_Release) {
-                                PLAYER.SpdY = -16; //-JUMP_IMPULSE / 2
+                                PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 2
                                 Ladder = TRUE;
                                 LEFT_RIGHT();
                                 switch_ladder();

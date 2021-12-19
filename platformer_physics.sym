@@ -293,6 +293,6 @@
 01:7A83 _NPC_electric_metasprites
 01:7A87 _NPC_electric_animation
 01:7A8D _vertical_platform_V1_data
-01:7ACD _vertical_platform_V1_metaspriteu
-01:7AE9 _vertical_platform_V1_metaspriteu
+01:7ACD _vertical_platform_V1_metaspritew
+01:7AE9 _vertical_platform_V1_metaspritew
 01:7AEB _elevator_frame
