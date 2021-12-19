@@ -320,11 +320,24 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (!Ladder) {
             // LADDER VERTICAL MOVEMENT
             if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05)) {
-                if ((Jump) && PLAYER.SpdY == 0 || (Jump) && (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
-                    if (!Ladder_Release) {
-                        Ladder = TRUE;
-                        LEFT_RIGHT();
-                        switch_ladder();
+                if (Jump){
+                    if (PLAYER.SpdX == 0){
+                        if (PLAYER.SpdY == 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+                            if (!Ladder_Release) {
+                                Ladder = TRUE;
+                                LEFT_RIGHT();
+                                switch_ladder();
+                            }
+                        }
+                    } else if (PLAYER.SpdX != 0){
+                        if (PLAYER.SpdY <= 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+                            if (!Ladder_Release) {
+                                PLAYER.SpdY = -16; //-JUMP_IMPULSE / 2
+                                Ladder = TRUE;
+                                LEFT_RIGHT();
+                                switch_ladder();
+                            }
+                        }
                     }
                 } else if ((!Jump) && (!Crouch)) {
                     if (!Ladder_Release) {
@@ -389,13 +402,13 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (PLAYER.SpdY <= 0) {
                 if (COLLISION_WIDE_MAP[tileindexCB] == 0x06) {
                     UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
-                    PLAYER.y = TO_COORDS(tiley * 8);
+                    PLAYER.y = TO_COORDS((tiley * 8) - 4);
                     PLAYER.SpdY = 0;
                     Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
                     // switch_idle();
                 }
             } else if (PLAYER.SpdY > 0) {
-                if (COLLISION_WIDE_MAP[tileindexLB] == 0x00) {
+                if (COLLISION_WIDE_MAP[tileindexCB] == 0x00) {
                     Ladder = FALSE;
                     Jump = Gravity = Ladder_Release = TRUE;
                     switch_jump();
