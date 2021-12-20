@@ -16,7 +16,7 @@ UINT8 current_elevator;
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[6] = {
+const actor_t level1_actors[5] = {
     // 0 PLAYER
     {.x = TO_COORDS(144),
      .y = TO_COORDS(16),
@@ -104,30 +104,8 @@ const actor_t level1_actors[6] = {
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
      .copy = TRUE},
-    // 4 ELEVATOR RIGHT
-    {.x = TO_COORDS(-60),
-     .y = TO_COORDS(104),
-     .SpdX = 0,
-     .SpdY = 8,
-     .w = elevator_WIDTH,
-     .h = elevator_HEIGHT,
-     .x_pivot = elevator_PIVOT_X,
-     .y_pivot = elevator_PIVOT_Y,
-     .x_offset = elevator_PIVOT_X,
-     .y_offset = elevator_PIVOT_Y,
-     .direction = DIR_DOWN,
-     .NPC_type = ELEVATOR,
-     .tile_count = (sizeof(elevator_data) >> 4),
-     .tile_index = 0,
-     .tile_data = elevator_data,
-     .patrol_timer = 64,
-     .patrol_reset = 64,
-     .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
-     .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-     .animation_phase = 0,
-     .copy = FALSE},
-    // 5 ELEVATOR
-    {.x = TO_COORDS(-140),
+    // 4 ELEVATOR
+    {.x = TO_COORDS(-148),
      .y = TO_COORDS(136),
      .SpdX = 0,
      .SpdY = 8,
@@ -143,26 +121,26 @@ const actor_t level1_actors[6] = {
      .tile_index = 0,
      .tile_data = elevator_data,
      .patrol_timer = 1,
-     .patrol_reset = 200,
+     .patrol_reset = 160,
      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
      .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
-     .copy = TRUE}};
+     .copy = FALSE}};
 
 const level_t level1 = {
     .submap_hook = init_submap,  // call this in collision
     .actors = level1_actors,
-    .actor_count = 6,
+    .actor_count = 5,
     .animate_hook = anim_level1,  // function that put life into the scene
     .collide_hook = npc_collisions_level1};
 
 UINT8 cam1[3] = {1, 2, 3};
-UINT8 cam2[3] = {3, 4, 5};
-UINT8 cam3[2] = {4, 5};
-UINT8 cam4[1] = {5};
+UINT8 cam2[3] = {3, 4};
+UINT8 cam3[2] = {4};
+UINT8 cam4[1] = {4};
 #define CAM1_COUNT 3
-#define CAM2_COUNT 3
-#define CAM3_COUNT 2
+#define CAM2_COUNT 2
+#define CAM3_COUNT 1
 #define CAM4_COUNT 1
 
 void anim_level1() {
