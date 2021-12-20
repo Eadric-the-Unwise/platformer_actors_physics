@@ -337,7 +337,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     }
                 } else if ((!Jump) && (!Crouch)) {
                     if (!Ladder_Release) {
-                        if (COLLISION_WIDE_MAP[tileindexCT] == 0x07) {
+                        if ((COLLISION_WIDE_MAP[tileindexCT] == 0x07) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06)) {
                             if (joy & J_UP) {
                                 ladder();
                             }
