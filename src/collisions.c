@@ -329,7 +329,9 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                         }
                     } else if (PLAYER.SpdX != 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
                         if (!Ladder_Release) {
-                            PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 2
+                            if (PLAYER.SpdY < 0) {
+                                PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 2
+                            }
                             ladder();
                         }
                     }
@@ -339,7 +341,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                             if (joy & J_UP) {
                                 ladder();
                             }
-                        } else {
+                        } else if (COLLISION_WIDE_MAP[tileindexCB] != 0x06) {
                             ladder();
                         }
                     }
@@ -355,9 +357,9 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         if (Ladder) {
             Crouch = FALSE;
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
-            if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexLB] == 0x06)) {
+            if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexLB] == 0x06)) {
                 PLAYER.x = TO_COORDS(tx * 8);
-            } else if ((COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindexRB] == 0x06)) {
+            } else if ((COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindexRB] == 0x06)) {
                 PLAYER.x = TO_COORDS((tx * 8) + 8);  // if on left side of ladder
             }
             if (joy & J_UP) {
@@ -388,7 +390,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
             // REACH TOP OF LADDER, SWITCH TO STANDING ON TOP OF LADDER
             if (PLAYER.SpdY <= 0) {
-                if (COLLISION_WIDE_MAP[tileindexCB] == 0x06) {
+                if (COLLISION_WIDE_MAP[tileindexCB] == 0x06 && COLLISION_WIDE_MAP[tileindexCT] == 0x00) {
                     UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
                     PLAYER.y = TO_COORDS((tiley * 8) - 4);
                     PLAYER.SpdY = 0;
