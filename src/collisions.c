@@ -281,7 +281,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
 
     if (PLAYER.SpdY > 0) {
-        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindexL] == 0x06) && (!Spawn) && (!Ladder) || (COLLISION_WIDE_MAP[tileindexC] == 0x06) && (!Spawn) && (!Ladder) || (COLLISION_WIDE_MAP[tileindexR] == 0x06) && (!Spawn) && (!Ladder)) {
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (!Spawn) && (!Ladder) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06) && (!Spawn) && (!Ladder) || (COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (!Spawn) && (!Ladder)) {
             if (!Drop) {
                 UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
@@ -324,33 +324,23 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     if (PLAYER.SpdX == 0) {
                         if (PLAYER.SpdY == 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
                             if (!Ladder_Release) {
-                                Ladder = TRUE;
-                                LEFT_RIGHT();
-                                switch_ladder();
+                                ladder();
                             }
                         }
-                    } else if (PLAYER.SpdX != 0) {
-                        if (PLAYER.SpdY <= 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
-                            if (!Ladder_Release) {
-                                PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 2
-                                Ladder = TRUE;
-                                LEFT_RIGHT();
-                                switch_ladder();
-                            }
+                    } else if (PLAYER.SpdX != 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+                        if (!Ladder_Release) {
+                            PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 2
+                            ladder();
                         }
                     }
                 } else if ((!Jump) && (!Crouch)) {
                     if (!Ladder_Release) {
                         if (COLLISION_WIDE_MAP[tileindexCT] == 0x07) {
                             if (joy & J_UP) {
-                                Ladder = TRUE;
-                                LEFT_RIGHT();
-                                switch_ladder();
+                                ladder();
                             }
                         } else {
-                            Ladder = TRUE;
-                            LEFT_RIGHT();
-                            switch_ladder();
+                            ladder();
                         }
                     }
                 }
@@ -358,9 +348,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             // IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
             if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {
                 if (joy & J_DOWN) {
-                    LEFT_RIGHT();
-                    switch_ladder();
-                    Ladder = TRUE;
+                    ladder();
                 }
             }
         }
@@ -462,6 +450,12 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             Crouch = FALSE;
         }
     }
+}
+
+void ladder() {
+    Ladder = TRUE;
+    LEFT_RIGHT();
+    switch_ladder();
 }
 
 // LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
