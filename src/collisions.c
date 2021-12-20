@@ -281,7 +281,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
 
     if (PLAYER.SpdY > 0) {
-        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCT] != 0x05) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCT] != 0x05) || (COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCT] != 0x05)) {
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05) || (COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05)) {
             if (!Drop) {
                 UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
