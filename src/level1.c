@@ -153,7 +153,7 @@ void anim_level1() {
     UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
     UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
-    if ((camera_x <= bkg.camera_max_x) && (camera_x > 480)) {  // CAM1
+    if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
         active_actors_count = CAM1_COUNT;
         next_actors_count = CAM2_COUNT;
         ptr = cam1;

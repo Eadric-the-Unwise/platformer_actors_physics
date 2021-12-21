@@ -100,7 +100,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     indexSRx = ((newplayerx - 5) + indexCamx) / 8;
 
     index_y = (newplayery - 1) / 8;
-    index_Ly = (newplayery + 1) / 8;
+    index_Ly = (newplayery + 1) / 8; // CHECKS WHEN TO JUMP VERTICALLY WHILE ON LADDER (ie climbing near top and wanting to jump out of the Ladder)
     index_Cy = (newplayery + 7) / 8;
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
