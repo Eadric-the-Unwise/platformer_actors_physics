@@ -354,7 +354,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
             // IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
             if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {
-                if (joy & J_DOWN) {
+                if ((joy & J_DOWN) && (!Jump)) {
                     ladder();
                 }
             }
