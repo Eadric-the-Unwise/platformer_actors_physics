@@ -84,14 +84,14 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, indexLLx, indexRLx, indexSLx, indexSCx, indexSRx, index_y, index_Ly, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLLU, tileindexRLU, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
+    UINT16 indexLx, indexCx, indexRx, indexLLx, indexRLx, indexSLx, indexSCx, indexSRx, index_y, index_Ty, index_Ly, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLLT, tileindexRLT, tileindexLLC, tileindexRLC, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
     // CL = Crouch Left CC = Crouch Center CR = Crouch Right
     indexCamx = camera_x;
 
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
     indexCx = ((newplayerx - 8) + indexCamx) / 8;
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
-    // LADDER LEFT/RIGHT CHECKS
+    // LADDER LEFT/RIGHT CHECKS (1 PIXEL LEFT OF AND RIGHT OF PLAYER VISUAL)
     indexLLx = ((newplayerx - 17) + indexCamx) / 8;
     indexRLx = ((newplayerx) + indexCamx) / 8;
     // STANDING x with a few pixels of forgiveness for 0x02 collision checks
@@ -99,16 +99,20 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     indexSCx = ((newplayerx - 9) + indexCamx) / 8;
     indexSRx = ((newplayerx - 5) + indexCamx) / 8;
 
-    index_y = (newplayery - 1) / 8;
-    index_Ly = (newplayery + 1) / 8; // CHECKS WHEN TO JUMP VERTICALLY WHILE ON LADDER (ie climbing near top and wanting to jump out of the Ladder)
+    index_y = (newplayery - 1) / 8; // CHECKS COLLISION 1 PIXEL ABOVE PLAYER
+    index_Ty = (newplayery - 3) / 8; // CHECKS ABSOLUTE TOP PIXEL OF VISUAL PLAYER
+    index_Ly = (newplayery + 4) / 8; // CHECKS WHEN TO JUMP VERTICALLY WHILE ON LADDER (ie climbing near top and wanting to jump out of the Ladder)
     index_Cy = (newplayery + 7) / 8;
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
     // LADDER LEFT/RIGHT
-    tileindexLLU = COLLISION_WIDE_MAPWidth * index_Ly + indexLLx;
-    tileindexRLU = COLLISION_WIDE_MAPWidth * index_Ly + indexRLx;
+    tileindexLLT = COLLISION_WIDE_MAPWidth * index_Ty + indexLLx;
+    tileindexRLT = COLLISION_WIDE_MAPWidth * index_Ty + indexRLx;
+
+    tileindexLLC = COLLISION_WIDE_MAPWidth * index_Ly + indexLLx;
+    tileindexRLC = COLLISION_WIDE_MAPWidth * index_Ly + indexRLx;
     // STANDING 0X02 FORGIVENESS
     tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;
     tileindexSC = COLLISION_WIDE_MAPWidth * index_y + indexSCx;
@@ -124,19 +128,19 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
     } else {  // IF LADDER
         if (joy & J_LEFT) {
-            if (COLLISION_WIDE_MAP[tileindexLLU] == 0x01) {
+            if ((COLLISION_WIDE_MAP[tileindexLLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexLLC] == 0x01)) {
             } else {
                 PLAYER.SpdX = -MAX_WALK_SPEED;
                 if (!(joy & J_DOWN)) {
-                    PLAYER.SpdY = -48;
+                    PLAYER.SpdY = -52;
                 }
             }
         } else if (joy & J_RIGHT) {
-            if (COLLISION_WIDE_MAP[tileindexRLU] == 0x01) {
+            if ((COLLISION_WIDE_MAP[tileindexRLT] == 0x01) || (COLLISION_WIDE_MAP[tileindexRLC] == 0x01)) {
             } else {
                 PLAYER.SpdX = MAX_WALK_SPEED;
                 if (!(joy & J_DOWN)) {
-                    PLAYER.SpdY = -48;
+                    PLAYER.SpdY = -52;
                 }
             }
         }
