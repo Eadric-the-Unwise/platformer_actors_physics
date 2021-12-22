@@ -335,7 +335,9 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     } else if (PLAYER.SpdX != 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
                         if (!Ladder_Release) {
                             if (PLAYER.SpdY < 0) {
-                                PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 2
+                                PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 4
+                            } else if (PLAYER.SpdY > 0) {
+                                PLAYER.SpdY = 16;  //-JUMP_IMPULSE / 4
                             }
                             ladder();
                         }
@@ -394,7 +396,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
 
             // REACH TOP OF LADDER, SWITCH TO STANDING ON TOP OF LADDER
-            if (PLAYER.SpdY <= 0) {
+            if (PLAYER.SpdY <= 0) {    //ADD THE LADDER CLIMB ONTO/OFF HERE
                 if (COLLISION_WIDE_MAP[tileindexCB] == 0x06 && COLLISION_WIDE_MAP[tileindexCT] == 0x00) {
                     UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
                     PLAYER.y = TO_COORDS((tiley * 8) - 4);
