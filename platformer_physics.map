@@ -313,13 +313,13 @@ _DATA                  0000C0A0    00000916 =        2326. bytes (REL,CON)
         -----  ------            -----  ------            -----  ------    
      0000C0A0  __cpu     |    0000C0A1  __is_GBA  |    0000C0A2  .mode    
      0000C0A3  .sys_time |    0000C0A3  _sys_time |    0000C0A5  .int_0x40
-     0000C0B9  _bkg      |    0000C0D9  _Spawn    |    0000C0DA  _Ladder  
-     0000C0DB  _Ladder_R |    0000C0DC  _Gravity  |    0000C0DD  _Jump    
-     0000C0DE  _Crouch   |    0000C0DF  _canCrouc |    0000C0E0  _Drop    
+     0000C0B9  _bkg      |    0000C0D9  _SPAWN    |    0000C0DA  _LADDER  
+     0000C0DB  _LADDER_R |    0000C0DC  _Gravity  |    0000C0DD  _JUMP    
+     0000C0DE  _CROUCH   |    0000C0DF  _canCROUC |    0000C0E0  _DROP    
      0000C0E1  _x_Adjust |    0000C0E2  _LEFT     |    0000C0E3  _RIGHT   
-     0000C0E4  _canCrouc |    0000C0E5  _canCrouc |    0000C0E6  _Drop_tim
+     0000C0E4  _canCROUC |    0000C0E5  _canCROUC |    0000C0E6  _DROP_tim
      0000C0E7  _LR_Offse |    0000C0E8  _LR_Offse |    0000C0E9  _UD_Offse
-     0000C0EA  _UD_Offse |    0000C0EB  _UD_Offse |    0000C0EC  _Attach  
+     0000C0EA  _UD_Offse |    0000C0EB  _UD_Offse |    0000C0EC  _ATTACH  
      0000C0ED  _x_Collid |    0000C0EE  _y_Collid |    0000C0EF  _current_
      0000C0F0  _joy      |    0000C0F1  _last_joy |    0000C0F2  _px      
      0000C0F3  _py       |    0000C0F4  _GAMEOVER |    0000C0F5  _current_
@@ -383,35 +383,35 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103320.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178600.rel
                                           [ camera ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103321.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178601.rel
                                           [ collisions ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103322.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178602.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103323.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178603.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103324.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178604.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103325.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178605.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103326.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178606.rel
                                           [ submap ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103327.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178607.rel
                                           [ brick_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103328.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178608.rel
                                           [ brick_wide_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc103329.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc178609.rel
                                           [ collision_wide_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1033210.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1786010.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1033211.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1786011.rel
                                           [ elevator ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1033212.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1786012.rel
                                           [ enemy_arrow ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1033213.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1786013.rel
                                           [ NPC_electric ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1033214.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc1786014.rel
                                           [ stage_drop_tiles ]
 
 

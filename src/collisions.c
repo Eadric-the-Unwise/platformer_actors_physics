@@ -1,13 +1,12 @@
 #pragma bank 255
 #include "collisions.h"
-// FOR SOME REASNON, SETTING PLAYER.direction or SetActorDirection causes inaccessible VRAM bug.
-// Use switch(); functions instead
-UINT8 Spawn, Ladder, Ladder_Release, Gravity, Jump, Crouch, canCrouch, Drop, x_Adjust;
+
+UINT8 SPAWN, LADDER, LADDER_Release, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;
 UINT8 LEFT, RIGHT;
-UINT8 canCrouch_timer, canCrouch_Ftimer, Drop_timer;
+UINT8 canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
 // Release_timer
 extern UINT8 joy, last_joy;
-extern UINT8 Attach, x_Collide, y_Collide;
+extern UINT8 ATTACH, x_Collide, y_Collide;
 UINT8 LR_Offset_X, LR_Offset_kX;
 UINT8 UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
 
@@ -41,40 +40,38 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexkC = COLLISION_WIDE_MAPWidth * indexCy + index_kx;
     tileindexkD = COLLISION_WIDE_MAPWidth * indexDy + index_kx;
 
-    if (Crouch) {
+    if (CROUCH) {
         if ((COLLISION_WIDE_MAP[tileindexD] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexD] == 0x02) || (COLLISION_WIDE_MAP[tileindexC] == 0x02)) {
-            if (!Jump) {
+            if (!JUMP) {
                 PLAYER.SpdX = 0;
                 switch_crawl();
             }
         }
         if ((COLLISION_WIDE_MAP[tileindexD] == 0x00) && (COLLISION_WIDE_MAP[tileindexC] == 0x00) && (COLLISION_WIDE_MAP[tileindexT] == 0x01)) {
-            if (canCrouch_timer == 1) {
-                canCrouch = TRUE;
-                Crouch = TRUE;
-                // canCrouch = FALSE;
-                canCrouch_timer = 10;
+            if (canCROUCH_timer == 1) {
+                canCROUCH = TRUE;
+                CROUCH = TRUE;
+                canCROUCH_timer = 10;
             }
-            canCrouch_timer -= 1;
+            canCROUCH_timer -= 1;
         }
-    } else if (!Crouch) {
+    } else if (!CROUCH) {
         if ((COLLISION_WIDE_MAP[tileindexD] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexT] == 0x01) || (COLLISION_WIDE_MAP[tileindexD] == 0x02) || (COLLISION_WIDE_MAP[tileindexC] == 0x02) || (COLLISION_WIDE_MAP[tileindexT] == 0x02) || (x_Collide)) {
             if (!x_Adjust) {
                 PLAYER.SpdX = 0;
-                if (!Jump) {
+                if (!JUMP) {
                     switch_idle();
                 }
             }
         }
-        if (!Jump) {
+        if (!JUMP) {
             if ((COLLISION_WIDE_MAP[tileindexD] == 0x00) && (COLLISION_WIDE_MAP[tileindexC] == 0x00) && (COLLISION_WIDE_MAP[tileindexT] == 0x01)) {
-                if (canCrouch_timer == 1) {
-                    canCrouch = TRUE;
-                    Crouch = TRUE;
-                    // canCrouch = FALSE;
-                    canCrouch_timer = 10;
+                if (canCROUCH_timer == 1) {
+                    canCROUCH = TRUE;
+                    CROUCH = TRUE;
+                    canCROUCH_timer = 10;
                 }
-                canCrouch_timer -= 1;
+                canCROUCH_timer -= 1;
             }
         }
     }
@@ -85,7 +82,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, indexLLx, indexRLx, indexSLx, indexSCx, indexSRx, index_y, index_Ty, index_Ly, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLLT, tileindexRLT, tileindexLLC, tileindexRLC, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
-    // CL = Crouch Left CC = Crouch Center CR = Crouch Right
+    // CL = CROUCH Left CC = CROUCH Center CR = CROUCH Right
     indexCamx = camera_x;
 
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
@@ -101,7 +98,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
     index_y = (newplayery - 1) / 8; // CHECKS COLLISION 1 PIXEL ABOVE PLAYER
     index_Ty = (newplayery - 3) / 8; // CHECKS ABSOLUTE TOP PIXEL OF VISUAL PLAYER
-    index_Ly = (newplayery + 4) / 8; // CHECKS WHEN TO JUMP VERTICALLY WHILE ON LADDER (ie climbing near top and wanting to jump out of the Ladder)
+    index_Ly = (newplayery + 4) / 8; // CHECKS WHEN TO JUMP VERTICALLY WHILE ON LADDER (ie climbing near top and wanting to JUMP out of the LADDER)
     index_Cy = (newplayery + 7) / 8;
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
@@ -122,9 +119,9 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexCC = COLLISION_WIDE_MAPWidth * index_Cy + indexCx;
     tileindexCR = COLLISION_WIDE_MAPWidth * index_Cy + indexRx;
 
-    if (!Ladder) {  // RESET LADDER RELEASE IF JUMPING FROM THE GROUND TO ALLOW GRABBING WHEN SPDY = 0
-        if (Ladder_Release) {
-            Ladder_Release = FALSE;
+    if (!LADDER) {  // RESET LADDER RELEASE IF JUMPING FROM THE GROUND TO ALLOW GRABBING WHEN SPDY = 0
+        if (LADDER_Release) {
+            LADDER_Release = FALSE;
         }
     } else {  // IF LADDER
         if (joy & J_LEFT) {
@@ -144,36 +141,36 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
             }
         }
-        Ladder = FALSE;
-        Jump = Gravity = Ladder_Release = TRUE;
+        LADDER = FALSE;
+        JUMP = Gravity = LADDER_Release = TRUE;
         switch_jump();
     }
 
-    if (Crouch) {
+    if (CROUCH) {
         // THIS IS CAUSING A BUG WHEN YOU CROUCH JUMP INTO AN 0X01 WALL COLLISION. WE MUST RESTRICT THIS EVEN FURTHER
         if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexCL] == 0x01) || (COLLISION_WIDE_MAP[tileindexCC] == 0x01) || (COLLISION_WIDE_MAP[tileindexCR] == 0x01)) {
         } else {
-            if (!Drop) {
-                Crouch = canCrouch = FALSE;
-                if (!Jump) {
+            if (!DROP) {
+                CROUCH = canCROUCH = FALSE;
+                if (!JUMP) {
                     PLAYER.SpdY = JUMP_IMPULSE;
-                    Jump = x_Adjust = TRUE;
-                    Attach = FALSE;
+                    JUMP = x_Adjust = TRUE;
+                    ATTACH = FALSE;
                     switch_jump();
                 }
             }
         }
-    } else if (!Crouch) {
+    } else if (!CROUCH) {
         // IF WALK SPEED IS LESS THAN MAX, MAKE HIS JUMP ABILITY ON CORNERS A BIT MORE RESTRICTED
         if ((PLAYER.SpdX < MAX_WALK_SPEED) && (PLAYER.SpdX > -MAX_WALK_SPEED)) {
             if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexSC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01)) {
             } else {
-                if (!Drop) {
-                    Crouch = canCrouch = FALSE;
-                    if (!Jump) {
+                if (!DROP) {
+                    CROUCH = canCROUCH = FALSE;
+                    if (!JUMP) {
                         PLAYER.SpdY = JUMP_IMPULSE;
-                        Jump = TRUE;
-                        Attach = FALSE;
+                        JUMP = TRUE;
+                        ATTACH = FALSE;
                         switch_jump();
                     }
                 }
@@ -185,12 +182,12 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (PLAYER.direction == DIR_RIGHT) {
                 if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexR] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexR] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
                 } else {
-                    if (!Drop) {
-                        Crouch = canCrouch = FALSE;
-                        if (!Jump) {
+                    if (!DROP) {
+                        CROUCH = canCROUCH = FALSE;
+                        if (!JUMP) {
                             PLAYER.SpdY = JUMP_IMPULSE;
-                            Jump = TRUE;
-                            Attach = FALSE;
+                            JUMP = TRUE;
+                            ATTACH = FALSE;
                             switch_jump();
                         }
                     }
@@ -199,12 +196,12 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (PLAYER.direction == DIR_LEFT) {
                 if (((COLLISION_WIDE_MAP[tileindexC] == 0x02) && (COLLISION_WIDE_MAP[tileindexL] == 0x02)) || ((COLLISION_WIDE_MAP[tileindexL] == 0x02) || (COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01))) {
                 } else {
-                    if (!Drop) {
-                        Crouch = canCrouch = FALSE;
-                        if (!Jump) {
+                    if (!DROP) {
+                        CROUCH = canCROUCH = FALSE;
+                        if (!JUMP) {
                             PLAYER.SpdY = JUMP_IMPULSE;
-                            Attach = FALSE;
-                            Jump = TRUE;
+                            ATTACH = FALSE;
+                            JUMP = TRUE;
                             switch_jump();
                         }
                     }
@@ -285,15 +282,15 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
 
     if (PLAYER.SpdY > 0) {
-        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05) || (COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (!Spawn) && (!Ladder) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05)) {
-            if (!Drop) {
+        if ((COLLISION_WIDE_MAP[tileindexL] == 0x01) || (COLLISION_WIDE_MAP[tileindexC] == 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x01) || (COLLISION_WIDE_MAP[tileindexL] == 0x03) || (COLLISION_WIDE_MAP[tileindexC] == 0x03) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (!SPAWN) && (!LADDER) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06) && (!SPAWN) && (!LADDER) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05) || (COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (!SPAWN) && (!LADDER) && (COLLISION_WIDE_MAP[tileindexCL] != 0x05)) {
+            if (!DROP) {
                 UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
-                Spawn = Jump = y_Collide = Gravity = FALSE;
-                if (Ladder) {
+                SPAWN = JUMP = y_Collide = Gravity = FALSE;
+                if (LADDER) {
                     if (COLLISION_WIDE_MAP[tileindexC] == 0x01) {
-                        Ladder = FALSE;
+                        LADDER = FALSE;
                     }
                 }
                 switch_land();
@@ -315,25 +312,25 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
     // ********** ALL LADDER CHECKS BELOW THIS LINE **********
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
-    if (!Spawn) {
-    if (Ladder_Release) {
-        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN) && (!Jump) || (COLLISION_WIDE_MAP[tileindexCL] != 0x05) && (!Jump)) {
-            Ladder_Release = FALSE;
+    if (!SPAWN) {
+    if (LADDER_Release) {
+        if ((CHANGED_BUTTONS & J_UP) && (joy & J_UP) || (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN) && (!JUMP) || (COLLISION_WIDE_MAP[tileindexCL] != 0x05) && (!JUMP)) {
+            LADDER_Release = FALSE;
         }
     }
 
-        if (!Ladder) {
+        if (!LADDER) {
             // LADDER VERTICAL MOVEMENT
             if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05)) {
-                if (Jump) {
+                if (JUMP) {
                     if (PLAYER.SpdX == 0) {
                         if (PLAYER.SpdY == 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
-                            if (!Ladder_Release) {
+                            if (!LADDER_Release) {
                                 ladder();
                             }
                         }
                     } else if (PLAYER.SpdX != 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
-                        if (!Ladder_Release) {
+                        if (!LADDER_Release) {
                             if (PLAYER.SpdY < 0) {
                                 PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 4
                             } else if (PLAYER.SpdY > 0) {
@@ -342,8 +339,8 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                             ladder();
                         }
                     }
-                } else if ((!Jump) && (!Crouch)) {
-                    if (!Ladder_Release) {
+                } else if ((!JUMP) && (!CROUCH)) {
+                    if (!LADDER_Release) {
                         if ((COLLISION_WIDE_MAP[tileindexCT] == 0x07) || (COLLISION_WIDE_MAP[tileindexCT] == 0x06) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06)) {
                             if (joy & J_UP) {
                                 ladder();
@@ -356,18 +353,18 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
             // IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
             if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {
-                if ((joy & J_DOWN) && (!Jump)) {
+                if ((joy & J_DOWN) && (!JUMP)) {
                     ladder();
                 }
             }
         }
-        if (Ladder) {
-            Crouch = FALSE;
+        if (LADDER) {
+            CROUCH = FALSE;
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
             if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexLB] == 0x06)) {
                 PLAYER.x = TO_COORDS(tx * 8);
             } else if ((COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindexRB] == 0x06)) {
-                PLAYER.x = TO_COORDS((tx * 8) + 8);  // if on left side of ladder
+                PLAYER.x = TO_COORDS((tx * 8) + 8);  // if on left side of LADDER
             }
             if (PLAYER.SpdY == 0 && PLAYER.patrol_timer > 4){ //PREVENTS UP DOWN SPAM OF ANIMATION
                 PLAYER.patrol_timer = 4;
@@ -405,17 +402,17 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
                     PLAYER.y = TO_COORDS((tiley * 8) - 4);
                     PLAYER.SpdY = 0;
-                    Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
+                    SPAWN = LADDER = JUMP = y_Collide = Gravity = FALSE;
                     // switch_idle();
                 }
             } else if (PLAYER.SpdY > 0) {
                 if (COLLISION_WIDE_MAP[tileindexCB] == 0x00) {
-                    Ladder = FALSE;
-                    Jump = Gravity = Ladder_Release = TRUE;
+                    LADDER = FALSE;
+                    JUMP = Gravity = LADDER_Release = TRUE;
                     switch_jump();
                 }
             }
-        } else if (!Ladder) {
+        } else if (!LADDER) {
             if ((LEFT) || (RIGHT)) {
                 if ((joy & J_LEFT) || (joy & J_RIGHT)) {
                     LEFT = FALSE;
@@ -439,7 +436,7 @@ void check_Drop(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexR = COLLISION_WIDE_MAPWidth * index_y + indexRx;
 
     if ((COLLISION_WIDE_MAP[tileindexL] == 0x03) && (COLLISION_WIDE_MAP[tileindexR] != 0x01) || (COLLISION_WIDE_MAP[tileindexR] == 0x03) && (COLLISION_WIDE_MAP[tileindexL] != 0x01)) {
-        Drop = Gravity = TRUE;
+        DROP = Gravity = TRUE;
     }
 }
 // CHECK CROUCH
@@ -457,16 +454,16 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexSL = COLLISION_WIDE_MAPWidth * index_y + indexSLx;
     tileindexSR = COLLISION_WIDE_MAPWidth * index_y + indexSRx;
 
-    if (Crouch) {
+    if (CROUCH) {
         if ((COLLISION_WIDE_MAP[tileindexSL] == 0x01) || (COLLISION_WIDE_MAP[tileindexSR] == 0x01)) {
         } else {
-            Crouch = FALSE;
+            CROUCH = FALSE;
         }
     }
 }
 
 void ladder() {
-    Ladder = TRUE;
+    LADDER = TRUE;
     LEFT_RIGHT();
     switch_ladder();
 }

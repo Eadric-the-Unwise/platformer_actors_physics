@@ -148,13 +148,13 @@ void switch_down() {
 }
 void switch_jump() {
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_DROP_L || (LEFT)) {
-        if (!Drop) {
+        if (!DROP) {
             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
         } else {
             SetActorDirection(&PLAYER, DIR_DROP_L, 0);
         }
     } else {
-        if (!Drop) {
+        if (!DROP) {
             SetActorDirection(&PLAYER, DIR_JUMP_R, 0);
         } else {
             SetActorDirection(&PLAYER, DIR_DROP_R, 0);
@@ -214,7 +214,7 @@ void jump() {
     UINT8 px, py;
     px = TO_PIXELS(PLAYER.x);
     py = TO_PIXELS(PLAYER.y);
-    if (Crouch) {
+    if (CROUCH) {
         check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
     }
     // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
@@ -224,15 +224,15 @@ void land() {
     UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
     PLAYER.y = TO_COORDS(ty * 8);
     PLAYER.SpdY = 0;
-    Spawn = Ladder = Jump = y_Collide = Gravity = FALSE;
+    SPAWN = LADDER = JUMP = y_Collide = Gravity = FALSE;
     switch_land();
 }
 
 void gameover() {
     DISPLAY_OFF;
-    Spawn = TRUE;
-    GAMEOVER = LEFT = RIGHT = Ladder = Crouch = canCrouch = Drop = FALSE;
-    Jump = Ladder_Release = TRUE;
+    SPAWN = TRUE;
+    GAMEOVER = LEFT = RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
+    JUMP = LADDER_Release = TRUE;
     load_level(current_stage);
     if (load_submap) load_submap();
     render_actors();

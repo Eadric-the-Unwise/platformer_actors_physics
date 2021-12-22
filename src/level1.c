@@ -11,7 +11,7 @@
 extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;
-UINT8 Attach, x_Collide, y_Collide;
+UINT8 ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
@@ -33,7 +33,7 @@ const actor_t level1_actors[5] = {
      .tile_count = (sizeof(detective_large_data) >> 4),
      .tile_index = 0,
      .tile_data = detective_large_data,
-     .animations = {detective_walk_left, detective_walk_left, detective_crouch, detective_crouch, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_jump, detective_jump, detective_land, detective_land, detective_drop, detective_drop, detective_ladder, detective_ladder, NULL, NULL},
+     .animations = {detective_walk_left, detective_walk_left, detective_CROUCH, detective_CROUCH, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_JUMP, detective_JUMP, detective_land, detective_land, detective_drop, detective_drop, detective_LADDER, detective_LADDER, NULL, NULL},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL},
      .animation_phase = 3,
      .copy = FALSE,
@@ -246,7 +246,7 @@ void anim_level1() {
 void npc_collisions_level1() {
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
-    if (Crouch) {  // CROUCH HITBOX
+    if (CROUCH) {  // CROUCH HITBOX
         PLAYER.h_offset = -2;
         PLAYER.x_offset = 8;
         PLAYER.y_offset = 16;
@@ -254,7 +254,7 @@ void npc_collisions_level1() {
         PLAYER.h_offset = 11;
         PLAYER.x_offset = 6;
         PLAYER.y_offset = 6;
-    } else if ((!Crouch) && (!Jump)) {  // STAND AND WALKING HITBOX
+    } else if ((!CROUCH) && (!JUMP)) {  // STAND AND WALKING HITBOX
         PLAYER.h_offset = 7;
         PLAYER.x_offset = 6;
         PLAYER.y_offset = 16;
@@ -284,7 +284,7 @@ void npc_collisions_level1() {
                     {
                         x_Collide = TRUE;
                     } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
-                        Attach = TRUE;
+                        ATTACH = TRUE;
                         Gravity = FALSE;
                         current_elevator = i;
                     } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
@@ -299,20 +299,20 @@ void npc_collisions_level1() {
 
         } else {
         }
-        if (Attach) {
+        if (ATTACH) {
             if (i == current_elevator) {
                 if ((PBL_x > NTR_x) || (PTR_x < NBL_x)) {
-                    Attach = FALSE;
+                    ATTACH = FALSE;
                     Gravity = TRUE;
                 } else {
                     PLAYER.SpdY = 0;
                     PLAYER.y = TO_COORDS(NTR_y - (PLAYER.h / 2));
-                    if (Jump) {
+                    if (JUMP) {
                         switch_land();
                     } else if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
                         switch_idle();
                     }
-                    Spawn = Gravity = Jump = FALSE;
+                    SPAWN = Gravity = JUMP = FALSE;
                 }
             }
             if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
