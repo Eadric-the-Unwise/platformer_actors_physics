@@ -369,6 +369,10 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             } else if ((COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindexRB] == 0x06)) {
                 PLAYER.x = TO_COORDS((tx * 8) + 8);  // if on left side of ladder
             }
+            if (PLAYER.SpdY == 0 && PLAYER.patrol_timer > 4){ //PREVENTS UP DOWN SPAM OF ANIMATION
+                PLAYER.patrol_timer = 4;
+            }
+
             if (joy & J_UP) {
                 PLAYER.SpdY = -12;
                 switch_ladder();
