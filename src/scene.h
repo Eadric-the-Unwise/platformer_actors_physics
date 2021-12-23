@@ -55,6 +55,7 @@ typedef enum {
     DIR_DROP_R,
     DIR_LADDER_L,
     DIR_LADDER_R,
+    DIR_ONTOLADDER,
     DIR_UP,
     DIR_DOWN,
 } direction_e;
@@ -99,8 +100,8 @@ typedef struct actor_t {
     const UINT8 *tile_data;  // const variables cannot be manipulated. Initialized only ONCE
 
     // animation description
-    const metasprite_t **animations[116];  // list all DIRs in level's actors struct, up to max of [this value]
-    anim_loop_e animations_props[18];      // equivilent to above DIRs to define whether they loop or play ONCE
+    const metasprite_t **animations[19];  // list all DIRs in level's actors struct, up to max of [this value]
+    anim_loop_e animations_props[19];      // equivilent to above DIRs to define whether they loop or play ONCE
     UINT8 animation_phase;                 // frame of metasprite animation loop
     UINT8 copy;
     UINT8 RENDER;  // if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
