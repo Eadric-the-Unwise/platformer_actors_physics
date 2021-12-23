@@ -13,6 +13,7 @@
 #include "../res/tiles/enemy_arrow.h"
 #include "camera.h"
 #include "collisions.h"
+#include "ladder.h"
 #include "level1.h"
 #include "level2.h"
 

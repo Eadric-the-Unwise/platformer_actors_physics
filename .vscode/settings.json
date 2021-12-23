@@ -10,7 +10,8 @@
         "scene.h": "c",
         "level1.h": "c",
         "metasprites.h": "c",
-        "brick_wide_tiles.h": "c"
+        "brick_wide_tiles.h": "c",
+        "ladder.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
