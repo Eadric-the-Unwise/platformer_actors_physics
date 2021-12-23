@@ -55,9 +55,9 @@ typedef enum {
     DIR_DROP_R,
     DIR_LADDER_L,
     DIR_LADDER_R,
-    DIR_ONTOLADDER,
     DIR_UP,
     DIR_DOWN,
+    DIR_ONTOLADDER,
 } direction_e;
 
 typedef enum {
@@ -136,6 +136,7 @@ void switch_jump();
 void switch_idle();
 void switch_land();
 void switch_crawl();
+void switch_onto_ladder();
 void switch_ladder();
 void LEFT_RIGHT();
 void jump();

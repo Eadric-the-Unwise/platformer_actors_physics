@@ -7,7 +7,6 @@
 
 extern const UINT8 detective_large_data[2752];
 extern const metasprite_t* const detective_large_metasprites[18];
-
 extern const metasprite_t* const detective_walk_left[];
 extern const metasprite_t* const detective_CROUCH[];
 extern const metasprite_t* const detective_crawl_left[];

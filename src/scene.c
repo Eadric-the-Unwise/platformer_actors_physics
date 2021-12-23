@@ -169,6 +169,9 @@ void switch_idle() {
         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
     }
 }
+void switch_onto_ladder(){
+        SetActorDirection(&PLAYER, DIR_ONTOLADDER, 0);
+}
 void switch_ladder() {
     PLAYER.patrol_timer--;
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_LADDER_L) {

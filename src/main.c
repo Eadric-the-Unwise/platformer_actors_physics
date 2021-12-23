@@ -106,7 +106,7 @@ void main() {
                 }
             }
         }
-        if ((joy & J_DOWN) && (!JUMP) && (!LADDER)) {
+        if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder)) {
             CROUCH = TRUE;
         }
 
