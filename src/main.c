@@ -227,7 +227,7 @@ void main() {
         py = TO_PIXELS(PLAYER.y);
 
         // Change to IDLE state when not moving
-        if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER)) {
+        if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER) && (!ONTO_Ladder)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
                 if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
                     switch_idle();
