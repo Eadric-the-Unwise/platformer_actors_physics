@@ -214,7 +214,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLT, tileindexCT, tileindexRT, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
+    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
 
     if (PLAYER.SpdY >= 0) {
@@ -234,7 +234,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     index6 = ((newplayerx - 6) + indexCamx) / 8;    // LADDER X CENTER OFFSETS
     indexRx = ((newplayerx - 1) + indexCamx) / 8;
     index_y = (newplayery - UD_Offset_Y) / 8;
-    index_Ty = (newplayery - 26) / 8;
     index_By = (newplayery) / 8;
     index_ky = (newplayery - UD_Offset_kY) / 8;  // KILL SPIKE CHECK
     index_Ly = (newplayery - UD_Offset_LY) / 8;  // LADDER COLLISION CHECK
@@ -246,10 +245,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexLL = COLLISION_WIDE_MAPWidth * index_Ly + indexLx;  // LADDER CENTER Y
     tileindexCL = COLLISION_WIDE_MAPWidth * index_Ly + indexCx;  // LADDER CENTER Y
     tileindexRL = COLLISION_WIDE_MAPWidth * index_Ly + indexRx;  // LADDER CENTER Y
-
-    tileindexLT = COLLISION_WIDE_MAPWidth * index_Ty + indexLx;  // TOP Y
-    tileindexCT = COLLISION_WIDE_MAPWidth * index_Ty + indexCx;  // TOP Y
-    tileindexRT = COLLISION_WIDE_MAPWidth * index_Ty + indexRx;  // TOP Y
 
     tileindexLB = COLLISION_WIDE_MAPWidth * index_By + indexLx;  // BOT Y
     tileindexCB = COLLISION_WIDE_MAPWidth * index_By + indexCx;  // BOT Y

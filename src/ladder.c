@@ -5,7 +5,7 @@ extern UINT8 joy, last_joy;
 extern UINT8 ATTACH, x_Collide, y_Collide;
 
 void check_LADDER (UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLT, tileindexCT, tileindexRT, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
+    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCT, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10;
     indexCamx = camera_x;
 
     if (PLAYER.SpdY >= 0) {
@@ -27,7 +27,6 @@ void check_LADDER (UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     index_y = (newplayery - UD_Offset_Y) / 8;
     index_Ty = (newplayery - 26) / 8;
     index_By = (newplayery) / 8;
-    index_ky = (newplayery - UD_Offset_kY) / 8;  // KILL SPIKE CHECK
     index_Ly = (newplayery - UD_Offset_LY) / 8;  // LADDER COLLISION CHECK
     // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // THESE ARE USED MOSTLY FOR BASIC COLLISION CHECKS (NOT LADDERS)
@@ -38,9 +37,8 @@ void check_LADDER (UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindexCL = COLLISION_WIDE_MAPWidth * index_Ly + indexCx;  // LADDER CENTER Y
     tileindexRL = COLLISION_WIDE_MAPWidth * index_Ly + indexRx;  // LADDER CENTER Y
 
-    tileindexLT = COLLISION_WIDE_MAPWidth * index_Ty + indexLx;  // TOP Y
     tileindexCT = COLLISION_WIDE_MAPWidth * index_Ty + indexCx;  // TOP Y
-    tileindexRT = COLLISION_WIDE_MAPWidth * index_Ty + indexRx;  // TOP Y
+
 
     tileindexLB = COLLISION_WIDE_MAPWidth * index_By + indexLx;  // BOT Y
     tileindexCB = COLLISION_WIDE_MAPWidth * index_By + indexCx;  // BOT Y
@@ -51,9 +49,6 @@ void check_LADDER (UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     tileindex6 = COLLISION_WIDE_MAPWidth * index_Ly + index6;    // OFFSET FOR LADDER X "CENTER"
     tileindex10 = COLLISION_WIDE_MAPWidth * index_Ly + index10;  // OFFSET FOR LADDER X "CENTER"
 
-    tileindexkL = COLLISION_WIDE_MAPWidth * index_ky + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexkC = COLLISION_WIDE_MAPWidth * index_ky + indexCx;
-    tileindexkR = COLLISION_WIDE_MAPWidth * index_ky + indexRx;
 
     // ********** ALL LADDER CHECKS BELOW THIS LINE **********
     // CHECK IF PLAYER CAN SNAP TO THE LADDER WHEN PRESSING U/L U/R etc
