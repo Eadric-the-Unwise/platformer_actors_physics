@@ -328,7 +328,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     LEFT_RIGHT();
                     LADDER = TRUE;
                     ONTO_Ladder = TRUE;
-                    ONTO_Ladder_timer = 64; //2 animation frames (DOWN, then ONTO_LADDER) 12
+                    ONTO_Ladder_timer = 12; //2 animation frames (DOWN, then ONTO_LADDER)
                 }
             }
             

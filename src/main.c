@@ -11,6 +11,7 @@ extern Variables bkg;
 extern uint8_t animation_timer;
 extern UINT8 ATTACH;
 const level_t *current_stage;
+//WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -52,7 +53,7 @@ void main() {
                         canCROUCH_timer = 1;
                     }
                 }
-                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH)) {
+                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
                     if (canCROUCH) {
                         SetActorDirection(&PLAYER, DIR_CRAWL_L, PLAYER.animation_phase);
                     } else {
@@ -82,7 +83,7 @@ void main() {
                         canCROUCH_timer = 1;
                     }
                 }
-                if ((!JUMP) && !(joy & J_DOWN) && !(CROUCH)) {
+                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
                     if (canCROUCH) {
                         SetActorDirection(&PLAYER, DIR_CRAWL_R, PLAYER.animation_phase);
                     } else {
@@ -110,7 +111,7 @@ void main() {
             CROUCH = TRUE;
         }
 
-        if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
+        if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder)) {
             jump();
         }
 
