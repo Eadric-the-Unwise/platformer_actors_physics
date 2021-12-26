@@ -96,7 +96,7 @@ void render_actors() {
                 if (current_animation[current_actor->animation_phase] != NULL) {
                     if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE) {
                         current_actor->ON = TRUE;
-                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R)) {
+                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R) || (current_direction == DIR_OFFLADDER_R)) {
                             hiwater += move_metasprite_vflip(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,
@@ -174,6 +174,13 @@ void switch_onto_ladder() {
         SetActorDirection(&PLAYER, DIR_ONTOLADDER_L, 0);
     } else if (RIGHT) {
         SetActorDirection(&PLAYER, DIR_ONTOLADDER_R, 0);
+    }
+}
+void switch_off_ladder() {
+    if (LEFT) {
+        SetActorDirection(&PLAYER, DIR_OFFLADDER_L, 0);
+    } else if (RIGHT) {
+        SetActorDirection(&PLAYER, DIR_OFFLADDER_R, 0);
     }
 }
 void switch_ladder() {

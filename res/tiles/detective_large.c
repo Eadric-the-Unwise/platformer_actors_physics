@@ -183,3 +183,6 @@ const metasprite_t* const detective_LADDER[] = {
 const metasprite_t* const detective_ONTOLADDER[] = {
     detective_large_metasprite15, detective_large_metasprite17, detective_large_metasprite17,
     NULL};
+const metasprite_t* const detective_OFFLADDER[] = {
+    detective_large_metasprite17, detective_large_metasprite17, detective_large_metasprite17,
+    NULL};

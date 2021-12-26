@@ -3,8 +3,8 @@
 
 extern UINT8 joy, last_joy;
 extern UINT8 ATTACH, x_Collide, y_Collide;
-UINT8 ONTO_Ladder_timer, UP_LADDER_timer, DOWN_LADDER_timer;
-UINT8 LADDER, ONTO_Ladder, UP_LADDER, DOWN_LADDER, DOWN_LADDER_F, LADDER_Release;
+UINT8 ONTO_Ladder_timer, DOWN_LADDER_timer, UP_LADDER_timer, OFF_LADDER_timer;
+UINT8 LADDER, ONTO_Ladder, DOWN_LADDER, DOWN_LADDER_F, UP_LADDER, OFF_LADDER, LADDER_Release;
 
 void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCT, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10;
@@ -121,7 +121,16 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (COLLISION_WIDE_MAP[tileindexCL] == 0x06 && COLLISION_WIDE_MAP[tileindexCT] == 0x00) {
                 if ((!ONTO_Ladder) && (!DOWN_LADDER)) {
                     UP_LADDER = TRUE;  // ADD OFF LADDER CODE HERE
-                    UP_LADDER_timer = 8;
+                    UP_LADDER_timer = 2;
+                    // if (LEFT) {
+                    //     if (PLAYER.direction == DIR_LADDER_R && PLAYER.patrol_timer > 4) {
+                    //         PLAYER.patrol_timer = 4;
+                    //     }
+                    //     SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
+                    // } else if (RIGHT) {
+                    //     SetActorDirection(&PLAYER, DIR_LADDER_R, 0);
+                    // }
+                    // PLAYER.patrol_timer = 3;
                 }
             }
             if (ONTO_Ladder) {
@@ -132,28 +141,13 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     PLAYER.y += TO_COORDS(5);
                 }
 
-                if (ONTO_Ladder_timer == 0) {
+                if (ONTO_Ladder_timer == 1) {
                     PLAYER.y += TO_COORDS(13);
                     ONTO_Ladder = FALSE;
                     DOWN_LADDER = TRUE;
                     DOWN_LADDER_timer = 8;
                     PLAYER.patrol_timer = 8;
-                }
-
-            } else if (UP_LADDER) {
-                // ONTO_Ladder_timer = 32;
-                // UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
-                // PLAYER.y = TO_COORDS((tiley * 8) - 4);
-                // PLAYER.SpdY = 0;
-                // UP_LADDER = SPAWN = LADDER = JUMP = y_Collide = Gravity = FALSE;
-                SPAWN = JUMP = y_Collide = Gravity = FALSE;
-                PLAYER.SpdY = -10;
-                switch_ladder();
-                UP_LADDER_timer -= 1;
-                if (UP_LADDER_timer == 0) {
-                    UP_LADDER = LADDER = FALSE;
-                    PLAYER.SpdY = 0;
-                    PLAYER.y -= TO_COORDS(5);  // 9
+                    // switch_ladder();
                 }
             }
             if (DOWN_LADDER) {
@@ -169,8 +163,35 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     PLAYER.SpdY = 0;
                 }
             }
+            if (UP_LADDER) {
+                // ONTO_Ladder_timer = 32;
+                // UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
+                // PLAYER.y = TO_COORDS((tiley * 8) - 4);
+                // PLAYER.SpdY = 0;
+                // UP_LADDER = SPAWN = LADDER = JUMP = y_Collide = Gravity = FALSE;
+                SPAWN = JUMP = y_Collide = Gravity = FALSE;
+                PLAYER.SpdY = -10;
+                switch_ladder();
+                UP_LADDER_timer -= 1;
+                if (UP_LADDER_timer == 0) {
+                    UP_LADDER = FALSE;
+                    PLAYER.SpdY = 0;
+                    PLAYER.y -= TO_COORDS(7);  // 9
+                    // switch_off_ladder();
+                    OFF_LADDER = TRUE;
+                    OFF_LADDER_timer = 12;
+                }
+            }
+            if (OFF_LADDER) {
+                OFF_LADDER_timer -= 1;
+                switch_off_ladder();
+                if (OFF_LADDER_timer == 0) {
+                    PLAYER.y -= TO_COORDS(5);
+                    OFF_LADDER = LADDER = FALSE;
+                }
+            }
 
-            if ((ONTO_Ladder) || (DOWN_LADDER)) {
+            if ((ONTO_Ladder) || (DOWN_LADDER) || (UP_LADDER) || (OFF_LADDER)) {
             } else {  // CROUCH = FALSE;
                 if ((DOWN_LADDER_F) && (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN)) {
                     PLAYER.patrol_timer = 1;

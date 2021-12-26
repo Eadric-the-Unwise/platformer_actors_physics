@@ -16,3 +16,4 @@ extern const metasprite_t* const detective_land[];
 extern const metasprite_t* const detective_drop[];
 extern const metasprite_t* const detective_LADDER[];
 extern const metasprite_t* const detective_ONTOLADDER[];
+extern const metasprite_t* const detective_OFFLADDER[];
