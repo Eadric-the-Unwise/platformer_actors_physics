@@ -3,6 +3,7 @@
 
 extern UINT8 joy, last_joy;
 extern UINT8 ATTACH, x_Collide, y_Collide;
+UINT8 ONTO_Ladder_timer, DOWN_LADDER_timer;
 
 void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCT, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10;
@@ -130,9 +131,10 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
 
                 if (ONTO_Ladder_timer == 0) {
-                    PLAYER.y += TO_COORDS(12);
-                    DOWN_LADDER = TRUE;
+                    PLAYER.y += TO_COORDS(13);
                     ONTO_Ladder = FALSE;
+                    DOWN_LADDER = TRUE;
+                    DOWN_LADDER_timer = 6;
                 }
 
             } else if (OFF_Ladder) {
@@ -145,8 +147,9 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (DOWN_LADDER) {
                 PLAYER.SpdY = 12;
                 switch_ladder();
+                DOWN_LADDER_timer -= 1;
 
-                if ((COLLISION_WIDE_MAP[tileindexCB] == 0x00) || (COLLISION_WIDE_MAP[tileindexCB] == 0x05)) {
+                if (DOWN_LADDER_timer == 0 || (COLLISION_WIDE_MAP[tileindexCB] == 0x00)) {
                     ONTO_Ladder = FALSE;
                     DOWN_LADDER = FALSE;
                     // LADDER = TRUE;

@@ -29,7 +29,7 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      0000025A  l__HOME   |    00000313  l__DATA   |    00001105  l__INITIA
      00001105  l__INITIA |    00002000  _rROMB0   |    0000247D  l__CODE  
      0000267D  s__HOME   |    000028D7  s__BASE   |    000028D7  s__CODE_0
-     000028D7  s__INITIA |    000028D7  s__LIT    |    00002962  l__CODE_1
+     000028D7  s__INITIA |    000028D7  s__LIT    |    00002969  l__CODE_1
      00003000  _rROMB1   |    000039DC  s__GSINIT |    000039E8  s__GSFINA
      00004000  _rRAMB    |    00008000  __VRAM    |    00008000  __VRAM800
      00008800  __VRAM880 |    00009000  __VRAM900 |    00009800  __SCRN0  
@@ -328,10 +328,10 @@ _DATA                  0000C0A0    00000313 =         787. bytes (REL,CON)
      0000C0DE  _LADDER_R |    0000C0DF  _Gravity  |    0000C0E0  _JUMP    
      0000C0E1  _CROUCH   |    0000C0E2  _canCROUC |    0000C0E3  _DROP    
      0000C0E4  _x_Adjust |    0000C0E5  _LEFT     |    0000C0E6  _RIGHT   
-     0000C0E7  _ONTO_Lad |    0000C0E8  _DOWN_LAD |    0000C0E9  _canCROUC
-     0000C0EA  _canCROUC |    0000C0EB  _DROP_tim |    0000C0EC  _LR_Offse
-     0000C0ED  _LR_Offse |    0000C0EE  _UD_Offse |    0000C0EF  _UD_Offse
-     0000C0F0  _UD_Offse |    0000C0F1  _ATTACH   |    0000C0F2  _x_Collid
+     0000C0E7  _canCROUC |    0000C0E8  _canCROUC |    0000C0E9  _DROP_tim
+     0000C0EA  _LR_Offse |    0000C0EB  _LR_Offse |    0000C0EC  _UD_Offse
+     0000C0ED  _UD_Offse |    0000C0EE  _UD_Offse |    0000C0EF  _ONTO_Lad
+     0000C0F0  _DOWN_LAD |    0000C0F1  _ATTACH   |    0000C0F2  _x_Collid
      0000C0F3  _y_Collid |    0000C0F4  _current_ |    0000C0F5  _joy     
      0000C0F6  _last_joy |    0000C0F7  _px       |    0000C0F8  _py      
      0000C0F9  _GAMEOVER |    0000C0FA  _current_ |    0000C0FC  _dir     
@@ -366,56 +366,56 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_1                00014000    00002962 =       10594. bytes (REL,CON)
+_CODE_1                00014000    00002969 =       10601. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      00014000  _check_LR |    00014332  _check_J  |    0001496E  _check_UD
      00014F32  _check_Dr |    00015004  _check_C  |    000150C9  _ladder  
-     000150D4  _overlap  |    000151A0  _check_LA |    00015936  _anim_lev
-     00015EEC  _level1_a |    0001609A  _level1   |    000160A3  _npc_coll
-     000163F3  _animate_ |    0001655D  _level2_a |    000166B5  _level2  
-     000166BE  _init_sub |    000167D2  _enemy_ar |    00016892  _enemy_ar
-     0001689E  _enemy_ar |    000168AA  _enemy_ar |    000168B6  _enemy_ar
-     000168BA  _enemy_ar |    000168C0  _NPC_elec |    00016940  _NPC_elec
-     0001694C  _NPC_elec |    00016958  _NPC_elec |    0001695C  _NPC_elec
+     000150D4  _overlap  |    000151A0  _check_LA |    0001593D  _anim_lev
+     00015EF3  _level1_a |    000160A1  _level1   |    000160AA  _npc_coll
+     000163FA  _animate_ |    00016564  _level2_a |    000166BC  _level2  
+     000166C5  _init_sub |    000167D9  _enemy_ar |    00016899  _enemy_ar
+     000168A5  _enemy_ar |    000168B1  _enemy_ar |    000168BD  _enemy_ar
+     000168C1  _enemy_ar |    000168C7  _NPC_elec |    00016947  _NPC_elec
+     00016953  _NPC_elec |    0001695F  _NPC_elec |    00016963  _NPC_elec
 ASxxxx Linker V03.00 + NoICE + sdld,  page 30.
 
 Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc173880.rel
+C:\Users\User\AppData\Local\Temp/lcc115040.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc173881.rel
+C:\Users\User\AppData\Local\Temp/lcc115041.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc173882.rel
+C:\Users\User\AppData\Local\Temp/lcc115042.rel
                                           [ ladder ]
-C:\Users\User\AppData\Local\Temp/lcc173883.rel
+C:\Users\User\AppData\Local\Temp/lcc115043.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc173884.rel
+C:\Users\User\AppData\Local\Temp/lcc115044.rel
                                           [ level2 ]
-C:\Users\User\AppData\Local\Temp/lcc173885.rel
+C:\Users\User\AppData\Local\Temp/lcc115045.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc173886.rel
+C:\Users\User\AppData\Local\Temp/lcc115046.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc173887.rel
+C:\Users\User\AppData\Local\Temp/lcc115047.rel
                                           [ submap ]
-C:\Users\User\AppData\Local\Temp/lcc173888.rel
+C:\Users\User\AppData\Local\Temp/lcc115048.rel
                                           [ brick_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc173889.rel
+C:\Users\User\AppData\Local\Temp/lcc115049.rel
                                           [ brick_wide_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc1738810.rel
+C:\Users\User\AppData\Local\Temp/lcc1150410.rel
                                           [ collision_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc1738811.rel
+C:\Users\User\AppData\Local\Temp/lcc1150411.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc1738812.rel
+C:\Users\User\AppData\Local\Temp/lcc1150412.rel
                                           [ elevator ]
-C:\Users\User\AppData\Local\Temp/lcc1738813.rel
+C:\Users\User\AppData\Local\Temp/lcc1150413.rel
                                           [ enemy_arrow ]
-C:\Users\User\AppData\Local\Temp/lcc1738814.rel
+C:\Users\User\AppData\Local\Temp/lcc1150414.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc1738815.rel
+C:\Users\User\AppData\Local\Temp/lcc1150415.rel
                                           [ stage_drop_tiles ]
 
 

@@ -3,7 +3,7 @@
 
 UINT8 SPAWN, LADDER, ONTO_Ladder, OFF_Ladder, DOWN_LADDER, LADDER_Release, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;
 UINT8 LEFT, RIGHT;
-UINT8 ONTO_Ladder_timer, DOWN_LADDER_timer, canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
+UINT8 canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
 // Release_timer
 extern UINT8 joy, last_joy;
 extern UINT8 ATTACH, x_Collide, y_Collide;
@@ -95,9 +95,9 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     indexSCx = ((newplayerx - 9) + indexCamx) / 8;
     indexSRx = ((newplayerx - 5) + indexCamx) / 8;
 
-    index_y = (newplayery - 1) / 8; // CHECKS COLLISION 1 PIXEL ABOVE PLAYER
-    index_Ty = (newplayery - 3) / 8; // CHECKS ABSOLUTE TOP PIXEL OF VISUAL PLAYER
-    index_Ly = (newplayery + 4) / 8; // CHECKS WHEN TO JUMP VERTICALLY WHILE ON LADDER (ie climbing near top and wanting to JUMP out of the LADDER)
+    index_y = (newplayery - 1) / 8;   // CHECKS COLLISION 1 PIXEL ABOVE PLAYER
+    index_Ty = (newplayery - 3) / 8;  // CHECKS ABSOLUTE TOP PIXEL OF VISUAL PLAYER
+    index_Ly = (newplayery + 4) / 8;  // CHECKS WHEN TO JUMP VERTICALLY WHILE ON LADDER (ie climbing near top and wanting to JUMP out of the LADDER)
     index_Cy = (newplayery + 7) / 8;
 
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
@@ -305,9 +305,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
     }
     check_LADDER(newplayerx, newplayery, camera_x);
-
 }
-
 
 void check_Drop(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
