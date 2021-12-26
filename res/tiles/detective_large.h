@@ -5,7 +5,7 @@
 #define detective_large_PIVOT_X 12
 #define detective_large_PIVOT_Y 16
 
-extern const UINT8 detective_large_data[2720];
+extern const UINT8 detective_large_data[2752];
 extern const metasprite_t* const detective_large_metasprites[18];
 extern const metasprite_t* const detective_walk_left[];
 extern const metasprite_t* const detective_CROUCH[];

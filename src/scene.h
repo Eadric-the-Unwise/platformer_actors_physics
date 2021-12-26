@@ -102,8 +102,8 @@ typedef struct actor_t {
 
     // animation description
     const metasprite_t **animations[19];  // list all DIRs in level's actors struct, up to max of [this value]
-    anim_loop_e animations_props[19];      // equivilent to above DIRs to define whether they loop or play ONCE
-    UINT8 animation_phase;                 // frame of metasprite animation loop
+    anim_loop_e animations_props[19];     // equivilent to above DIRs to define whether they loop or play ONCE
+    UINT8 animation_phase;                // frame of metasprite animation loop
     UINT8 copy;
     UINT8 RENDER;  // if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
     UINT8 ON;
@@ -144,6 +144,7 @@ void jump();
 void land();
 void gameover();
 extern UINT8 GAMEOVER;
+extern uint8_t animation_timer;
 
 // fuction body is inlined into the code
 inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase) {

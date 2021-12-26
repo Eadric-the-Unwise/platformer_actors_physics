@@ -71,7 +71,8 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     LEFT_RIGHT();
                     LADDER = TRUE;
                     ONTO_Ladder = TRUE;
-                    ONTO_Ladder_timer = 18;  // 3 animation frames (DOWN, then ONTO_LADDER, ONTO_LADDER)
+                    ONTO_Ladder_timer = 15;  // 3 animation frames (DOWN, then ONTO_LADDER, ONTO_LADDER)
+                    // animation_timer = 3;
                 }
             }
 
@@ -124,9 +125,12 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 CROUCH = FALSE;
                 switch_onto_ladder();
                 ONTO_Ladder_timer -= 1;
+                if (ONTO_Ladder_timer == 9) {
+                    PLAYER.y += TO_COORDS(5);
+                }
 
                 if (ONTO_Ladder_timer == 0) {
-                    PLAYER.y += TO_COORDS(8);
+                    PLAYER.y += TO_COORDS(12);
                     DOWN_LADDER = TRUE;
                     ONTO_Ladder = FALSE;
                 }
