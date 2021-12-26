@@ -123,8 +123,8 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
             }
             if (ONTO_Ladder) {
-                CROUCH = FALSE;
                 switch_onto_ladder();
+                CROUCH = FALSE;
                 ONTO_Ladder_timer -= 1;
                 if (ONTO_Ladder_timer == 9) {
                     PLAYER.y += TO_COORDS(5);
@@ -134,7 +134,13 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     PLAYER.y += TO_COORDS(13);
                     ONTO_Ladder = FALSE;
                     DOWN_LADDER = TRUE;
-                    DOWN_LADDER_timer = 6;
+                    DOWN_LADDER_timer = 8;
+                    PLAYER.patrol_timer = 8;
+                    // if (LEFT) {
+                    //     SetActorDirection(&PLAYER, DIR_ONTOLADDER_R, PLAYER.animation_phase);
+                    // } else if (RIGHT) {
+                    //     SetActorDirection(&PLAYER, DIR_ONTOLADDER_L, PLAYER.animation_phase);
+                    // }
                 }
 
             } else if (OFF_Ladder) {
@@ -145,15 +151,16 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 OFF_Ladder = SPAWN = LADDER = JUMP = y_Collide = Gravity = FALSE;
             }
             if (DOWN_LADDER) {
-                PLAYER.SpdY = 12;
+                PLAYER.SpdY = 10;
                 switch_ladder();
                 DOWN_LADDER_timer -= 1;
 
                 if (DOWN_LADDER_timer == 0 || (COLLISION_WIDE_MAP[tileindexCB] == 0x00)) {
                     ONTO_Ladder = FALSE;
                     DOWN_LADDER = FALSE;
+                    PLAYER.patrol_timer = 1;
                     // LADDER = TRUE;
-                    switch_ladder();
+                    // switch_ladder();
                 }
             }
 

@@ -96,7 +96,7 @@ void render_actors() {
                 if (current_animation[current_actor->animation_phase] != NULL) {
                     if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE) {
                         current_actor->ON = TRUE;
-                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R)) {
+                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R)) {
                             hiwater += move_metasprite_vflip(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,
@@ -169,12 +169,16 @@ void switch_idle() {
         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
     }
 }
-void switch_onto_ladder(){
-        SetActorDirection(&PLAYER, DIR_ONTOLADDER, 0);
+void switch_onto_ladder() {
+    if (LEFT) {
+        SetActorDirection(&PLAYER, DIR_ONTOLADDER_L, 0);
+    } else if (RIGHT) {
+        SetActorDirection(&PLAYER, DIR_ONTOLADDER_R, 0);
+    }
 }
 void switch_ladder() {
     PLAYER.patrol_timer--;
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_LADDER_L) {
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_LADDER_L || PLAYER.direction == DIR_ONTOLADDER_L) {
         SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
     } else {
         SetActorDirection(&PLAYER, DIR_LADDER_R, 0);
