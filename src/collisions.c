@@ -282,11 +282,6 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 PLAYER.y = TO_COORDS(ty * 8);
                 PLAYER.SpdY = 0;
                 SPAWN = JUMP = y_Collide = Gravity = FALSE;
-                if (LADDER) {
-                    if (COLLISION_WIDE_MAP[tileindexC] == 0x01) {
-                        LADDER = FALSE;
-                    }
-                }
                 switch_land();
             }
         } else if ((COLLISION_WIDE_MAP[tileindexkL] == 0x04) || (COLLISION_WIDE_MAP[tileindexkC] == 0x04) || (COLLISION_WIDE_MAP[tileindexkR] == 0x04)) {
@@ -344,12 +339,6 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             CROUCH = FALSE;
         }
     }
-}
-
-void ladder() {
-    LADDER = TRUE;
-    LEFT_RIGHT();
-    switch_ladder();
 }
 
 // LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
