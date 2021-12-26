@@ -11,7 +11,7 @@ extern Variables bkg;
 extern uint8_t animation_timer;
 extern UINT8 ATTACH;
 const level_t *current_stage;
-//WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
+// WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -26,7 +26,7 @@ void main() {
     SHOW_SPRITES;
     current_stage = &level1;
 
-    GAMEOVER = Gravity = LEFT = RIGHT = ATTACH = LADDER = ONTO_Ladder = OFF_Ladder = DOWN_LADDER = CROUCH = canCROUCH = DROP = FALSE;
+    GAMEOVER = Gravity = LEFT = RIGHT = ATTACH = LADDER = ONTO_Ladder = OFF_Ladder = DOWN_LADDER = DOWN_LADDER_F = CROUCH = canCROUCH = DROP = FALSE;
     SPAWN = JUMP = LADDER_Release = TRUE;
     DROP_timer = 16;
     canCROUCH_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH

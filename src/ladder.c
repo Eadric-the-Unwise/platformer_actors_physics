@@ -4,6 +4,7 @@
 extern UINT8 joy, last_joy;
 extern UINT8 ATTACH, x_Collide, y_Collide;
 UINT8 ONTO_Ladder_timer, DOWN_LADDER_timer;
+UINT8 LADDER, ONTO_Ladder, OFF_Ladder, DOWN_LADDER, DOWN_LADDER_F, LADDER_Release;
 
 void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_Ty, index_By, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCT, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10;
@@ -155,19 +156,25 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 switch_ladder();
                 DOWN_LADDER_timer -= 1;
 
-                if (DOWN_LADDER_timer == 0 || (COLLISION_WIDE_MAP[tileindexCB] == 0x00)) {
+                if (DOWN_LADDER_timer == 0) {
                     ONTO_Ladder = FALSE;
                     DOWN_LADDER = FALSE;
-                    PLAYER.patrol_timer = 1;
+
+                    DOWN_LADDER_F = TRUE;
+                    PLAYER.SpdY = 0;
+                    // if ((CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN)) {
+                    //     PLAYER.patrol_timer = 1;
+                    // }
                     // LADDER = TRUE;
                     // switch_ladder();
                 }
             }
 
-            if ((!ONTO_Ladder) && (!DOWN_LADDER)) {
-                // CROUCH = FALSE;
-                if (PLAYER.SpdY == 0 && PLAYER.patrol_timer > 4) {  // PREVENTS UP DOWN SPAM OF ANIMATION
-                    PLAYER.patrol_timer = 4;
+            if ((ONTO_Ladder) || (DOWN_LADDER)) {
+            } else {  // CROUCH = FALSE;
+                if ((DOWN_LADDER_F) && (CHANGED_BUTTONS & J_DOWN) && (joy & J_DOWN)) {
+                    PLAYER.patrol_timer = 1;
+                    DOWN_LADDER_F = FALSE;
                 }
 
                 if (joy & J_UP) {
@@ -191,6 +198,12 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                         PLAYER.direction = DIR_LADDER_R;
                         PLAYER.patrol_timer = 1;
                     }
+                }
+                if (PLAYER.SpdY == 0 && PLAYER.patrol_timer > 4) {  // PREVENTS UP DOWN SPAM OF ANIMATION
+                    PLAYER.patrol_timer = 4;
+                }
+                if ((DOWN_LADDER_F) && (PLAYER.SpdY != 0)) {
+                    DOWN_LADDER_F = FALSE;
                 }
             }
             PLAYER.SpdX = 0;

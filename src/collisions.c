@@ -1,7 +1,7 @@
 #pragma bank 255
 #include "collisions.h"
 
-UINT8 SPAWN, LADDER, ONTO_Ladder, OFF_Ladder, DOWN_LADDER, LADDER_Release, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;
+UINT8 SPAWN, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;
 UINT8 LEFT, RIGHT;
 UINT8 canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
 // Release_timer

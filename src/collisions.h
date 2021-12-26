@@ -2,7 +2,7 @@
 #include "../res/tiles/collision_wide_map.h"
 #include "scene.h"
 
-extern UINT8 SPAWN, LADDER, ONTO_Ladder, OFF_Ladder, DOWN_LADDER, LADDER_Release, JUMP, Gravity, CROUCH, canCROUCH, DROP, x_Adjust;
+extern UINT8 SPAWN, JUMP, Gravity, CROUCH, canCROUCH, DROP, x_Adjust;
 extern UINT8 LEFT, RIGHT;
 extern UINT8 canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
 extern UINT8 LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
