@@ -112,9 +112,9 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 
         } else if (LADDER) {
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
-            if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexLB] == 0x06)) {
+            if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexLL] == 0x07) || (COLLISION_WIDE_MAP[tileindexLB] == 0x06)) {
                 PLAYER.x = TO_COORDS(tx * 8);
-            } else if ((COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindexRB] == 0x06)) {
+            } else if ((COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindexRL] == 0x07) || (COLLISION_WIDE_MAP[tileindexRB] == 0x06)) {
                 PLAYER.x = TO_COORDS((tx * 8) + 8);  // if on left side of LADDER
             }
 
