@@ -184,7 +184,7 @@ void switch_off_ladder() {
     }
 }
 void switch_ladder() {
-    PLAYER.patrol_timer--;
+    PLAYER.patrol_timer -= 1;
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_LADDER_L || PLAYER.direction == DIR_ONTOLADDER_L) {
         SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
     } else {

@@ -66,18 +66,6 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     RIGHT = FALSE;
                 }
             }
-            // IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
-            if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {
-                if ((joy & J_DOWN) && (!JUMP)) {
-                    // ladder();
-                    LEFT_RIGHT();
-                    LADDER = TRUE;
-                    ONTO_Ladder = TRUE;
-                    ONTO_Ladder_timer = 15;  // 3 animation frames (DOWN, then ONTO_LADDER, ONTO_LADDER)
-                    // animation_timer = 3;
-                }
-            }
-
             // LADDER VERTICAL MOVEMENT
             if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05)) {
                 if (JUMP) {
@@ -109,6 +97,17 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     }
                 }
             }
+            // IF PRESS DOWN WHILE STANDING ON TOP OF LADDER, DESCEND LADDER
+            if ((COLLISION_WIDE_MAP[tileindex6B] == 0x06) && (COLLISION_WIDE_MAP[tileindexL] == 0x06) || (COLLISION_WIDE_MAP[tileindex10B] == 0x06) && (COLLISION_WIDE_MAP[tileindexR] == 0x06)) {
+                if ((joy & J_DOWN) && (!JUMP)) {
+                    // ladder();
+                    LEFT_RIGHT();
+                    LADDER = TRUE;
+                    ONTO_Ladder = TRUE;
+                    ONTO_Ladder_timer = 15;  // 3 animation frames (DOWN, then ONTO_LADDER, ONTO_LADDER)
+                    // animation_timer = 3;
+                }
+            }
 
         } else if (LADDER) {
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
@@ -121,16 +120,8 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             if (COLLISION_WIDE_MAP[tileindexCL] == 0x06 && COLLISION_WIDE_MAP[tileindexCT] == 0x00) {
                 if ((!ONTO_Ladder) && (!DOWN_LADDER)) {
                     UP_LADDER = TRUE;  // ADD OFF LADDER CODE HERE
-                    UP_LADDER_timer = 2;
-                    // if (LEFT) {
-                    //     if (PLAYER.direction == DIR_LADDER_R && PLAYER.patrol_timer > 4) {
-                    //         PLAYER.patrol_timer = 4;
-                    //     }
-                    //     SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
-                    // } else if (RIGHT) {
-                    //     SetActorDirection(&PLAYER, DIR_LADDER_R, 0);
-                    // }
-                    // PLAYER.patrol_timer = 3;
+                    UP_LADDER_timer = 1;
+                    PLAYER.patrol_timer = 2;
                 }
             }
             if (ONTO_Ladder) {
@@ -146,7 +137,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     ONTO_Ladder = FALSE;
                     DOWN_LADDER = TRUE;
                     DOWN_LADDER_timer = 8;
-                    PLAYER.patrol_timer = 8;
+                    PLAYER.patrol_timer = 4;
                     // switch_ladder();
                 }
             }
@@ -172,15 +163,25 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 SPAWN = JUMP = y_Collide = Gravity = FALSE;
                 PLAYER.SpdY = -10;
                 switch_ladder();
-                UP_LADDER_timer -= 1;
+                // PREVENT PLAYER FROM FLICKERING OFF LADDER IF FACING THE WRONG DIRECTION
+                // if (LEFT) {
+                //     if (PLAYER.direction == DIR_LADDER_R && PLAYER.patrol_timer < 3) {
+                //         // PLAYER.patrol_timer = 4;
+                //         SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
+                //     }
+                // } else if (RIGHT) {
+                //     SetActorDirection(&PLAYER, DIR_LADDER_R, 0);
+                // }
+
                 if (UP_LADDER_timer == 0) {
                     UP_LADDER = FALSE;
                     PLAYER.SpdY = 0;
-                    PLAYER.y -= TO_COORDS(7);  // 9
+                    PLAYER.y -= TO_COORDS(8);  // 9
                     // switch_off_ladder();
                     OFF_LADDER = TRUE;
                     OFF_LADDER_timer = 12;
                 }
+                UP_LADDER_timer -= 1;
             }
             if (OFF_LADDER) {
                 OFF_LADDER_timer -= 1;
@@ -188,6 +189,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 if (OFF_LADDER_timer == 0) {
                     PLAYER.y -= TO_COORDS(5);
                     OFF_LADDER = LADDER = FALSE;
+                    PLAYER.SpdY = -12;
                 }
             }
 
@@ -220,7 +222,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                         PLAYER.patrol_timer = 1;
                     }
                 }
-                if (PLAYER.SpdY == 0 && PLAYER.patrol_timer > 4) {  // PREVENTS UP DOWN SPAM OF ANIMATION
+                if (PLAYER.SpdY == 0) {  // PREVENTS UP DOWN SPAM OF ANIMATION
                     PLAYER.patrol_timer = 4;
                 }
                 if ((DOWN_LADDER_F) && (PLAYER.SpdY != 0)) {
