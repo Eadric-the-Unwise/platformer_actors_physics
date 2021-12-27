@@ -241,7 +241,9 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
 }
 void ladder() {
+    // PLAYER.SpdX = 0;
     LADDER = TRUE;
+    // JUMP = FALSE;
     LEFT_RIGHT();
     switch_ladder();
 }

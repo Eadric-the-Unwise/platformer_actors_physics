@@ -140,7 +140,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
             }
         }
-        LADDER = FALSE;
+        LADDER = UP_LADDER = DOWN_LADDER = FALSE;
         JUMP = Gravity = LADDER_Release = TRUE;
         switch_jump();
     }

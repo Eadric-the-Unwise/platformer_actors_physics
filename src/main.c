@@ -111,7 +111,7 @@ void main() {
             CROUCH = TRUE;
         }
 
-        if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder)) {
+        if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder) && (!OFF_LADDER)) {
             jump();
         }
 
