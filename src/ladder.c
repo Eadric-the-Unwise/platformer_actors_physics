@@ -67,7 +67,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
             }
             // LADDER VERTICAL MOVEMENT
-            if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05)) {
+            if ((COLLISION_WIDE_MAP[tileindex6] == 0x05) && (COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindex10] == 0x05) && (COLLISION_WIDE_MAP[tileindexRL] == 0x05) || (COLLISION_WIDE_MAP[tileindex6] == 0x07) && (COLLISION_WIDE_MAP[tileindexLL] == 0x07) || (COLLISION_WIDE_MAP[tileindex10] == 0x07) && (COLLISION_WIDE_MAP[tileindexRL] == 0x07)) {
                 if (JUMP) {
                     if (PLAYER.SpdX == 0) {
                         if (PLAYER.SpdY == 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
@@ -75,7 +75,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                                 ladder();
                             }
                         }
-                    } else if (PLAYER.SpdX != 0 || (CHANGED_BUTTONS & J_UP) && (joy & J_UP)) {
+                    } else if (PLAYER.SpdX != 0 && (joy & J_UP)) {
                         if (!LADDER_Release) {
                             if (PLAYER.SpdY < 0) {
                                 PLAYER.SpdY = -16;  //-JUMP_IMPULSE / 4
@@ -87,13 +87,14 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     }
                 } else if ((!JUMP) && (!CROUCH)) {
                     if (!LADDER_Release) {
-                        if ((COLLISION_WIDE_MAP[tileindexCT] == 0x07) || (COLLISION_WIDE_MAP[tileindexCT] == 0x06) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06)) {
+                        if ((COLLISION_WIDE_MAP[tileindexCT] == 0x07) || (COLLISION_WIDE_MAP[tileindexCT] == 0x05) || (COLLISION_WIDE_MAP[tileindexCT] == 0x06) || (COLLISION_WIDE_MAP[tileindexCB] == 0x06)) {
                             if (joy & J_UP) {
                                 ladder();
                             }
-                        } else if (COLLISION_WIDE_MAP[tileindexCB] != 0x06) {
-                            ladder();
                         }
+                        // else if (COLLISION_WIDE_MAP[tileindexCB] != 0x06) {
+                        //     ladder();
+                        // }
                     }
                 }
             }
