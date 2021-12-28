@@ -194,7 +194,7 @@ void anim_level1() {
         nptr++;
         next_actor = &active_actors[*nptr];
     }
-    for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT SET OF SPRITES
+    for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT SET OF NPC SPRITES
         current_actor->RENDER = TRUE;
 
         if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)

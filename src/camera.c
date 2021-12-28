@@ -7,9 +7,9 @@ extern UINT8 joy;
 
 void set_camera() {
     SCY_REG = bkg.camera_y;
-    SCX_REG = (UINT8)(bkg.camera_x >> 4u);
+    SCX_REG = (bkg.camera_x >> 4u);
 
-    bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
+    bkg.map_pos_y = (bkg.camera_y >> 3u);
     if (bkg.map_pos_y != bkg.old_map_pos_y) {
         if (bkg.camera_y < bkg.old_camera_y) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, MIN(21u, bkg.level_map_width - bkg.map_pos_x), 1, bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
@@ -20,7 +20,7 @@ void set_camera() {
         bkg.old_map_pos_y = bkg.map_pos_y;
     }
     // left or right
-    bkg.map_pos_x = (UINT8)(bkg.camera_x >> 7u);
+    bkg.map_pos_x = (bkg.camera_x >> 7u);
     if (bkg.map_pos_x != bkg.old_map_pos_x) {
         if (bkg.camera_x < bkg.old_camera_x) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 1, MIN(19u, bkg.level_map_height - bkg.map_pos_y), bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
@@ -43,8 +43,15 @@ inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, 
     bkg.level_map_bank = bank;
 }
 void render_camera(UINT8 playerx, INT16 camx) {
-    //THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
+    // THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
     if ((camx > 0) && (camx < bkg.camera_max_x)) {
+        if (playerx > 118) {
+            UINT8 px_reset;
+            px_reset = playerx - 118;
+            // bkg.camera_x += TO_COORDS(px_reset);
+            PLAYER.SpdX += TO_COORDS(px_reset);
+            PLAYER.x -= PLAYER.SpdX;
+        }
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
     } else
