@@ -45,13 +45,13 @@ inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, 
 void render_camera(UINT8 playerx, INT16 camx) {
     // THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
     if ((camx > 0) && (camx < bkg.camera_max_x)) {
-        // if (playerx > 118) {
-        //     UINT8 px_reset;
-        //     px_reset = playerx - 118;
-        //     // bkg.camera_x += TO_COORDS(px_reset);
-        //     PLAYER.SpdX += TO_COORDS(px_reset);
-        //     PLAYER.x -= PLAYER.SpdX;
-        // }
+        if (playerx > 118) {
+            UINT8 px_reset;
+            px_reset = playerx - 118;
+            // bkg.camera_x += TO_COORDS(px_reset);
+            PLAYER.SpdX += TO_COORDS(px_reset);
+            PLAYER.x -= PLAYER.SpdX;
+        }
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
 
