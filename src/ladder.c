@@ -111,6 +111,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
 
         } else if (LADDER) {
+            // TRY ADJUSTING THIS TO WORK WITH THE CAMERA USING SPDX
             UINT8 tx = (TO_PIXELS(PLAYER.x) / 8);
             if ((COLLISION_WIDE_MAP[tileindexLL] == 0x05) || (COLLISION_WIDE_MAP[tileindexLL] == 0x07) || (COLLISION_WIDE_MAP[tileindexLB] == 0x06)) {
                 PLAYER.x = TO_COORDS(tx * 8);
