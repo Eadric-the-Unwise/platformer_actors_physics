@@ -54,6 +54,7 @@ void render_camera(UINT8 playerx, INT16 camx) {
         }
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
+
     } else
         PLAYER.x += PLAYER.SpdX;
     if ((camx - 1) <= 0) {

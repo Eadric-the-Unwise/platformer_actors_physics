@@ -17,6 +17,7 @@ const level_t *current_stage;
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /******************************/
 void main() {
+    // DISABLE_VBL_TRANSFER;
     DISPLAY_OFF;
     BGP_REG = 0xE4;
     OBP0_REG = 0xE4;
@@ -209,7 +210,21 @@ void main() {
             PLAYER.y += PLAYER.SpdY;
         }
         //+- PLAYER.SpdX
+        render_camera(px, TO_PIXELS(bkg.camera_x));
 
+        // call level animation hook (if any)
+        if (animate_level) animate_level();
+
+        if (bkg.redraw) {
+            wait_vbl_done();
+            bkg.redraw = FALSE;
+            refresh_OAM();
+            set_camera();
+
+        } else {
+            wait_vbl_done();
+            refresh_OAM();
+        }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
@@ -230,21 +245,6 @@ void main() {
         }
         // render all actors on screen
         // MAY WANT TO BRING THE BKG.REDRAW DOWN INTO HERE AND DON'T RENDER ACTORS UNDER WAIT_BVL_DONE
-        render_camera(px, TO_PIXELS(bkg.camera_x));
-
-        // call level animation hook (if any)
-        if (animate_level) animate_level();
-
-        if (bkg.redraw) {
-            wait_vbl_done();
-            bkg.redraw = FALSE;
-            refresh_OAM();
-            set_camera();
-
-        } else {
-            wait_vbl_done();
-            refresh_OAM();
-        }
         render_actors();
         if (GAMEOVER) {
             gameover();
