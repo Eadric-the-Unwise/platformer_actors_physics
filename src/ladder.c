@@ -29,7 +29,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     index_y = (newplayery - UD_Offset_Y) / 8;
     index_Ty = (newplayery - 26) / 8;
     index_By = (newplayery) / 8;
-    index_Ly = (newplayery - UD_Offset_LY) / 8;  // LADDER COLLISION CHECK
+    index_Ly = (newplayery - UD_Offset_LY) / 8;  // LADDER COLLISION CHECKS
     // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexL = COLLISION_WIDE_MAPWidth * index_y + indexLx;  // THESE ARE USED MOSTLY FOR BASIC COLLISION CHECKS (NOT LADDERS)
     tileindexC = COLLISION_WIDE_MAPWidth * index_y + indexCx;  // AS THEY FLUCTUATE DEPENDING ON THE SPD OF THE PLAYER
