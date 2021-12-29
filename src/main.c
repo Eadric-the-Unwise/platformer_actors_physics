@@ -27,7 +27,6 @@ void main() {
     SHOW_BKG;
     SHOW_SPRITES;
     current_stage = &level1;
-
     GAMEOVER = Gravity = LEFT = RIGHT = ATTACH = LADDER = ONTO_Ladder = DOWN_LADDER = DOWN_LADDER_F = UP_LADDER = OFF_LADDER = CROUCH = canCROUCH = DROP = FALSE;
     SPAWN = JUMP = LADDER_Release = TRUE;
     DROP_timer = 16;
@@ -212,7 +211,6 @@ void main() {
         }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
-
         // // Change to IDLE state when not moving
         if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
@@ -226,10 +224,13 @@ void main() {
         if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
             switch_down();
         }
+
         // UPDATE THE CAMERA POSITION SETTINGS
         render_camera(px, TO_PIXELS(bkg.camera_x));
         // UPDATE CURRENT LEVEL NPC ANIMATIONS AND X/Y POSITIONS
         if (animate_level) animate_level();  // call level animation hook (if any)
+        // CHECK FOR NPC COLLISIONS
+        if (collide_level) collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_actors();
 
@@ -245,7 +246,7 @@ void main() {
             wait_vbl_done();
             refresh_OAM();
         }
-        if (collide_level) collide_level();
+
         if (GAMEOVER) {
             gameover();
         }

@@ -141,14 +141,15 @@ UINT8 cam4[1] = {4};
 #define CAM1_COUNT 3
 #define CAM2_COUNT 2
 #define CAM3_COUNT 2
-#define CAM4_COUNT 1
-
+#define CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
+// CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
 void anim_level1() {
     UINT8 *ptr = NULL;   // pointer // simply = NULL to bypass compiler error lol
     UINT8 *pptr = NULL;  // previous pointer
     UINT8 *nptr = NULL;  // next pointer
 
-    UINT16 camera_x = TO_PIXELS(bkg.camera_x);
+    INT16 camera_x = TO_PIXELS(bkg.camera_x);
+    // UINT16 playerx = TO_PIXELS(PLAYER.x);
     UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
     UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
     UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
@@ -184,13 +185,11 @@ void anim_level1() {
 
     for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF SPRITES
         prev_actor->RENDER = FALSE;
-        // prev_actor->ON = FALSE;
         pptr++;
         prev_actor = &active_actors[*pptr];
     }
     for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF NEXT SET OF SPRITES
         next_actor->RENDER = FALSE;
-        // next_actor->ON = FALSE;
         nptr++;
         next_actor = &active_actors[*nptr];
     }
@@ -200,6 +199,15 @@ void anim_level1() {
         if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
             current_actor->x -= PLAYER.SpdX;
         }
+        // if ((camera_x - 1) <= 0) {
+        //     if ((joy & J_RIGHT) && (playerx >= 118)) {
+        //         current_actor->x -= PLAYER.SpdX;
+        //     }
+        // } else if ((camera_x + 1) >= bkg.camera_max_x) {
+        //     if ((joy & J_LEFT) && (playerx <= 118)) {
+        //         current_actor->x -= PLAYER.SpdX;
+        //     }
+        // }
         if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {  // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
             if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
                 current_actor->patrol_timer--;

@@ -49,7 +49,7 @@ void render_camera(UINT8 playerx, INT16 camx) {
         bkg.redraw = TRUE;
     } else
         PLAYER.x += PLAYER.SpdX;
-    if ((camx - 1) < 0) {
+    if ((camx - 1) <= 0) {
         if ((joy & J_RIGHT) && (playerx >= 118)) {
             bkg.camera_x += PLAYER.SpdX;
             bkg.redraw = TRUE;
@@ -57,7 +57,7 @@ void render_camera(UINT8 playerx, INT16 camx) {
                 PLAYER.x = TO_COORDS(118);
             }
         }
-    } else if ((camx + 1) > bkg.camera_max_x) {
+    } else if ((camx + 1) >= bkg.camera_max_x) {
         if ((joy & J_LEFT) && (playerx <= 118)) {
             bkg.camera_x += PLAYER.SpdX;
             bkg.redraw = TRUE;
