@@ -226,7 +226,7 @@ void main() {
         if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
             switch_down();
         }
-        // UPDATE CAMERA POSITION SETTINGS
+        // UPDATE THE CAMERA POSITION SETTINGS
         render_camera(px, TO_PIXELS(bkg.camera_x));
         // UPDATE CURRENT LEVEL NPC ANIMATIONS AND X/Y POSITIONS
         if (animate_level) animate_level();  // call level animation hook (if any)
