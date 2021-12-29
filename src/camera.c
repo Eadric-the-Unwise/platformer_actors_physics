@@ -7,9 +7,9 @@ extern UINT8 joy;
 
 void set_camera() {
     shadow_scy = bkg.camera_y;
-    shadow_scx = (UINT8)(bkg.camera_x >> 4u);
+    shadow_scx = (bkg.camera_x >> 4u);
 
-    bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
+    bkg.map_pos_y = (bkg.camera_y >> 3u);
     if (bkg.map_pos_y != bkg.old_map_pos_y) {
         if (bkg.camera_y < bkg.old_camera_y) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, MIN(21u, bkg.level_map_width - bkg.map_pos_x), 1, bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
@@ -20,7 +20,7 @@ void set_camera() {
         bkg.old_map_pos_y = bkg.map_pos_y;
     }
     // left or right
-    bkg.map_pos_x = (UINT8)(bkg.camera_x >> 7u);
+    bkg.map_pos_x = (bkg.camera_x >> 7u);
     if (bkg.map_pos_x != bkg.old_map_pos_x) {
         if (bkg.camera_x < bkg.old_camera_x) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 1, MIN(19u, bkg.level_map_height - bkg.map_pos_y), bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
@@ -47,23 +47,26 @@ void render_camera(UINT8 playerx, INT16 camx) {
     if ((camx > 0) && (camx < bkg.camera_max_x)) {
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
+        if (playerx != 118) {
+            PLAYER.x = TO_COORDS(118);
+        }
     } else
         PLAYER.x += PLAYER.SpdX;
     if ((camx - 1) <= 0) {
         if ((joy & J_RIGHT) && (playerx >= 118)) {
             bkg.camera_x += PLAYER.SpdX;
             bkg.redraw = TRUE;
-            if (playerx != 118) {
-                PLAYER.x = TO_COORDS(118);
-            }
+            // if (playerx != 118) {
+            //     PLAYER.x = TO_COORDS(118);
+            // }
         }
     } else if ((camx + 1) >= bkg.camera_max_x) {
         if ((joy & J_LEFT) && (playerx <= 118)) {
             bkg.camera_x += PLAYER.SpdX;
             bkg.redraw = TRUE;
-            if (playerx != 118) {
-                PLAYER.x = TO_COORDS(118);
-            }
+            // if (playerx != 118) {
+            //     PLAYER.x = TO_COORDS(118);
+            // }
         }
     }
 }
