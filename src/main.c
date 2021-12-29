@@ -166,6 +166,18 @@ void main() {
                 }
             }
         }
+        px = TO_PIXELS(PLAYER.x);
+        py = TO_PIXELS(PLAYER.y);
+
+        // Y-AXIS COLLISION CHECK / /LADDER CHECK
+        check_UD(px, py, TO_PIXELS(bkg.camera_x));
+
+        if ((CROUCH) && (!canCROUCH)) {
+            if (!(joy & J_DOWN)) {
+                check_C(px, py, TO_PIXELS(bkg.camera_x));
+            }
+        }
+
         if (PLAYER.SpdX < 0) {
             if (PLAYER.SpdX != -MAX_WALK_SPEED) {
                 PLAYER.SpdX += FRICTION;
@@ -191,17 +203,6 @@ void main() {
 
             } else if (PLAYER.SpdX < 0) {
                 check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
-            }
-        }
-        px = TO_PIXELS(PLAYER.x);
-        py = TO_PIXELS(PLAYER.y);
-
-        // Y-AXIS COLLISION CHECK / /LADDER CHECK
-        check_UD(px, py, TO_PIXELS(bkg.camera_x));
-
-        if ((CROUCH) && (!canCROUCH)) {
-            if (!(joy & J_DOWN)) {
-                check_C(px, py, TO_PIXELS(bkg.camera_x));
             }
         }
 
