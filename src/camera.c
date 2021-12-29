@@ -6,8 +6,8 @@ Variables bkg;
 extern UINT8 joy;
 
 void set_camera() {
-    SCY_REG = bkg.camera_y;
-    SCX_REG = (UINT8)(bkg.camera_x >> 4u);
+    shadow_scy = bkg.camera_y;
+    shadow_scx = (UINT8)(bkg.camera_x >> 4u);
 
     bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
     if (bkg.map_pos_y != bkg.old_map_pos_y) {
@@ -43,21 +43,27 @@ inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, 
     bkg.level_map_bank = bank;
 }
 void render_camera(UINT8 playerx, INT16 camx) {
-    //THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
+    // THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
     if ((camx > 0) && (camx < bkg.camera_max_x)) {
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
     } else
         PLAYER.x += PLAYER.SpdX;
-    if ((camx - 1) <= 0) {
-        if ((joy & J_RIGHT) && (PLAYER.SpdX > 0) && (playerx >= 118)) {
+    if ((camx - 1) < 0) {
+        if ((joy & J_RIGHT) && (playerx >= 118)) {
             bkg.camera_x += PLAYER.SpdX;
             bkg.redraw = TRUE;
+            if (playerx != 118) {
+                PLAYER.x = TO_COORDS(118);
+            }
         }
-    } else if ((camx + 1) >= bkg.camera_max_x) {
-        if ((joy & J_LEFT) && (PLAYER.SpdX < 0) && (playerx <= 118)) {
+    } else if ((camx + 1) > bkg.camera_max_x) {
+        if ((joy & J_LEFT) && (playerx <= 118)) {
             bkg.camera_x += PLAYER.SpdX;
             bkg.redraw = TRUE;
+            if (playerx != 118) {
+                PLAYER.x = TO_COORDS(118);
+            }
         }
     }
 }

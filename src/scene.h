@@ -150,6 +150,8 @@ void gameover();
 extern UINT8 GAMEOVER;
 extern uint8_t animation_timer;
 
+extern uint8_t shadow_scx, shadow_scy;
+
 // fuction body is inlined into the code
 inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase) {
     if (actor->direction != dir) {

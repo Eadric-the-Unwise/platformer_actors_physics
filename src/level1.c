@@ -96,7 +96,7 @@ const actor_t level1_actors[5] = {
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_LEFT,
-     .NPC_type = WALK,
+     .NPC_type = PISTOL,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -135,12 +135,12 @@ const level_t level1 = {
     .collide_hook = npc_collisions_level1};
 
 UINT8 cam1[3] = {1, 2, 3};
-UINT8 cam2[3] = {3, 4};
-UINT8 cam3[2] = {4};
+UINT8 cam2[2] = {3, 4};
+UINT8 cam3[2] = {3, 4};
 UINT8 cam4[1] = {4};
 #define CAM1_COUNT 3
 #define CAM2_COUNT 2
-#define CAM3_COUNT 1
+#define CAM3_COUNT 2
 #define CAM4_COUNT 1
 
 void anim_level1() {

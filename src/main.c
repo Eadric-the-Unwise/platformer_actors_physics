@@ -11,12 +11,14 @@ extern Variables bkg;
 extern uint8_t animation_timer;
 extern UINT8 ATTACH;
 const level_t *current_stage;
+uint8_t shadow_scx = 0, shadow_scy = 0;
 // WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
 
 /******************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /******************************/
 void main() {
+    DISABLE_VBL_TRANSFER;
     DISPLAY_OFF;
     BGP_REG = 0xE4;
     OBP0_REG = 0xE4;
@@ -208,22 +210,6 @@ void main() {
         if (!ATTACH) {
             PLAYER.y += PLAYER.SpdY;
         }
-        //+- PLAYER.SpdX
-        render_camera(px, TO_PIXELS(bkg.camera_x));
-
-        // call level animation hook (if any)
-        if (animate_level) animate_level();
-
-        if (bkg.redraw) {
-            wait_vbl_done();
-            bkg.redraw = FALSE;
-            refresh_OAM();
-            set_camera();
-
-        } else {
-            wait_vbl_done();
-            refresh_OAM();
-        }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
@@ -236,15 +222,30 @@ void main() {
                 }
             }
         }
-        if (collide_level) collide_level();
-
         // DOWN while standing still
         if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
             switch_down();
         }
-        // render all actors on screen
-        // MAY WANT TO BRING THE BKG.REDRAW DOWN INTO HERE AND DON'T RENDER ACTORS UNDER WAIT_BVL_DONE
+        // UPDATE CAMERA POSITION SETTINGS
+        render_camera(px, TO_PIXELS(bkg.camera_x));
+        // UPDATE CURRENT LEVEL NPC ANIMATIONS AND X/Y POSITIONS
+        if (animate_level) animate_level();  // call level animation hook (if any)
+        // RENDER ALL CURRENT ACTORS ON SCREEN
         render_actors();
+
+        if (bkg.redraw) {
+            set_camera();
+            wait_vbl_done();
+            refresh_OAM();
+            SCX_REG = shadow_scx;
+            SCY_REG = shadow_scy;
+            bkg.redraw = FALSE;
+
+        } else {
+            wait_vbl_done();
+            refresh_OAM();
+        }
+        if (collide_level) collide_level();
         if (GAMEOVER) {
             gameover();
         }

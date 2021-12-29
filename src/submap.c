@@ -32,8 +32,8 @@ void init_submap() {
 
     bkg.camera_style = horizontal_cam;
 
-    SCX_REG = bkg.camera_x;
-    SCY_REG = bkg.camera_y;
+    shadow_scx = bkg.camera_x;
+    shadow_scy = bkg.camera_y;
 
     SHOW_BKG;
 }
