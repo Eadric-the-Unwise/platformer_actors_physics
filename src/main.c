@@ -226,7 +226,7 @@ void main() {
         }
 
         // UPDATE THE CAMERA POSITION SETTINGS
-        render_camera(px, TO_PIXELS(bkg.camera_x));
+        // render_camera(px, TO_PIXELS(bkg.camera_x));
         // UPDATE CURRENT LEVEL NPC ANIMATIONS AND X/Y POSITIONS
         if (animate_level) animate_level();  // call level animation hook (if any)
         // CHECK FOR NPC COLLISIONS

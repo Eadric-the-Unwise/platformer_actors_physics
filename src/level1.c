@@ -149,6 +149,7 @@ void anim_level1() {
     UINT8 *nptr = NULL;  // next pointer
 
     INT16 camera_x = TO_PIXELS(bkg.camera_x);
+    UINT8 player_x = TO_PIXELS(PLAYER.x);
     // UINT16 playerx = TO_PIXELS(PLAYER.x);
     UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
     UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
@@ -183,6 +184,26 @@ void anim_level1() {
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
 
+    if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {
+        bkg.camera_x += PLAYER.SpdX;
+        bkg.redraw = TRUE;
+        // if (player_x != 118) {
+        //     PLAYER.x = TO_COORDS(118);
+        // }
+    } else
+        PLAYER.x += PLAYER.SpdX;
+    if ((camera_x - 1) <= 0) {
+        if ((joy & J_RIGHT) && (player_x >= 118)) {
+            bkg.camera_x += PLAYER.SpdX;
+            bkg.redraw = TRUE;
+        }
+    } else if ((camera_x + 1) >= bkg.camera_max_x) {
+        if ((joy & J_LEFT) && (player_x <= 118)) {
+            bkg.camera_x += PLAYER.SpdX;
+            bkg.redraw = TRUE;
+        }
+    }
+
     for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF SPRITES
         prev_actor->RENDER = FALSE;
         pptr++;
@@ -195,8 +216,8 @@ void anim_level1() {
     }
     for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT SET OF SPRITES
         current_actor->RENDER = TRUE;
-
-        if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
+        INT16 camx = TO_PIXELS(bkg.camera_x);
+        if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
             current_actor->x -= PLAYER.SpdX;
         }
         // if ((camera_x - 1) <= 0) {
