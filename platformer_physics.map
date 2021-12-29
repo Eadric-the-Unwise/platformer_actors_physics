@@ -29,7 +29,7 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      0000025A  l__HOME   |    0000035F  l__DATA   |    00001106  l__INITIA
      00001106  l__INITIA |    00002000  _rROMB0   |    00002509  l__CODE  
      00002709  s__HOME   |    00002963  s__BASE   |    00002963  s__CODE_0
-     00002963  s__INITIA |    00002963  s__LIT    |    00002A48  l__CODE_1
+     00002963  s__INITIA |    00002963  s__LIT    |    00002B6C  l__CODE_1
      00003000  _rROMB1   |    00003A69  s__GSINIT |    00003A75  s__GSFINA
      00004000  _rRAMB    |    00008000  __VRAM    |    00008000  __VRAM800
      00008800  __VRAM880 |    00009000  __VRAM900 |    00009800  __SCRN0  
@@ -369,56 +369,56 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_1                00014000    00002A48 =       10824. bytes (REL,CON)
+_CODE_1                00014000    00002B6C =       11116. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      00014000  _check_LR |    00014332  _check_J  |    00014978  _check_UD
      00014F0F  _check_Dr |    00014FE1  _check_C  |    000150A6  _overlap 
      00015172  _check_LA |    000159B0  _ladder   |    000159BB  _anim_lev
-     00015F7D  _level1_a |    00016158  _level1   |    00016161  _npc_coll
-     000164B3  _animate_ |    0001661D  _level2_a |    00016799  _level2  
-     000167A2  _init_sub |    000168B8  _enemy_ar |    00016978  _enemy_ar
-     00016984  _enemy_ar |    00016990  _enemy_ar |    0001699C  _enemy_ar
-     000169A0  _enemy_ar |    000169A6  _NPC_elec |    00016A26  _NPC_elec
-     00016A32  _NPC_elec |    00016A3E  _NPC_elec |    00016A42  _NPC_elec
+     000160A1  _level1_a |    0001627C  _level1   |    00016285  _npc_coll
+     000165D7  _animate_ |    00016741  _level2_a |    000168BD  _level2  
+     000168C6  _init_sub |    000169DC  _enemy_ar |    00016A9C  _enemy_ar
+     00016AA8  _enemy_ar |    00016AB4  _enemy_ar |    00016AC0  _enemy_ar
+     00016AC4  _enemy_ar |    00016ACA  _NPC_elec |    00016B4A  _NPC_elec
+     00016B56  _NPC_elec |    00016B62  _NPC_elec |    00016B66  _NPC_elec
 ASxxxx Linker V03.00 + NoICE + sdld,  page 30.
 
 Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc17760.rel
+C:\Users\User\AppData\Local\Temp/lcc4560.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc17761.rel
+C:\Users\User\AppData\Local\Temp/lcc4561.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc17762.rel
+C:\Users\User\AppData\Local\Temp/lcc4562.rel
                                           [ ladder ]
-C:\Users\User\AppData\Local\Temp/lcc17763.rel
+C:\Users\User\AppData\Local\Temp/lcc4563.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc17764.rel
+C:\Users\User\AppData\Local\Temp/lcc4564.rel
                                           [ level2 ]
-C:\Users\User\AppData\Local\Temp/lcc17765.rel
+C:\Users\User\AppData\Local\Temp/lcc4565.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc17766.rel
+C:\Users\User\AppData\Local\Temp/lcc4566.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc17767.rel
+C:\Users\User\AppData\Local\Temp/lcc4567.rel
                                           [ submap ]
-C:\Users\User\AppData\Local\Temp/lcc17768.rel
+C:\Users\User\AppData\Local\Temp/lcc4568.rel
                                           [ brick_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc17769.rel
+C:\Users\User\AppData\Local\Temp/lcc4569.rel
                                           [ brick_wide_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc177610.rel
+C:\Users\User\AppData\Local\Temp/lcc45610.rel
                                           [ collision_wide_map ]
-C:\Users\User\AppData\Local\Temp/lcc177611.rel
+C:\Users\User\AppData\Local\Temp/lcc45611.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc177612.rel
+C:\Users\User\AppData\Local\Temp/lcc45612.rel
                                           [ elevator ]
-C:\Users\User\AppData\Local\Temp/lcc177613.rel
+C:\Users\User\AppData\Local\Temp/lcc45613.rel
                                           [ enemy_arrow ]
-C:\Users\User\AppData\Local\Temp/lcc177614.rel
+C:\Users\User\AppData\Local\Temp/lcc45614.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc177615.rel
+C:\Users\User\AppData\Local\Temp/lcc45615.rel
                                           [ stage_drop_tiles ]
 
 
