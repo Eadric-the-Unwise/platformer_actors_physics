@@ -34,7 +34,9 @@ void main() {
     canCROUCH_Ftimer = 8;  // TURN canCROUCH TO FALSE WHEN REACH COUNTDOWN
     load_level(current_stage);
     if (load_submap) load_submap();
+    load_bullet_data(hiwater);
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
+
     // switch on display after everything is ready
     DISPLAY_ON;
 

@@ -133,6 +133,12 @@ const level_t level1 = {
     .animate_hook = anim_level1,  // function that put life into the scene
     .collide_hook = npc_collisions_level1};
 
+void load_bullet_data(UINT8 hiwater) {
+    set_sprite_data(hiwater, (sizeof(bullet_data) >> 4), bullet_data);
+    // hiwater += (sizeof(smoke_data) >> 4);
+    // return hiwater;
+}
+
 UINT8 cam1[3] = {1, 2, 3};
 UINT8 cam2[2] = {3, 4};
 UINT8 cam3[2] = {3, 4};

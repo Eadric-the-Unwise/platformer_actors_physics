@@ -5,6 +5,7 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
 
+#include "../res/tiles/bullet.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
 #include "../res/tiles/stage_drop_collision.h"
@@ -129,6 +130,7 @@ extern animate_level_t animate_level;
 extern collide_level_t collide_level;
 extern load_submap_t load_submap;
 extern UINT8 total_actors_count;
+extern UINT8 hiwater;
 
 extern const level_t *current_stage;
 void load_level(const level_t *level);

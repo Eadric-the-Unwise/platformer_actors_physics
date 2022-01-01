@@ -15,14 +15,15 @@ UINT8 total_actors_count;                  // amount of actors that are currentl
 animate_level_t animate_level = NULL;  // level animation function
 collide_level_t collide_level = NULL;  // level animation function
 load_submap_t load_submap = NULL;
+UINT8 hiwater;
 
 /******************************/
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS
 /******************************/
-void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
+UINT8 load_scene_actors(const actor_t *actor, uint8_t actors_count) {
     actor_t *current_actor = active_actors;
 
-    UINT8 hiwater = 0;
+    hiwater = 0;
     for (UINT8 i = actors_count; i != 0; i--) {  // counter direction does not matter, because pointer is moved. only number of iterations matter.
         if (actor->copy == TRUE) {
             hiwater -= actor->tile_count;
@@ -57,6 +58,7 @@ void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         actor++;
     }
     total_actors_count = actors_count;  // copies from ROM to RAM
+    return hiwater;
 }
 
 void load_level(const level_t *level) {
