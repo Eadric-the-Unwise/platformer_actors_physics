@@ -1,6 +1,6 @@
 /*
 
- BRICK_WIDE_MAP.H
+ STAGE_DROP_MAP.H
 
  Map Include File.
 
@@ -18,10 +18,10 @@
 
 */
 
-#define BRICK_WIDE_MAPWidth 100
-#define BRICK_WIDE_MAPHeight 18
-#define BRICK_WIDE_MAPBank 0
+#define STAGE_DROP_MAPWidth 100
+#define STAGE_DROP_MAPHeight 18
+#define STAGE_DROP_MAPBank 0
 
-extern unsigned char BRICK_WIDE_MAP[];
+extern unsigned char STAGE_DROP_MAP[];
 
-/* End of BRICK_WIDE_MAP.H */
+/* End of STAGE_DROP_MAP.H */

@@ -5,17 +5,15 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
 
-#include "../res/tiles/brick_wide_map.h"
-#include "../res/tiles/brick_wide_tiles.h"
-#include "../res/tiles/collision_wide_map.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
-#include "../res/tiles/enemy_arrow.h"
+#include "../res/tiles/stage_drop_collision.h"
+#include "../res/tiles/stage_drop_map.h"
+#include "../res/tiles/stage_drop_tiles.h"
 #include "camera.h"
 #include "collisions.h"
 #include "ladder.h"
 #include "level1.h"
-#include "level2.h"
 
 #define MAX_ACTIVE_ACTORS 8
 #define ACTOR_DETECTIVE 0

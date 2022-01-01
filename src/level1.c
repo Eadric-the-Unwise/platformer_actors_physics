@@ -7,7 +7,6 @@
 #include "../res/tiles/NPC_electric.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
-#include "../res/tiles/enemy_arrow.h"
 extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;

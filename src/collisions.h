@@ -1,5 +1,5 @@
-#include "../res/tiles/brick_wide_map.h"
-#include "../res/tiles/collision_wide_map.h"
+#include "../res/tiles/stage_drop_collision.h"
+#include "../res/tiles/stage_drop_map.h"
 #include "scene.h"
 
 extern UINT8 SPAWN, JUMP, Gravity, CROUCH, canCROUCH, DROP, x_Adjust;

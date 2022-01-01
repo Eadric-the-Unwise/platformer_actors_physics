@@ -1,6 +1,6 @@
 /*
 
- BRICK_WIDE_MAP.C
+ STAGE_DROP_MAP.C
 
  Map Source File.
 
@@ -18,11 +18,11 @@
 
 */
 
-#define BRICK_WIDE_MAPWidth 100
-#define BRICK_WIDE_MAPHeight 18
-#define BRICK_WIDE_MAPBank 0
+#define STAGE_DROP_MAPWidth 100
+#define STAGE_DROP_MAPHeight 18
+#define STAGE_DROP_MAPBank 0
 
-unsigned char BRICK_WIDE_MAP[] =
+unsigned char STAGE_DROP_MAP[] =
 {
   0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02,
   0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02,
@@ -206,4 +206,4 @@ unsigned char BRICK_WIDE_MAP[] =
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 };
 
-/* End of BRICK_WIDE_MAP.C */
+/* End of STAGE_DROP_MAP.C */
