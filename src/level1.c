@@ -126,9 +126,9 @@ const actor_t level1_actors[6] = {
      .animation_phase = 0,
      .copy = FALSE},
     // 5 BULLET
-    {.x = TO_COORDS(120),
+    {.x = TO_COORDS(148),
      .y = TO_COORDS(136),
-     .SpdX = 0,
+     .SpdX = 8,
      .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
@@ -147,8 +147,8 @@ const actor_t level1_actors[6] = {
      .animations_props = {ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE,
-     .RENDER = TRUE,
-     .ON = TRUE}};
+     .RENDER = FALSE,
+     .ON = FALSE}};
 
 const level_t level1 = {
     .submap_hook = init_submap,  // call this in collision
@@ -286,10 +286,25 @@ void anim_level1() {
                 if (actor_x > 196) {
                     current_actor->KILL = TRUE;  // KILL NPC IS HE GOES OFF SCREEN TO THE RIGHT TOO FAR
                 }
+            } else if (current_actor->NPC_type == BULLET) {
             }
         }
         ptr++;
         current_actor = &active_actors[*ptr];
+    }
+    if ((CHANGED_BUTTONS & J_B) && (joy & J_B) && active_actors[5].RENDER == FALSE) {
+        active_actors[5].x = PLAYER.x - TO_COORDS(16);
+        active_actors[5].y = PLAYER.y;
+        active_actors[5].RENDER = TRUE;
+        // active_actors[5].ON = TRUE;
+    }
+    if (active_actors[5].RENDER == TRUE) {
+        active_actors[5].x -= active_actors[5].SpdX;
+        if (TO_PIXELS(active_actors[5].x) < 0) {
+            active_actors[5].RENDER = FALSE;
+            // active_actors[5].ON = FALSE;
+            active_actors[5].KILL = TRUE;
+        }
     }
 }
 
