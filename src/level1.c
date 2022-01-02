@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "../res/tiles/NPC_electric.h"
+#include "../res/tiles/bullet.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
 extern Variables bkg;
@@ -12,6 +13,7 @@ extern UINT8 px, py;
 extern UINT8 joy, last_joy;
 UINT8 ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
+UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
@@ -135,8 +137,7 @@ const level_t level1 = {
 
 void load_bullet_data(UINT8 hiwater) {
     set_sprite_data(hiwater, (sizeof(bullet_data) >> 4), bullet_data);
-    // hiwater += (sizeof(smoke_data) >> 4);
-    // return hiwater;
+    // set_sprite_tile(10, 0xB8);
 }
 
 UINT8 cam1[3] = {1, 2, 3};
@@ -156,9 +157,8 @@ void anim_level1() {
     INT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 player_x = TO_PIXELS(PLAYER.x);
     // UINT16 playerx = TO_PIXELS(PLAYER.x);
-    UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
-    UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
-    UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
+    UINT8 prev_actors_count = NULL;  // previous array of sprites to turn off
+    UINT8 next_actors_count = NULL;  // next array of sprite to turn off (in case you move back to a previous position)
 
     if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
         active_actors_count = CAM1_COUNT;

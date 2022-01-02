@@ -118,6 +118,14 @@ void main() {
             jump();
         }
 
+        // if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
+        // move_metasprite(
+        //     current_animation[current_actor->animation_phase],
+        //     current_actor->tile_index,
+        //     hiwater,
+        //     TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+        // }
+
         // IF PLAYER IS FREE FALLING FOR ANY REASON
         if (PLAYER.SpdY != 0) {
             JUMP = Gravity = TRUE;
@@ -234,8 +242,10 @@ void main() {
         if (animate_level) animate_level();  // call level animation hook (if any)
         // CHECK FOR NPC COLLISIONS
         if (collide_level) collide_level();
+
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_actors();
+        move_metasprite(bullet_metasprites[0], 0xB8, 10, 100, 156);
 
         if (bkg.redraw) {
             set_camera();
