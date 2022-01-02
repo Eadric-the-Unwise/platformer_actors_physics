@@ -20,7 +20,7 @@ UINT8 hiwater;
 /******************************/
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS
 /******************************/
-UINT8 load_scene_actors(const actor_t *actor, uint8_t actors_count) {
+void load_scene_actors(const actor_t *actor, uint8_t actors_count) {
     actor_t *current_actor = active_actors;
 
     hiwater = 0;
@@ -58,7 +58,7 @@ UINT8 load_scene_actors(const actor_t *actor, uint8_t actors_count) {
         actor++;
     }
     total_actors_count = actors_count;  // copies from ROM to RAM
-    return hiwater;
+    // return hiwater;
 }
 
 void load_level(const level_t *level) {

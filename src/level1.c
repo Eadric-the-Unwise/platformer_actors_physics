@@ -15,7 +15,7 @@ UINT8 current_elevator;
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[5] = {
+const actor_t level1_actors[6] = {
     // 0 PLAYER
     {.x = TO_COORDS(144),
      .y = TO_COORDS(16),
@@ -124,20 +124,44 @@ const actor_t level1_actors[5] = {
      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
      .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
-     .copy = FALSE}};
+     .copy = FALSE},
+    // 5 BULLET
+    {.x = TO_COORDS(120),
+     .y = TO_COORDS(136),
+     .SpdX = 0,
+     .SpdY = 0,
+     .w = bullet_WIDTH,
+     .h = bullet_HEIGHT,
+     .x_pivot = bullet_PIVOT_X,
+     .y_pivot = bullet_PIVOT_Y,
+     .x_offset = bullet_PIVOT_X,
+     .y_offset = bullet_PIVOT_Y,
+     .direction = DIR_LEFT,
+     .NPC_type = BULLET,
+     .tile_count = (sizeof(bullet_data) >> 4),
+     .tile_index = 0,
+     .tile_data = bullet_data,
+     .patrol_timer = 1,
+     .patrol_reset = 160,
+     .animations = {bullet_scroll, bullet_scroll},
+     .animations_props = {ANIM_ONCE, ANIM_ONCE},
+     .animation_phase = 0,
+     .copy = FALSE,
+     .RENDER = TRUE,
+     .ON = TRUE}};
 
 const level_t level1 = {
     .submap_hook = init_submap,  // call this in collision
     .actors = level1_actors,
-    .actor_count = 5,
+    .actor_count = 6,
     .animate_hook = anim_level1,  // function that put life into the scene
     .collide_hook = npc_collisions_level1};
 
-void load_bullet_data(UINT8 hiwater) {
-    set_sprite_data(hiwater, (sizeof(bullet_data) >> 4), bullet_data);
-    // hiwater += (sizeof(smoke_data) >> 4);
-    // return hiwater;
-}
+// void load_bullet_data(UINT8 hiwater) {
+//     set_sprite_data(hiwater, (sizeof(bullet_data) >> 4), bullet_data);
+//     // hiwater += (sizeof(smoke_data) >> 4);
+//     // return hiwater;
+// }
 
 UINT8 cam1[3] = {1, 2, 3};
 UINT8 cam2[2] = {3, 4};
@@ -225,15 +249,7 @@ void anim_level1() {
         if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
             current_actor->x -= PLAYER.SpdX;
         }
-        // if ((camera_x - 1) <= 0) {
-        //     if ((joy & J_RIGHT) && (playerx >= 118)) {
-        //         current_actor->x -= PLAYER.SpdX;
-        //     }
-        // } else if ((camera_x + 1) >= bkg.camera_max_x) {
-        //     if ((joy & J_LEFT) && (playerx <= 118)) {
-        //         current_actor->x -= PLAYER.SpdX;
-        //     }
-        // }
+
         if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {  // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
             if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
                 current_actor->patrol_timer--;
