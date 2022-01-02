@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #include "scene.h"
-
+// 9919d0f770f7adf82b67416ecf9d5f0c0a78c295
 UINT8 joy, last_joy;
 UINT8 px, py;
 UINT8 GAMEOVER;
