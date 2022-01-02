@@ -87,7 +87,7 @@ void render_actors() {
     // draw each metasprite
     direction_e current_direction;
     UINT8 hiwater = 0;  // OAM Sprite hiwater
-    for (UINT8 i = total_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
+    for (UINT8 i = 3; i != (ACTOR_FIRST_NPC - 1); i--) {
         UINT16 camera_x = TO_PIXELS(bkg.camera_x);
         INT16 actor_x = TO_PIXELS(current_actor->x);
         INT16 NPC_xOffset = actor_x - (current_actor->x_pivot + 8);

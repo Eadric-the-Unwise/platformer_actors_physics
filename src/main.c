@@ -35,6 +35,7 @@ void main() {
     load_level(current_stage);
     if (load_submap) load_submap();
     load_bullet_data(hiwater);
+
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 
     // switch on display after everything is ready
@@ -234,9 +235,12 @@ void main() {
         if (animate_level) animate_level();  // call level animation hook (if any)
         // CHECK FOR NPC COLLISIONS
         if (collide_level) collide_level();
+
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_actors();
 
+        // hide rest of the hardware sprites
+        for (UINT8 i = ; i < 40u; i++) shadow_OAM[i].y = 0;
         if (bkg.redraw) {
             set_camera();
             wait_vbl_done();
