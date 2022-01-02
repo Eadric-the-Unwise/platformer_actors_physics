@@ -12,10 +12,11 @@ extern UINT8 px, py;
 extern UINT8 joy, last_joy;
 UINT8 ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
+UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[6] = {
+const actor_t level1_actors[5] = {
     // 0 PLAYER
     {.x = TO_COORDS(144),
      .y = TO_COORDS(16),
@@ -124,85 +125,23 @@ const actor_t level1_actors[6] = {
      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
      .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
-     .copy = FALSE},
-    // 5 BULLET
-    {.SpdX = 8,
-     .SpdY = 0,
-     .w = bullet_WIDTH,
-     .h = bullet_HEIGHT,
-     .x_pivot = bullet_PIVOT_X,
-     .y_pivot = bullet_PIVOT_Y,
-     .x_offset = bullet_PIVOT_X,
-     .y_offset = bullet_PIVOT_Y,
-     .direction = DIR_LEFT,
-     .NPC_type = BULLET,
-     .tile_count = (sizeof(bullet_data) >> 4),
-     .tile_index = 0,
-     .tile_data = bullet_data,
-     .animations = {bullet_scroll, bullet_scroll},
-     .animations_props = {ANIM_ONCE, ANIM_ONCE},
-     .animation_phase = 0,
-     .copy = FALSE}
-    //  ,
-    // // 6 BULLET
-    // {.SpdX = 8,
-    //  .SpdY = 0,
-    //  .w = bullet_WIDTH,
-    //  .h = bullet_HEIGHT,
-    //  .x_pivot = bullet_PIVOT_X,
-    //  .y_pivot = bullet_PIVOT_Y,
-    //  .x_offset = bullet_PIVOT_X,
-    //  .y_offset = bullet_PIVOT_Y,
-    //  .direction = DIR_LEFT,
-    //  .NPC_type = BULLET,
-    //  .tile_count = (sizeof(bullet_data) >> 4),
-    //  .tile_index = 0,
-    //  .tile_data = bullet_data,
-    //  .animations = {bullet_scroll, bullet_scroll},
-    //  .animations_props = {ANIM_ONCE, ANIM_ONCE},
-    //  .animation_phase = 0,
-    //  .copy = TRUE},
-    // // 7 BULLET
-    // {.SpdX = 8,
-    //  .SpdY = 0,
-    //  .w = bullet_WIDTH,
-    //  .h = bullet_HEIGHT,
-    //  .x_pivot = bullet_PIVOT_X,
-    //  .y_pivot = bullet_PIVOT_Y,
-    //  .x_offset = bullet_PIVOT_X,
-    //  .y_offset = bullet_PIVOT_Y,
-    //  .direction = DIR_LEFT,
-    //  .NPC_type = BULLET,
-    //  .tile_count = (sizeof(bullet_data) >> 4),
-    //  .tile_index = 0,
-    //  .tile_data = bullet_data,
-    //  .animations = {bullet_scroll, bullet_scroll},
-    //  .animations_props = {ANIM_ONCE, ANIM_ONCE},
-    //  .animation_phase = 0,
-    //  .copy = TRUE}
-};
+     .copy = FALSE}};
 
 const level_t level1 = {
     .submap_hook = init_submap,  // call this in collision
     .actors = level1_actors,
-    .actor_count = 6,
+    .actor_count = 5,
     .animate_hook = anim_level1,  // function that put life into the scene
     .collide_hook = npc_collisions_level1};
 
-// void load_bullet_data(UINT8 hiwater) {
-//     set_sprite_data(hiwater, (sizeof(bullet_data) >> 4), bullet_data);
-//     // hiwater += (sizeof(smoke_data) >> 4);
-//     // return hiwater;
-// }
-
-UINT8 cam1[3] = {1, 2, 3};
-UINT8 cam2[2] = {3, 4};
-UINT8 cam3[2] = {3, 4};
-UINT8 cam4[1] = {4};
-#define CAM1_COUNT 3
-#define CAM2_COUNT 2
-#define CAM3_COUNT 2
-#define CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
+UINT8 cam1[4] = {0, 1, 2, 3};
+UINT8 cam2[3] = {0, 3, 4};
+UINT8 cam3[3] = {0, 3, 4};
+UINT8 cam4[2] = {0, 4};
+#define CAM1_COUNT 4
+#define CAM2_COUNT 3
+#define CAM3_COUNT 3
+#define CAM4_COUNT 2  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
 // CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
 void anim_level1() {
     UINT8 *ptr = NULL;   // pointer // simply = NULL to bypass compiler error lol
@@ -212,16 +151,17 @@ void anim_level1() {
     INT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 player_x = TO_PIXELS(PLAYER.x);
     // UINT16 playerx = TO_PIXELS(PLAYER.x);
-    UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
-    UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
-    UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
+    UINT8 prev_actors_count = NULL;  // previous array of sprites to turn off
+    UINT8 next_actors_count = NULL;  // next array of sprite to turn off (in case you move back to a previous position)
 
     if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
+        CAM = 1;
         active_actors_count = CAM1_COUNT;
         next_actors_count = CAM2_COUNT;
         ptr = cam1;
         nptr = cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
+        CAM = 2;
         prev_actors_count = CAM1_COUNT;
         active_actors_count = CAM2_COUNT;
         next_actors_count = CAM3_COUNT;
@@ -229,6 +169,7 @@ void anim_level1() {
         ptr = cam2;
         nptr = cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
+        CAM = 3;
         prev_actors_count = CAM2_COUNT;
         active_actors_count = CAM3_COUNT;
         next_actors_count = CAM4_COUNT;
@@ -236,6 +177,7 @@ void anim_level1() {
         ptr = cam3;
         nptr = cam4;
     } else if (camera_x < 160) {  // CAM4
+        CAM = 4;
         prev_actors_count = CAM3_COUNT;
         active_actors_count = CAM4_COUNT;
         pptr = cam3;
@@ -248,9 +190,7 @@ void anim_level1() {
     if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
-        // if (player_x != 118) {
-        //     PLAYER.x = TO_COORDS(118);
-        // }
+
     } else
         PLAYER.x += PLAYER.SpdX;
     if ((camera_x - 1) <= 0) {
@@ -319,26 +259,25 @@ void anim_level1() {
                     current_actor->KILL = TRUE;  // KILL NPC IS HE GOES OFF SCREEN TO THE RIGHT TOO FAR
                 }
             }
-            // else if (current_actor->NPC_type == BULLET) {
-            // }
         }
-        ptr++;
-        current_actor = &active_actors[*ptr];
+        // ptr++;
+        // current_actor = &active_actors[*ptr];
+        current_actor++;
     }
-    if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
-        active_actors[5].x = PLAYER.x - TO_COORDS(16);
-        active_actors[5].y = PLAYER.y;
-        active_actors[5].RENDER = TRUE;
-        // active_actors[5].ON = TRUE;
-    }
-    if (active_actors[5].RENDER == TRUE) {
-        active_actors[5].x -= active_actors[5].SpdX;
-        if (TO_PIXELS(active_actors[5].x) < TO_PIXELS(0)) {
-            active_actors[5].RENDER = FALSE;
-            // active_actors[5].ON = FALSE;
-            // active_actors[5].KILL = TRUE;
-        }
-    }
+    // if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
+    //     active_actors[5].x = PLAYER.x - TO_COORDS(16);
+    //     active_actors[5].y = PLAYER.y;
+    //     active_actors[5].RENDER = TRUE;
+    //     // active_actors[5].ON = TRUE;
+    // }
+    // if (active_actors[5].RENDER == TRUE) {
+    //     active_actors[5].x -= active_actors[5].SpdX;
+    //     if (TO_PIXELS(active_actors[5].x) < TO_PIXELS(0)) {
+    //         active_actors[5].RENDER = FALSE;
+    //         // active_actors[5].ON = FALSE;
+    //         // active_actors[5].KILL = TRUE;
+    //     }
+    // }
 }
 
 void npc_collisions_level1() {

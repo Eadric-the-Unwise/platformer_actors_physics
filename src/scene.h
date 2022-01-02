@@ -131,6 +131,7 @@ extern animate_level_t animate_level;
 extern collide_level_t collide_level;
 extern load_submap_t load_submap;
 extern UINT8 total_actors_count;
+extern UINT8 CAM;
 extern UINT8 hiwater;
 
 extern const level_t *current_stage;
