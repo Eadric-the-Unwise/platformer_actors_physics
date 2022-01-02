@@ -11,7 +11,7 @@ UINT8 dir, last_dir;
 // array of avaliable actors
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
 UINT8 total_actors_count;                  // amount of actors that are currently active
-UINT8 CAM = 1;
+UINT8 RENDERCAM = NULL;
 
 animate_level_t animate_level = NULL;  // level animation function
 collide_level_t collide_level = NULL;  // level animation function
@@ -74,12 +74,17 @@ void load_level(const level_t *level) {
 uint8_t animation_timer = 6;
 void render_actors() {
     UINT8 *ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
-    ptr = cam1;
+    if (RENDERCAM == 1) {
+        ptr = cam1_render;
+    } else if (RENDERCAM == 2) {
+        ptr = cam2_render;
+    } else if (RENDERCAM == 3) {
+        ptr = cam3_render;
+    } else if (RENDERCAM == 4) {
+        ptr = cam4_render;
+    }
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
-    // if (CAM == 1) {
-    // actor_t *current_actor = &cam1[0];
-    // }
     // actor_t *current_actor = active_actors;
 
     last_dir = dir;
@@ -96,7 +101,7 @@ void render_actors() {
     // draw each metasprite
     direction_e current_direction;
     UINT8 hiwater = 0;  // OAM Sprite hiwater
-    for (UINT8 i = active_actors_count; i != (ACTOR_FIRST_NPC - 1); i--) {
+    for (UINT8 i = render_actors_count; i != ACTOR_DETECTIVE; i--) {
         UINT16 camera_x = TO_PIXELS(bkg.camera_x);
         INT16 actor_x = TO_PIXELS(current_actor->x);
         INT16 NPC_xOffset = actor_x - (current_actor->x_pivot + 8);

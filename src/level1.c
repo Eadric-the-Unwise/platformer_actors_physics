@@ -12,7 +12,7 @@ extern UINT8 px, py;
 extern UINT8 joy, last_joy;
 UINT8 ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
-UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+UINT8 render_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
@@ -134,14 +134,22 @@ const level_t level1 = {
     .animate_hook = anim_level1,  // function that put life into the scene
     .collide_hook = npc_collisions_level1};
 
-UINT8 cam1[4] = {0, 1, 2, 3};
-UINT8 cam2[3] = {0, 3, 4};
-UINT8 cam3[3] = {0, 3, 4};
-UINT8 cam4[2] = {0, 4};
-#define CAM1_COUNT 4
-#define CAM2_COUNT 3
-#define CAM3_COUNT 3
-#define CAM4_COUNT 2  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
+// current_actor = cam1 + 1
+//  for loop
+// aka don't need double arrays here
+UINT8 cam1_render[4] = {0, 1, 2, 3};
+UINT8 cam2_render[3] = {0, 3, 4};
+UINT8 cam3_render[3] = {0, 3, 4};
+UINT8 cam4_render[2] = {0, 4};
+UINT8 cam1[3] = {1, 2, 3};
+UINT8 cam2[2] = {3, 4};
+UINT8 cam3[2] = {3, 4};
+UINT8 cam4[1] = {4};
+
+#define CAM1_COUNT 3
+#define CAM2_COUNT 2
+#define CAM3_COUNT 2
+#define CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
 // CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
 void anim_level1() {
     UINT8 *ptr = NULL;   // pointer // simply = NULL to bypass compiler error lol
@@ -151,17 +159,18 @@ void anim_level1() {
     INT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 player_x = TO_PIXELS(PLAYER.x);
     // UINT16 playerx = TO_PIXELS(PLAYER.x);
-    UINT8 prev_actors_count = NULL;  // previous array of sprites to turn off
-    UINT8 next_actors_count = NULL;  // next array of sprite to turn off (in case you move back to a previous position)
+    UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+    UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
+    UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
     if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
-        CAM = 1;
+        RENDERCAM = 1;
         active_actors_count = CAM1_COUNT;
         next_actors_count = CAM2_COUNT;
         ptr = cam1;
         nptr = cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
-        CAM = 2;
+        RENDERCAM = 2;
         prev_actors_count = CAM1_COUNT;
         active_actors_count = CAM2_COUNT;
         next_actors_count = CAM3_COUNT;
@@ -169,7 +178,7 @@ void anim_level1() {
         ptr = cam2;
         nptr = cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-        CAM = 3;
+        RENDERCAM = 3;
         prev_actors_count = CAM2_COUNT;
         active_actors_count = CAM3_COUNT;
         next_actors_count = CAM4_COUNT;
@@ -177,12 +186,13 @@ void anim_level1() {
         ptr = cam3;
         nptr = cam4;
     } else if (camera_x < 160) {  // CAM4
-        CAM = 4;
+        RENDERCAM = 4;
         prev_actors_count = CAM3_COUNT;
         active_actors_count = CAM4_COUNT;
         pptr = cam3;
         ptr = cam4;
     }
+    render_actors_count = (active_actors_count + 2);
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
@@ -207,13 +217,15 @@ void anim_level1() {
 
     for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF SPRITES
         prev_actor->RENDER = FALSE;
-        pptr++;
-        prev_actor = &active_actors[*pptr];
+        prev_actor++;
+        // pptr++;
+        // prev_actor = &active_actors[*pptr];
     }
     for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF NEXT SET OF SPRITES
         next_actor->RENDER = FALSE;
-        nptr++;
-        next_actor = &active_actors[*nptr];
+        next_actor++;
+        // nptr++;
+        // next_actor = &active_actors[*nptr];
     }
     for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT SET OF SPRITES
         current_actor->RENDER = TRUE;
