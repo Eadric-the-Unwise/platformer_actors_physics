@@ -35,6 +35,7 @@ void main() {
     load_level(current_stage);
     if (load_submap) load_submap();
     load_bullet_data(hiwater);
+
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 
     // switch on display after everything is ready
@@ -117,14 +118,6 @@ void main() {
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder) && (!OFF_LADDER)) {
             jump();
         }
-
-        // if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
-        // move_metasprite(
-        //     current_animation[current_actor->animation_phase],
-        //     current_actor->tile_index,
-        //     hiwater,
-        //     TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
-        // }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
         if (PLAYER.SpdY != 0) {
@@ -245,8 +238,9 @@ void main() {
 
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_actors();
-        move_metasprite(bullet_metasprites[0], 0xB8, 10, 100, 156);
 
+        // hide rest of the hardware sprites
+        for (UINT8 i = ; i < 40u; i++) shadow_OAM[i].y = 0;
         if (bkg.redraw) {
             set_camera();
             wait_vbl_done();
