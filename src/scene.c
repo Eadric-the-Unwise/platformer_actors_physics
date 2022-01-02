@@ -73,19 +73,19 @@ void load_level(const level_t *level) {
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
 uint8_t animation_timer = 6;
 void render_actors() {
-    UINT8 *ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
-    if (RENDERCAM == 1) {
-        ptr = cam1_render;
-    } else if (RENDERCAM == 2) {
-        ptr = cam2_render;
-    } else if (RENDERCAM == 3) {
-        ptr = cam3_render;
-    } else if (RENDERCAM == 4) {
-        ptr = cam4_render;
-    }
-    actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
+    // UINT8 *ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
+    // if (RENDERCAM == 1) {
+    //     ptr = cam1_render;
+    // } else if (RENDERCAM == 2) {
+    //     ptr = cam2_render;
+    // } else if (RENDERCAM == 3) {
+    //     ptr = cam3_render;
+    // } else if (RENDERCAM == 4) {
+    //     ptr = cam4_render;
+    // }
+    // actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
-    // actor_t *current_actor = active_actors;
+    actor_t *current_actor = active_actors;
 
     last_dir = dir;
     dir = PLAYER.direction;
@@ -101,7 +101,7 @@ void render_actors() {
     // draw each metasprite
     direction_e current_direction;
     UINT8 hiwater = 0;  // OAM Sprite hiwater
-    for (UINT8 i = render_actors_count; i != ACTOR_DETECTIVE; i--) {
+    for (UINT8 i = total_actors_count; i != ACTOR_DETECTIVE; i--) {
         UINT16 camera_x = TO_PIXELS(bkg.camera_x);
         INT16 actor_x = TO_PIXELS(current_actor->x);
         INT16 NPC_xOffset = actor_x - (current_actor->x_pivot + 8);
