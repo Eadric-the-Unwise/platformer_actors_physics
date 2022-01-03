@@ -10,8 +10,9 @@ UINT8 dir, last_dir;
 
 // array of avaliable actors
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
-UINT8 total_actors_count;                  // amount of actors that are currently active
-UINT8 RENDERCAM = NULL;
+actor_t active_bullets[2];
+UINT8 total_actors_count;  // amount of actors that are currently active
+UINT8 RENDERCAM = NULL;    // VAR determining where the sceen is currently location in stage
 
 animate_level_t animate_level = NULL;  // level animation function
 collide_level_t collide_level = NULL;  // level animation function
@@ -19,9 +20,9 @@ load_submap_t load_submap = NULL;
 UINT8 hiwater;
 
 /******************************/
-// Load enemies sequencially up to MAX_ACTIVE_ACTORS
+// Load enemies sequencially up to MAX_ACTIVE_ACTORS from LEVEL(x) to active_actors[MAX_ACTORS] here in scene.c
 /******************************/
-void load_scene_actors(const actor_t *actor, UINT8 actors_count) {
+UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count) {
     //? current_actor locally here is manipulating the active_actors[MAX_ACTORS] array information
     actor_t *current_actor = active_actors;
 
@@ -55,17 +56,40 @@ void load_scene_actors(const actor_t *actor, UINT8 actors_count) {
         current_actor->RENDER = actor->RENDER;
         current_actor->ON = actor->ON;
         current_actor->KILL = actor->KILL;
+
         hiwater += actor->tile_count;
         current_actor++;
         actor++;
     }
     total_actors_count = actors_count;  // copies from ROM to RAM
-    // return hiwater;
+    return hiwater;
+}
+void load_bullets(const actor_t *bullet, UINT8 hiwater) {
+    if (bullet == NULL) return;
+    actor_t *current_bullet = active_bullets;
+
+    set_sprite_data(hiwater, bullet->tile_count, bullet->tile_data);
+    for (UINT8 i = 2; i != 0; i--) {
+        current_bullet->tile_index = hiwater;
+
+        // current_bullet->tile_index = bullet->tile_index;
+        current_bullet->tile_count = bullet->tile_count;
+        current_bullet->x = bullet->x;
+        current_bullet->y = bullet->y;
+        current_bullet->SpdX = bullet->SpdX;
+        current_bullet->SpdY = bullet->SpdY;
+        current_bullet->NPC_type = bullet->NPC_type;
+        // memcpy(current_bullet->animations, bullet->animations, sizeof(current_bullet->animations));
+        current_bullet++;
+        bullet++;
+    }
 }
 
 void load_level(const level_t *level) {
     if (level == NULL) return;
     load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
+    load_bullets(level->bullets, hiwater);
+    // bullets = level->bullets;
     load_submap = level->submap_hook;
     animate_level = level->animate_hook;
     collide_level = level->collide_hook;
@@ -87,22 +111,24 @@ void render_actors() {
     // actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
     actor_t *current_actor = &active_actors[*ptr];
+    actor_t *current_bullet = active_bullets;
     // current_actor
 
     last_dir = dir;
     dir = PLAYER.direction;
     if (dir != last_dir || animation_timer == 0) {
-        if (PLAYER.direction == 10 || PLAYER.direction == 11) {
-            animation_timer = 6;
-        } else {
-            animation_timer = 6;
-        }
+        animation_timer = 6;
+        // if (PLAYER.direction == 10 || PLAYER.direction == 11) {
+        //     animation_timer = 6;
+        // } else {
+        //     animation_timer = 6;
+        // }
     }
     animation_timer -= 1;
 
     // draw each metasprite
     direction_e current_direction;
-    UINT8 hiwater = 0;  // OAM Sprite hiwater
+    UINT8 OAM_hiwater = 0;  // OAM Sprite hiwater
 
     for (UINT8 i = render_actors_count; i != ACTOR_DETECTIVE; i--) {
         UINT16 camera_x = TO_PIXELS(bkg.camera_x);
@@ -116,16 +142,16 @@ void render_actors() {
                     if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE) {
                         current_actor->ON = TRUE;
                         if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R) || (current_direction == DIR_OFFLADDER_R)) {
-                            hiwater += move_metasprite_vflip(
+                            OAM_hiwater += move_metasprite_vflip(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,
-                                hiwater,
+                                OAM_hiwater,
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
                         } else {
-                            hiwater += move_metasprite(
+                            OAM_hiwater += move_metasprite(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,
-                                hiwater,
+                                OAM_hiwater,
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
                         }
                     } else {
@@ -133,7 +159,7 @@ void render_actors() {
                         // current_actor->RENDER = FALSE;
                         hide_metasprite(
                             current_animation[current_actor->animation_phase],
-                            hiwater);
+                            OAM_hiwater);
                     }
                 }
                 // process actor animation
@@ -157,8 +183,20 @@ void render_actors() {
         ptr++;
         current_actor = &active_actors[*ptr];
     }
+    // BULLET RENDERING //
+    for (UINT8 i = 2; i != 0; i--) {
+        // set_sprite_tile(OAM_hiwater, current_bullet->tile_index);
+
+        OAM_hiwater += move_metasprite(
+            bullet_metasprites[0],
+            current_bullet->tile_index,
+            OAM_hiwater,
+            TO_PIXELS(current_bullet->x), TO_PIXELS(current_bullet->y));
+
+        current_bullet++;
+    }
     // hide rest of the hardware sprites
-    for (UINT8 i = hiwater; i < 40u; i++) shadow_OAM[i].y = 0;
+    for (UINT8 i = OAM_hiwater; i < 40u; i++) shadow_OAM[i].y = 0;
 }
 void switch_down() {
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L) {
