@@ -127,6 +127,34 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE}};
 
+// const actor_t level1_bullets[2] = {
+//     {.SpdX = 0,
+//      .SpdY = 16,
+//      .w = bullet_WIDTH,
+//      .h = bullet_HEIGHT,
+//      .h_offset = bullet_HEIGHT,
+//      .x_offset = 6,
+//      .y_offset = 6,
+//      .tile_count = (sizeof(bullet_data) >> 4),
+//      .tile_index = 0,
+//      .tile_data = bullet_data,
+//      .copy = FALSE,
+//      .RENDER = FALSE,
+//      .ON = FALSE},
+//     {.SpdX = 0,
+//      .SpdY = 16,
+//      .w = bullet_WIDTH,
+//      .h = bullet_HEIGHT,
+//      .h_offset = bullet_HEIGHT,
+//      .x_offset = 6,
+//      .y_offset = 6,
+//      .tile_count = (sizeof(bullet_data) >> 4),
+//      .tile_index = 0,
+//      .tile_data = bullet_data,
+//      .copy = TRUE,
+//      .RENDER = FALSE,
+//      .ON = FALSE}};
+
 const level_t level1 = {
     .submap_hook = init_submap,  // call this in collision
     .actors = level1_actors,
@@ -192,7 +220,7 @@ void anim_level1() {
         pptr = cam3;
         ptr = cam4;
     }
-    render_actors_count = (active_actors_count + 2);
+    render_actors_count = active_actors_count + 1;
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
@@ -217,15 +245,15 @@ void anim_level1() {
 
     for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF SPRITES
         prev_actor->RENDER = FALSE;
-        prev_actor++;
-        // pptr++;
-        // prev_actor = &active_actors[*pptr];
+        // prev_actor++;
+        pptr++;
+        prev_actor = &active_actors[*pptr];
     }
     for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF NEXT SET OF SPRITES
         next_actor->RENDER = FALSE;
-        next_actor++;
-        // nptr++;
-        // next_actor = &active_actors[*nptr];
+        // next_actor++;
+        nptr++;
+        next_actor = &active_actors[*nptr];
     }
     for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT SET OF SPRITES
         current_actor->RENDER = TRUE;
@@ -272,9 +300,9 @@ void anim_level1() {
                 }
             }
         }
-        // ptr++;
-        // current_actor = &active_actors[*ptr];
-        current_actor++;
+        ptr++;
+        current_actor = &active_actors[*ptr];
+        // current_actor++;
     }
     // if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
     //     active_actors[5].x = PLAYER.x - TO_COORDS(16);
