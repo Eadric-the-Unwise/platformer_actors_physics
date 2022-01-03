@@ -316,25 +316,30 @@ void anim_level1() {
         // current_actor++;
     }
     for (UINT8 i = 2; i != 0; i--) {
-        if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
-            current_bullet->x -= PLAYER.SpdX;
+        if (current_bullet->RENDER == TRUE) {
+            INT16 bullet_x = TO_PIXELS(current_bullet->x);
+            if (bullet_x < 0) {
+                current_bullet->KILL = TRUE;
+                current_bullet->RENDER = FALSE;
+            }
+            if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
+                current_bullet->x -= PLAYER.SpdX;
+            }
+            current_bullet->x -= current_bullet->SpdX;
         }
-        current_bullet->x -= current_bullet->SpdX;
         current_bullet++;
     }
-    // if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
-    //     active_actors[5].x = PLAYER.x - TO_COORDS(16);
-    //     active_actors[5].y = PLAYER.y;
-    //     active_actors[5].RENDER = TRUE;
-    //     // active_actors[5].ON = TRUE;
-    // }
-    // if (active_actors[5].RENDER == TRUE) {
-    //     active_actors[5].x -= active_actors[5].SpdX;
-    //     if (TO_PIXELS(active_actors[5].x) < TO_PIXELS(0)) {
-    //         active_actors[5].RENDER = FALSE;
-    //         // active_actors[5].ON = FALSE;
-    //         // active_actors[5].KILL = TRUE;
-    //     }
+}
+void spawn_bullet() {
+    actor_t *spawn_bullet = active_bullets;
+    // for (UINT8 i = 2; i != 0; i--) {
+    if (spawn_bullet->RENDER == FALSE) {
+        spawn_bullet->x = PLAYER.x - TO_COORDS(16);
+        spawn_bullet->y = PLAYER.y;
+        spawn_bullet->RENDER = TRUE;
+        spawn_bullet->ON = TRUE;
+    }
+    spawn_bullet++;
     // }
 }
 

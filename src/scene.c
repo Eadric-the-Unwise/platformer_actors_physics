@@ -186,13 +186,13 @@ void render_actors() {
     // BULLET RENDERING //
     for (UINT8 i = 2; i != 0; i--) {
         // set_sprite_tile(OAM_hiwater, current_bullet->tile_index);
-
-        OAM_hiwater += move_metasprite(
-            bullet_metasprites[0],
-            current_bullet->tile_index,
-            OAM_hiwater,
-            TO_PIXELS(current_bullet->x), TO_PIXELS(current_bullet->y));
-
+        if (current_bullet->RENDER == TRUE) {
+            OAM_hiwater += move_metasprite(
+                bullet_metasprites[0],
+                current_bullet->tile_index,
+                OAM_hiwater,
+                TO_PIXELS(current_bullet->x), TO_PIXELS(current_bullet->y));
+        }
         current_bullet++;
     }
     // hide rest of the hardware sprites

@@ -117,6 +117,9 @@ void main() {
         if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder) && (!OFF_LADDER)) {
             jump();
         }
+        if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
+            spawn_bullet();
+        }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
         if (PLAYER.SpdY != 0) {
