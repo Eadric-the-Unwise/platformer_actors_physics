@@ -13,6 +13,7 @@ extern UINT8 joy, last_joy;
 UINT8 ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
 UINT8 render_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+UINT8 bullet_timer = 0;
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
@@ -127,9 +128,9 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE}};
 
-const actor_t level1_bullets[3] = {
+const actor_t level1_bullets[2] = {
     // 0 BULLET
-    {.SpdX = 32,
+    {.SpdX = 48,
      .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
@@ -144,21 +145,7 @@ const actor_t level1_bullets[3] = {
      .RENDER = FALSE,
      .ON = FALSE},
     // 1 BULLET
-    {.SpdX = 32,
-     .SpdY = 0,
-     .w = bullet_WIDTH,
-     .h = bullet_HEIGHT,
-     .h_offset = bullet_HEIGHT,
-     .x_offset = 6,
-     .y_offset = 6,
-     .NPC_type = BULLET,
-     .tile_count = (sizeof(bullet_data) >> 4),
-     .animations = {bullet_scroll, bullet_scroll},
-     .tile_data = bullet_data,
-     .copy = TRUE,
-     .RENDER = FALSE,
-     .ON = FALSE},
-    {.SpdX = 32,
+    {.SpdX = 48,
      .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
@@ -339,6 +326,9 @@ void anim_level1() {
         }
         current_bullet++;
     }
+    if (bullet_timer != 0) {
+        bullet_timer -= 1;
+    }
 }
 
 void spawn_bullets() {
@@ -346,11 +336,12 @@ void spawn_bullets() {
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         if (spawn_bullet->RENDER == TRUE) {
             spawn_bullet++;
-        } else {
+        } else if (bullet_timer == 0) {
             spawn_bullet->x = PLAYER.x - TO_COORDS(16);
             spawn_bullet->y = PLAYER.y;
             spawn_bullet->RENDER = TRUE;
             spawn_bullet->ON = TRUE;
+            bullet_timer = 12;
             break;
         }
     }
