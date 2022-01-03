@@ -27,8 +27,8 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      0000000C  l__GSINIT |    00000030  l__HEADER |    0000004F  l__HEADER
      00000082  l__HEADER |    00000200  s__CODE   |    0000025A  l__HOME  
      0000041E  l__DATA   |    000010D4  l__INITIA |    000010D4  l__INITIA
-     00002000  _rROMB0   |    00002723  l__CODE   |    000028FE  l__CODE_1
-     00002923  s__HOME   |    00002B7D  s__BASE   |    00002B7D  s__CODE_0
+     00002000  _rROMB0   |    00002723  l__CODE   |    00002923  s__HOME  
+     0000297A  l__CODE_1 |    00002B7D  s__BASE   |    00002B7D  s__CODE_0
      00002B7D  s__INITIA |    00002B7D  s__LIT    |    00003000  _rROMB1  
      00003C51  s__GSINIT |    00003C5D  s__GSFINA |    00004000  _rRAMB   
      00008000  __VRAM    |    00008000  __VRAM800 |    00008800  __VRAM880
@@ -373,50 +373,50 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_1                00014000    000028FE =       10494. bytes (REL,CON)
+_CODE_1                00014000    0000297A =       10618. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      00014000  _check_LR |    00014332  _check_J  |    00014978  _check_UD
      00014F0F  _check_Dr |    00014FE1  _check_C  |    000150A6  _overlap 
      00015172  _check_LA |    000159B0  _ladder   |    000159BB  _anim_lev
-     00016150  _level1_a |    0001632B  _level1_b |    000163E9  _level1  
-     000163F4  _npc_coll |    00016746  _init_sub |    0001685C  _NPC_elec
-     000168DC  _NPC_elec |    000168E8  _NPC_elec |    000168F4  _NPC_elec
-     000168F8  _NPC_elec
+     000161CC  _level1_a |    000163A7  _level1_b |    00016465  _level1  
+     00016470  _npc_coll |    000167C2  _init_sub |    000168D8  _NPC_elec
+     00016958  _NPC_elec |    00016964  _NPC_elec |    00016970  _NPC_elec
+     00016974  _NPC_elec
 ASxxxx Linker V03.00 + NoICE + sdld,  page 30.
 
 Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc161200.rel
+C:\Users\User\AppData\Local\Temp/lcc40280.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc161201.rel
+C:\Users\User\AppData\Local\Temp/lcc40281.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc161202.rel
+C:\Users\User\AppData\Local\Temp/lcc40282.rel
                                           [ ladder ]
-C:\Users\User\AppData\Local\Temp/lcc161203.rel
+C:\Users\User\AppData\Local\Temp/lcc40283.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc161204.rel
+C:\Users\User\AppData\Local\Temp/lcc40284.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc161205.rel
+C:\Users\User\AppData\Local\Temp/lcc40285.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc161206.rel
+C:\Users\User\AppData\Local\Temp/lcc40286.rel
                                           [ submap ]
-C:\Users\User\AppData\Local\Temp/lcc161207.rel
+C:\Users\User\AppData\Local\Temp/lcc40287.rel
                                           [ bullet ]
-C:\Users\User\AppData\Local\Temp/lcc161208.rel
+C:\Users\User\AppData\Local\Temp/lcc40288.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc161209.rel
+C:\Users\User\AppData\Local\Temp/lcc40289.rel
                                           [ elevator ]
-C:\Users\User\AppData\Local\Temp/lcc1612010.rel
+C:\Users\User\AppData\Local\Temp/lcc402810.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc1612011.rel
+C:\Users\User\AppData\Local\Temp/lcc402811.rel
                                           [ stage_drop_collision ]
-C:\Users\User\AppData\Local\Temp/lcc1612012.rel
+C:\Users\User\AppData\Local\Temp/lcc402812.rel
                                           [ stage_drop_map ]
-C:\Users\User\AppData\Local\Temp/lcc1612013.rel
+C:\Users\User\AppData\Local\Temp/lcc402813.rel
                                           [ stage_drop_tiles ]
 
 

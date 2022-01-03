@@ -130,13 +130,14 @@ const actor_t level1_actors[5] = {
 const actor_t level1_bullets[2] = {
     {.x = TO_COORDS(144),
      .y = TO_COORDS(144),
-     .SpdX = 0,
-     .SpdY = 16,
+     .SpdX = 8,
+     .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
      .h_offset = bullet_HEIGHT,
      .x_offset = 6,
      .y_offset = 6,
+     .NPC_type = BULLET,
      .tile_count = (sizeof(bullet_data) >> 4),
      .animations = {bullet_scroll, bullet_scroll},
      //  .tile_index = 0,
@@ -146,13 +147,14 @@ const actor_t level1_bullets[2] = {
      .ON = FALSE},
     {.x = TO_COORDS(100),
      .y = TO_COORDS(144),
-     .SpdX = 0,
-     .SpdY = 16,
+     .SpdX = 8,
+     .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
      .h_offset = bullet_HEIGHT,
      .x_offset = 6,
      .y_offset = 6,
+     .NPC_type = BULLET,
      .tile_count = (sizeof(bullet_data) >> 4),
      .animations = {bullet_scroll, bullet_scroll},
      //  .tile_index = 0,
@@ -231,6 +233,7 @@ void anim_level1() {
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
+    actor_t *current_bullet = active_bullets;
 
     if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {
         bkg.camera_x += PLAYER.SpdX;
@@ -262,9 +265,10 @@ void anim_level1() {
         nptr++;
         next_actor = &active_actors[*nptr];
     }
+    INT16 camx = TO_PIXELS(bkg.camera_x);
     for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT SET OF SPRITES
         current_actor->RENDER = TRUE;
-        INT16 camx = TO_PIXELS(bkg.camera_x);
+
         if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
             current_actor->x -= PLAYER.SpdX;
         }
@@ -310,6 +314,13 @@ void anim_level1() {
         ptr++;
         current_actor = &active_actors[*ptr];
         // current_actor++;
+    }
+    for (UINT8 i = 2; i != 0; i--) {
+        if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
+            current_bullet->x -= PLAYER.SpdX;
+        }
+        current_bullet->x -= current_bullet->SpdX;
+        current_bullet++;
     }
     // if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
     //     active_actors[5].x = PLAYER.x - TO_COORDS(16);
