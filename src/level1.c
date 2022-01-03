@@ -330,17 +330,19 @@ void anim_level1() {
         current_bullet++;
     }
 }
-void spawn_bullet() {
+
+void spawn_bullets() {
     actor_t *spawn_bullet = active_bullets;
-    // for (UINT8 i = 2; i != 0; i--) {
+    if (spawn_bullet->RENDER == TRUE) {
+        spawn_bullet++;
+    }
     if (spawn_bullet->RENDER == FALSE) {
         spawn_bullet->x = PLAYER.x - TO_COORDS(16);
         spawn_bullet->y = PLAYER.y;
         spawn_bullet->RENDER = TRUE;
         spawn_bullet->ON = TRUE;
     }
-    spawn_bullet++;
-    // }
+    // spawn_bullet++;
 }
 
 void npc_collisions_level1() {

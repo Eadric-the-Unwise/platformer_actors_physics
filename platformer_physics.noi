@@ -61,7 +61,7 @@ DEF l__INITIALIZER 0x10D4
 DEF _rROMB0 0x2000
 DEF l__CODE 0x2740
 DEF s__HOME 0x2940
-DEF l__CODE_1 0x29E7
+DEF l__CODE_1 0x2A19
 DEF s__BASE 0x2B9A
 DEF s__CODE_0 0x2B9A
 DEF s__INITIALIZER 0x2B9A
@@ -346,12 +346,12 @@ DEF _anim_level1 0x159BB
 DEF _level1_actors 0x1620F
 DEF _level1_bullets 0x163EA
 DEF _level1 0x164A8
-DEF _spawn_bullet 0x164B3
-DEF _npc_collisions_level1 0x164DD
-DEF _init_submap 0x1682F
-DEF _NPC_electric_data 0x16945
-DEF _NPC_electric_metasprite0 0x169C5
-DEF _NPC_electric_metasprite1 0x169D1
-DEF _NPC_electric_metasprites 0x169DD
-DEF _NPC_electric_animation 0x169E1
+DEF _spawn_bullets 0x164B3
+DEF _npc_collisions_level1 0x1650F
+DEF _init_submap 0x16861
+DEF _NPC_electric_data 0x16977
+DEF _NPC_electric_metasprite0 0x169F7
+DEF _NPC_electric_metasprite1 0x16A03
+DEF _NPC_electric_metasprites 0x16A0F
+DEF _NPC_electric_animation 0x16A13
 LOAD platformer_physics.ihx

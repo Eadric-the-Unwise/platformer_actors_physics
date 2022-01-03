@@ -118,7 +118,7 @@ void main() {
             jump();
         }
         if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
-            spawn_bullet();
+            spawn_bullets();
         }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON

@@ -16,4 +16,4 @@ extern const struct level_t level1;
 extern UINT8 render_actors_count;
 void npc_collisions_level1();
 void anim_level1();
-void spawn_bullet();
+void spawn_bullets();
