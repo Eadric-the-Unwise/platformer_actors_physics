@@ -128,9 +128,8 @@ const actor_t level1_actors[5] = {
      .copy = FALSE}};
 
 const actor_t level1_bullets[2] = {
-    {.x = TO_COORDS(144),
-     .y = TO_COORDS(144),
-     .SpdX = 8,
+    // 0 BULLET
+    {.SpdX = 40,
      .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
@@ -140,14 +139,12 @@ const actor_t level1_bullets[2] = {
      .NPC_type = BULLET,
      .tile_count = (sizeof(bullet_data) >> 4),
      .animations = {bullet_scroll, bullet_scroll},
-     //  .tile_index = 0,
      .tile_data = bullet_data,
      .copy = FALSE,
      .RENDER = FALSE,
      .ON = FALSE},
-    {.x = TO_COORDS(100),
-     .y = TO_COORDS(144),
-     .SpdX = 8,
+    // 1 BULLET
+    {.SpdX = 40,
      .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
@@ -157,7 +154,6 @@ const actor_t level1_bullets[2] = {
      .NPC_type = BULLET,
      .tile_count = (sizeof(bullet_data) >> 4),
      .animations = {bullet_scroll, bullet_scroll},
-     //  .tile_index = 0,
      .tile_data = bullet_data,
      .copy = TRUE,
      .RENDER = FALSE,
@@ -315,7 +311,7 @@ void anim_level1() {
         current_actor = &active_actors[*ptr];
         // current_actor++;
     }
-    for (UINT8 i = 2; i != 0; i--) {
+    for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         if (current_bullet->RENDER == TRUE) {
             INT16 bullet_x = TO_PIXELS(current_bullet->x);
             if (bullet_x < 0) {
@@ -333,16 +329,19 @@ void anim_level1() {
 
 void spawn_bullets() {
     actor_t *spawn_bullet = active_bullets;
-    if (spawn_bullet->RENDER == TRUE) {
-        spawn_bullet++;
+    for (UINT8 i = MAX_BULLETS; i != 0; i--) {
+        if (spawn_bullet->RENDER == TRUE) {
+            spawn_bullet++;
+        } else {
+            spawn_bullet->x = PLAYER.x - TO_COORDS(16);
+            spawn_bullet->y = PLAYER.y;
+            spawn_bullet->RENDER = TRUE;
+            spawn_bullet->ON = TRUE;
+            break;
+        }
     }
-    if (spawn_bullet->RENDER == FALSE) {
-        spawn_bullet->x = PLAYER.x - TO_COORDS(16);
-        spawn_bullet->y = PLAYER.y;
-        spawn_bullet->RENDER = TRUE;
-        spawn_bullet->ON = TRUE;
-    }
-    // spawn_bullet++;
+    // if (spawn_bullet->RENDER == FALSE) {
+    // }
 }
 
 void npc_collisions_level1() {

@@ -26,16 +26,16 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000006  l__HEADER |    00000007  l__HEADER |    00000008  l__HEADER
      0000000C  l__GSINIT |    00000030  l__HEADER |    0000004F  l__HEADER
      00000082  l__HEADER |    00000200  s__CODE   |    0000025A  l__HOME  
-     0000041E  l__DATA   |    000010D4  l__INITIA |    000010D4  l__INITIA
+     00000360  l__DATA   |    000010D4  l__INITIA |    000010D4  l__INITIA
      00002000  _rROMB0   |    00002740  l__CODE   |    00002940  s__HOME  
-     00002A19  l__CODE_1 |    00002B9A  s__BASE   |    00002B9A  s__CODE_0
+     00002A3E  l__CODE_1 |    00002B9A  s__BASE   |    00002B9A  s__CODE_0
      00002B9A  s__INITIA |    00002B9A  s__LIT    |    00003000  _rROMB1  
      00003C6E  s__GSINIT |    00003C7A  s__GSFINA |    00004000  _rRAMB   
      00008000  __VRAM    |    00008000  __VRAM800 |    00008800  __VRAM880
      00009000  __VRAM900 |    00009800  __SCRN0   |    00009C00  __SCRN1  
      0000A000  __SRAM    |    0000C000  __RAM     |    0000C000  _shadow_O
-     0000C0A0  s__DATA   |    0000C4BE  s__BSS    |    0000C4BE  s__INITIA
-     0000D000  __RAMBANK |    0000D592  s__HEAP   |    0000E000  .STACK   
+     0000C0A0  s__DATA   |    0000C400  s__BSS    |    0000C400  s__INITIA
+     0000D000  __RAMBANK |    0000D4D4  s__HEAP   |    0000E000  .STACK   
      0000FE00  __OAMRAM  |    0000FF00  _P1_REG   |    0000FF00  __IO     
      0000FF01  _SB_REG   |    0000FF02  _SC_REG   |    0000FF04  _DIV_REG 
      0000FF05  _TIMA_REG |    0000FF06  _TMA_REG  |    0000FF07  _TAC_REG 
@@ -320,7 +320,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_DATA                  0000C0A0    0000041E =        1054. bytes (REL,CON)
+_DATA                  0000C0A0    00000360 =         864. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -340,24 +340,24 @@ _DATA                  0000C0A0    0000041E =        1054. bytes (REL,CON)
      0000C0F9  _joy      |    0000C0FA  _last_joy |    0000C0FB  _px      
      0000C0FC  _py       |    0000C0FD  _GAMEOVER |    0000C0FE  _current_
      0000C100  _dir      |    0000C101  _last_dir |    0000C102  _active_a
-     0000C3FA  _active_b |    0000C4B8  _total_ac |    0000C4B9  _hiwater 
-     0000C4BA  .image_ti |    0000C4BB  ___curren |    0000C4BD  ___curren
+     0000C33C  _active_b |    0000C3FA  _total_ac |    0000C3FB  _hiwater 
+     0000C3FC  .image_ti |    0000C3FD  ___curren |    0000C3FF  ___curren
 ASxxxx Linker V03.00 + NoICE + sdld,  page 27.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZED           0000C4BE    000010D4 =        4308. bytes (REL,CON)
+_INITIALIZED           0000C400    000010D4 =        4308. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     0000C4BE  _render_a |    0000C4BF  _cam1_ren |    0000C4C3  _cam2_ren
-     0000C4C6  _cam3_ren |    0000C4C9  _cam4_ren |    0000C4CB  _cam1    
-     0000C4CE  _cam2     |    0000C4D0  _cam3     |    0000C4D2  _cam4    
-     0000C4D3  _shadow_s |    0000C4D4  _shadow_s |    0000C4D5  _RENDERCA
-     0000C4D6  _animate_ |    0000C4D8  _collide_ |    0000C4DA  _load_sub
-     0000C4DC  _animatio |    0000C4DD  _STAGE_DR |    0000CDD9  _STAGE_DR
-     0000D4E1  _STAGE_DR |    0000D591  ___render
+     0000C400  _render_a |    0000C401  _cam1_ren |    0000C405  _cam2_ren
+     0000C408  _cam3_ren |    0000C40B  _cam4_ren |    0000C40D  _cam1    
+     0000C410  _cam2     |    0000C412  _cam3     |    0000C414  _cam4    
+     0000C415  _shadow_s |    0000C416  _shadow_s |    0000C417  _RENDERCA
+     0000C418  _animate_ |    0000C41A  _collide_ |    0000C41C  _load_sub
+     0000C41E  _animatio |    0000C41F  _STAGE_DR |    0000CD1B  _STAGE_DR
+     0000D423  _STAGE_DR |    0000D4D3  ___render
 ASxxxx Linker V03.00 + NoICE + sdld,  page 28.
 Hexadecimal  [32-Bits]
 
@@ -373,7 +373,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_1                00014000    00002A19 =       10777. bytes (REL,CON)
+_CODE_1                00014000    00002A3E =       10814. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -381,42 +381,42 @@ _CODE_1                00014000    00002A19 =       10777. bytes (REL,CON)
      00014F0F  _check_Dr |    00014FE1  _check_C  |    000150A6  _overlap 
      00015172  _check_LA |    000159B0  _ladder   |    000159BB  _anim_lev
      0001620F  _level1_a |    000163EA  _level1_b |    000164A8  _level1  
-     000164B3  _spawn_bu |    0001650F  _npc_coll |    00016861  _init_sub
-     00016977  _NPC_elec |    000169F7  _NPC_elec |    00016A03  _NPC_elec
-     00016A0F  _NPC_elec |    00016A13  _NPC_elec
+     000164B3  _spawn_bu |    00016534  _npc_coll |    00016886  _init_sub
+     0001699C  _NPC_elec |    00016A1C  _NPC_elec |    00016A28  _NPC_elec
+     00016A34  _NPC_elec |    00016A38  _NPC_elec
 ASxxxx Linker V03.00 + NoICE + sdld,  page 30.
 
 Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc159560.rel
+C:\Users\User\AppData\Local\Temp/lcc172000.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc159561.rel
+C:\Users\User\AppData\Local\Temp/lcc172001.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc159562.rel
+C:\Users\User\AppData\Local\Temp/lcc172002.rel
                                           [ ladder ]
-C:\Users\User\AppData\Local\Temp/lcc159563.rel
+C:\Users\User\AppData\Local\Temp/lcc172003.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc159564.rel
+C:\Users\User\AppData\Local\Temp/lcc172004.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc159565.rel
+C:\Users\User\AppData\Local\Temp/lcc172005.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc159566.rel
+C:\Users\User\AppData\Local\Temp/lcc172006.rel
                                           [ submap ]
-C:\Users\User\AppData\Local\Temp/lcc159567.rel
+C:\Users\User\AppData\Local\Temp/lcc172007.rel
                                           [ bullet ]
-C:\Users\User\AppData\Local\Temp/lcc159568.rel
+C:\Users\User\AppData\Local\Temp/lcc172008.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc159569.rel
+C:\Users\User\AppData\Local\Temp/lcc172009.rel
                                           [ elevator ]
-C:\Users\User\AppData\Local\Temp/lcc1595610.rel
+C:\Users\User\AppData\Local\Temp/lcc1720010.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc1595611.rel
+C:\Users\User\AppData\Local\Temp/lcc1720011.rel
                                           [ stage_drop_collision ]
-C:\Users\User\AppData\Local\Temp/lcc1595612.rel
+C:\Users\User\AppData\Local\Temp/lcc1720012.rel
                                           [ stage_drop_map ]
-C:\Users\User\AppData\Local\Temp/lcc1595613.rel
+C:\Users\User\AppData\Local\Temp/lcc1720013.rel
                                           [ stage_drop_tiles ]
 
 

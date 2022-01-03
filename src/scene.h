@@ -16,7 +16,8 @@
 #include "ladder.h"
 #include "level1.h"
 
-#define MAX_ACTIVE_ACTORS 8
+#define MAX_ACTIVE_ACTORS 6
+#define MAX_BULLETS 2
 #define ACTOR_DETECTIVE 0
 #define ACTOR_FIRST_NPC 1
 #define FALL_DELAY 12
@@ -128,7 +129,7 @@ typedef struct level_t {
 
 // from scene.c
 extern actor_t active_actors[MAX_ACTIVE_ACTORS];
-extern actor_t active_bullets[2];
+extern actor_t active_bullets[MAX_BULLETS];
 extern animate_level_t animate_level;
 extern collide_level_t collide_level;
 extern load_submap_t load_submap;

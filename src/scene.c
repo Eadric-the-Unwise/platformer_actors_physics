@@ -10,7 +10,7 @@ UINT8 dir, last_dir;
 
 // array of avaliable actors
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
-actor_t active_bullets[2];
+actor_t active_bullets[MAX_BULLETS];
 UINT8 total_actors_count;  // amount of actors that are currently active
 UINT8 RENDERCAM = NULL;    // VAR determining where the sceen is currently location in stage
 
@@ -69,7 +69,7 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater) {
     actor_t *current_bullet = active_bullets;
 
     set_sprite_data(hiwater, bullet->tile_count, bullet->tile_data);
-    for (UINT8 i = 2; i != 0; i--) {
+    for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         current_bullet->tile_index = hiwater;
 
         // current_bullet->tile_index = bullet->tile_index;
@@ -184,7 +184,7 @@ void render_actors() {
         current_actor = &active_actors[*ptr];
     }
     // BULLET RENDERING //
-    for (UINT8 i = 2; i != 0; i--) {
+    for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         // set_sprite_tile(OAM_hiwater, current_bullet->tile_index);
         if (current_bullet->RENDER == TRUE) {
             OAM_hiwater += move_metasprite(
