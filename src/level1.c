@@ -127,9 +127,9 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE}};
 
-const actor_t level1_bullets[2] = {
+const actor_t level1_bullets[3] = {
     // 0 BULLET
-    {.SpdX = 40,
+    {.SpdX = 32,
      .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
@@ -144,7 +144,21 @@ const actor_t level1_bullets[2] = {
      .RENDER = FALSE,
      .ON = FALSE},
     // 1 BULLET
-    {.SpdX = 40,
+    {.SpdX = 32,
+     .SpdY = 0,
+     .w = bullet_WIDTH,
+     .h = bullet_HEIGHT,
+     .h_offset = bullet_HEIGHT,
+     .x_offset = 6,
+     .y_offset = 6,
+     .NPC_type = BULLET,
+     .tile_count = (sizeof(bullet_data) >> 4),
+     .animations = {bullet_scroll, bullet_scroll},
+     .tile_data = bullet_data,
+     .copy = TRUE,
+     .RENDER = FALSE,
+     .ON = FALSE},
+    {.SpdX = 32,
      .SpdY = 0,
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,

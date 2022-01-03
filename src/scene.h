@@ -17,7 +17,7 @@
 #include "level1.h"
 
 #define MAX_ACTIVE_ACTORS 6
-#define MAX_BULLETS 2
+#define MAX_BULLETS 3
 #define ACTOR_DETECTIVE 0
 #define ACTOR_FIRST_NPC 1
 #define FALL_DELAY 12
