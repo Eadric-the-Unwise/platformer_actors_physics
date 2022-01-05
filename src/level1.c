@@ -322,7 +322,12 @@ void anim_level1() {
             if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
                 current_bullet->x -= PLAYER.SpdX;
             }
+            if (PLAYER.facing == LEFT){
             current_bullet->x -= current_bullet->SpdX;
+            } 
+            else if (PLAYER.facing == RIGHT) {
+                current_bullet->x += current_bullet->SpdX;
+            }
         }
         current_bullet++;
     }
