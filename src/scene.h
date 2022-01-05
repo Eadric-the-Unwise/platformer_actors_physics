@@ -65,6 +65,11 @@ typedef enum {
 } direction_e;
 
 typedef enum {
+    LEFT,
+    RIGHT,
+} facing_e;
+
+typedef enum {
     PATROL,
     PISTOL,
     WALK,
@@ -93,6 +98,7 @@ typedef struct actor_t {
     // direction
     direction_e direction;
     direction_e last_direction;
+    facing_e facing;
 
     // NPC type
     NPC_type_e NPC_type;

@@ -147,12 +147,14 @@ void render_actors() {
                                 current_actor->tile_index,
                                 OAM_hiwater,
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                                current_actor->facing == RIGHT;
                         } else {
                             OAM_hiwater += move_metasprite(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,
                                 OAM_hiwater,
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                                current_actor->facing == LEFT;
                         }
                     } else {
                         current_actor->ON = FALSE;
@@ -206,7 +208,7 @@ void switch_down() {
     }
 }
 void switch_jump() {
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_DROP_L || (LEFT)) {
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_LAND_L || PLAYER.direction == DIR_DROP_L || (L_LEFT)) {
         if (!DROP) {
             SetActorDirection(&PLAYER, DIR_JUMP_L, 0);
         } else {
@@ -222,23 +224,23 @@ void switch_jump() {
 }
 
 void switch_idle() {
-    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || (LEFT)) {
+    if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || (L_LEFT)) {
         SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
     } else {
         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
     }
 }
 void switch_onto_ladder() {
-    if (LEFT) {
+    if (L_LEFT) {
         SetActorDirection(&PLAYER, DIR_ONTOLADDER_L, 0);
-    } else if (RIGHT) {
+    } else if (L_RIGHT) {
         SetActorDirection(&PLAYER, DIR_ONTOLADDER_R, 0);
     }
 }
 void switch_off_ladder() {
-    if (LEFT) {
+    if (L_LEFT) {
         SetActorDirection(&PLAYER, DIR_OFFLADDER_L, 0);
-    } else if (RIGHT) {
+    } else if (L_RIGHT) {
         SetActorDirection(&PLAYER, DIR_OFFLADDER_R, 0);
     }
 }
@@ -258,9 +260,9 @@ void switch_ladder() {
     }
 }
 void switch_land() {
-    if (PLAYER.direction == DIR_JUMP_R || (RIGHT)) {
+    if (PLAYER.direction == DIR_JUMP_R || (L_RIGHT)) {
         SetActorDirection(&PLAYER, DIR_LAND_R, 0);
-    } else if (PLAYER.direction == DIR_JUMP_L || (LEFT)) {
+    } else if (PLAYER.direction == DIR_JUMP_L || (L_LEFT)) {
         SetActorDirection(&PLAYER, DIR_LAND_L, 0);
     }
 }
@@ -275,11 +277,11 @@ void switch_crawl() {
 // DETERMINES WHETHER HE WILL EXIT LADDER FACING RIGHT OR LEFT
 void LEFT_RIGHT() {
     if ((PLAYER.direction == DIR_RIGHT) || (PLAYER.direction == DIR_JUMP_R) || (PLAYER.direction == DIR_IDLE_R) || (PLAYER.direction == DIR_DOWN_R) || (PLAYER.direction == DIR_CRAWL_R) || (PLAYER.direction == DIR_LAND_R) || (PLAYER.direction == DIR_DROP_R) || (PLAYER.direction == DIR_LADDER_R)) {
-        RIGHT = TRUE;
-        LEFT = FALSE;
+        L_RIGHT = TRUE;
+        L_LEFT = FALSE;
     } else {
-        LEFT = TRUE;
-        RIGHT = FALSE;
+        L_LEFT = TRUE;
+        L_RIGHT = FALSE;
     }
 }
 
@@ -304,7 +306,7 @@ void land() {
 void gameover() {
     DISPLAY_OFF;
     SPAWN = TRUE;
-    GAMEOVER = LEFT = RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
+    GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
     load_level(current_stage);
     if (load_submap) load_submap();

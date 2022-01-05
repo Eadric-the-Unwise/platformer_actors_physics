@@ -60,10 +60,10 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
 
         if (!LADDER) {
-            if ((LEFT) || (RIGHT)) {
+            if ((L_LEFT) || (L_RIGHT)) {
                 if ((joy & J_LEFT) || (joy & J_RIGHT)) {
-                    LEFT = FALSE;
-                    RIGHT = FALSE;
+                    L_LEFT = FALSE;
+                    L_RIGHT = FALSE;
                 }
             }
             // LADDER VERTICAL MOVEMENT
@@ -209,15 +209,15 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                     switch_ladder();
                 }
                 if (joy & J_LEFT) {
-                    LEFT = TRUE;
-                    RIGHT = FALSE;
+                    L_LEFT = TRUE;
+                    L_RIGHT = FALSE;
                     if (!(joy & J_UP) && !(joy & J_DOWN)) {
                         PLAYER.direction = DIR_LADDER_L;
                         PLAYER.patrol_timer = 1;
                     }
                 } else if (joy & J_RIGHT) {
-                    LEFT = FALSE;
-                    RIGHT = TRUE;
+                    L_LEFT = FALSE;
+                    L_RIGHT = TRUE;
                     if (!(joy & J_UP) && !(joy & J_DOWN)) {
                         PLAYER.direction = DIR_LADDER_R;
                         PLAYER.patrol_timer = 1;

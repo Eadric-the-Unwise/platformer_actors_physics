@@ -2,7 +2,7 @@
 #include "collisions.h"
 
 UINT8 SPAWN, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;
-UINT8 LEFT, RIGHT;
+UINT8 L_LEFT, L_RIGHT;
 UINT8 canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
 // Release_timer
 extern UINT8 joy, last_joy;

@@ -341,7 +341,7 @@ void spawn_bullets() {
             spawn_bullet->y = PLAYER.y;
             spawn_bullet->RENDER = TRUE;
             spawn_bullet->ON = TRUE;
-            bullet_timer = 12;
+            bullet_timer = 8;
             break;
         }
     }
