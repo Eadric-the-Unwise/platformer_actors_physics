@@ -313,10 +313,10 @@
 01:643C _level1_bullets
 01:649C _level1
 01:64A7 _spawn_bullets
-01:65BA _npc_collisions_level1
-01:6908 _init_submap
-01:6A1E _NPC_electric_data
-01:6A9E _NPC_electric_metasprite0
-01:6AAA _NPC_electric_metasprite1
-01:6AB6 _NPC_electric_metasprites
-01:6ABA _NPC_electric_animation
+01:65D7 _npc_collisions_level1
+01:6925 _init_submap
+01:6A3B _NPC_electric_data
+01:6ABB _NPC_electric_metasprite0
+01:6AC7 _NPC_electric_metasprite1
+01:6AD3 _NPC_electric_metasprites
+01:6AD7 _NPC_electric_animation

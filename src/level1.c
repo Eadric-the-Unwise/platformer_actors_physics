@@ -343,7 +343,20 @@ void spawn_bullets() {
                 spawn_bullet->facing = RIGHT;
                 spawn_bullet->x = PLAYER.x + TO_COORDS(6);
             }
-            spawn_bullet->y = PLAYER.y;
+            if (CROUCH){
+                spawn_bullet->y = PLAYER.y + TO_COORDS(4);
+            } else if (LADDER){
+                spawn_bullet->y = PLAYER.y - TO_COORDS(4);
+            } else if (JUMP){
+                if (PLAYER.SpdY < 0){
+                spawn_bullet->y = PLAYER.y - TO_COORDS(8);
+                } else {
+                    spawn_bullet->y = PLAYER.y - TO_COORDS(4);
+                }
+            }
+            else {
+                    spawn_bullet->y = PLAYER.y;
+            }
             bullet_timer = 90;
             break;
         }
