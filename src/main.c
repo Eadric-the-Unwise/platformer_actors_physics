@@ -109,7 +109,7 @@ void main() {
                         PLAYER.SpdX = MAX_WALK_SPEED;
                 }
             }
-        }
+        
         if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder)) {
             CROUCH = TRUE;
         }
@@ -119,6 +119,7 @@ void main() {
         }
         if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
             spawn_bullets();
+        }
         }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
