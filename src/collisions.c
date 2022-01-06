@@ -342,7 +342,7 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 
 // LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
-BYTE overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x) { //BYTE IS SAME AS BOOLEAN (ONLY SHORTER NAME)
+BYTE overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x) {  // BYTE IS SAME AS BOOLEAN (ONLY SHORTER NAME)
     // Standard rectangle-to-rectangle collision check
 
     if (l1_x == r1_x || l1_y == r1_y || l2_x == r2_x || l2_y == r2_y) {

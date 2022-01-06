@@ -87,6 +87,7 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater) {
 
 void load_level(const level_t *level) {
     if (level == NULL) return;
+    setGameBank(level->bank);
     load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
     load_bullets(level->bullets, hiwater);
     // bullets = level->bullets;
@@ -147,16 +148,18 @@ void render_actors() {
                                 current_actor->tile_index,
                                 OAM_hiwater,
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
-                                if (!LADDER){
-                                current_actor->facing = RIGHT;}
+                            if (!LADDER) {
+                                current_actor->facing = RIGHT;
+                            }
                         } else {
                             OAM_hiwater += move_metasprite(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,
                                 OAM_hiwater,
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
-                                    if (!LADDER){
-                                current_actor->facing = LEFT;}
+                            if (!LADDER) {
+                                current_actor->facing = LEFT;
+                            }
                         }
                     } else {
                         current_actor->ON = FALSE;
@@ -304,7 +307,10 @@ void land() {
     SPAWN = LADDER = JUMP = y_Collide = Gravity = FALSE;
     switch_land();
 }
-
+void setGameBank(UBYTE i) {
+    // game_bank = i;
+    SWITCH_ROM_MBC1(i);
+}
 void gameover() {
     DISPLAY_OFF;
     SPAWN = TRUE;

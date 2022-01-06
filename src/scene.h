@@ -127,6 +127,7 @@ typedef void (*collide_level_t)();
 typedef void (*load_submap_t)();
 
 typedef struct level_t {
+    UINT8 bank;
     load_submap_t submap_hook;
     const actor_t *actors;
     const actor_t *bullets;
@@ -159,6 +160,7 @@ void switch_ladder();
 void LEFT_RIGHT();
 void jump();
 void land();
+void setGameBank(UBYTE i);
 void gameover();
 extern UINT8 GAMEOVER;
 extern uint8_t animation_timer;

@@ -147,6 +147,7 @@ const actor_t level1_bullets[1] = {
      .ON = FALSE}};
 
 const level_t level1 = {
+    .bank = 5,
     .submap_hook = init_submap,  // call this in collision
     .actors = level1_actors,
     .bullets = level1_bullets,
@@ -308,10 +309,9 @@ void anim_level1() {
             if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
                 current_bullet->x -= PLAYER.SpdX;
             }
-            if (current_bullet->facing == LEFT){
-            current_bullet->x -= current_bullet->SpdX;
-            } 
-            else if (current_bullet->facing == RIGHT) {
+            if (current_bullet->facing == LEFT) {
+                current_bullet->x -= current_bullet->SpdX;
+            } else if (current_bullet->facing == RIGHT) {
                 current_bullet->x += current_bullet->SpdX;
             }
         }
@@ -330,32 +330,31 @@ void spawn_bullets() {
         } else if (bullet_timer == 0) {
             spawn_bullet->RENDER = TRUE;
             spawn_bullet->ON = TRUE;
-            if (PLAYER.facing == LEFT){ //BULLET IS VISIBLE BEFORE ITS X AXIS IS LESS THAN DETECTIVE
-                if ((LADDER) && (PLAYER.direction == DIR_LADDER_R)){
+            if (PLAYER.facing == LEFT) {  // BULLET IS VISIBLE BEFORE ITS X AXIS IS LESS THAN DETECTIVE
+                if ((LADDER) && (PLAYER.direction == DIR_LADDER_R)) {
                     PLAYER.direction = DIR_LADDER_L;
                 }
                 spawn_bullet->facing = LEFT;
                 spawn_bullet->x = PLAYER.x - TO_COORDS(6);
             } else {
-                if ((LADDER) && (PLAYER.direction == DIR_LADDER_L)){
+                if ((LADDER) && (PLAYER.direction == DIR_LADDER_L)) {
                     PLAYER.direction = DIR_LADDER_R;
                 }
                 spawn_bullet->facing = RIGHT;
                 spawn_bullet->x = PLAYER.x + TO_COORDS(6);
             }
-            if (CROUCH){
+            if (CROUCH) {
                 spawn_bullet->y = PLAYER.y + TO_COORDS(4);
-            } else if (LADDER){
+            } else if (LADDER) {
                 spawn_bullet->y = PLAYER.y - TO_COORDS(4);
-            } else if (JUMP){
-                if (PLAYER.SpdY < 0){
-                spawn_bullet->y = PLAYER.y - TO_COORDS(8);
+            } else if (JUMP) {
+                if (PLAYER.SpdY < 0) {
+                    spawn_bullet->y = PLAYER.y - TO_COORDS(8);
                 } else {
                     spawn_bullet->y = PLAYER.y - TO_COORDS(4);
                 }
-            }
-            else {
-                    spawn_bullet->y = PLAYER.y;
+            } else {
+                spawn_bullet->y = PLAYER.y;
             }
             bullet_timer = 90;
             break;
