@@ -330,7 +330,7 @@ void spawn_bullets() {
         } else if (bullet_timer == 0) {
             spawn_bullet->RENDER = TRUE;
             spawn_bullet->ON = TRUE;
-            if (PLAYER.facing == LEFT){
+            if (PLAYER.facing == LEFT){ //BULLET IS VISIBLE BEFORE ITS X AXIS IS LESS THAN DETECTIVE
                 if ((LADDER) && (PLAYER.direction == DIR_LADDER_R)){
                     PLAYER.direction = DIR_LADDER_L;
                 }
@@ -341,7 +341,7 @@ void spawn_bullets() {
                     PLAYER.direction = DIR_LADDER_R;
                 }
                 spawn_bullet->facing = RIGHT;
-                spawn_bullet->x = PLAYER.x + TO_COORDS(8);
+                spawn_bullet->x = PLAYER.x + TO_COORDS(6);
             }
             spawn_bullet->y = PLAYER.y;
             bullet_timer = 90;
