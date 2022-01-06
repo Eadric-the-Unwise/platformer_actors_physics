@@ -1,13 +1,13 @@
 #pragma bank 255
 #include "collisions.h"
 
-UINT8 SPAWN, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;
-UINT8 L_LEFT, L_RIGHT;
-UINT8 canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
+BYTE SPAWN, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;
+BYTE L_LEFT, L_RIGHT;
+BYTE canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
 // Release_timer
 extern UINT8 joy, last_joy;
-extern UINT8 ATTACH, x_Collide, y_Collide;
-UINT8 LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
+extern BYTE ATTACH, x_Collide, y_Collide;
+BYTE LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
 
 // THESE COLLISIONS ARE SET ON SINGLE PIXELS, MEANING FINDING THE CENTER IS A CHALLENGE (AS OPPOSED TO NPC COLLISIONS WHICH ARE PERFECTLY CENTRED)
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -342,7 +342,7 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 
 // LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
-BOOLEAN overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x) {
+BYTE overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x) { //BYTE IS SAME AS BOOLEAN (ONLY SHORTER NAME)
     // Standard rectangle-to-rectangle collision check
 
     if (l1_x == r1_x || l1_y == r1_y || l2_x == r2_x || l2_y == r2_y) {

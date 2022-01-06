@@ -16,6 +16,8 @@
 #include "ladder.h"
 #include "level1.h"
 
+typedef INT8 BOOL; //SAME AS BYTE IN GBDK
+
 #define MAX_ACTIVE_ACTORS 6
 #define MAX_BULLETS 1
 #define ACTOR_DETECTIVE 0
