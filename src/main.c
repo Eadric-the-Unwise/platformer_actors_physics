@@ -14,9 +14,9 @@ const level_t *current_stage;
 uint8_t shadow_scx = 0, shadow_scy = 0;
 // WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
 
-/******************************/
+/*****************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
-/******************************/
+/*****************************/
 void main() {
     DISABLE_VBL_TRANSFER;
     DISPLAY_OFF;
@@ -109,17 +109,17 @@ void main() {
                         PLAYER.SpdX = MAX_WALK_SPEED;
                 }
             }
-        
-        if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder)) {
-            CROUCH = TRUE;
-        }
 
-        if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder) && (!OFF_LADDER)) {
-            jump();
-        }
-        if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
-            spawn_bullets();
-        }
+            if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder)) {
+                CROUCH = TRUE;
+            }
+
+            if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder) && (!OFF_LADDER)) {
+                jump();
+            }
+            if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
+                spawn_bullets();
+            }
         }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
