@@ -210,6 +210,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
                 if (joy & J_LEFT) {
                     L_LEFT = TRUE;
+                    PLAYER.facing = LEFT;
                     L_RIGHT = FALSE;
                     if (!(joy & J_UP) && !(joy & J_DOWN)) {
                         PLAYER.direction = DIR_LADDER_L;
@@ -218,6 +219,7 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 } else if (joy & J_RIGHT) {
                     L_LEFT = FALSE;
                     L_RIGHT = TRUE;
+                    PLAYER.facing = RIGHT;
                     if (!(joy & J_UP) && !(joy & J_DOWN)) {
                         PLAYER.direction = DIR_LADDER_R;
                         PLAYER.patrol_timer = 1;

@@ -29,6 +29,7 @@ const actor_t level1_actors[5] = {
      .x_offset = 6,
      .y_offset = 16,
      .direction = DIR_JUMP_L,
+     .facing = LEFT,
      .patrol_timer = 12,
      .patrol_reset = 12,
      .tile_count = (sizeof(detective_large_data) >> 4),
@@ -128,7 +129,7 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE}};
 
-const actor_t level1_bullets[2] = {
+const actor_t level1_bullets[1] = {
     // 0 BULLET
     {.SpdX = 48,
      .SpdY = 0,
@@ -142,21 +143,6 @@ const actor_t level1_bullets[2] = {
      .animations = {bullet_scroll, bullet_scroll},
      .tile_data = bullet_data,
      .copy = FALSE,
-     .RENDER = FALSE,
-     .ON = FALSE},
-    // 1 BULLET
-    {.SpdX = 48,
-     .SpdY = 0,
-     .w = bullet_WIDTH,
-     .h = bullet_HEIGHT,
-     .h_offset = bullet_HEIGHT,
-     .x_offset = 6,
-     .y_offset = 6,
-     .NPC_type = BULLET,
-     .tile_count = (sizeof(bullet_data) >> 4),
-     .animations = {bullet_scroll, bullet_scroll},
-     .tile_data = bullet_data,
-     .copy = TRUE,
      .RENDER = FALSE,
      .ON = FALSE}};
 
@@ -315,17 +301,17 @@ void anim_level1() {
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         if (current_bullet->RENDER == TRUE) {
             INT16 bullet_x = TO_PIXELS(current_bullet->x);
-            if (bullet_x < 0) {
+            if ((bullet_x < 0) || (bullet_x > 168)) {
                 current_bullet->KILL = TRUE;
                 current_bullet->RENDER = FALSE;
             }
             if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
                 current_bullet->x -= PLAYER.SpdX;
             }
-            if (PLAYER.facing == LEFT){
+            if (current_bullet->facing == LEFT){
             current_bullet->x -= current_bullet->SpdX;
             } 
-            else if (PLAYER.facing == RIGHT) {
+            else if (current_bullet->facing == RIGHT) {
                 current_bullet->x += current_bullet->SpdX;
             }
         }
@@ -342,11 +328,23 @@ void spawn_bullets() {
         if (spawn_bullet->RENDER == TRUE) {
             spawn_bullet++;
         } else if (bullet_timer == 0) {
-            spawn_bullet->x = PLAYER.x - TO_COORDS(16);
-            spawn_bullet->y = PLAYER.y;
             spawn_bullet->RENDER = TRUE;
             spawn_bullet->ON = TRUE;
-            bullet_timer = 8;
+            if (PLAYER.facing == LEFT){
+                if ((LADDER) && (PLAYER.direction == DIR_LADDER_R)){
+                    PLAYER.direction = DIR_LADDER_L;
+                }
+                spawn_bullet->facing = LEFT;
+                spawn_bullet->x = PLAYER.x - TO_COORDS(6);
+            } else {
+                if ((LADDER) && (PLAYER.direction == DIR_LADDER_L)){
+                    PLAYER.direction = DIR_LADDER_R;
+                }
+                spawn_bullet->facing = RIGHT;
+                spawn_bullet->x = PLAYER.x + TO_COORDS(8);
+            }
+            spawn_bullet->y = PLAYER.y;
+            bullet_timer = 90;
             break;
         }
     }

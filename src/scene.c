@@ -147,14 +147,16 @@ void render_actors() {
                                 current_actor->tile_index,
                                 OAM_hiwater,
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
-                                current_actor->facing == RIGHT;
+                                if (!LADDER){
+                                current_actor->facing = RIGHT;}
                         } else {
                             OAM_hiwater += move_metasprite(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,
                                 OAM_hiwater,
                                 TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
-                                current_actor->facing == LEFT;
+                                    if (!LADDER){
+                                current_actor->facing = LEFT;}
                         }
                     } else {
                         current_actor->ON = FALSE;
