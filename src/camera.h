@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef __camera_H__
 // prevents the includes from being called twice
 #define __camera_H__
@@ -7,7 +9,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "level.h"
+  
 #include "submap.h"
 
 void set_camera();
@@ -26,3 +28,37 @@ void set_bkg_submap_nonbanked(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const UINT8 *m
 // #define OFFSET(A) (void *)&(A)
 
 #endif
+
+enum Cam {
+    vertical_cam,
+    horizontal_cam,
+    platforming_cam,
+    scroll_cam
+};
+
+typedef struct Variables {
+    UINT16 camera_max_y;
+    UINT16 camera_max_x;
+    UINT16 camera_tiles_x;
+    UINT16 camera_tiles_y;
+    UINT8 joy;
+
+    UINT8 sliding;
+    UINT8 fading;
+    INT8 slide_x;
+    INT8 slide_y;
+    // current and old positions of the camera in pixels
+    INT16 camera_x, camera_y, old_camera_x, old_camera_y;
+    // current and old position of the map in tiles
+    UINT8 map_pos_x, map_pos_y, old_map_pos_x, old_map_pos_y;
+    // redraw flag, indicates that camera position was changed
+    UINT8 redraw;
+    //below PROVIDED BY TOXA IN DISCORD //
+    UINT8 level_map_width;
+    UINT8 level_map_height;
+    const UINT8 *level_map_data;
+    enum Cam camera_style;
+
+    UINT8 level_map_bank;
+
+} Variables;

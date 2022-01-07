@@ -1,4 +1,4 @@
-#pragma bank 255
+  #pragma bank 5
 #include "submap.h"
 
 #include "camera.h"

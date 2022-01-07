@@ -1,4 +1,4 @@
-#pragma bank 255
+  #pragma bank 5
 #include "ladder.h"
 
 extern UINT8 joy, last_joy;

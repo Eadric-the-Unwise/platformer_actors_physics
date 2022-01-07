@@ -1,8 +1,8 @@
 #include <gb/gb.h>
 
-#include "level.h"
+  
 #include "scene.h"
-
+#define LEVEL1_BANK 5
 extern const struct actor_t level1_actors[5];
 extern UINT8 cam1[3];
 extern UINT8 cam2[2];

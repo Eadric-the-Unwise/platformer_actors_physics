@@ -1,4 +1,4 @@
-#pragma bank 255
+#pragma bank 5
 #include "level1.h"
 
 #include <gb/gb.h>
@@ -14,6 +14,15 @@ BYTE ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
 UINT8 render_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 UINT8 bullet_timer = 0;
+
+const level_t level1 = {
+    .bank = 5,
+    .submap_hook = init_submap,  // call this in collision
+    .actors = level1_actors,
+    .bullets = level1_bullets,
+    .actor_count = 5,
+    .animate_hook = anim_level1,  // function that put life into the scene
+    .collide_hook = npc_collisions_level1};
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
@@ -145,15 +154,6 @@ const actor_t level1_bullets[1] = {
      .copy = FALSE,
      .RENDER = FALSE,
      .ON = FALSE}};
-
-const level_t level1 = {
-    .bank = 5,
-    .submap_hook = init_submap,  // call this in collision
-    .actors = level1_actors,
-    .bullets = level1_bullets,
-    .actor_count = 5,
-    .animate_hook = anim_level1,  // function that put life into the scene
-    .collide_hook = npc_collisions_level1};
 
 // current_actor = cam1 + 1
 //  for loop

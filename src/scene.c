@@ -3,7 +3,7 @@
 #include <gb/gb.h>
 #include <string.h>
 
-#include "level.h"
+  
 extern Variables bkg;
 extern UINT8 y_Collide;
 UINT8 dir, last_dir;
@@ -87,7 +87,8 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater) {
 
 void load_level(const level_t *level) {
     if (level == NULL) return;
-    setGameBank(level->bank);
+    // setGameBank(level->bank);
+    // SWITCH_ROM_MBC1(5);
     load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
     load_bullets(level->bullets, hiwater);
     // bullets = level->bullets;
