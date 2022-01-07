@@ -11,7 +11,7 @@ extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;
 extern UINT8 gamestate;
-const level_t *current_stage;
+extern const level_t *current_stage;
 BYTE ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
 UINT8 render_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
