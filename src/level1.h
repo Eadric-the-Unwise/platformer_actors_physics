@@ -17,3 +17,4 @@ extern UINT8 render_actors_count;
 void npc_collisions_level1();
 void anim_level1();
 void spawn_bullets();
+void enter_lvl1();
