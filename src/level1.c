@@ -446,8 +446,8 @@ void npc_collisions_level1() {
 }
 
 void enter_lvl1() {
-    load_level(&level1);
-    if (load_submap) load_submap();
+    // load_level(&level1);
+    // if (load_submap) load_submap();
     current_stage = &level1;
     while (gamestate == 1) {
         last_joy = joy;
@@ -662,6 +662,7 @@ void enter_lvl1() {
 
         if (GAMEOVER) {
             gameover();
+            // TRY LOADING A SECOND STAGE HERE?
         }
     }
 }

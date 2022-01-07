@@ -19,8 +19,8 @@ uint8_t shadow_scx = 0, shadow_scy = 0;
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /*****************************/
 void main() {
-    DISABLE_VBL_TRANSFER;
     DISPLAY_OFF;
+    DISABLE_VBL_TRANSFER;
     BGP_REG = 0xE4;
     OBP0_REG = 0xE4;
     OBP1_REG = 0xE1;
@@ -32,8 +32,10 @@ void main() {
     DROP_timer = 16;
     canCROUCH_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCROUCH_Ftimer = 8;  // TURN canCROUCH TO FALSE WHEN REACH COUNTDOWN
+    SWITCH_ROM_MBC1(LEVEL1_BANK);
+    load_level(&level1);
+    if (load_submap) load_submap();
     gamestate = 1;
-    // load_bullet_data(hiwater);
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 
     // switch on display after everything is ready
