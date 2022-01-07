@@ -19,6 +19,15 @@ collide_level_t collide_level = NULL;  // level animation function
 load_submap_t load_submap = NULL;
 UINT8 hiwater;
 
+void load_level(const level_t *level) {
+    if (level == NULL) return;
+    load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
+    load_bullets(level->bullets, hiwater);
+    load_submap = level->submap_hook;
+    animate_level = level->animate_hook;
+    collide_level = level->collide_hook;
+}
+
 /******************************/
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS from LEVEL(x) to active_actors[MAX_ACTORS] here in scene.c
 /******************************/
@@ -83,18 +92,6 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater) {
         current_bullet++;
         bullet++;
     }
-}
-
-void load_level(const level_t *level) {
-    if (level == NULL) return;
-    // setGameBank(level->bank);
-    // SWITCH_ROM_MBC1(5);
-    load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
-    load_bullets(level->bullets, hiwater);
-    // bullets = level->bullets;
-    load_submap = level->submap_hook;
-    animate_level = level->animate_hook;
-    collide_level = level->collide_hook;
 }
 
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
