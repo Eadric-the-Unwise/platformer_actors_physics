@@ -42,15 +42,14 @@ void main() {
     last_joy = joy = 0;
     while (TRUE) {  // main loop runs at 60fps
         // ---------------------------------------------
-        switch(gamestate){
+        switch (gamestate) {
             case 1:
-            SWITCH_ROM_MBC1(LEVEL1_BANK);
-            enter_lvl1();
-            break;
+                SWITCH_ROM_MBC1(LEVEL1_BANK);
+                enter_lvl1();
+                break;
             case 2:
-            //level 2 here
-            break;
+                // level 2 here
+                break;
         }
-
     }
 }

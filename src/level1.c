@@ -445,13 +445,12 @@ void npc_collisions_level1() {
     }
 }
 
-void enter_lvl1(){
-        load_level(&level1);
+void enter_lvl1() {
+    load_level(&level1);
     if (load_submap) load_submap();
     current_stage = &level1;
-    while (gamestate == 1){
-                last_joy = joy;
-
+    while (gamestate == 1) {
+        last_joy = joy;
         joy = joypad();
         if (!SPAWN) {
             UINT8 px, py;
