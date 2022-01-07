@@ -297,7 +297,7 @@ void jump() {
     if (CROUCH) {
         check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
     }
-    // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
+        // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
     check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
 }
 void land() {
