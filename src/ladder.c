@@ -1,6 +1,6 @@
 #pragma bank 255
 #include "ladder.h"
-
+// comment
 extern UINT8 joy, last_joy;
 extern UINT8 ATTACH, x_Collide, y_Collide;
 UINT8 ONTO_Ladder_timer, DOWN_LADDER_timer, UP_LADDER_timer, OFF_LADDER_timer;
