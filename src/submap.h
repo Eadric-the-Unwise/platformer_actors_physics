@@ -6,6 +6,6 @@
 #include "../res/tiles/stage_drop_map.h"
 #include "../res/tiles/stage_drop_tiles.h"
 
-void init_submap();
+// void init_submap();
 
 #endif

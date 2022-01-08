@@ -1,8 +1,5 @@
-#pragma bank 5
-#include "level1.h"
-#include "submap.h"
-#include "scene.h"
-#include "camera.h"
+#pragma bank 6
+#include "level2.h"
 
 #include <gb/gb.h>
 #include <stdlib.h>
@@ -21,18 +18,18 @@ extern UINT8 render_actors_count;  // the amount of actors in 160px window, the 
 extern UINT8 bullet_timer;
 extern UINT8 *cam_ptr;
 
-const level_t level1 = {
-    .bank = LEVEL1_BANK,
-    .submap_hook = init_submap,  // call this in collision
-    .actors = level1_actors,
-    .bullets = level1_bullets,
+const level_t level2 = {
+    .bank = LEVEL2_BANK,
+    .submap_hook = init_submap_lvl2,  // call this in collision
+    .actors = level2_actors,
+    .bullets = level2_bullets,
     .actor_count = 5,
-    .animate_hook = anim_level1,  // function that put life into the scene
-    .collide_hook = npc_collisions_level1};
+    .animate_hook = anim_level2,  // function that put life into the scene
+    .collide_hook = npc_collisions_level2};
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[5] = {
+const actor_t level2_actors[5] = {
     // 0 PLAYER
     {.x = TO_COORDS(144),
      .y = TO_COORDS(16),
@@ -144,7 +141,7 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE}};
 
-const actor_t level1_bullets[1] = {
+const actor_t level2_bullets[1] = {
     // 0 BULLET
     {.SpdX = 48,
      .SpdY = 0,
@@ -164,21 +161,21 @@ const actor_t level1_bullets[1] = {
 // current_actor = cam1 + 1
 //  for loop
 // aka don't need double arrays here
-UINT8 lvl1_cam1_render[4] = {0, 1, 2, 3};
-UINT8 lvl1_cam2_render[3] = {0, 3, 4};
-UINT8 lvl1_cam3_render[3] = {0, 3, 4};
-UINT8 lvl1_cam4_render[2] = {0, 4};
-UINT8 cam1[3] = {1, 2, 3};
-UINT8 cam2[2] = {3, 4};
-UINT8 cam3[2] = {3, 4};
-UINT8 cam4[1] = {4};
+UINT8 lvl2_cam1_render[4] = {0, 1, 2, 3};
+UINT8 lvl2_cam2_render[3] = {0, 3, 4};
+UINT8 lvl2_cam3_render[3] = {0, 3, 4};
+UINT8 lvl2_cam4_render[2] = {0, 4};
+UINT8 lvl2_cam1[3] = {1, 2, 3};
+UINT8 lvl2_cam2[2] = {3, 4};
+UINT8 lvl2_cam3[2] = {3, 4};
+UINT8 lvl2_cam4[1] = {4};
 
-#define CAM1_COUNT 3
-#define CAM2_COUNT 2
-#define CAM3_COUNT 2
-#define CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
+#define lvl2_CAM1_COUNT 3
+#define lvl2_CAM2_COUNT 2
+#define lvl2_CAM3_COUNT 2
+#define lvl2_CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
 // CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
-void anim_level1() {
+void anim_level2() {
     UINT8 *ptr = NULL;   // pointer // simply = NULL to bypass compiler error lol
     UINT8 *pptr = NULL;  // previous pointer
     UINT8 *nptr = NULL;  // next pointer
@@ -192,36 +189,36 @@ void anim_level1() {
 
     if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
         // RENDERCAM = 1;
-        cam_ptr = lvl1_cam1_render;
-        active_actors_count = CAM1_COUNT;
-        next_actors_count = CAM2_COUNT;
-        ptr = cam1;
-        nptr = cam2;
+        cam_ptr = lvl2_cam1_render;
+        active_actors_count = lvl2_CAM1_COUNT;
+        next_actors_count = lvl2_CAM2_COUNT;
+        ptr = lvl2_cam1;
+        nptr = lvl2_cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
         // RENDERCAM = 2;
-                cam_ptr = lvl1_cam2_render;
-        prev_actors_count = CAM1_COUNT;
-        active_actors_count = CAM2_COUNT;
-        next_actors_count = CAM3_COUNT;
-        pptr = cam1;
-        ptr = cam2;
-        nptr = cam3;
+                cam_ptr = lvl2_cam2_render;
+        prev_actors_count = lvl2_CAM1_COUNT;
+        active_actors_count = lvl2_CAM2_COUNT;
+        next_actors_count = lvl2_CAM3_COUNT;
+        pptr = lvl2_cam1;
+        ptr = lvl2_cam2;
+        nptr = lvl2_cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
         // RENDERCAM = 3;
-                cam_ptr = lvl1_cam3_render;
-        prev_actors_count = CAM2_COUNT;
-        active_actors_count = CAM3_COUNT;
-        next_actors_count = CAM4_COUNT;
-        pptr = cam2;
-        ptr = cam3;
-        nptr = cam4;
+                cam_ptr = lvl2_cam3_render;
+        prev_actors_count = lvl2_CAM2_COUNT;
+        active_actors_count = lvl2_CAM3_COUNT;
+        next_actors_count = lvl2_CAM4_COUNT;
+        pptr = lvl2_cam2;
+        ptr = lvl2_cam3;
+        nptr = lvl2_cam4;
     } else if (camera_x < 160) {  // CAM4
-            cam_ptr = lvl1_cam4_render;
+            cam_ptr = lvl2_cam4_render;
         // RENDERCAM = 4;
-        prev_actors_count = CAM3_COUNT;
-        active_actors_count = CAM4_COUNT;
-        pptr = cam3;
-        ptr = cam4;
+        prev_actors_count = lvl2_CAM3_COUNT;
+        active_actors_count = lvl2_CAM4_COUNT;
+        pptr = lvl2_cam3;
+        ptr = lvl2_cam4;
     }
     render_actors_count = active_actors_count + 1;
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
@@ -332,7 +329,7 @@ void anim_level1() {
     }
 }
 
-void spawn_bullets() {
+void spawn_bullets_lvl2() {
     actor_t *spawn_bullet = active_bullets;
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         if (spawn_bullet->RENDER == TRUE) {
@@ -374,7 +371,7 @@ void spawn_bullets() {
     // }
 }
 
-void npc_collisions_level1() {
+void npc_collisions_level2() {
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
     if (CROUCH) {  // CROUCH HITBOX
@@ -453,7 +450,7 @@ void npc_collisions_level1() {
     }
 }
 
-void init_submap() {
+void init_submap_lvl2() {
     HIDE_BKG;
     bkg.redraw = TRUE;
     bkg.sliding = FALSE;
@@ -485,11 +482,11 @@ void init_submap() {
     SHOW_BKG;
 }
 
-void enter_lvl1() {
-    // load_level(&level1);
+void enter_lvl2() {
+    // load_level(&level2);
     // if (load_submap) load_submap();
-    current_stage = &level1;
-    while (gamestate == 1) {
+    current_stage = &level2;
+    while (gamestate == 2) {
         last_joy = joy;
         joy = joypad();
         if (!SPAWN) {
@@ -701,7 +698,6 @@ void enter_lvl1() {
         }
 
         if (GAMEOVER) {
-            gamestate = 2;
             gameover();
             // TRY LOADING A SECOND STAGE HERE?
         }

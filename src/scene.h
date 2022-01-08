@@ -15,6 +15,9 @@
 #include "collisions.h"
 #include "ladder.h"
 #include "level1.h"
+#define LEVEL1_BANK 5
+#define LEVEL2_BANK 6
+void enter_lvl2();
 
 // typedef INT8 BOOL; //SAME AS BYTE IN GBDK
 
