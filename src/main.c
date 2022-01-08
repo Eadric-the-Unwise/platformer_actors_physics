@@ -10,10 +10,15 @@ UINT8 GAMEOVER;
 UINT8 gamestate;
 extern Variables bkg;
 extern uint8_t animation_timer;
-extern UINT8 ATTACH;
+// extern UINT8 ATTACH;
 const level_t *current_stage;
 uint8_t shadow_scx = 0, shadow_scy = 0;
 UINT8 *cam_ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
+
+BYTE ATTACH, x_Collide, y_Collide;
+UINT8 current_elevator;
+UINT8 render_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+UINT8 bullet_timer = 0;
 // WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
 
 /*****************************/
@@ -51,7 +56,8 @@ void main() {
                 enter_lvl1();
                 break;
             case 2:
-                // level 2 here
+                SWITCH_ROM_MBC1(LEVEL2_BANK);
+                enter_lvl2();
                 break;
         }
     }
