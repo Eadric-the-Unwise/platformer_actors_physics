@@ -7,6 +7,7 @@
 extern Variables bkg;
 extern UINT8 y_Collide;
 UINT8 dir, last_dir;
+extern UINT8 *cam_ptr;
 
 // array of avaliable actors
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
@@ -97,19 +98,19 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater) {
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
 uint8_t animation_timer = 6;
 void render_actors() {
-    UINT8 *ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
-    if (RENDERCAM == 1) {
-        ptr = cam1_render;
-    } else if (RENDERCAM == 2) {
-        ptr = cam2_render;
-    } else if (RENDERCAM == 3) {
-        ptr = cam3_render;
-    } else if (RENDERCAM == 4) {
-        ptr = cam4_render;
-    }
+    // UINT8 *ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
+    // if (RENDERCAM == 1) {
+    //     ptr = cam1_render;
+    // } else if (RENDERCAM == 2) {
+    //     ptr = cam2_render;
+    // } else if (RENDERCAM == 3) {
+    //     ptr = cam3_render;
+    // } else if (RENDERCAM == 4) {
+    //     ptr = cam4_render;
+    // }
     // actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
 
-    actor_t *current_actor = &active_actors[*ptr];
+    actor_t *current_actor = &active_actors[*cam_ptr];
     actor_t *current_bullet = active_bullets;
     // current_actor
 
@@ -185,8 +186,8 @@ void render_actors() {
             }
         }
         // current_actor++;
-        ptr++;
-        current_actor = &active_actors[*ptr];
+        cam_ptr++;
+        current_actor = &active_actors[*cam_ptr];
     }
     // BULLET RENDERING //
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {

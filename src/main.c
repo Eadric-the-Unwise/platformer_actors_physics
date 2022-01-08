@@ -13,6 +13,7 @@ extern uint8_t animation_timer;
 extern UINT8 ATTACH;
 const level_t *current_stage;
 uint8_t shadow_scx = 0, shadow_scy = 0;
+UINT8 *cam_ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
 // WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
 
 /*****************************/

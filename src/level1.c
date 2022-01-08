@@ -16,6 +16,7 @@ BYTE ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
 UINT8 render_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 UINT8 bullet_timer = 0;
+extern UINT8 *cam_ptr;
 
 const level_t level1 = {
     .bank = 5,
@@ -160,10 +161,10 @@ const actor_t level1_bullets[1] = {
 // current_actor = cam1 + 1
 //  for loop
 // aka don't need double arrays here
-UINT8 cam1_render[4] = {0, 1, 2, 3};
-UINT8 cam2_render[3] = {0, 3, 4};
-UINT8 cam3_render[3] = {0, 3, 4};
-UINT8 cam4_render[2] = {0, 4};
+UINT8 lvl1_cam1_render[4] = {0, 1, 2, 3};
+UINT8 lvl1_cam2_render[3] = {0, 3, 4};
+UINT8 lvl1_cam3_render[3] = {0, 3, 4};
+UINT8 lvl1_cam4_render[2] = {0, 4};
 UINT8 cam1[3] = {1, 2, 3};
 UINT8 cam2[2] = {3, 4};
 UINT8 cam3[2] = {3, 4};
@@ -187,13 +188,15 @@ void anim_level1() {
     UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
     if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
-        RENDERCAM = 1;
+        // RENDERCAM = 1;
+        cam_ptr = lvl1_cam1_render;
         active_actors_count = CAM1_COUNT;
         next_actors_count = CAM2_COUNT;
         ptr = cam1;
         nptr = cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
-        RENDERCAM = 2;
+        // RENDERCAM = 2;
+                cam_ptr = lvl1_cam2_render;
         prev_actors_count = CAM1_COUNT;
         active_actors_count = CAM2_COUNT;
         next_actors_count = CAM3_COUNT;
@@ -201,7 +204,8 @@ void anim_level1() {
         ptr = cam2;
         nptr = cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-        RENDERCAM = 3;
+        // RENDERCAM = 3;
+                cam_ptr = lvl1_cam3_render;
         prev_actors_count = CAM2_COUNT;
         active_actors_count = CAM3_COUNT;
         next_actors_count = CAM4_COUNT;
@@ -209,7 +213,8 @@ void anim_level1() {
         ptr = cam3;
         nptr = cam4;
     } else if (camera_x < 160) {  // CAM4
-        RENDERCAM = 4;
+            cam_ptr = lvl1_cam4_render;
+        // RENDERCAM = 4;
         prev_actors_count = CAM3_COUNT;
         active_actors_count = CAM4_COUNT;
         pptr = cam3;
