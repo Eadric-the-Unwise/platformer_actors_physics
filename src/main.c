@@ -20,12 +20,12 @@ UINT8 current_elevator;
 UINT8 render_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 UINT8 bullet_timer = 0;
 // WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
-
+// actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 /*****************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /*****************************/
 void main() {
-    DISPLAY_OFF;
+    // DISPLAY_OFF;
     DISABLE_VBL_TRANSFER;
     BGP_REG = 0xE4;
     OBP0_REG = 0xE4;
@@ -41,11 +41,11 @@ void main() {
     // SWITCH_ROM_MBC1(LEVEL1_BANK);
     // load_level(&level1);
     // if (load_submap) load_submap();
-    gamestate = 1;
-    actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 
+    // actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
     // switch on display after everything is ready
-    DISPLAY_ON;
+    // DISPLAY_ON;
+    gamestate = 1;
 
     last_joy = joy = 0;
     while (TRUE) {  // main loop runs at 60fps
