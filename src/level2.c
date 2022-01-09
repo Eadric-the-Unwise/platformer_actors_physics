@@ -1,4 +1,4 @@
-#pragma bank 6
+#pragma bank 7
 #include "level2.h"
 
 #include <gb/gb.h>
@@ -490,7 +490,7 @@ void setup_lvl2() {
     load_level(&level2);
     if (load_submap) load_submap();
     render_actors();
-    GAMEOVER = FALSE;
+    // GAMEOVER = FALSE;
     DISPLAY_ON;
     current_stage = &level2;
 }
@@ -711,7 +711,8 @@ void enter_lvl2() {
         }
 
         if (GAMEOVER) {
-            gamestate = 1;
+            // gamestate = 1;
+            enter_lvl1();
             // gameover();
             // TRY LOADING A SECOND STAGE HERE?
         }

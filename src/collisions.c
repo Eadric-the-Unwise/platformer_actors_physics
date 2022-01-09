@@ -1,4 +1,4 @@
-//   #pragma bank 5
+// #pragma bank 0
 #include "collisions.h"
 
 BYTE SPAWN, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;
@@ -77,6 +77,9 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     if ((STAGE_DROP_COLLISION[tileindexkD] == 0x04) || (STAGE_DROP_COLLISION[tileindexkC] == 0x04) || (STAGE_DROP_COLLISION[tileindexkT] == 0x04)) {
         GAMEOVER = TRUE;
     }
+    // if ((STAGE_DROP_COLLISION[tileindexC] == 0x08)) {
+    //     GAMEOVER = TRUE;
+    // }
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -358,6 +361,6 @@ BYTE overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r
 
     return 0x01U;
 }
-//IF YOU COLLIDE WITH AN EXIT DOOR, THEN SET GAMESTATE TO THAT PARTICULAR STAGE
-//IF COLLIDE WITH DOOR
-//GAMESTATE = NEXT STAGE
+// IF YOU COLLIDE WITH AN EXIT DOOR, THEN SET GAMESTATE TO THAT PARTICULAR STAGE
+// IF COLLIDE WITH DOOR
+// GAMESTATE = NEXT STAGE

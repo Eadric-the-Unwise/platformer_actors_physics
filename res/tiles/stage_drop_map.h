@@ -5,7 +5,7 @@
  Map Include File.
 
  Info:
-   Section       : 
+   Section       :
    Bank          : 0
    Map size      : 100 x 18
    Tile set      : stage_drop_tileset.gbr
@@ -20,7 +20,7 @@
 
 #define STAGE_DROP_MAPWidth 100
 #define STAGE_DROP_MAPHeight 18
-#define STAGE_DROP_MAPBank 0
+#define STAGE_DROP_MAPBank 6
 
 extern unsigned char STAGE_DROP_MAP[];
 

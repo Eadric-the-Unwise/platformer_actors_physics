@@ -4,6 +4,7 @@
 #include "../res/tiles/stage_drop_map.h"
 #include "../res/tiles/stage_drop_tiles.h"
 #include "scene.h"
+
 extern const struct actor_t level1_actors[5];
 extern UINT8 cam1_render[4];
 extern UINT8 cam2_render[3];

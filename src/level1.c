@@ -468,7 +468,7 @@ void init_submap() {
     bkg.map_pos_x = (UINT8)(bkg.camera_x >> 7u);
     bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
     // CHANGE THE TILE COUNT AS YOU ADD TILES TO THE BKG TILE_SET
-    set_bkg_data_nonbanked(0, 11, STAGE_DROP_TILES, STAGE_DROP_TILESBank);
+    set_bkg_data_nonbanked(0, STAGE_DROP_TILESLen, STAGE_DROP_TILES, STAGE_DROP_TILESBank);
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
 
     set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, STAGE_DROP_MAP, STAGE_DROP_MAPWidth, STAGE_DROP_MAPBank);
@@ -493,7 +493,7 @@ void setup_lvl1() {
     load_level(&level1);
     if (load_submap) load_submap();
     render_actors();
-    GAMEOVER = FALSE;
+    // GAMEOVER = FALSE;
     DISPLAY_ON;
     current_stage = &level1;
 }
@@ -715,9 +715,14 @@ void enter_lvl1() {
         }
 
         if (GAMEOVER) {
+            // gamestate = 2;
+            // enter_lvl1();
             gamestate = 2;
             // gameover();
             // TRY LOADING A SECOND STAGE HERE?
+        } else if (WINNER) {
+            WINNER = FALSE;
+            gamestate = 2;
         }
     }
 }

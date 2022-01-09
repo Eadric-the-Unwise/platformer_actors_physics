@@ -7,6 +7,7 @@
 UINT8 joy, last_joy;
 UINT8 px, py;
 UINT8 GAMEOVER;
+UINT8 WINNER;
 UINT8 gamestate;
 extern Variables bkg;
 extern uint8_t animation_timer;
@@ -33,7 +34,7 @@ void main() {
     SPRITES_8x16;  // MUST be 8x16 or 8x8. Can change in different scenes only
     SHOW_BKG;
     SHOW_SPRITES;
-    GAMEOVER = Gravity = L_LEFT = L_RIGHT = ATTACH = LADDER = ONTO_Ladder = DOWN_LADDER = DOWN_LADDER_F = UP_LADDER = OFF_LADDER = CROUCH = canCROUCH = DROP = FALSE;
+    GAMEOVER = WINNER = Gravity = L_LEFT = L_RIGHT = ATTACH = LADDER = ONTO_Ladder = DOWN_LADDER = DOWN_LADDER_F = UP_LADDER = OFF_LADDER = CROUCH = canCROUCH = DROP = FALSE;
     SPAWN = JUMP = LADDER_Release = TRUE;
     DROP_timer = 16;
     canCROUCH_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH

@@ -8,9 +8,9 @@
   Form                 : All tiles as one unit.
   Format               : Gameboy 4 color.
   Compression          : None.
-  Counter              : None.
+  Counter              : Tile-count as Constant.
   Tile size            : 8 x 8
-  Tiles                : 0 to 10
+  Tiles                : 0 to 12
 
   Palette colors       : None.
   SGB Palette          : None.
@@ -22,10 +22,10 @@
 
 */
 
-
 /* Bank of tiles. */
-#define STAGE_DROP_TILESBank 0
+#define STAGE_DROP_TILESBank 6
 /* Start of tile array. */
 extern unsigned char STAGE_DROP_TILES[];
+#define STAGE_DROP_TILESLen 13
 
 /* End of STAGE_DROP_TILES.H */
