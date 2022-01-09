@@ -1,4 +1,4 @@
-// #pragma bank 0
+#pragma bank 5
 #include "collisions.h"
 
 BYTE SPAWN, Gravity, JUMP, CROUCH, canCROUCH, DROP, x_Adjust;

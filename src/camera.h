@@ -9,7 +9,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-  
 #include "submap.h"
 
 void set_camera();
@@ -18,6 +17,8 @@ void performantdelay(UINT8 numloops);
 inline void set_level(UINT8, UINT8, const UINT8 *, UINT8 bank);
 void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank);
 void set_bkg_submap_nonbanked(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const UINT8 *map_data, UINT8 map_w, UINT8 bank);
+
+void set_sprite_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank);
 
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 //##joins the __bank and 'A' variable name together
@@ -53,7 +54,7 @@ typedef struct Variables {
     UINT8 map_pos_x, map_pos_y, old_map_pos_x, old_map_pos_y;
     // redraw flag, indicates that camera position was changed
     UINT8 redraw;
-    //below PROVIDED BY TOXA IN DISCORD //
+    // below PROVIDED BY TOXA IN DISCORD //
     UINT8 level_map_width;
     UINT8 level_map_height;
     const UINT8 *level_map_data;

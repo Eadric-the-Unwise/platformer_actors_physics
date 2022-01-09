@@ -22,3 +22,5 @@ void spawn_bullets();
 void init_submap();
 void setup_lvl1();
 void enter_lvl1();
+
+UINT8 init_lvl1_actor_data();

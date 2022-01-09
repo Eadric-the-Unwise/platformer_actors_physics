@@ -64,6 +64,17 @@ void render_camera(UINT8 playerx, INT16 camx) {
         }
     }
 }
+void set_sprite_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank)
+#ifndef __INTELLISENSE__
+    NONBANKED
+#endif
+{
+    UINT8 __save = _current_bank;
+    SWITCH_ROM_MBC1(bank);
+    set_sprite_data(first_tile, nb_tiles, tile_data);
+    SWITCH_ROM_MBC1(__save);
+}
+
 void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank)
 #ifndef __INTELLISENSE__
     NONBANKED

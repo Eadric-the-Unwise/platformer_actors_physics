@@ -452,6 +452,16 @@ void npc_collisions_level1() {
         }
     }
 }
+UINT8 init_lvl1_actor_data() {
+    hiwater = 0;
+    set_bkg_data_nonbanked(hiwater, (sizeof(detective_large_data) >> 4), detective_large_data, detective_large_Bank);
+    hiwater += (sizeof(detective_large_data) >> 4);
+    set_bkg_data_nonbanked(hiwater, (sizeof(NPC_electric_data) >> 4), NPC_electric_data, NPC_electric_data_Bank);
+    hiwater += (sizeof(NPC_electric_data) >> 4);
+    set_bkg_data_nonbanked(hiwater, (sizeof(elevator_data) >> 4), elevator_data, elevator_data_Bank);
+    hiwater += (sizeof(elevator_data) >> 4);
+    return hiwater;
+}
 
 void init_submap() {
     HIDE_BKG;
