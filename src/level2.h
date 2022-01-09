@@ -1,7 +1,8 @@
+#define LEVEL2_BANK 6
 #include <gb/gb.h>
+
 #include "../res/tiles/stage_drop_map.h"
 #include "../res/tiles/stage_drop_tiles.h"
-  
 #include "scene.h"
 
 extern const struct actor_t level2_actors[5];
@@ -18,6 +19,6 @@ extern UINT8 render_actors_count;
 void npc_collisions_level2();
 void anim_level2();
 void spawn_bullets_lvl2();
-
-
 void init_submap_lvl2();
+void setup_lvl2();
+void enter_lvl2();

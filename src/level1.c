@@ -1,8 +1,5 @@
 #pragma bank 5
 #include "level1.h"
-#include "submap.h"
-#include "scene.h"
-#include "camera.h"
 
 #include <gb/gb.h>
 #include <stdlib.h>
@@ -10,6 +7,9 @@
 #include "../res/tiles/NPC_electric.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
+#include "camera.h"
+#include "scene.h"
+#include "submap.h"
 extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;
@@ -198,8 +198,8 @@ void anim_level1() {
         ptr = cam1;
         nptr = cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
-        // RENDERCAM = 2;
-                cam_ptr = lvl1_cam2_render;
+                                                         // RENDERCAM = 2;
+        cam_ptr = lvl1_cam2_render;
         prev_actors_count = CAM1_COUNT;
         active_actors_count = CAM2_COUNT;
         next_actors_count = CAM3_COUNT;
@@ -207,8 +207,8 @@ void anim_level1() {
         ptr = cam2;
         nptr = cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-        // RENDERCAM = 3;
-                cam_ptr = lvl1_cam3_render;
+                                                         // RENDERCAM = 3;
+        cam_ptr = lvl1_cam3_render;
         prev_actors_count = CAM2_COUNT;
         active_actors_count = CAM3_COUNT;
         next_actors_count = CAM4_COUNT;
@@ -216,7 +216,7 @@ void anim_level1() {
         ptr = cam3;
         nptr = cam4;
     } else if (camera_x < 160) {  // CAM4
-            cam_ptr = lvl1_cam4_render;
+        cam_ptr = lvl1_cam4_render;
         // RENDERCAM = 4;
         prev_actors_count = CAM3_COUNT;
         active_actors_count = CAM4_COUNT;
@@ -485,10 +485,24 @@ void init_submap() {
     SHOW_BKG;
 }
 
+void setup_lvl1() {
+    DISPLAY_OFF;
+    SPAWN = TRUE;
+    GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
+    JUMP = LADDER_Release = TRUE;
+    load_level(&level1);
+    if (load_submap) load_submap();
+    render_actors();
+    GAMEOVER = FALSE;
+    DISPLAY_ON;
+    current_stage = &level1;
+}
+
 void enter_lvl1() {
     // load_level(&level1);
     // if (load_submap) load_submap();
-    current_stage = &level1;
+    setup_lvl1();
+
     while (gamestate == 1) {
         last_joy = joy;
         joy = joypad();
@@ -702,7 +716,7 @@ void enter_lvl1() {
 
         if (GAMEOVER) {
             gamestate = 2;
-            gameover();
+            // gameover();
             // TRY LOADING A SECOND STAGE HERE?
         }
     }

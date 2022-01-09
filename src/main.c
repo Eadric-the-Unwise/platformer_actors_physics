@@ -38,9 +38,9 @@ void main() {
     DROP_timer = 16;
     canCROUCH_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCROUCH_Ftimer = 8;  // TURN canCROUCH TO FALSE WHEN REACH COUNTDOWN
-    SWITCH_ROM_MBC1(LEVEL1_BANK);
-    load_level(&level1);
-    if (load_submap) load_submap();
+    // SWITCH_ROM_MBC1(LEVEL1_BANK);
+    // load_level(&level1);
+    // if (load_submap) load_submap();
     gamestate = 1;
     actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 

@@ -65,7 +65,7 @@ const actor_t level2_actors[5] = {
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_DOWN,
-     .NPC_type = PATROL,
+     .NPC_type = PISTOL,
      .patrol_timer = 78,
      .patrol_reset = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
@@ -88,7 +88,7 @@ const actor_t level2_actors[5] = {
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_UP,
-     .NPC_type = PATROL,
+     .NPC_type = PISTOL,
      .patrol_timer = 78,
      .patrol_reset = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
@@ -195,8 +195,8 @@ void anim_level2() {
         ptr = lvl2_cam1;
         nptr = lvl2_cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
-        // RENDERCAM = 2;
-                cam_ptr = lvl2_cam2_render;
+                                                         // RENDERCAM = 2;
+        cam_ptr = lvl2_cam2_render;
         prev_actors_count = lvl2_CAM1_COUNT;
         active_actors_count = lvl2_CAM2_COUNT;
         next_actors_count = lvl2_CAM3_COUNT;
@@ -204,8 +204,8 @@ void anim_level2() {
         ptr = lvl2_cam2;
         nptr = lvl2_cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-        // RENDERCAM = 3;
-                cam_ptr = lvl2_cam3_render;
+                                                         // RENDERCAM = 3;
+        cam_ptr = lvl2_cam3_render;
         prev_actors_count = lvl2_CAM2_COUNT;
         active_actors_count = lvl2_CAM3_COUNT;
         next_actors_count = lvl2_CAM4_COUNT;
@@ -213,7 +213,7 @@ void anim_level2() {
         ptr = lvl2_cam3;
         nptr = lvl2_cam4;
     } else if (camera_x < 160) {  // CAM4
-            cam_ptr = lvl2_cam4_render;
+        cam_ptr = lvl2_cam4_render;
         // RENDERCAM = 4;
         prev_actors_count = lvl2_CAM3_COUNT;
         active_actors_count = lvl2_CAM4_COUNT;
@@ -482,10 +482,23 @@ void init_submap_lvl2() {
     SHOW_BKG;
 }
 
+void setup_lvl2() {
+    DISPLAY_OFF;
+    SPAWN = TRUE;
+    GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
+    JUMP = LADDER_Release = TRUE;
+    load_level(&level2);
+    if (load_submap) load_submap();
+    render_actors();
+    GAMEOVER = FALSE;
+    DISPLAY_ON;
+    current_stage = &level2;
+}
+
 void enter_lvl2() {
     // load_level(&level2);
     // if (load_submap) load_submap();
-    current_stage = &level2;
+    setup_lvl2();
     while (gamestate == 2) {
         last_joy = joy;
         joy = joypad();
@@ -698,7 +711,8 @@ void enter_lvl2() {
         }
 
         if (GAMEOVER) {
-            gameover();
+            gamestate = 1;
+            // gameover();
             // TRY LOADING A SECOND STAGE HERE?
         }
     }
