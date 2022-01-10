@@ -61,7 +61,7 @@ DEF l__CODE_10 0xE20
 DEF l__INITIALIZED 0x110B
 DEF l__INITIALIZER 0x110B
 DEF l__CODE_5 0x1777
-DEF l__CODE_7 0x1779
+DEF l__CODE_7 0x1778
 DEF _rROMB0 0x2000
 DEF l__CODE 0x25DA
 DEF s__HOME 0x27DA
@@ -344,7 +344,7 @@ DEF _spawn_bullets_lvl2 0x74B02
 DEF _npc_collisions_level2 0x74C32
 DEF _init_submap_lvl2 0x74F81
 DEF _setup_lvl2 0x75099
-DEF _enter_lvl2 0x750FA
+DEF _enter_lvl2 0x750E8
 DEF _detective_large_data 0xA4000
 DEF _detective_large_metasprite0 0xA4AC0
 DEF _detective_large_metasprite1 0xA4AD8

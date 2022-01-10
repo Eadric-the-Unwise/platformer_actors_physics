@@ -306,7 +306,7 @@
 07:4C32 _npc_collisions_level2
 07:4F81 _init_submap_lvl2
 07:5099 _setup_lvl2
-07:50FA _enter_lvl2
+07:50E8 _enter_lvl2
 0A:4000 _detective_large_data
 0A:4AC0 _detective_large_metasprite0
 0A:4AD8 _detective_large_metasprite1

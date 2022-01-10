@@ -47,6 +47,7 @@ const actor_t level2_actors[5] = {
      .tile_count = (sizeof(detective_large_data) >> 4),
      .tile_index = 0,
      .tile_data = detective_large_data,
+     .bank = detective_large_Bank,
      .animations = {detective_walk_left, detective_walk_left, detective_CROUCH, detective_CROUCH, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_JUMP, detective_JUMP, detective_land, detective_land, detective_drop, detective_drop, detective_LADDER, detective_LADDER, NULL, NULL, detective_ONTOLADDER, detective_ONTOLADDER, detective_OFFLADDER, detective_OFFLADDER},
      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 3,
@@ -71,6 +72,7 @@ const actor_t level2_actors[5] = {
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
+     .bank = NPC_electric_data_Bank,
      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NPC_electric_animation, NPC_electric_animation},
      .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
@@ -94,6 +96,7 @@ const actor_t level2_actors[5] = {
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
+     .bank = NPC_electric_data_Bank,
      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NPC_electric_animation, NPC_electric_animation},
      .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
@@ -114,6 +117,7 @@ const actor_t level2_actors[5] = {
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
+     .bank = NPC_electric_data_Bank,
      .animations = {NPC_electric_animation, NPC_electric_animation},
      .animations_props = {ANIM_LOOP, ANIM_LOOP},
      .animation_phase = 0,
@@ -134,6 +138,7 @@ const actor_t level2_actors[5] = {
      .tile_count = (sizeof(elevator_data) >> 4),
      .tile_index = 0,
      .tile_data = elevator_data,
+     .bank = elevator_data_Bank,
      .patrol_timer = 1,
      .patrol_reset = 160,
      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
@@ -488,9 +493,7 @@ void setup_lvl2() {
     GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
     load_level(&level2);
-    if (load_submap) load_submap();
     render_actors();
-    // GAMEOVER = FALSE;
     DISPLAY_ON;
     current_stage = &level2;
 }
@@ -712,9 +715,12 @@ void enter_lvl2() {
 
         if (GAMEOVER) {
             // gamestate = 1;
-            enter_lvl1();
+            enter_lvl2();
             // gameover();
             // TRY LOADING A SECOND STAGE HERE?
+        } else if (WINNER) {
+            WINNER = FALSE;
+            gamestate = 1;
         }
     }
 }
