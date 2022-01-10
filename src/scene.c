@@ -21,8 +21,8 @@ UINT8 hiwater;
 
 void load_level(const level_t *level) {
     if (level == NULL) return;
-    init_lvl1_actor_data();
-    load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
+    // init_lvl1_actor_data();
+    load_scene_actors(level->actors, level->actor_count, level->bank);  // Loads level1.c actors
     load_bullets(level->bullets, hiwater);
     load_submap = level->submap_hook;
     animate_level = level->animate_hook;
@@ -32,19 +32,22 @@ void load_level(const level_t *level) {
 /******************************/
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS from LEVEL(x) to active_actors[MAX_ACTORS] here in scene.c
 /******************************/
-void load_scene_actors(const actor_t *actor, UINT8 actors_count) {
+UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count, UINT8 Bank) {
     //? current_actor locally here is manipulating the active_actors[MAX_ACTORS] array information
     actor_t *current_actor = active_actors;
+    UINT8 __save = _current_bank;
+    SWITCH_ROM_MBC1(Bank);
 
-    // hiwater = 0;
+    hiwater = 0;
     for (UINT8 i = actors_count; i != 0; i--) {  // counter direction does not matter, because pointer is moved. only number of iterations matter.
-        // if (actor->copy == TRUE) {
-        //     hiwater -= actor->tile_count;
-        //     current_actor->tile_index = hiwater;
-        // } else if (actor->copy == FALSE) {
-        //     current_actor->tile_index = hiwater;
-        //     set_sprite_data(hiwater, actor->tile_count, actor->tile_data);
-        // }
+        if (actor->copy == TRUE) {
+            hiwater -= actor->tile_count;
+            current_actor->tile_index = hiwater;
+        } else if (actor->copy == FALSE) {
+            current_actor->tile_index = hiwater;
+            // memcpy(current_actor->tile_data, actor->tile_data, sizeof(current_actor->tile_data));
+            set_sprite_data(hiwater, actor->tile_count, actor->tile_data);
+        }
         current_actor->x = actor->x;
         current_actor->y = actor->y;
         current_actor->SpdX = actor->SpdX;
@@ -60,19 +63,20 @@ void load_scene_actors(const actor_t *actor, UINT8 actors_count) {
         current_actor->NPC_type = actor->NPC_type;
         current_actor->patrol_timer = actor->patrol_timer;
         current_actor->patrol_reset = actor->patrol_reset;
-        memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations));  // copy array of 5 pointers to animation phases
+        memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations));  // copy large amount of data conveniently via memcpy (not necessarily ROM to RAM)
         memcpy(current_actor->animations_props, actor->animations_props, sizeof(actor->animations_props));
         current_actor->animation_phase = actor->animation_phase;
         current_actor->RENDER = actor->RENDER;
         current_actor->ON = actor->ON;
         current_actor->KILL = actor->KILL;
 
-        // hiwater += actor->tile_count;
+        hiwater += actor->tile_count;
         current_actor++;
         actor++;
     }
+    SWITCH_ROM_MBC1(__save);
     total_actors_count = actors_count;  // copies from ROM to RAM
-    // return hiwater;
+    return hiwater;
 }
 void load_bullets(const actor_t *bullet, UINT8 hiwater) {
     if (bullet == NULL) return;

@@ -1,6 +1,7 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
 #include <stdio.h>
+#include <string.h>  // DELETE AFTER MOVING MEMCPY FUNCTION(S)
 
 #include "scene.h"
 
@@ -25,6 +26,17 @@ UINT8 bullet_timer = 0;
 /*****************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
 /*****************************/
+void NPC_memcpy() {
+    UINT8 __save = _current_bank;
+    SWITCH_ROM_MBC1(10);
+    actor_t *current_actor = active_actors;
+    // for (i = 3; i != 0; i--) {
+    memcpy(current_actor->tile_data, detective_large_data, (sizeof(detective_large_data) >> 4));
+    //     current_actor++;
+    SWITCH_ROM_MBC1(__save);
+    // }
+}
+
 void main() {
     // DISPLAY_OFF;
     DISABLE_VBL_TRANSFER;
@@ -47,6 +59,7 @@ void main() {
     // switch on display after everything is ready
     // DISPLAY_ON;
     gamestate = 1;
+    // NPC_memcpy();
 
     last_joy = joy = 0;
     while (TRUE) {  // main loop runs at 60fps

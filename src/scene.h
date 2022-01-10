@@ -5,6 +5,7 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
 
+#include "../res/tiles/NPC_electric.h"
 #include "../res/tiles/bullet.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
@@ -146,10 +147,10 @@ extern load_submap_t load_submap;
 extern UINT8 total_actors_count;
 extern UINT8 RENDERCAM;
 extern UINT8 hiwater;
-
+void NPC_memcpy();
 extern const level_t *current_stage;
 void load_level(const level_t *level);
-void load_scene_actors(const actor_t *actor, UINT8 actors_count);
+UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count, UINT8 Bank);
 void load_bullets(const actor_t *bullet, UINT8 hiwater);
 void render_actors();
 void switch_down();
