@@ -9,8 +9,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "submap.h"
-
 void set_camera();
 void render_camera(UINT8 playerx, INT16 camx);
 void performantdelay(UINT8 numloops);

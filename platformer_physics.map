@@ -419,37 +419,35 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc29200.rel
+C:\Users\User\AppData\Local\Temp/lcc181680.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc29201.rel
+C:\Users\User\AppData\Local\Temp/lcc181681.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc29202.rel
+C:\Users\User\AppData\Local\Temp/lcc181682.rel
                                           [ ladder ]
-C:\Users\User\AppData\Local\Temp/lcc29203.rel
+C:\Users\User\AppData\Local\Temp/lcc181683.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc29204.rel
+C:\Users\User\AppData\Local\Temp/lcc181684.rel
                                           [ level2 ]
-C:\Users\User\AppData\Local\Temp/lcc29205.rel
+C:\Users\User\AppData\Local\Temp/lcc181685.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc29206.rel
+C:\Users\User\AppData\Local\Temp/lcc181686.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc29207.rel
-                                          [ submap ]
-C:\Users\User\AppData\Local\Temp/lcc29208.rel
+C:\Users\User\AppData\Local\Temp/lcc181687.rel
                                           [ bullet ]
-C:\Users\User\AppData\Local\Temp/lcc29209.rel
+C:\Users\User\AppData\Local\Temp/lcc181688.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc292010.rel
+C:\Users\User\AppData\Local\Temp/lcc181689.rel
                                           [ elevator ]
-C:\Users\User\AppData\Local\Temp/lcc292011.rel
+C:\Users\User\AppData\Local\Temp/lcc1816810.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc292012.rel
+C:\Users\User\AppData\Local\Temp/lcc1816811.rel
                                           [ stage_drop_collision ]
-C:\Users\User\AppData\Local\Temp/lcc292013.rel
+C:\Users\User\AppData\Local\Temp/lcc1816812.rel
                                           [ stage_drop_map ]
-C:\Users\User\AppData\Local\Temp/lcc292014.rel
+C:\Users\User\AppData\Local\Temp/lcc1816813.rel
                                           [ stage_drop_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc292015.rel
+C:\Users\User\AppData\Local\Temp/lcc1816814.rel
                                           [ lvl1_actors ]
 
 

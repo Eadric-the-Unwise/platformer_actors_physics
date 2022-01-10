@@ -9,7 +9,7 @@
 #include "../res/tiles/elevator.h"
 #include "camera.h"
 #include "scene.h"
-#include "submap.h"
+
 extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;
