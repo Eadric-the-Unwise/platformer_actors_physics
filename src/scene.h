@@ -5,6 +5,7 @@
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
 
+#include "../actor/lvl1_actors.h"
 #include "../res/tiles/NPC_electric.h"
 #include "../res/tiles/bullet.h"
 #include "../res/tiles/detective_large.h"
