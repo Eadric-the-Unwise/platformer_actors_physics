@@ -21,10 +21,11 @@ UINT8 hiwater;
 
 void load_level(const level_t *level) {
     if (level == NULL) return;
-    init_lvl1_actor_data();
+    // init_lvl1_actor_data();
     load_scene_actors(level->actors, level->actor_count);  // Loads level1.c actors
     load_bullets(level->bullets, hiwater);
     load_submap = level->submap_hook;
+    if (load_submap) load_submap();
     animate_level = level->animate_hook;
     collide_level = level->collide_hook;
 }
@@ -32,19 +33,19 @@ void load_level(const level_t *level) {
 /******************************/
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS from LEVEL(x) to active_actors[MAX_ACTORS] here in scene.c
 /******************************/
-void load_scene_actors(const actor_t *actor, UINT8 actors_count) {
+UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count) {
     //? current_actor locally here is manipulating the active_actors[MAX_ACTORS] array information
     actor_t *current_actor = active_actors;
 
-    // hiwater = 0;
+    hiwater = 0;
     for (UINT8 i = actors_count; i != 0; i--) {  // counter direction does not matter, because pointer is moved. only number of iterations matter.
-        // if (actor->copy == TRUE) {
-        //     hiwater -= actor->tile_count;
-        //     current_actor->tile_index = hiwater;
-        // } else if (actor->copy == FALSE) {
-        //     current_actor->tile_index = hiwater;
-        //     set_sprite_data(hiwater, actor->tile_count, actor->tile_data);
-        // }
+        if (actor->copy == TRUE) {
+            hiwater -= actor->tile_count;
+            current_actor->tile_index = hiwater;
+        } else if (actor->copy == FALSE) {
+            current_actor->tile_index = hiwater;
+            set_sprite_data(hiwater, actor->tile_count, actor->tile_data);
+        }
         current_actor->x = actor->x;
         current_actor->y = actor->y;
         current_actor->SpdX = actor->SpdX;
@@ -67,12 +68,12 @@ void load_scene_actors(const actor_t *actor, UINT8 actors_count) {
         current_actor->ON = actor->ON;
         current_actor->KILL = actor->KILL;
 
-        // hiwater += actor->tile_count;
+        hiwater += actor->tile_count;
         current_actor++;
         actor++;
     }
     total_actors_count = actors_count;  // copies from ROM to RAM
-    // return hiwater;
+    return hiwater;
 }
 void load_bullets(const actor_t *bullet, UINT8 hiwater) {
     if (bullet == NULL) return;

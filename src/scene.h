@@ -149,7 +149,7 @@ extern UINT8 hiwater;
 
 extern const level_t *current_stage;
 void load_level(const level_t *level);
-void load_scene_actors(const actor_t *actor, UINT8 actors_count);
+UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count);
 void load_bullets(const actor_t *bullet, UINT8 hiwater);
 void render_actors();
 void switch_down();

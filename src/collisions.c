@@ -77,9 +77,9 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     if ((STAGE_DROP_COLLISION[tileindexkD] == 0x04) || (STAGE_DROP_COLLISION[tileindexkC] == 0x04) || (STAGE_DROP_COLLISION[tileindexkT] == 0x04)) {
         GAMEOVER = TRUE;
     }
-    // if ((STAGE_DROP_COLLISION[tileindexC] == 0x08)) {
-    //     GAMEOVER = TRUE;
-    // }
+    if ((STAGE_DROP_COLLISION[tileindexC] == 0x08)) {
+        WINNER = TRUE;
+    }
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
