@@ -23,7 +23,7 @@ void load_level(const level_t *level) {
     if (level == NULL) return;
     // init_lvl1_actor_data();
     load_scene_actors(level->actors, level->actor_count, level->bank);  // Loads level1.c actors
-    load_bullets(level->bullets, hiwater);
+    load_bullets(hiwater, level->bullets, level->bank);
     load_submap = level->submap_hook;
     animate_level = level->animate_hook;
     collide_level = level->collide_hook;
@@ -78,9 +78,11 @@ UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count, UINT8 Bank) {
     total_actors_count = actors_count;  // copies from ROM to RAM
     return hiwater;
 }
-void load_bullets(const actor_t *bullet, UINT8 hiwater) {
+void load_bullets(UINT8 hiwater, const actor_t *bullet, UINT8 bank) {
     if (bullet == NULL) return;
     actor_t *current_bullet = active_bullets;
+    UINT8 __save = _current_bank;
+    SWITCH_ROM_MBC1(bank);
 
     set_sprite_data(hiwater, bullet->tile_count, bullet->tile_data);
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
@@ -97,6 +99,7 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater) {
         current_bullet++;
         bullet++;
     }
+    SWITCH_ROM_MBC1(__save);
 }
 
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value

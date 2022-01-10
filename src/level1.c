@@ -30,137 +30,6 @@ const level_t level1 = {
     .animate_hook = anim_level1,  // function that put life into the scene
     .collide_hook = npc_collisions_level1};
 
-// CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
-//.w and .h are adjusted for COLLISION functions
-// const actor_t level1_actors[5] = {
-//     // 0 PLAYER
-//     {.x = TO_COORDS(144),
-//      .y = TO_COORDS(16),
-//      .SpdX = 0,
-//      .SpdY = 16,
-//      .w = detective_large_WIDTH,
-//      .h = detective_large_HEIGHT,
-//      .h_offset = 7,
-//      .x_offset = 6,
-//      .y_offset = 16,
-//      .direction = DIR_JUMP_L,
-//      .facing = LEFT,
-//      .patrol_timer = 12,
-//      .patrol_reset = 12,
-//      .tile_count = (sizeof(detective_large_data) >> 4),
-//      .tile_index = 0,
-//      .tile_data = detective_large_data,
-//      .animations = {detective_walk_left, detective_walk_left, detective_CROUCH, detective_CROUCH, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_JUMP, detective_JUMP, detective_land, detective_land, detective_drop, detective_drop, detective_LADDER, detective_LADDER, NULL, NULL, detective_ONTOLADDER, detective_ONTOLADDER, detective_OFFLADDER, detective_OFFLADDER},
-//      .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-//      .animation_phase = 3,
-//      .copy = FALSE,
-//      .RENDER = TRUE,
-//      .ON = TRUE},
-//     // 1 TOP PATROL
-//     {.x = TO_COORDS(56),
-//      .y = TO_COORDS(68),
-//      .SpdX = 8,
-//      .SpdY = 0,
-//      .w = NPC_electric_WIDTH,
-//      .h = NPC_electric_HEIGHT,
-//      .x_pivot = NPC_electric_PIVOT_X,
-//      .y_pivot = NPC_electric_PIVOT_Y,
-//      .x_offset = 6,
-//      .y_offset = 6,
-//      .direction = DIR_DOWN,
-//      .NPC_type = PATROL,
-//      .patrol_timer = 78,
-//      .patrol_reset = 156,
-//      .tile_count = (sizeof(NPC_electric_data) >> 4),
-//      .tile_index = 0,
-//      .tile_data = NPC_electric_data,
-//      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NPC_electric_animation, NPC_electric_animation},
-//      .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ANIM_LOOP, ANIM_LOOP},
-//      .animation_phase = 0,
-//      .copy = FALSE,
-//      .ON = TRUE},
-//     // 2 BOTTOM PATROL
-//     {.x = TO_COORDS(56),
-//      .y = TO_COORDS(132),
-//      .SpdX = -8,
-//      .SpdY = 0,
-//      .w = NPC_electric_WIDTH,
-//      .h = NPC_electric_HEIGHT,
-//      .x_pivot = NPC_electric_PIVOT_X,
-//      .y_pivot = NPC_electric_PIVOT_Y,
-//      .x_offset = 6,
-//      .y_offset = 6,
-//      .direction = DIR_UP,
-//      .NPC_type = PATROL,
-//      .patrol_timer = 78,
-//      .patrol_reset = 156,
-//      .tile_count = (sizeof(NPC_electric_data) >> 4),
-//      .tile_index = 0,
-//      .tile_data = NPC_electric_data,
-//      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NPC_electric_animation, NPC_electric_animation},
-//      .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ANIM_LOOP, ANIM_LOOP},
-//      .animation_phase = 0,
-//      .copy = TRUE},
-//     // 3 WALK
-//     {.x = TO_COORDS(-144),
-//      .y = TO_COORDS(116),
-//      .SpdX = 8,
-//      .SpdY = 0,
-//      .w = NPC_electric_WIDTH,
-//      .h = NPC_electric_HEIGHT,
-//      .x_pivot = NPC_electric_PIVOT_X,
-//      .y_pivot = NPC_electric_PIVOT_Y,
-//      .x_offset = 6,
-//      .y_offset = 6,
-//      .direction = DIR_LEFT,
-//      .NPC_type = PISTOL,
-//      .tile_count = (sizeof(NPC_electric_data) >> 4),
-//      .tile_index = 0,
-//      .tile_data = NPC_electric_data,
-//      .animations = {NPC_electric_animation, NPC_electric_animation},
-//      .animations_props = {ANIM_LOOP, ANIM_LOOP},
-//      .animation_phase = 0,
-//      .copy = TRUE},
-//     // 4 ELEVATOR
-//     {.x = TO_COORDS(-148),
-//      .y = TO_COORDS(136),
-//      .SpdX = 0,
-//      .SpdY = 8,
-//      .w = elevator_WIDTH,
-//      .h = elevator_HEIGHT,
-//      .x_pivot = elevator_PIVOT_X,
-//      .y_pivot = elevator_PIVOT_Y,
-//      .x_offset = elevator_PIVOT_X,
-//      .y_offset = elevator_PIVOT_Y,
-//      .direction = DIR_DOWN,
-//      .NPC_type = ELEVATOR,
-//      .tile_count = (sizeof(elevator_data) >> 4),
-//      .tile_index = 0,
-//      .tile_data = elevator_data,
-//      .patrol_timer = 1,
-//      .patrol_reset = 160,
-//      .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
-//      .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-//      .animation_phase = 0,
-//      .copy = FALSE}};
-
-const actor_t level1_bullets[1] = {
-    // 0 BULLET
-    {.SpdX = 48,
-     .SpdY = 0,
-     .w = bullet_WIDTH,
-     .h = bullet_HEIGHT,
-     .h_offset = bullet_HEIGHT,
-     .x_offset = 6,
-     .y_offset = 6,
-     .NPC_type = BULLET,
-     .tile_count = (sizeof(bullet_data) >> 4),
-     .animations = {bullet_scroll, bullet_scroll},
-     .tile_data = bullet_data,
-     .copy = FALSE,
-     .RENDER = FALSE,
-     .ON = FALSE}};
-
 // current_actor = cam1 + 1
 //  for loop
 // aka don't need double arrays here
@@ -501,6 +370,7 @@ void setup_lvl1() {
     GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
     load_scene_actors(level1_actors, 5, 10);
+    load_bullets(hiwater, level1_bullets, 10);
     init_submap();
     // load_level(&level1);
     // if (load_submap) load_submap();

@@ -6,7 +6,6 @@
 #define detective_large_PIVOT_X 12
 #define detective_large_PIVOT_Y 16
 
-extern const struct actor_t level1_actors[5];
 extern const UINT8 detective_large_data[2752];
 extern const metasprite_t* const detective_large_metasprites[18];
 extern const metasprite_t* const detective_walk_left[];

@@ -152,7 +152,7 @@ void NPC_memcpy();
 extern const level_t *current_stage;
 void load_level(const level_t *level);
 UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count, UINT8 Bank);
-void load_bullets(const actor_t *bullet, UINT8 hiwater);
+void load_bullets(UINT8 hiwater, const actor_t *bullet, UINT8 bank);
 void render_actors();
 void switch_down();
 void switch_jump();

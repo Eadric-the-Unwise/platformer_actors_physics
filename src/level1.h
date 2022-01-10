@@ -6,6 +6,7 @@
 #include "scene.h"
 
 // extern const struct actor_t level1_actors[5];
+// extern const actor_t level1_bullets[1];
 extern UINT8 cam1_render[4];
 extern UINT8 cam2_render[3];
 extern UINT8 cam3_render[3];
