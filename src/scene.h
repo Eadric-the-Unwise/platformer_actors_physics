@@ -4,6 +4,8 @@
 
 #include <gb/gb.h>
 #include <gbdk/metasprites.h>
+#include <stdint.h>
+#include <stdio.h>
 
 #include "../res/tiles/bullet.h"
 #include "../res/tiles/detective_large.h"
@@ -97,22 +99,19 @@ typedef struct actor_t {
     INT8 h_offset;  // y - value
     INT8 x_offset;
     INT8 y_offset;  // y + value
-
     // direction
     direction_e direction;
     direction_e last_direction;
     facing_e facing;
-
     // NPC type
     NPC_type_e NPC_type;
-
     // tiledata related
     UINT8 tile_count;
     UINT8 tile_index;
     UINT8 patrol_timer;
     UINT8 patrol_reset;
     const UINT8 *tile_data;  // const variables cannot be manipulated. Initialized only ONCE
-
+    UINT8 bank;
     // animation description
     const metasprite_t **animations[22];  // list all DIRs in level's actors struct, up to max of [this value]
     anim_loop_e animations_props[22];     // equivilent to above DIRs to define whether they loop or play ONCE

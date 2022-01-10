@@ -36,6 +36,7 @@ void load_level(const level_t *level) {
 UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count) {
     //? current_actor locally here is manipulating the active_actors[MAX_ACTORS] array information
     actor_t *current_actor = active_actors;
+    UINT8 __save = _current_bank;
 
     hiwater = 0;
     for (UINT8 i = actors_count; i != 0; i--) {  // counter direction does not matter, because pointer is moved. only number of iterations matter.
@@ -44,6 +45,7 @@ UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count) {
             current_actor->tile_index = hiwater;
         } else if (actor->copy == FALSE) {
             current_actor->tile_index = hiwater;
+            SWITCH_ROM_MBC1(current_actor->bank);
             set_sprite_data(hiwater, actor->tile_count, actor->tile_data);
         }
         current_actor->x = actor->x;
@@ -67,6 +69,7 @@ UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count) {
         current_actor->RENDER = actor->RENDER;
         current_actor->ON = actor->ON;
         current_actor->KILL = actor->KILL;
+        current_actor->bank = actor->bank;
 
         hiwater += actor->tile_count;
         current_actor++;
@@ -98,7 +101,13 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater) {
 
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
 uint8_t animation_timer = 6;
-void render_actors() {
+void render_actors()
+#ifndef __INTELLISENSE__
+    NONBANKED
+#endif
+{
+    UINT8 __save = _current_bank;
+
     actor_t *current_actor = &active_actors[*cam_ptr];
     actor_t *current_bullet = active_bullets;
     // current_actor
@@ -125,6 +134,7 @@ void render_actors() {
                 if (current_animation[current_actor->animation_phase] != NULL) {
                     if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE) {
                         current_actor->ON = TRUE;
+                        SWITCH_ROM_MBC1(current_actor->bank);
                         if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R) || (current_direction == DIR_OFFLADDER_R)) {
                             OAM_hiwater += move_metasprite_vflip(
                                 current_animation[current_actor->animation_phase],
@@ -173,6 +183,7 @@ void render_actors() {
         cam_ptr++;
         current_actor = &active_actors[*cam_ptr];
     }
+    SWITCH_ROM_MBC1(__save);
     // BULLET RENDERING //
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         // set_sprite_tile(OAM_hiwater, current_bullet->tile_index);
