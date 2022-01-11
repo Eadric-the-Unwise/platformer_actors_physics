@@ -161,6 +161,7 @@ const actor_t level1_bullets[1] = {
      .tile_count = (sizeof(bullet_data) >> 4),
      .animations = {bullet_scroll, bullet_scroll},
      .tile_data = bullet_data,
+       .bank = bullet_Bank,
      .copy = FALSE,
      .RENDER = FALSE,
      .ON = FALSE}};

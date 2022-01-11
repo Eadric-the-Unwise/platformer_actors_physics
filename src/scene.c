@@ -88,13 +88,25 @@ UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count)
     total_actors_count = actors_count;  // copies from ROM to RAM
     return hiwater;
 }
-void load_bullets(const actor_t *bullet, UINT8 hiwater) {
+void load_bullets(const actor_t *bullet, UINT8 hiwater)
+#ifndef __INTELLISENSE__
+    NONBANKED
+#endif
+ {
+    
     if (bullet == NULL) return;
     actor_t *current_bullet = active_bullets;
+    UINT8 __save = _current_bank;
 
-    set_sprite_data(hiwater, bullet->tile_count, bullet->tile_data);
+    
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         current_bullet->tile_index = hiwater;
+            current_bullet->bank = bullet->bank;
+        current_bullet->tile_count = bullet->tile_count;
+        current_bullet->tile_data = bullet->tile_data;
+        SWITCH_ROM_MBC1(current_bullet->bank);
+            set_sprite_data(hiwater, current_bullet->tile_count, current_bullet->tile_data);
+    SWITCH_ROM_MBC1(__save);
 
         // current_bullet->tile_index = bullet->tile_index;
         current_bullet->tile_count = bullet->tile_count;
@@ -193,11 +205,12 @@ void render_actors()
         cam_ptr++;
         current_actor = &active_actors[*cam_ptr];
     }
-    SWITCH_ROM_MBC1(__save);
+    // SWITCH_ROM_MBC1(__save);
     // BULLET RENDERING //
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         // set_sprite_tile(OAM_hiwater, current_bullet->tile_index);
         if (current_bullet->RENDER == TRUE) {
+            SWITCH_ROM_MBC1(current_bullet->bank);
             OAM_hiwater += move_metasprite(
                 bullet_metasprites[0],
                 current_bullet->tile_index,
@@ -206,6 +219,7 @@ void render_actors()
         }
         current_bullet++;
     }
+    SWITCH_ROM_MBC1(__save);
     // hide rest of the hardware sprites
     for (UINT8 i = OAM_hiwater; i < 40u; i++) shadow_OAM[i].y = 0;
 }
