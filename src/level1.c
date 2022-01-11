@@ -161,7 +161,7 @@ const actor_t level1_bullets[1] = {
      .tile_count = (sizeof(bullet_data) >> 4),
      .animations = {bullet_scroll, bullet_scroll},
      .tile_data = bullet_data,
-       .bank = bullet_Bank,
+     .bank = bullet_Bank,
      .copy = FALSE,
      .RENDER = FALSE,
      .ON = FALSE}};
@@ -233,6 +233,8 @@ void anim_level1() {
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
     actor_t *current_bullet = active_bullets;
+
+    // SIDE SCROLLING CAMERA LOCKED AT 118
 
     if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {
         bkg.camera_x += PLAYER.SpdX;
@@ -416,7 +418,7 @@ void npc_collisions_level1() {
                 if (active_actors[i].NPC_type != ELEVATOR) {
                     GAMEOVER = TRUE;
                 } else if (active_actors[i].NPC_type == ELEVATOR) {
-                    if (!ATTACH){
+                    if (!ATTACH) {
                         if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
                         {
                             x_Collide = TRUE;
@@ -427,7 +429,7 @@ void npc_collisions_level1() {
                         } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
                             y_Collide = TRUE;
                         }
-                     }
+                    }
                 }
             } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
                 if (x_Collide) {
