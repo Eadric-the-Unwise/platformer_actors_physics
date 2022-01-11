@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 #include "../res/tiles/bullet.h"
+#include "../res/tiles/detective_16.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
 #include "../res/tiles/stage_drop_collision.h"
@@ -18,6 +19,7 @@
 #include "ladder.h"
 #include "level1.h"
 #include "level2.h"
+#include "world1.h"
 
 // typedef INT8 BOOL; //SAME AS BYTE IN GBDK
 
