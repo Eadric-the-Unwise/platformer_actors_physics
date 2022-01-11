@@ -375,7 +375,6 @@ void spawn_bullets_lvl2() {
     // if (spawn_bullet->RENDER == FALSE) {
     // }
 }
-
 void npc_collisions_level2() {
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
@@ -413,16 +412,18 @@ void npc_collisions_level2() {
                 if (active_actors[i].NPC_type != ELEVATOR) {
                     GAMEOVER = TRUE;
                 } else if (active_actors[i].NPC_type == ELEVATOR) {
-                    if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
-                    {
-                        x_Collide = TRUE;
-                    } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
-                        ATTACH = TRUE;
-                        Gravity = FALSE;
-                        current_elevator = i;
-                    } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
-                        y_Collide = TRUE;
-                    }
+                    if (!ATTACH){
+                        if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
+                        {
+                            x_Collide = TRUE;
+                        } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
+                            ATTACH = TRUE;
+                            Gravity = FALSE;
+                            current_elevator = i;
+                        } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
+                            y_Collide = TRUE;
+                        }
+                     }
                 }
             } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
                 if (x_Collide) {
@@ -442,7 +443,7 @@ void npc_collisions_level2() {
                     PLAYER.y = TO_COORDS(NTR_y - (PLAYER.h / 2));
                     if (JUMP) {
                         switch_land();
-                    } else if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                    } else if (!(joy & J_LEFT) && !(joy & J_RIGHT) && (!CROUCH)) {
                         switch_idle();
                     }
                     SPAWN = Gravity = JUMP = FALSE;
