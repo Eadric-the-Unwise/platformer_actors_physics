@@ -46,7 +46,7 @@ void main() {
     // actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
     // switch on display after everything is ready
     // DISPLAY_ON;
-    gamestate = 1;
+    gamestate = 3;
 
     last_joy = joy = 0;
     while (TRUE) {  // main loop runs at 60fps
@@ -59,6 +59,10 @@ void main() {
             case 2:
                 SWITCH_ROM_MBC1(LEVEL2_BANK);
                 enter_lvl2();
+                break;
+            case 3:
+                SWITCH_ROM_MBC1(WORLD1_BANK);
+                enter_world1();
                 break;
         }
     }

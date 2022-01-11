@@ -14,6 +14,8 @@
 #include "../res/tiles/stage_drop_collision.h"
 #include "../res/tiles/stage_drop_map.h"
 #include "../res/tiles/stage_drop_tiles.h"
+#include "../res/tiles/world1_map.h"
+#include "../res/tiles/world1_tiles.h"
 #include "camera.h"
 #include "collisions.h"
 #include "ladder.h"
