@@ -185,12 +185,12 @@ void anim_world1() {
     //             if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
     //                 current_actor->patrol_timer--;
     //                 current_actor->x += current_actor->SpdX;
-    //                 if ((current_actor->direction == DIR_UP) && (current_actor->patrol_timer == 0)) {
-    //                     SetActorDirection(current_actor, DIR_DOWN, 0);
+    //                 if ((current_actor->direction == DIR_UP_L) && (current_actor->patrol_timer == 0)) {
+    //                     SetActorDirection(current_actor, DIR_UP_R, 0);
     //                     current_actor->SpdX = abs(current_actor->SpdX);
     //                     current_actor->patrol_timer = current_actor->patrol_reset;
-    //                 } else if ((current_actor->direction == DIR_DOWN) && (current_actor->patrol_timer == 0)) {
-    //                     SetActorDirection(current_actor, DIR_UP, 0);
+    //                 } else if ((current_actor->direction == DIR_UP_R) && (current_actor->patrol_timer == 0)) {
+    //                     SetActorDirection(current_actor, DIR_UP_L, 0);
     //                     current_actor->SpdX = -abs(current_actor->SpdX);
     //                     current_actor->patrol_timer = current_actor->patrol_reset;
     //                 }
@@ -199,12 +199,12 @@ void anim_world1() {
     //                 current_actor->patrol_timer--;
     //                 current_actor->y += current_actor->SpdY;
 
-    //                 if ((current_actor->direction == DIR_UP) && (current_actor->patrol_timer == 0)) {
-    //                     SetActorDirection(current_actor, DIR_DOWN, 0);
+    //                 if ((current_actor->direction == DIR_UP_L) && (current_actor->patrol_timer == 0)) {
+    //                     SetActorDirection(current_actor, DIR_UP_R, 0);
     //                     current_actor->SpdY = abs(current_actor->SpdY);
     //                     current_actor->patrol_timer = current_actor->patrol_reset;
-    //                 } else if ((current_actor->direction == DIR_DOWN) && (current_actor->patrol_timer == 0)) {
-    //                     SetActorDirection(current_actor, DIR_UP, 0);
+    //                 } else if ((current_actor->direction == DIR_UP_R) && (current_actor->patrol_timer == 0)) {
+    //                     SetActorDirection(current_actor, DIR_UP_L, 0);
     //                     current_actor->SpdY = -abs(current_actor->SpdY);
     //                     current_actor->patrol_timer = current_actor->patrol_reset;
     //                 }

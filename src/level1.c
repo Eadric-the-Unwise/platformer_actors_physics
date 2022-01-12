@@ -50,8 +50,8 @@ const actor_t level1_actors[5] = {
      .tile_index = 0,
      .tile_data = detective_large_data,
      .bank = detective_large_Bank,
-     .animations = {detective_walk_left, detective_walk_left, detective_CROUCH, detective_CROUCH, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_JUMP, detective_JUMP, detective_land, detective_land, detective_drop, detective_drop, detective_LADDER, detective_LADDER, NULL, NULL, detective_ONTOLADDER, detective_ONTOLADDER, detective_OFFLADDER, detective_OFFLADDER},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, NULL, NULL, NULL, NULL, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
+     .animations = {detective_walk_left, detective_walk_left, NULL, NULL, detective_CROUCH, detective_CROUCH, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_JUMP, detective_JUMP, detective_land, detective_land, detective_drop, detective_drop, detective_LADDER, detective_LADDER, detective_ONTOLADDER, detective_ONTOLADDER, detective_OFFLADDER, detective_OFFLADDER},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, NULL, NULL, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, NULL, NULL, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 3,
      .copy = FALSE,
      .RENDER = TRUE,
@@ -135,7 +135,7 @@ const actor_t level1_actors[5] = {
      .y_pivot = elevator_PIVOT_Y,
      .x_offset = elevator_PIVOT_X,
      .y_offset = elevator_PIVOT_Y,
-     .direction = DIR_DOWN,
+     .direction = DIR_DOWN_L,
      .NPC_type = ELEVATOR,
      .tile_count = (sizeof(elevator_data) >> 4),
      .tile_index = 0,
@@ -143,8 +143,8 @@ const actor_t level1_actors[5] = {
      .bank = elevator_data_Bank,
      .patrol_timer = 1,
      .patrol_reset = 160,
-     .animations = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, elevator_frame, elevator_frame},
-     .animations_props = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+     .animations = {NULL, NULL, elevator_frame, NULL, elevator_frame},
+     .animations_props = {NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
      .copy = FALSE}};
 
@@ -292,12 +292,12 @@ void anim_level1() {
                 current_actor->patrol_timer--;
                 current_actor->y += current_actor->SpdY;
 
-                if ((current_actor->direction == DIR_UP) && (current_actor->patrol_timer == 0)) {
-                    SetActorDirection(current_actor, DIR_DOWN, 0);
+                if ((current_actor->direction == DIR_UP_L) && (current_actor->patrol_timer == 0)) {
+                    SetActorDirection(current_actor, DIR_DOWN_L, 0);
                     current_actor->SpdY = abs(current_actor->SpdY);
                     current_actor->patrol_timer = current_actor->patrol_reset;
-                } else if ((current_actor->direction == DIR_DOWN) && (current_actor->patrol_timer == 0)) {
-                    SetActorDirection(current_actor, DIR_UP, 0);
+                } else if ((current_actor->direction == DIR_DOWN_L) && (current_actor->patrol_timer == 0)) {
+                    SetActorDirection(current_actor, DIR_UP_L, 0);
                     current_actor->SpdY = -abs(current_actor->SpdY);
                     current_actor->patrol_timer = current_actor->patrol_reset;
                 }

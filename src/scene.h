@@ -51,6 +51,8 @@
 typedef enum {
     DIR_LEFT,
     DIR_RIGHT,
+    DIR_UP_L,
+    DIR_UP_R,
     DIR_DOWN_L,
     DIR_DOWN_R,
     DIR_CRAWL_L,
@@ -65,8 +67,6 @@ typedef enum {
     DIR_DROP_R,
     DIR_LADDER_L,
     DIR_LADDER_R,
-    DIR_UP,
-    DIR_DOWN,
     DIR_ONTOLADDER_L,
     DIR_ONTOLADDER_R,
     DIR_OFFLADDER_L,
