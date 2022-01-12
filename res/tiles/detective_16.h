@@ -8,3 +8,6 @@
 
 extern const UINT8 detective_16_data[544];
 extern const metasprite_t* const detective_16_metasprites[12];
+extern const metasprite_t* const detective_16_WALK[];
+    extern const metasprite_t* const detective_16_UP[];
+        extern const metasprite_t* const detective_16_DOWN[];

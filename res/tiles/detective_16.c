@@ -59,4 +59,19 @@ const metasprite_t detective_16_metasprite11[] = {
     {-8, -8, 30, 32}, {0, 8, 32, 0}, {metasprite_end}};
 
 const metasprite_t* const detective_16_metasprites[12] = {
-    detective_16_metasprite0, detective_16_metasprite1, detective_16_metasprite2, detective_16_metasprite3, detective_16_metasprite4, detective_16_metasprite5, detective_16_metasprite6, detective_16_metasprite7, detective_16_metasprite8, detective_16_metasprite9, detective_16_metasprite10, detective_16_metasprite11};
+    detective_16_metasprite0, detective_16_metasprite1, detective_16_metasprite2, detective_16_metasprite4, detective_16_metasprite5, detective_16_metasprite6, detective_16_metasprite7, detective_16_metasprite8, detective_16_metasprite9, detective_16_metasprite10, detective_16_metasprite11};
+
+const metasprite_t* const detective_16_WALK[] = {
+    detective_16_metasprite0, detective_16_metasprite1, detective_16_metasprite2,
+    detective_16_metasprite3,
+    NULL};
+
+    const metasprite_t* const detective_16_UP[] = {
+    detective_16_metasprite4, detective_16_metasprite5, detective_16_metasprite6,
+    detective_16_metasprite7,
+    NULL};
+
+        const metasprite_t* const detective_16_DOWN[] = {
+    detective_16_metasprite8, detective_16_metasprite9, detective_16_metasprite10,
+    detective_16_metasprite11,
+    NULL};

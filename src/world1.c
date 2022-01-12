@@ -33,7 +33,7 @@ const actor_t world1_actors[1] = {
     {.x = TO_COORDS(144),
      .y = TO_COORDS(16),
      .SpdX = 0,
-     .SpdY = 16,
+     .SpdY = 0,
      .w = detective_16_WIDTH,
      .h = detective_16_HEIGHT,
      .h_offset = 7,
@@ -373,10 +373,10 @@ void init_submap_world1() {
     HIDE_BKG;
     bkg.redraw = TRUE;
     bkg.sliding = FALSE;
-    bkg.camera_max_y = (SUBMAP_MAP_HEIGHT - 18) * 8;
-    bkg.camera_max_x = (SUBMAP_MAP_WIDTH - 20) * 8;
-    bkg.camera_tiles_x = STAGE_DROP_MAPWidth * 8;
-    bkg.camera_tiles_y = STAGE_DROP_MAPHeight * 8;
+    bkg.camera_max_y = (WORLD1_MAPHeight - 18) * 8;
+    bkg.camera_max_x = (WORLD1_MAPWidth - 20) * 8;
+    bkg.camera_tiles_x = WORLD1_MAPWidth * 8;
+    bkg.camera_tiles_y = WORLD1_MAPHeight * 8;
     bkg.camera_x = TO_COORDS(bkg.camera_max_x);
     bkg.camera_y = 0;
     bkg.old_camera_x = bkg.camera_x;
@@ -384,11 +384,11 @@ void init_submap_world1() {
     bkg.map_pos_x = (UINT8)(bkg.camera_x >> 7u);
     bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
     // CHANGE THE TILE COUNT AS YOU ADD TILES TO THE BKG TILE_SET
-    set_bkg_data_nonbanked(0, SUBMAP_TILE_COUNT, SUBMAP_TILE_DATA, SUBMAP_TILE_BANK);
+    set_bkg_data_nonbanked(0, WORLD1_TILESLen, WORLD1_TILES, WORLD1_TILESBank);
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
 
-    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, SUBMAP_MAP_DATA, SUBMAP_MAP_WIDTH, SUBMAP_MAP_BANK);
-    set_level(SUBMAP_MAP_WIDTH, SUBMAP_MAP_HEIGHT, SUBMAP_MAP_DATA, SUBMAP_MAP_BANK);
+    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, WORLD1_MAP, WORLD1_MAPWidth, WORLD1_MAPBank);
+    set_level(WORLD1_MAPWidth, WORLD1_MAPHeight, WORLD1_MAP, WORLD1_MAPBank);
 
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
@@ -642,20 +642,20 @@ void enter_world1() {
     //     // CHECK FOR NPC COLLISIONS
     //     if (collide_level) collide_level();
     //     // RENDER ALL CURRENT ACTORS ON SCREEN
-    //     render_actors();
+        render_actors();
 
-    //     if (bkg.redraw) {
-    //         set_camera();
-    //         wait_vbl_done();
-    //         refresh_OAM();
-    //         SCX_REG = shadow_scx;
-    //         SCY_REG = shadow_scy;
-    //         bkg.redraw = FALSE;
+        if (bkg.redraw) {
+            set_camera();
+            wait_vbl_done();
+            refresh_OAM();
+            SCX_REG = shadow_scx;
+            SCY_REG = shadow_scy;
+            bkg.redraw = FALSE;
 
-    //     } else {
-    //         wait_vbl_done();
-    //         refresh_OAM();
-    //     }
+        } else {
+            wait_vbl_done();
+            refresh_OAM();
+        }
 
     //     if (GAMEOVER) {
     //         // gamestate = 1;
