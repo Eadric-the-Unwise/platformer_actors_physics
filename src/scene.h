@@ -22,6 +22,7 @@
 #include "level1.h"
 #include "level2.h"
 #include "world1.h"
+#include "worldtest.h"
 
 // typedef INT8 BOOL; //SAME AS BYTE IN GBDK
 
@@ -147,7 +148,7 @@ extern animate_level_t animate_level;
 extern collide_level_t collide_level;
 extern load_submap_t load_submap;
 extern UINT8 total_actors_count;
-extern UINT8 RENDERCAM;
+// extern UINT8 RENDERCAM;
 extern UINT8 hiwater;
 
 extern const level_t *current_stage;

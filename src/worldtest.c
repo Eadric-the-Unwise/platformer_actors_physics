@@ -1,5 +1,5 @@
-#pragma bank 5
-#include "level1.h"
+#pragma bank 101
+#include "worldtest.h"
 
 #include <gb/gb.h>
 #include <stdlib.h>
@@ -7,8 +7,6 @@
 #include "../res/tiles/NPC_electric.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
-#include "camera.h"
-#include "scene.h"
 extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;
@@ -20,39 +18,39 @@ extern UINT8 render_actors_count;  // the amount of actors in 160px window, the 
 extern UINT8 bullet_timer;
 extern UINT8 *cam_ptr;
 
-const level_t level1 = {
-    .bank = LEVEL1_BANK,
-    .submap_hook = init_submap,  // call this in collision
-    .actors = level1_actors,
-    .bullets = level1_bullets,
+const level_t worldtest = {
+    .bank = worldtest_BANK,
+    .submap_hook = init_submap_worldtest,  // call this in collision
+    .actors = worldtest_actors,
+    .bullets = worldtest_bullets,
     .actor_count = 5,
-    .animate_hook = anim_level1,  // function that put life into the scene
-    .collide_hook = npc_collisions_level1};
+    .animate_hook = NULL,  // function that put life into the scene
+    .collide_hook = NULL};
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
-const actor_t level1_actors[5] = {
+const actor_t worldtest_actors[5] = {
     // 0 PLAYER
     {.x = TO_COORDS(144),
-     .y = TO_COORDS(16),
+     .y = TO_COORDS(140),
      .SpdX = 0,
-     .SpdY = 16,
-     .w = detective_large_WIDTH,
-     .h = detective_large_HEIGHT,
+     .SpdY = 0,
+     .w = detective_16_WIDTH,
+     .h = detective_16_HEIGHT,
      .h_offset = 7,
      .x_offset = 6,
      .y_offset = 16,
-     .direction = DIR_JUMP_L,
+     .direction = DIR_LEFT,
      .facing = LEFT,
      .patrol_timer = 12,
      .patrol_reset = 12,
-     .tile_count = (sizeof(detective_large_data) >> 4),
+     .tile_count = (sizeof(detective_16_data) >> 4),
      .tile_index = 0,
-     .tile_data = detective_large_data,
-     .bank = detective_large_Bank,
-     .animations = {detective_walk_left, detective_walk_left, NULL, NULL, detective_CROUCH, detective_CROUCH, detective_crawl_left, detective_crawl_left, detective_stand, detective_stand, detective_JUMP, detective_JUMP, detective_land, detective_land, detective_drop, detective_drop, detective_LADDER, detective_LADDER, detective_ONTOLADDER, detective_ONTOLADDER, detective_OFFLADDER, detective_OFFLADDER},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP, NULL, NULL, ANIM_ONCE, ANIM_ONCE, ANIM_LOOP, ANIM_LOOP, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, NULL, NULL, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
-     .animation_phase = 3,
+     .tile_data = detective_16_data,
+     .bank = detective_16_Bank,
+     .animations = {detective_16_WALK, detective_16_WALK, detective_16_UP, detective_16_UP, detective_16_DOWN, detective_16_DOWN},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP},
+     .animation_phase = 0,
      .copy = FALSE,
      .RENDER = TRUE,
      .ON = TRUE},
@@ -67,8 +65,8 @@ const actor_t level1_actors[5] = {
      .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
-     .direction = DIR_RIGHT,
-     .NPC_type = PATROL,
+     .direction = DIR_LEFT,
+     .NPC_type = PISTOL,
      .patrol_timer = 78,
      .patrol_reset = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
@@ -92,7 +90,7 @@ const actor_t level1_actors[5] = {
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_LEFT,
-     .NPC_type = PATROL,
+     .NPC_type = PISTOL,
      .patrol_timer = 78,
      .patrol_reset = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
@@ -148,7 +146,7 @@ const actor_t level1_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE}};
 
-const actor_t level1_bullets[1] = {
+const actor_t worldtest_bullets[1] = {
     // 0 BULLET
     {.SpdX = 48,
      .SpdY = 0,
@@ -169,21 +167,21 @@ const actor_t level1_bullets[1] = {
 // current_actor = cam1 + 1
 //  for loop
 // aka don't need double arrays here
-UINT8 lvl1_cam1_render[4] = {0, 1, 2, 3};
-UINT8 lvl1_cam2_render[3] = {0, 3, 4};
-UINT8 lvl1_cam3_render[3] = {0, 3, 4};
-UINT8 lvl1_cam4_render[2] = {0, 4};
-UINT8 cam1[3] = {1, 2, 3};
-UINT8 cam2[2] = {3, 4};
-UINT8 cam3[2] = {3, 4};
-UINT8 cam4[1] = {4};
+UINT8 worldtest_cam1_render[4] = {0, 1, 2, 3};
+UINT8 worldtest_cam2_render[3] = {0, 3, 4};
+UINT8 worldtest_cam3_render[3] = {0, 3, 4};
+UINT8 worldtest_cam4_render[2] = {0, 4};
+UINT8 worldtest_cam1[3] = {1, 2, 3};
+UINT8 worldtest_cam2[2] = {3, 4};
+UINT8 worldtest_cam3[2] = {3, 4};
+UINT8 worldtest_cam4[1] = {4};
 
-#define CAM1_COUNT 3
-#define CAM2_COUNT 2
-#define CAM3_COUNT 2
-#define CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
+#define worldtest_CAM1_COUNT 3
+#define worldtest_CAM2_COUNT 2
+#define worldtest_CAM3_COUNT 2
+#define worldtest_CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
 // CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
-void anim_level1() {
+void anim_worldtest() {
     UINT8 *ptr = NULL;   // pointer // simply = NULL to bypass compiler error lol
     UINT8 *pptr = NULL;  // previous pointer
     UINT8 *nptr = NULL;  // next pointer
@@ -196,37 +194,36 @@ void anim_level1() {
     UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
     if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
-
-        cam_ptr = lvl1_cam1_render;
-        active_actors_count = CAM1_COUNT;
-        next_actors_count = CAM2_COUNT;
-        ptr = cam1;
-        nptr = cam2;
+        cam_ptr = worldtest_cam1_render;
+        active_actors_count = worldtest_CAM1_COUNT;
+        next_actors_count = worldtest_CAM2_COUNT;
+        ptr = worldtest_cam1;
+        nptr = worldtest_cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
-                                                       
-        cam_ptr = lvl1_cam2_render;
-        prev_actors_count = CAM1_COUNT;
-        active_actors_count = CAM2_COUNT;
-        next_actors_count = CAM3_COUNT;
-        pptr = cam1;
-        ptr = cam2;
-        nptr = cam3;
+                                                    
+        cam_ptr = worldtest_cam2_render;
+        prev_actors_count = worldtest_CAM1_COUNT;
+        active_actors_count = worldtest_CAM2_COUNT;
+        next_actors_count = worldtest_CAM3_COUNT;
+        pptr = worldtest_cam1;
+        ptr = worldtest_cam2;
+        nptr = worldtest_cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-                                                     
-        cam_ptr = lvl1_cam3_render;
-        prev_actors_count = CAM2_COUNT;
-        active_actors_count = CAM3_COUNT;
-        next_actors_count = CAM4_COUNT;
-        pptr = cam2;
-        ptr = cam3;
-        nptr = cam4;
+                                                   
+        cam_ptr = worldtest_cam3_render;
+        prev_actors_count = worldtest_CAM2_COUNT;
+        active_actors_count = worldtest_CAM3_COUNT;
+        next_actors_count = worldtest_CAM4_COUNT;
+        pptr = worldtest_cam2;
+        ptr = worldtest_cam3;
+        nptr = worldtest_cam4;
     } else if (camera_x < 160) {  // CAM4
-        cam_ptr = lvl1_cam4_render;
+        cam_ptr = worldtest_cam4_render;
 
-        prev_actors_count = CAM3_COUNT;
-        active_actors_count = CAM4_COUNT;
-        pptr = cam3;
-        ptr = cam4;
+        prev_actors_count = worldtest_CAM3_COUNT;
+        active_actors_count = worldtest_CAM4_COUNT;
+        pptr = worldtest_cam3;
+        ptr = worldtest_cam4;
     }
     render_actors_count = active_actors_count + 1;
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
@@ -339,7 +336,7 @@ void anim_level1() {
     }
 }
 
-void spawn_bullets() {
+void spawn_bullets_worldtest() {
     actor_t *spawn_bullet = active_bullets;
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         if (spawn_bullet->RENDER == TRUE) {
@@ -380,8 +377,7 @@ void spawn_bullets() {
     // if (spawn_bullet->RENDER == FALSE) {
     // }
 }
-
-void npc_collisions_level1() {
+void npc_collisions_worldtest() {
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
     if (CROUCH) {  // CROUCH HITBOX
@@ -461,25 +457,15 @@ void npc_collisions_level1() {
         }
     }
 }
-// UINT8 init_lvl1_actor_data() {
-//     hiwater = 0;
-//     set_bkg_data_nonbanked(hiwater, (sizeof(detective_large_data) >> 4), detective_large_data, detective_large_Bank);
-//     hiwater += (sizeof(detective_large_data) >> 4);
-//     set_bkg_data_nonbanked(hiwater, (sizeof(NPC_electric_data) >> 4), NPC_electric_data, NPC_electric_data_Bank);
-//     hiwater += (sizeof(NPC_electric_data) >> 4);
-//     set_bkg_data_nonbanked(hiwater, (sizeof(elevator_data) >> 4), elevator_data, elevator_data_Bank);
-//     hiwater += (sizeof(elevator_data) >> 4);
-//     return hiwater;
-// }
 
-void init_submap() {
+void init_submap_worldtest() {
     HIDE_BKG;
     bkg.redraw = TRUE;
     bkg.sliding = FALSE;
-    bkg.camera_max_y = (STAGE_DROP_MAPHeight - 18) * 8;
-    bkg.camera_max_x = (STAGE_DROP_MAPWidth - 20) * 8;
-    bkg.camera_tiles_x = STAGE_DROP_MAPWidth * 8;
-    bkg.camera_tiles_y = STAGE_DROP_MAPHeight * 8;
+    bkg.camera_max_y = (WORLD1_MAPHeight - 18) * 8;
+    bkg.camera_max_x = (WORLD1_MAPWidth - 20) * 8;
+    bkg.camera_tiles_x = WORLD1_MAPWidth * 8;
+    bkg.camera_tiles_y = WORLD1_MAPHeight * 8;
     bkg.camera_x = TO_COORDS(bkg.camera_max_x);
     bkg.camera_y = 0;
     bkg.old_camera_x = bkg.camera_x;
@@ -487,11 +473,11 @@ void init_submap() {
     bkg.map_pos_x = (UINT8)(bkg.camera_x >> 7u);
     bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
     // CHANGE THE TILE COUNT AS YOU ADD TILES TO THE BKG TILE_SET
-    set_bkg_data_nonbanked(0, STAGE_DROP_TILESLen, STAGE_DROP_TILES, STAGE_DROP_TILESBank);
+    set_bkg_data_nonbanked(0, WORLD1_TILESLen, WORLD1_TILES, WORLD1_TILESBank);
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
 
-    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, STAGE_DROP_MAP, STAGE_DROP_MAPWidth, STAGE_DROP_MAPBank);
-    set_level(STAGE_DROP_MAPWidth, STAGE_DROP_MAPHeight, STAGE_DROP_MAP, STAGE_DROP_MAPBank);
+    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, WORLD1_MAP, WORLD1_MAPWidth, WORLD1_MAPBank);
+    set_level(WORLD1_MAPWidth, WORLD1_MAPHeight, WORLD1_MAP, WORLD1_MAPBank);
 
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
@@ -504,23 +490,22 @@ void init_submap() {
     SHOW_BKG;
 }
 
-void setup_lvl1() {
+void setup_worldtest() {
     DISPLAY_OFF;
-    SPAWN = TRUE;
+    SPAWN = FALSE;
     GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
-    load_level(&level1);
+    load_level(&worldtest);
     render_actors();
     DISPLAY_ON;
-    current_stage = &level1;
+    current_stage = &worldtest;
 }
 
-void enter_lvl1() {
-    // load_level(&level1);
+void enter_worldtest() {
+    // load_level(&worldtest);
     // if (load_submap) load_submap();
-    setup_lvl1();
-
-    while (gamestate == 1) {
+    setup_worldtest();
+    while (gamestate == 4) {
         last_joy = joy;
         joy = joypad();
         if (!SPAWN) {
@@ -600,13 +585,13 @@ void enter_lvl1() {
         }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
-        if (PLAYER.SpdY != 0) {
-            JUMP = Gravity = TRUE;
-            CROUCH = FALSE;
-            if (!LADDER) {
-                switch_jump();
-            }
-        }
+        // if (PLAYER.SpdY != 0) {
+        //     JUMP = Gravity = TRUE;
+        //     CROUCH = FALSE;
+        //     if (!LADDER) {
+        //         switch_jump();
+        //     }
+        // }
         if (DROP) {
             DROP_timer -= 1;
             if (DROP_timer == 0) {
@@ -635,25 +620,25 @@ void enter_lvl1() {
         // WORLD PHYSICS:
         // GRAVITY
 
-        if (Gravity) {
-            if (LADDER) {
-                if (PLAYER.SpdY < 0) {
-                    PLAYER.SpdY += GRAVITY;
-                } else if (PLAYER.SpdY > 0) {
-                    PLAYER.SpdY -= GRAVITY;
-                }
-            } else {
-                PLAYER.SpdY += GRAVITY;
-                if (PLAYER.SpdY > MAX_FALL_SPEED) {
-                    PLAYER.SpdY = MAX_FALL_SPEED;
-                }
-            }
-        }
+        // if (Gravity) {
+        //     if (LADDER) {
+        //         if (PLAYER.SpdY < 0) {
+        //             PLAYER.SpdY += GRAVITY;
+        //         } else if (PLAYER.SpdY > 0) {
+        //             PLAYER.SpdY -= GRAVITY;
+        //         }
+        //     } else {
+        //         PLAYER.SpdY += GRAVITY;
+        //         if (PLAYER.SpdY > MAX_FALL_SPEED) {
+        //             PLAYER.SpdY = MAX_FALL_SPEED;
+        //         }
+        //     }
+        // }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
         // Y-AXIS COLLISION CHECK / /LADDER CHECK
-        check_UD(px, py, TO_PIXELS(bkg.camera_x));
+        // check_UD(px, py, TO_PIXELS(bkg.camera_x));
 
         if ((CROUCH) && (!canCROUCH)) {
             if (!(joy & J_DOWN)) {
@@ -676,18 +661,18 @@ void enter_lvl1() {
             }
         }
 
-        if (PLAYER.SpdX != 0) {
-            UINT8 px, py;
-            px = TO_PIXELS(PLAYER.x);
-            py = TO_PIXELS(PLAYER.y);
+        // if (PLAYER.SpdX != 0) {
+        //     UINT8 px, py;
+        //     px = TO_PIXELS(PLAYER.x);
+        //     py = TO_PIXELS(PLAYER.y);
 
-            if (PLAYER.SpdX > 0) {
-                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING RIGHT
+        //     if (PLAYER.SpdX > 0) {
+        //         check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING RIGHT
 
-            } else if (PLAYER.SpdX < 0) {
-                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
-            }
-        }
+        //     } else if (PLAYER.SpdX < 0) {
+        //         check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
+        //     }
+        // }
 
         // update PLAYER absolute posiiton
         if (!ATTACH) {
@@ -696,14 +681,14 @@ void enter_lvl1() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
         // // Change to IDLE state when not moving
-        if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER)) {
-            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-                    switch_idle();
-                    check_C(px, py, TO_PIXELS(bkg.camera_x));
-                }
-            }
-        }
+        // if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER)) {
+        //     if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
+        //         if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+        //             switch_idle();
+        //             check_C(px, py, TO_PIXELS(bkg.camera_x));
+        //         }
+        //     }
+        // }
         // DOWN while standing still
         if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
             switch_down();
@@ -712,9 +697,9 @@ void enter_lvl1() {
         // UPDATE THE CAMERA POSITION SETTINGS
         // render_camera(px, TO_PIXELS(bkg.camera_x));
         // UPDATE CURRENT LEVEL NPC ANIMATIONS AND X/Y POSITIONS
-        if (animate_level) animate_level();  // call level animation hook (if any)
-        // CHECK FOR NPC COLLISIONS
-        if (collide_level) collide_level();
+        // if (animate_level) animate_level();  // call level animation hook (if any)
+        // // CHECK FOR NPC COLLISIONS
+        // if (collide_level) collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_actors();
 
@@ -732,14 +717,13 @@ void enter_lvl1() {
         }
 
         if (GAMEOVER) {
-            // gamestate = 2;
-            enter_lvl1();
             // gamestate = 1;
+            enter_worldtest();
             // gameover();
             // TRY LOADING A SECOND STAGE HERE?
         } else if (WINNER) {
             WINNER = FALSE;
-            gamestate = 2;
+            gamestate = 1;
         }
     }
 }

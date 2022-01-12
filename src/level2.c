@@ -194,14 +194,13 @@ void anim_level2() {
     UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
     if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
-        // RENDERCAM = 1;
         cam_ptr = lvl2_cam1_render;
         active_actors_count = lvl2_CAM1_COUNT;
         next_actors_count = lvl2_CAM2_COUNT;
         ptr = lvl2_cam1;
         nptr = lvl2_cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
-                                                         // RENDERCAM = 2;
+                                                    
         cam_ptr = lvl2_cam2_render;
         prev_actors_count = lvl2_CAM1_COUNT;
         active_actors_count = lvl2_CAM2_COUNT;
@@ -210,7 +209,7 @@ void anim_level2() {
         ptr = lvl2_cam2;
         nptr = lvl2_cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-                                                         // RENDERCAM = 3;
+                                                   
         cam_ptr = lvl2_cam3_render;
         prev_actors_count = lvl2_CAM2_COUNT;
         active_actors_count = lvl2_CAM3_COUNT;
@@ -220,7 +219,7 @@ void anim_level2() {
         nptr = lvl2_cam4;
     } else if (camera_x < 160) {  // CAM4
         cam_ptr = lvl2_cam4_render;
-        // RENDERCAM = 4;
+
         prev_actors_count = lvl2_CAM3_COUNT;
         active_actors_count = lvl2_CAM4_COUNT;
         pptr = lvl2_cam3;

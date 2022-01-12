@@ -10,6 +10,7 @@
 #include <stdio.h>
 
 void set_camera();
+void set_world_camera();
 void render_camera(UINT8 playerx, INT16 camx);
 void performantdelay(UINT8 numloops);
 inline void set_level(UINT8, UINT8, const UINT8 *, UINT8 bank);

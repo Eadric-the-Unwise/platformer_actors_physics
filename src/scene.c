@@ -12,7 +12,7 @@ extern UINT8 *cam_ptr;
 actor_t active_actors[MAX_ACTIVE_ACTORS];  // active_actors[] is your working structures in WRAM
 actor_t active_bullets[MAX_BULLETS];
 UINT8 total_actors_count;  // amount of actors that are currently active
-UINT8 RENDERCAM = NULL;    // VAR determining where the sceen is currently location in stage
+// UINT8 RENDERCAM = NULL;    // VAR determining where the sceen is currently location in stage
 
 animate_level_t animate_level = NULL;  // level animation function
 collide_level_t collide_level = NULL;  // level animation function
@@ -157,7 +157,7 @@ void render_actors()
                     if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE) {
                         current_actor->ON = TRUE;
                         SWITCH_ROM_MBC1(current_actor->bank);
-                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R) || (current_direction == DIR_OFFLADDER_R)) {
+                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_UP_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R) || (current_direction == DIR_OFFLADDER_R)) {
                             OAM_hiwater += move_metasprite_vflip(
                                 current_animation[current_actor->animation_phase],
                                 current_actor->tile_index,

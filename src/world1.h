@@ -19,5 +19,6 @@ void npc_collisions_world1();
 void anim_world1();
 // void spawn_bullets_world1();
 void init_submap_world1();
+void init_submap_example();
 void setup_world1();
 void enter_world1();
