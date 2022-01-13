@@ -604,14 +604,14 @@ void enter_worldtest() {
         if (bkg.sliding)
         {
             // If the camera and slide is inside the map, slide, otherwise cancel slide
-            // if (!(TO_PIXELS(bkg.camera_x) + 8 < 0 || TO_PIXELS(bkg.camera_x) + 8 > bkg.camera_max_x ||
-            //       bkg.camera_y + 8 < 0 || bkg.camera_y + 8 > bkg.camera_max_y))
-            // {
+            if (!(TO_PIXELS(bkg.camera_x) < 0 || TO_PIXELS(bkg.camera_x) > bkg.camera_max_x ||
+                  bkg.camera_y < 0 || bkg.camera_y > bkg.camera_max_y))
+            {
                 bkg.camera_x -= TO_COORDS(4); // Move as much as slide in X direction
                 PLAYER.x += TO_COORDS(3);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;           // Flag for redraw
-            // }
+            }
             // else
             //     bkg.sliding = FALSE;
 
