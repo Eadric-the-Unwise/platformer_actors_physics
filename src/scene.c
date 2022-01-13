@@ -34,9 +34,7 @@ void load_level(const level_t *level) {
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS from LEVEL(x) to active_actors[MAX_ACTORS] here in scene.c
 /******************************/
 UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count)
-#ifndef __INTELLISENSE__
-    NONBANKED
-#endif
+NONBANKED
 {
     //? current_actor locally here is manipulating the active_actors[MAX_ACTORS] array information
     actor_t *current_actor = active_actors;
@@ -89,9 +87,7 @@ UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count)
     return hiwater;
 }
 void load_bullets(const actor_t *bullet, UINT8 hiwater)
-#ifndef __INTELLISENSE__
-    NONBANKED
-#endif
+NONBANKED
  {
     
     if (bullet == NULL) return;
@@ -123,10 +119,8 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater)
 
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
 uint8_t animation_timer = 6;
-void render_actors()
-#ifndef __INTELLISENSE__
-    NONBANKED
-#endif
+void render_actors_platform()
+NONBANKED
 {
     UINT8 __save = _current_bank;
 
@@ -176,13 +170,14 @@ void render_actors()
                                 current_actor->facing = LEFT;
                             }
                         }
-                    } else {
-                        current_actor->ON = FALSE;
-                        // current_actor->RENDER = FALSE;
-                        hide_metasprite(
-                            current_animation[current_actor->animation_phase],
-                            OAM_hiwater);
-                    }
+                    } 
+                    // else {
+                    //     current_actor->ON = FALSE;
+                    //     // current_actor->RENDER = FALSE;
+                    //     hide_metasprite(
+                    //         current_animation[current_actor->animation_phase],
+                    //         OAM_hiwater);
+                    // }
                 }
                 // process actor animation
                 if (animation_timer == 1) {
@@ -336,7 +331,7 @@ void gameover() {
     JUMP = LADDER_Release = TRUE;
     load_level(current_stage);
     if (load_submap) load_submap();
-    render_actors();
+    render_actors_platform();
     GAMEOVER = FALSE;
     DISPLAY_ON;
 }

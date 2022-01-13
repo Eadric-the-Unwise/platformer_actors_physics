@@ -105,9 +105,7 @@ void render_camera(UINT8 playerx, INT16 camx) {
 // }
 
 void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank)
-#ifndef __INTELLISENSE__
-    NONBANKED
-#endif
+NONBANKED
 {
     UINT8 __save = _current_bank;
     SWITCH_ROM_MBC1(bank);
@@ -116,9 +114,7 @@ void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_
 }
 
 void set_bkg_submap_nonbanked(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const UINT8 *map_data, UINT8 map_w, UINT8 bank)
-#ifndef __INTELLISENSE__
-    NONBANKED
-#endif
+NONBANKED
 {
     UINT8 __save = _current_bank;
     SWITCH_ROM_MBC1(bank);

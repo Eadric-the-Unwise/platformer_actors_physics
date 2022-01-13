@@ -24,7 +24,7 @@ const level_t worldtest = {
     .actors = worldtest_actors,
     .bullets = worldtest_bullets,
     .actor_count = 5,
-    .animate_hook = NULL,  // function that put life into the scene
+    .animate_hook = anim_worldtest,  // function that put life into the scene
     .collide_hook = NULL};
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
@@ -496,7 +496,7 @@ void setup_worldtest() {
     GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
     load_level(&worldtest);
-    render_actors();
+    render_actors_platform();
     DISPLAY_ON;
     current_stage = &worldtest;
 }
@@ -697,11 +697,11 @@ void enter_worldtest() {
         // UPDATE THE CAMERA POSITION SETTINGS
         // render_camera(px, TO_PIXELS(bkg.camera_x));
         // UPDATE CURRENT LEVEL NPC ANIMATIONS AND X/Y POSITIONS
-        // if (animate_level) animate_level();  // call level animation hook (if any)
+        if (animate_level) animate_level();  // call level animation hook (if any)
         // // CHECK FOR NPC COLLISIONS
         // if (collide_level) collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
-        render_actors();
+        render_actors_platform();
 
         if (bkg.redraw) {
             set_camera();
