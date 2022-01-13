@@ -27,8 +27,8 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000007  l__HEADER |    00000008  l__HEADER |    0000000C  l__GSINIT
      0000002E  l__CODE_2 |    00000030  l__HEADER |    0000004F  l__HEADER
      00000082  l__HEADER |    00000200  s__CODE   |    00000311  l__DATA  
-     00000C6A  l__HOME   |    00000D26  l__CODE_1 |    00001106  l__CODE_2
-     000015AD  l__CODE_1 |    000016FF  l__INITIA |    000016FF  l__INITIA
+     00000C6A  l__HOME   |    00000D26  l__CODE_1 |    0000110A  l__CODE_2
+     00001335  l__CODE_1 |    000016FF  l__INITIA |    000016FF  l__INITIA
      00001783  l__CODE_5 |    00001784  l__CODE_7 |    00002000  _rROMB0  
      00002784  l__CODE   |    00002984  s__HOME   |    00003000  _rROMB1  
      000035EE  s__BASE   |    000035EE  s__CODE_0 |    000035EE  s__INITIA
@@ -411,13 +411,13 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_101              00654000    000015AD =        5549. bytes (REL,CON)
+_CODE_101              00654000    00001335 =        4917. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00654000  _anim_wor |    006548AF  _worldtes |    006548BB  _worldtes
-     00654AA0  _worldtes |    00654B01  _spawn_bu |    00654C31  _npc_coll
-     00654F8D  _init_sub |    006550A7  _setup_wo |    006550F6  _enter_wo
+     00654000  _anim_wor |    0065476D  _worldtes |    00654779  _worldtes
+     0065495E  _worldtes |    006549BF  _spawn_bu |    00654AEF  _npc_coll
+     00654E4B  _init_sub |    00654F65  _setup_wo |    00654FB4  _enter_wo
 ASxxxx Linker V03.00 + NoICE + sdld,  page 33.
 Hexadecimal  [32-Bits]
 
@@ -434,7 +434,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_200              00C84000    00001106 =        4358. bytes (REL,CON)
+_CODE_200              00C84000    0000110A =        4362. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -444,62 +444,62 @@ _CODE_200              00C84000    00001106 =        4358. bytes (REL,CON)
      00C84280  _detectiv |    00C8428C  _detectiv |    00C84298  _detectiv
      00C842A4  _detectiv |    00C842B0  _detectiv |    00C842C8  _detectiv
      00C842D2  _detectiv |    00C842DC  _detectiv |    00C842E6  _detectiv
-     00C84DA6  _detectiv |    00C84DBE  _detectiv |    00C84DD6  _detectiv
-     00C84DF2  _detectiv |    00C84E0A  _detectiv |    00C84E26  _detectiv
-     00C84E42  _detectiv |    00C84E5E  _detectiv |    00C84E7A  _detectiv
-     00C84E96  _detectiv |    00C84EB2  _detectiv |    00C84ECE  _detectiv
-     00C84EEA  _detectiv |    00C84F06  _detectiv |    00C84F22  _detectiv
-     00C84F3E  _detectiv |    00C84F56  _detectiv |    00C84F72  _detectiv
-     00C84F8E  _detectiv |    00C84FB2  _detectiv |    00C84FC4  _detectiv
-     00C84FC8  _detectiv |    00C84FD2  _detectiv |    00C84FDC  _detectiv
-     00C84FE2  _detectiv |    00C84FE6  _detectiv |    00C84FEE  _detectiv
-     00C84FF2  _detectiv |    00C84FFA  _detectiv |    00C85002  _elevator
-     00C85042  _elevator |    00C8505E  _elevator |    00C85060  _elevator
-     00C85064  _NPC_elec |    00C850E4  _NPC_elec |    00C850F0  _NPC_elec
-     00C850FC  _NPC_elec |    00C85100  _NPC_elec
+     00C842EA  _detectiv |    00C84DAA  _detectiv |    00C84DC2  _detectiv
+     00C84DDA  _detectiv |    00C84DF6  _detectiv |    00C84E0E  _detectiv
+     00C84E2A  _detectiv |    00C84E46  _detectiv |    00C84E62  _detectiv
+     00C84E7E  _detectiv |    00C84E9A  _detectiv |    00C84EB6  _detectiv
+     00C84ED2  _detectiv |    00C84EEE  _detectiv |    00C84F0A  _detectiv
+     00C84F26  _detectiv |    00C84F42  _detectiv |    00C84F5A  _detectiv
+     00C84F76  _detectiv |    00C84F92  _detectiv |    00C84FB6  _detectiv
+     00C84FC8  _detectiv |    00C84FCC  _detectiv |    00C84FD6  _detectiv
+     00C84FE0  _detectiv |    00C84FE6  _detectiv |    00C84FEA  _detectiv
+     00C84FF2  _detectiv |    00C84FF6  _detectiv |    00C84FFE  _detectiv
+     00C85006  _elevator |    00C85046  _elevator |    00C85062  _elevator
+     00C85064  _elevator |    00C85068  _NPC_elec |    00C850E8  _NPC_elec
+     00C850F4  _NPC_elec |    00C85100  _NPC_elec |    00C85104  _NPC_elec
 ASxxxx Linker V03.00 + NoICE + sdld,  page 35.
 
 Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83120.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215840.rel
                                           [ camera ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83121.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215841.rel
                                           [ collisions ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83122.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215842.rel
                                           [ ladder ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83123.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215843.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83124.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215844.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83125.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215845.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83126.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215846.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83127.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215847.rel
                                           [ world1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83128.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215848.rel
                                           [ worldtest ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc83129.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215849.rel
                                           [ bullet ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831210.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158410.rel
                                           [ detective_16 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831211.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158411.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831212.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158412.rel
                                           [ elevator ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831213.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158413.rel
                                           [ NPC_electric ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831214.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158414.rel
                                           [ stage_drop_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831215.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158415.rel
                                           [ stage_drop_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831216.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158416.rel
                                           [ stage_drop_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831217.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158417.rel
                                           [ world1_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc831218.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158418.rel
                                           [ world1_tiles ]
 
 

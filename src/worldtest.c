@@ -48,8 +48,8 @@ const actor_t worldtest_actors[5] = {
      .tile_index = 0,
      .tile_data = detective_16_data,
      .bank = detective_16_Bank,
-     .animations = {detective_16_WALK, detective_16_WALK, detective_16_UP, detective_16_UP, detective_16_DOWN, detective_16_DOWN},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP},
+     .animations = {detective_16_WALK, detective_16_WALK, detective_16_UP, detective_16_UP, detective_16_DOWN, detective_16_DOWN, NULL, NULL, detective_16_IDLE, detective_16_IDLE},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, NULL, NULL, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE,
      .RENDER = TRUE,
@@ -233,23 +233,23 @@ void anim_worldtest() {
 
     // SIDE SCROLLING CAMERA LOCKED AT 118
 
-    if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {
-        bkg.camera_x += PLAYER.SpdX;
-        bkg.redraw = TRUE;
+    // if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {
+    //     bkg.camera_x += PLAYER.SpdX;
+    //     bkg.redraw = TRUE;
 
-    } else
+    // } else
         PLAYER.x += PLAYER.SpdX;
-    if ((camera_x - 1) <= 0) {
-        if ((joy & J_RIGHT) && (player_x >= 118)) {
-            bkg.camera_x += PLAYER.SpdX;
-            bkg.redraw = TRUE;
-        }
-    } else if ((camera_x + 1) >= bkg.camera_max_x) {
-        if ((joy & J_LEFT) && (player_x <= 118)) {
-            bkg.camera_x += PLAYER.SpdX;
-            bkg.redraw = TRUE;
-        }
-    }
+    // if ((camera_x - 1) <= 0) {
+    //     if ((joy & J_RIGHT) && (player_x >= 118)) {
+    //         bkg.camera_x += PLAYER.SpdX;
+    //         bkg.redraw = TRUE;
+    //     }
+    // } else if ((camera_x + 1) >= bkg.camera_max_x) {
+    //     if ((joy & J_LEFT) && (player_x <= 118)) {
+    //         bkg.camera_x += PLAYER.SpdX;
+    //         bkg.redraw = TRUE;
+    //     }
+    // }
 
     for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF SPRITES
         prev_actor->RENDER = FALSE;
@@ -513,63 +513,63 @@ void enter_worldtest() {
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
             if (joy & J_LEFT) {
-                if (PLAYER.SpdX == 0) {
-                    if (joy & J_DOWN) {
-                        canCROUCH_timer = 1;
-                    }
-                }
-                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
-                    if (canCROUCH) {
-                        SetActorDirection(&PLAYER, DIR_CRAWL_L, PLAYER.animation_phase);
-                    } else {
-                        SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
-                    }
+                // if (PLAYER.SpdX == 0) {
+                //     // if (joy & J_DOWN) {
+                //     //     canCROUCH_timer = 1;
+                //     // }
+                // }
+                // if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
+                //     if (canCROUCH) {
+                //         SetActorDirection(&PLAYER, DIR_CRAWL_L, PLAYER.animation_phase);
+                //     } else {
+                SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
+                    // }
 
-                } else if (CROUCH) {
-                    if (!JUMP) {
-                        SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
-                    }
-                }
-                if (CROUCH) {
-                    if (PLAYER.SpdX > -MAX_CRAWL_SPEED) {
-                        PLAYER.SpdX -= WALK_VELOCITY;
-                    } else
-                        PLAYER.SpdX = -MAX_CRAWL_SPEED;
-                } else if ((!CROUCH) && (!LADDER)) {
-                    if (PLAYER.SpdX > -MAX_WALK_SPEED) {
-                        PLAYER.SpdX -= WALK_VELOCITY;
-                    } else
-                        PLAYER.SpdX = -MAX_WALK_SPEED;
-                }
+                // } else if (CROUCH) {
+                //     if (!JUMP) {
+                //         SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
+                //     }
+                // }
+                // if (CROUCH) {
+                //     if (PLAYER.SpdX > -MAX_CRAWL_SPEED) {
+                //         PLAYER.SpdX -= WALK_VELOCITY;
+                //     } else
+                //         PLAYER.SpdX = -MAX_CRAWL_SPEED;
+                // } else if ((!CROUCH) && (!LADDER)) {
+                if (PLAYER.SpdX > -MAX_WALK_SPEED) {
+                    PLAYER.SpdX -= WALK_VELOCITY;
+                } else
+                    PLAYER.SpdX = -MAX_WALK_SPEED;
+                // }
 
             } else if (joy & J_RIGHT) {
-                if (PLAYER.SpdX == 0) {
-                    if (joy & J_DOWN) {
-                        canCROUCH_timer = 1;
-                    }
-                }
-                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
-                    if (canCROUCH) {
-                        SetActorDirection(&PLAYER, DIR_CRAWL_R, PLAYER.animation_phase);
-                    } else {
+                // if (PLAYER.SpdX == 0) {
+                //     if (joy & J_DOWN) {
+                //         canCROUCH_timer = 1;
+                //     }
+                // }
+                // if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
+                //     if (canCROUCH) {
+                //         SetActorDirection(&PLAYER, DIR_CRAWL_R, PLAYER.animation_phase);
+                //     } else {
                         SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
-                    }
-                } else if (CROUCH) {
-                    if (!JUMP) {
-                        SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
-                    }
-                }
-                if (CROUCH) {
-                    if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
-                        PLAYER.SpdX += WALK_VELOCITY;
-                    } else
-                        PLAYER.SpdX = MAX_CRAWL_SPEED;
-                } else if ((!CROUCH) && (!LADDER)) {
+                //     }
+                // } else if (CROUCH) {
+                //     if (!JUMP) {
+                //         SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
+                //     }
+                // }
+                // if (CROUCH) {
+                //     if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
+                //         PLAYER.SpdX += WALK_VELOCITY;
+                //     } else
+                //         PLAYER.SpdX = MAX_CRAWL_SPEED;
+                // } else if ((!CROUCH) && (!LADDER)) {
                     if (PLAYER.SpdX < MAX_WALK_SPEED) {
                         PLAYER.SpdX += WALK_VELOCITY;
                     } else
                         PLAYER.SpdX = MAX_WALK_SPEED;
-                }
+                // }
             }
 
             if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder)) {
@@ -682,12 +682,12 @@ void enter_worldtest() {
         py = TO_PIXELS(PLAYER.y);
         // // Change to IDLE state when not moving
         // if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER)) {
-        //     if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-        //         if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-        //             switch_idle();
-        //             check_C(px, py, TO_PIXELS(bkg.camera_x));
-        //         }
-        //     }
+            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
+                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                    switch_idle();
+                    // check_C(px, py, TO_PIXELS(bkg.camera_x));
+                }
+            }
         // }
         // DOWN while standing still
         if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {

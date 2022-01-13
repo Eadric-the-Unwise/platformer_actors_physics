@@ -75,3 +75,7 @@ const metasprite_t* const detective_16_WALK[] = {
     detective_16_metasprite8, detective_16_metasprite9, detective_16_metasprite10,
     detective_16_metasprite11,
     NULL};
+
+    const metasprite_t* const detective_16_IDLE[] = {
+    detective_16_metasprite0,
+    NULL};
