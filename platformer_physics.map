@@ -28,7 +28,7 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      0000002E  l__CODE_2 |    00000030  l__HEADER |    0000004F  l__HEADER
      00000082  l__HEADER |    00000200  s__CODE   |    00000311  l__DATA  
      00000D26  l__CODE_1 |    00000D91  l__HOME   |    0000110A  l__CODE_2
-     00001560  l__CODE_1 |    000016FF  l__INITIA |    000016FF  l__INITIA
+     00001514  l__CODE_1 |    000016FF  l__INITIA |    000016FF  l__INITIA
      00001783  l__CODE_5 |    00001784  l__CODE_7 |    00002000  _rROMB0  
      00002784  l__CODE   |    00002984  s__HOME   |    00003000  _rROMB1  
      00003715  s__BASE   |    00003715  s__CODE_0 |    00003715  s__INITIA
@@ -418,7 +418,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_101              00654000    00001560 =        5472. bytes (REL,CON)
+_CODE_101              00654000    00001514 =        5396. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -470,43 +470,43 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163800.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243440.rel
                                           [ camera ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163801.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243441.rel
                                           [ collisions ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163802.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243442.rel
                                           [ ladder ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163803.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243443.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163804.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243444.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163805.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243445.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163806.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243446.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163807.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243447.rel
                                           [ world1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163808.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243448.rel
                                           [ worldtest ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc163809.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc243449.rel
                                           [ bullet ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638010.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434410.rel
                                           [ detective_16 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638011.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434411.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638012.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434412.rel
                                           [ elevator ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638013.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434413.rel
                                           [ NPC_electric ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638014.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434414.rel
                                           [ stage_drop_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638015.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434415.rel
                                           [ stage_drop_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638016.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434416.rel
                                           [ stage_drop_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638017.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434417.rel
                                           [ world1_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1638018.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2434418.rel
                                           [ world1_tiles ]
 
 

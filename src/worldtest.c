@@ -538,10 +538,10 @@ void enter_worldtest() {
                 // } else if ((!CROUCH) && (!LADDER)) {
                 if (PLAYER.SpdX > -MAX_WALK_SPEED) {
                     PLAYER.SpdX -= WALK_VELOCITY;
-                } else
-                    PLAYER.SpdX = -MAX_WALK_SPEED;
+                } else{
+                    PLAYER.SpdX = -MAX_WALK_SPEED;}
                 // }
-
+         
             } else if (joy & J_RIGHT) {
                 // if (PLAYER.SpdX == 0) {
                 //     if (joy & J_DOWN) {
@@ -567,8 +567,9 @@ void enter_worldtest() {
                 // } else if ((!CROUCH) && (!LADDER)) {
                     if (PLAYER.SpdX < MAX_WALK_SPEED) {
                         PLAYER.SpdX += WALK_VELOCITY;
-                    } else
-                        PLAYER.SpdX = MAX_WALK_SPEED;
+                    } else {
+                        PLAYER.SpdX = MAX_WALK_SPEED;}
+                        bkg.sliding = TRUE;
                 // }
             }
             if (joy & J_UP){
@@ -595,6 +596,28 @@ void enter_worldtest() {
             if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
                 spawn_bullets();
             }
+        }
+        if (TO_PIXELS(PLAYER.x) < 16){
+            bkg.sliding = TRUE;
+        }
+
+        if (bkg.sliding)
+        {
+            // If the camera and slide is inside the map, slide, otherwise cancel slide
+            // if (!(TO_PIXELS(bkg.camera_x) + 8 < 0 || TO_PIXELS(bkg.camera_x) + 8 > bkg.camera_max_x ||
+            //       bkg.camera_y + 8 < 0 || bkg.camera_y + 8 > bkg.camera_max_y))
+            // {
+                bkg.camera_x -= TO_COORDS(4); // Move as much as slide in X direction
+                PLAYER.x += TO_COORDS(3);
+                // bkg.camera_y -= 8; // " " in Y direction
+                bkg.redraw = TRUE;           // Flag for redraw
+            // }
+            // else
+            //     bkg.sliding = FALSE;
+
+            // If camera is at the end of the slide, stop sliding
+            if (TO_PIXELS(bkg.camera_x) % 160 == 0 && bkg.camera_y % 144 == 0)
+                bkg.sliding = FALSE;
         }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
@@ -729,6 +752,8 @@ void enter_worldtest() {
         // if (collide_level) collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_actors_platform();
+        // bkg.camera_x -= TO_COORDS(1);
+        // bkg.redraw = TRUE;
 
         if (bkg.redraw) {
             set_camera();
