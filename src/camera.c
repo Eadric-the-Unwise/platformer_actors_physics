@@ -34,8 +34,8 @@ void set_camera() {
     bkg.old_camera_x = bkg.camera_x, bkg.old_camera_y = bkg.camera_y;
 }
 void set_world_camera() {
-    shadow_scy = bkg.camera_y;
-    shadow_scx = bkg.camera_x;
+    shadow_scy = bkg.camera_y >> 4u;
+    shadow_scx = (bkg.camera_x >> 4u);
 
     bkg.map_pos_y = (bkg.camera_y >> 7u);
     if (bkg.map_pos_y != bkg.old_map_pos_y) {

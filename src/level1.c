@@ -739,7 +739,7 @@ void enter_lvl1() {
             // TRY LOADING A SECOND STAGE HERE?
         } else if (WINNER) {
             WINNER = FALSE;
-            gamestate = 2;
+            gamestate = 4;
         }
     }
 }

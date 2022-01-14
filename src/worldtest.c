@@ -468,11 +468,11 @@ void init_submap_worldtest() {
     bkg.camera_tiles_x = WORLD1_MAPWidth * 8;
     bkg.camera_tiles_y = WORLD1_MAPHeight * 8;
     bkg.camera_x = TO_COORDS(bkg.camera_max_x);
-    bkg.camera_y = 0;
+    bkg.camera_y = TO_COORDS(0);;
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
     bkg.map_pos_x = (UINT8)(bkg.camera_x >> 7u);
-    bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
+    bkg.map_pos_y = (UINT8)(bkg.camera_y >> 7u);
     // CHANGE THE TILE COUNT AS YOU ADD TILES TO THE BKG TILE_SET
     set_bkg_data_nonbanked(0, WORLD1_TILESLen, WORLD1_TILES, WORLD1_TILESBank);
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
@@ -593,25 +593,29 @@ void enter_worldtest() {
             if (bkg.slide_dir == SLIDELEFT){
                 bkg.camera_x -= TO_COORDS(4); // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
+                PLAYER.SpdY = 0;
                 PLAYER.x += TO_COORDS(3);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;           // Flag for redraw
             } else if (bkg.slide_dir == SLIDERIGHT){
                 bkg.camera_x += TO_COORDS(4); // Move as much as slide in X direction
-                PLAYER.SpdX = 0;
+                                PLAYER.SpdX = 0;
+                PLAYER.SpdY = 0;
                 PLAYER.x -= TO_COORDS(3);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;           // Flag for redraw
             }
             else if (bkg.slide_dir == SLIDEUP){
                 bkg.camera_y -= TO_COORDS(4); // Move as much as slide in X direction
-                PLAYER.SpdX = 0;
+                                PLAYER.SpdX = 0;
+                PLAYER.SpdY = 0;
                 PLAYER.y += TO_COORDS(3);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;           // Flag for redraw
             }             else if (bkg.slide_dir == SLIDEDOWN){
                 bkg.camera_y += TO_COORDS(4); // Move as much as slide in X direction
-                PLAYER.SpdX = 0;
+                                PLAYER.SpdX = 0;
+                PLAYER.SpdY = 0;
                 PLAYER.y -= TO_COORDS(3);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;           // Flag for redraw
@@ -621,7 +625,7 @@ void enter_worldtest() {
             //     bkg.slider = FALSE;
 
             // If camera is at the end of the slide, stop slider
-            if (TO_PIXELS(bkg.camera_x) % 160 == 0 && bkg.camera_y % 144 == 0){
+            if (TO_PIXELS(bkg.camera_x) % 160 == 0 && TO_PIXELS(bkg.camera_y) % 144 == 0){
                 bkg.slider = FALSE;
                 bkg.slide_dir = NULL;
                 JOYLOCK = ANIMATIONLOCK = FALSE;
@@ -764,7 +768,7 @@ void enter_worldtest() {
         // bkg.redraw = TRUE;
 
         if (bkg.redraw) {
-            set_camera();
+            set_world_camera();
             wait_vbl_done();
             refresh_OAM();
             SCX_REG = shadow_scx;
