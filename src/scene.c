@@ -180,7 +180,7 @@ NONBANKED
                     // }
                 }
                 // process actor animation
-                if (animation_timer == 1) {
+                if ((animation_timer == 1) && !(ANIMATIONLOCK)) {
                     current_actor->animation_phase++;
                     // check for the last animation frame
                     if (current_animation[current_actor->animation_phase] == NULL) {

@@ -171,6 +171,8 @@ void setGameBank(UBYTE i);
 void gameover();
 extern UINT8 GAMEOVER;
 extern UINT8 WINNER;
+extern UINT8 JOYLOCK;
+extern UINT8 ANIMATIONLOCK;
 extern uint8_t animation_timer;
 
 extern uint8_t shadow_scx, shadow_scy;

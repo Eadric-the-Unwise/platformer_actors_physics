@@ -7,6 +7,7 @@
 #include "../res/tiles/NPC_electric.h"
 #include "../res/tiles/detective_large.h"
 #include "../res/tiles/elevator.h"
+
 extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;
@@ -509,68 +510,42 @@ void enter_worldtest() {
         last_joy = joy;
         joy = joypad();
         if (!SPAWN) {
-            UINT8 px, py;
+            // UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
+             if (!JOYLOCK){
             if (joy & J_LEFT) {
-                // if (PLAYER.SpdX == 0) {
-                //     // if (joy & J_DOWN) {
-                //     //     canCROUCH_timer = 1;
-                //     // }
-                // }
-                // if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
-                //     if (canCROUCH) {
-                //         SetActorDirection(&PLAYER, DIR_CRAWL_L, PLAYER.animation_phase);
-                //     } else {
-                SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
-                    // }
-
-                // } else if (CROUCH) {
-                //     if (!JUMP) {
-                //         SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
-                //     }
-                // }
-                // if (CROUCH) {
-                //     if (PLAYER.SpdX > -MAX_CRAWL_SPEED) {
-                //         PLAYER.SpdX -= WALK_VELOCITY;
-                //     } else
-                //         PLAYER.SpdX = -MAX_CRAWL_SPEED;
-                // } else if ((!CROUCH) && (!LADDER)) {
+                if (px < 16 && !(TO_PIXELS(bkg.camera_x)) <= 0){
+                bkg.sliding = TRUE;
+                JOYLOCK = TRUE;
+                ANIMATIONLOCK = TRUE;
+            
+                }
+               
+                    SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
                 if (PLAYER.SpdX > -MAX_WALK_SPEED) {
                     PLAYER.SpdX -= WALK_VELOCITY;
-                } else{
-                    PLAYER.SpdX = -MAX_WALK_SPEED;}
-                // }
+                } else {
+                    PLAYER.SpdX = -MAX_WALK_SPEED;
+                    }
+            
+                
+
          
             } else if (joy & J_RIGHT) {
-                // if (PLAYER.SpdX == 0) {
-                //     if (joy & J_DOWN) {
-                //         canCROUCH_timer = 1;
-                //     }
-                // }
-                // if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
-                //     if (canCROUCH) {
-                //         SetActorDirection(&PLAYER, DIR_CRAWL_R, PLAYER.animation_phase);
-                //     } else {
+
                         SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
-                //     }
-                // } else if (CROUCH) {
-                //     if (!JUMP) {
-                //         SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
-                //     }
-                // }
-                // if (CROUCH) {
-                //     if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
-                //         PLAYER.SpdX += WALK_VELOCITY;
-                //     } else
-                //         PLAYER.SpdX = MAX_CRAWL_SPEED;
-                // } else if ((!CROUCH) && (!LADDER)) {
+
                     if (PLAYER.SpdX < MAX_WALK_SPEED) {
                         PLAYER.SpdX += WALK_VELOCITY;
                     } else {
                         PLAYER.SpdX = MAX_WALK_SPEED;}
-                        bkg.sliding = TRUE;
-                // }
+
+                    if (px > 152){
+                    bkg.sliding = TRUE;
+                    JOYLOCK = TRUE;
+                    }
+                    
             }
             if (joy & J_UP){
                 SetActorDirection(&PLAYER, DIR_UP_L, PLAYER.animation_phase);
@@ -596,28 +571,30 @@ void enter_worldtest() {
             if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
                 spawn_bullets();
             }
-        }
-        if (TO_PIXELS(PLAYER.x) < 16){
-            bkg.sliding = TRUE;
-        }
-
+             }
+        
+    }
         if (bkg.sliding)
         {
             // If the camera and slide is inside the map, slide, otherwise cancel slide
-            if (!(TO_PIXELS(bkg.camera_x) < 0 || TO_PIXELS(bkg.camera_x) > bkg.camera_max_x ||
-                  bkg.camera_y < 0 || bkg.camera_y > bkg.camera_max_y))
-            {
+            // if (!(TO_PIXELS(bkg.camera_x) <= 0 || TO_PIXELS(bkg.camera_x) > bkg.camera_max_x ||
+            //       bkg.camera_y < 0 || bkg.camera_y > bkg.camera_max_y))
+            // {
+
                 bkg.camera_x -= TO_COORDS(4); // Move as much as slide in X direction
+                PLAYER.SpdX = 0;
                 PLAYER.x += TO_COORDS(3);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;           // Flag for redraw
-            }
+            // }
             // else
             //     bkg.sliding = FALSE;
 
             // If camera is at the end of the slide, stop sliding
-            if (TO_PIXELS(bkg.camera_x) % 160 == 0 && bkg.camera_y % 144 == 0)
+            if (TO_PIXELS(bkg.camera_x) % 160 == 0 && bkg.camera_y % 144 == 0){
                 bkg.sliding = FALSE;
+                JOYLOCK = ANIMATIONLOCK = FALSE;
+            }
         }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
@@ -733,7 +710,7 @@ void enter_worldtest() {
         // // Change to IDLE state when not moving
         // if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER)) {
             if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+                if (!(joy & J_LEFT) && !(joy & J_RIGHT) && !(ANIMATIONLOCK)) {
                     switch_idle();
                     // check_C(px, py, TO_PIXELS(bkg.camera_x));
                 }
