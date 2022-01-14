@@ -370,7 +370,7 @@ void npc_collisions_world1() {
 void init_submap_example() {
     HIDE_BKG;
     bkg.redraw = TRUE;
-    bkg.sliding = FALSE;
+    bkg.slider = FALSE;
     bkg.camera_max_y = (STAGE_DROP_MAPHeight - 18) * 8;
     bkg.camera_max_x = (STAGE_DROP_MAPWidth - 20) * 8;
     bkg.camera_tiles_x = STAGE_DROP_MAPWidth * 8;
@@ -403,7 +403,7 @@ void init_submap_world1() {
     // fadeout_white();
     HIDE_BKG;
     bkg.redraw = TRUE;
-    bkg.sliding = FALSE;
+    bkg.slider = FALSE;
     bkg.camera_max_y = (WORLD1_MAPHeight - 18) * 8;
     bkg.camera_max_x = (WORLD1_MAPWidth - 20) * 8;
     bkg.camera_tiles_x = WORLD1_MAPWidth * 8;
@@ -435,7 +435,7 @@ void init_submap_world1() {
 // void init_submap() {
 //     fadeout_white();
 //     HIDE_BKG;
-//     bkg.sliding = FALSE;
+//     bkg.slider = FALSE;
 //     bkg.camera_x = 320;
 //     bkg.camera_y = 144;
 //     bkg.old_camera_x = bkg.camera_x;

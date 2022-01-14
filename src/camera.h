@@ -29,12 +29,19 @@ void set_bkg_submap_nonbanked(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const UINT8 *m
 
 #endif
 
-enum Cam {
+typedef enum  {
     vertical_cam,
     horizontal_cam,
     platforming_cam,
     scroll_cam
-};
+} cam_style;
+
+typedef enum {
+    SLIDEUP,
+    SLIDEDOWN,
+    SLIDELEFT,
+    SLIDERIGHT
+} slide_dir;
 
 typedef struct Variables {
     UINT16 camera_max_y;
@@ -43,7 +50,7 @@ typedef struct Variables {
     UINT16 camera_tiles_y;
     UINT8 joy;
 
-    UINT8 sliding;
+    UINT8 slider;
     UINT8 fading;
     INT8 slide_x;
     INT8 slide_y;
@@ -57,8 +64,8 @@ typedef struct Variables {
     UINT8 level_map_width;
     UINT8 level_map_height;
     const UINT8 *level_map_data;
-    enum Cam camera_style;
-
+    cam_style camera_style;
+    slide_dir slide_dir;
     UINT8 level_map_bank;
 
 } Variables;

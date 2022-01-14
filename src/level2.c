@@ -461,7 +461,7 @@ void npc_collisions_level2() {
 void init_submap_lvl2() {
     HIDE_BKG;
     bkg.redraw = TRUE;
-    bkg.sliding = FALSE;
+    bkg.slider = FALSE;
     bkg.camera_max_y = (STAGE_DROP_MAPHeight - 18) * 8;
     bkg.camera_max_x = (STAGE_DROP_MAPWidth - 20) * 8;
     bkg.camera_tiles_x = STAGE_DROP_MAPWidth * 8;
