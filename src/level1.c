@@ -203,7 +203,7 @@ void anim_level1() {
         ptr = cam1;
         nptr = cam2;
     } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
-                                                       
+
         cam_ptr = lvl1_cam2_render;
         prev_actors_count = CAM1_COUNT;
         active_actors_count = CAM2_COUNT;
@@ -212,7 +212,7 @@ void anim_level1() {
         ptr = cam2;
         nptr = cam3;
     } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-                                                     
+
         cam_ptr = lvl1_cam3_render;
         prev_actors_count = CAM2_COUNT;
         active_actors_count = CAM3_COUNT;

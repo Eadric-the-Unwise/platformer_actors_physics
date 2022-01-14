@@ -34,8 +34,7 @@ void load_level(const level_t *level) {
 // Load enemies sequencially up to MAX_ACTIVE_ACTORS from LEVEL(x) to active_actors[MAX_ACTORS] here in scene.c
 /******************************/
 UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count)
-NONBANKED
-{
+    NONBANKED {
     //? current_actor locally here is manipulating the active_actors[MAX_ACTORS] array information
     actor_t *current_actor = active_actors;
     UINT8 __save = _current_bank;
@@ -87,22 +86,19 @@ NONBANKED
     return hiwater;
 }
 void load_bullets(const actor_t *bullet, UINT8 hiwater)
-NONBANKED
- {
-    
+    NONBANKED {
     if (bullet == NULL) return;
     actor_t *current_bullet = active_bullets;
     UINT8 __save = _current_bank;
 
-    
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         current_bullet->tile_index = hiwater;
-            current_bullet->bank = bullet->bank;
+        current_bullet->bank = bullet->bank;
         current_bullet->tile_count = bullet->tile_count;
         current_bullet->tile_data = bullet->tile_data;
         SWITCH_ROM_MBC1(current_bullet->bank);
-            set_sprite_data(hiwater, current_bullet->tile_count, current_bullet->tile_data);
-    SWITCH_ROM_MBC1(__save);
+        set_sprite_data(hiwater, current_bullet->tile_count, current_bullet->tile_data);
+        SWITCH_ROM_MBC1(__save);
 
         // current_bullet->tile_index = bullet->tile_index;
         current_bullet->tile_count = bullet->tile_count;
@@ -120,8 +116,7 @@ NONBANKED
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
 uint8_t animation_timer = 6;
 void render_actors_platform()
-NONBANKED
-{
+    NONBANKED {
     UINT8 __save = _current_bank;
 
     actor_t *current_actor = &active_actors[*cam_ptr];
@@ -170,14 +165,13 @@ NONBANKED
                                 current_actor->facing = LEFT;
                             }
                         }
-                    } 
-                    // else {
-                    //     current_actor->ON = FALSE;
-                    //     // current_actor->RENDER = FALSE;
-                    //     hide_metasprite(
-                    //         current_animation[current_actor->animation_phase],
-                    //         OAM_hiwater);
-                    // }
+                    } else {
+                        current_actor->ON = FALSE;
+                        // current_actor->RENDER = FALSE;
+                        hide_metasprite(
+                            current_animation[current_actor->animation_phase],
+                            OAM_hiwater);
+                    }
                 }
                 // process actor animation
                 if ((animation_timer == 1) && !(ANIMATIONLOCK)) {

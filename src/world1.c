@@ -102,14 +102,14 @@ void anim_world1() {
     UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
     // if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
-   
+
     //     cam_ptr = world1_cam1_render;
-        active_actors_count = world1_CAM1_COUNT;
+    active_actors_count = world1_CAM1_COUNT;
     //     next_actors_count = world1_CAM2_COUNT;
     //     ptr = world1_cam1;
     //     nptr = world1_cam2;
     // } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
-    //                                                  
+    //
     //     cam_ptr = world1_cam2_render;
     //     prev_actors_count = world1_CAM1_COUNT;
     //     active_actors_count = world1_CAM2_COUNT;
@@ -118,7 +118,7 @@ void anim_world1() {
     //     ptr = world1_cam2;
     //     nptr = world1_cam3;
     // } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-    //                                                     
+    //
     //     cam_ptr = world1_cam3_render;
     //     prev_actors_count = world1_CAM2_COUNT;
     //     active_actors_count = world1_CAM3_COUNT;
@@ -128,7 +128,7 @@ void anim_world1() {
     //     nptr = world1_cam4;
     // } else if (camera_x < 160) {  // CAM4
     //     cam_ptr = world1_cam4_render;
-    //     
+    //
     //     prev_actors_count = world1_CAM3_COUNT;
     //     active_actors_count = world1_CAM4_COUNT;
     //     pptr = world1_cam3;
@@ -144,7 +144,7 @@ void anim_world1() {
     // SIDE SCROLLING CAMERA LOCKED AT 118
     // if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {
     //     bkg.camera_x += PLAYER.SpdX;
-        // bkg.redraw = TRUE;
+    // bkg.redraw = TRUE;
 
     // } else
     //     PLAYER.x += PLAYER.SpdX;
@@ -480,22 +480,17 @@ void enter_world1() {
     while (gamestate == 3) {
         last_joy = joy;
         joy = joypad();
-            if (joy & J_LEFT)
-            {
-                if (bkg.camera_x)
-                {
-                    bkg.camera_x -= TO_COORDS(1);
-                    bkg.redraw = TRUE;
-                }
+        if (joy & J_LEFT) {
+            if (bkg.camera_x) {
+                bkg.camera_x -= TO_COORDS(1);
+                bkg.redraw = TRUE;
             }
-            else if (joy & J_RIGHT)
-            {
-                if (bkg.camera_x < bkg.camera_max_x)
-                {
-                    bkg.camera_x += TO_COORDS(1);
-                    bkg.redraw = TRUE;
-                }
+        } else if (joy & J_RIGHT) {
+            if (bkg.camera_x < bkg.camera_max_x) {
+                bkg.camera_x += TO_COORDS(1);
+                bkg.redraw = TRUE;
             }
+        }
         if (!SPAWN) {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
@@ -704,14 +699,14 @@ void enter_world1() {
             refresh_OAM();
         }
 
-    //     if (GAMEOVER) {
-    //         // gamestate = 1;
-    //         enter_world1();
-    //         // gameover();
-    //         // TRY LOADING A SECOND STAGE HERE?
-    //     } else if (WINNER) {
-    //         WINNER = FALSE;
-    //         gamestate = 1;
-    //     }
+        //     if (GAMEOVER) {
+        //         // gamestate = 1;
+        //         enter_world1();
+        //         // gameover();
+        //         // TRY LOADING A SECOND STAGE HERE?
+        //     } else if (WINNER) {
+        //         WINNER = FALSE;
+        //         gamestate = 1;
+        //     }
     }
 }

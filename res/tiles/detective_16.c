@@ -66,16 +66,16 @@ const metasprite_t* const detective_16_WALK[] = {
     detective_16_metasprite3,
     NULL};
 
-    const metasprite_t* const detective_16_UP[] = {
+const metasprite_t* const detective_16_UP[] = {
     detective_16_metasprite4, detective_16_metasprite5, detective_16_metasprite6,
     detective_16_metasprite7,
     NULL};
 
-        const metasprite_t* const detective_16_DOWN[] = {
+const metasprite_t* const detective_16_DOWN[] = {
     detective_16_metasprite8, detective_16_metasprite9, detective_16_metasprite10,
     detective_16_metasprite11,
     NULL};
 
-    const metasprite_t* const detective_16_IDLE[] = {
+const metasprite_t* const detective_16_IDLE[] = {
     detective_16_metasprite0,
     NULL};

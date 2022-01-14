@@ -66,7 +66,7 @@ void main() {
                 SWITCH_ROM_MBC1(WORLD1_BANK);
                 enter_world1();
                 break;
-                        case 4:
+            case 4:
                 SWITCH_ROM_MBC1(worldtest_BANK);
                 enter_worldtest();
                 break;

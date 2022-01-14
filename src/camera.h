@@ -29,7 +29,7 @@ void set_bkg_submap_nonbanked(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const UINT8 *m
 
 #endif
 
-typedef enum  {
+typedef enum {
     vertical_cam,
     horizontal_cam,
     platforming_cam,

@@ -70,7 +70,7 @@ inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, 
     bkg.camera_max_x = (map_width - 20) * 8;
     bkg.level_map_bank = bank;
 }
-//PLATFORMING CAMERA
+// PLATFORMING CAMERA
 void render_camera(UINT8 playerx, INT16 camx) {
     // THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
     if ((camx > 0) && (camx < bkg.camera_max_x)) {
@@ -105,8 +105,7 @@ void render_camera(UINT8 playerx, INT16 camx) {
 // }
 
 void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank)
-NONBANKED
-{
+    NONBANKED {
     UINT8 __save = _current_bank;
     SWITCH_ROM_MBC1(bank);
     set_bkg_data(first_tile, nb_tiles, tile_data);
@@ -114,8 +113,7 @@ NONBANKED
 }
 
 void set_bkg_submap_nonbanked(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const UINT8 *map_data, UINT8 map_w, UINT8 bank)
-NONBANKED
-{
+    NONBANKED {
     UINT8 __save = _current_bank;
     SWITCH_ROM_MBC1(bank);
     set_bkg_submap(x, y, w, h, map_data, map_w);
