@@ -516,7 +516,7 @@ void enter_worldtest() {
             py = TO_PIXELS(PLAYER.y);
           if (!JOYLOCK){
             if (joy & J_LEFT) {
-                if (px < 16 && !(TO_PIXELS(bkg.camera_x)) <= 0){
+                if (px < 16 && TO_PIXELS(bkg.camera_x) > 0){
                 bkg.slider = TRUE;
                 bkg.slide_dir = SLIDELEFT;
                 JOYLOCK = TRUE;
@@ -537,7 +537,7 @@ void enter_worldtest() {
                     } else {
                         PLAYER.SpdX = MAX_WALK_SPEED;}
 
-                    if (px > 152){
+                    if (px > 160 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x){
                     bkg.slider = TRUE;
                     JOYLOCK = TRUE;
                      ANIMATIONLOCK = TRUE;
@@ -546,12 +546,24 @@ void enter_worldtest() {
                     
             }
             if (joy & J_UP){
+                                if (py < 8 && TO_PIXELS(bkg.camera_y) > 0){
+                bkg.slider = TRUE;
+                bkg.slide_dir = SLIDEUP;
+                JOYLOCK = TRUE;
+                ANIMATIONLOCK = TRUE;
+                }
                 SetActorDirection(&PLAYER, DIR_UP_L, PLAYER.animation_phase);
                                     if (PLAYER.SpdY > MAX_WALK_SPEED) {
                         PLAYER.SpdY -= WALK_VELOCITY;
                     } else
                         PLAYER.SpdY = -MAX_WALK_SPEED;
             } else             if (joy & J_DOWN){
+                                if (py > 160 && TO_PIXELS(bkg.camera_y) < bkg.camera_max_y){
+                bkg.slider = TRUE;
+                bkg.slide_dir = SLIDEDOWN;
+                JOYLOCK = TRUE;
+                ANIMATIONLOCK = TRUE;
+                }
                 SetActorDirection(&PLAYER, DIR_DOWN_L, PLAYER.animation_phase);
                                     if (PLAYER.SpdY < MAX_WALK_SPEED) {
                         PLAYER.SpdY += WALK_VELOCITY;
@@ -588,6 +600,19 @@ void enter_worldtest() {
                 bkg.camera_x += TO_COORDS(4); // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.x -= TO_COORDS(3);
+                // bkg.camera_y -= 8; // " " in Y direction
+                bkg.redraw = TRUE;           // Flag for redraw
+            }
+            else if (bkg.slide_dir == SLIDEUP){
+                bkg.camera_y -= TO_COORDS(4); // Move as much as slide in X direction
+                PLAYER.SpdX = 0;
+                PLAYER.y += TO_COORDS(3);
+                // bkg.camera_y -= 8; // " " in Y direction
+                bkg.redraw = TRUE;           // Flag for redraw
+            }             else if (bkg.slide_dir == SLIDEDOWN){
+                bkg.camera_y += TO_COORDS(4); // Move as much as slide in X direction
+                PLAYER.SpdX = 0;
+                PLAYER.y -= TO_COORDS(3);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;           // Flag for redraw
             }
