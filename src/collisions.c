@@ -9,6 +9,8 @@ extern UINT8 joy, last_joy;
 extern BYTE ATTACH, x_Collide, y_Collide;
 BYTE LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
 
+//ADD STAGE_DROP_MAP AS A VARIABLE IN THE FUNC CALL
+
 // THESE COLLISIONS ARE SET ON SINGLE PIXELS, MEANING FINDING THE CENTER IS A CHALLENGE (AS OPPOSED TO NPC COLLISIONS WHICH ARE PERFECTLY CENTRED)
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexDy, indexCy, indexTy, index_x, index_kx, indexCamx, tileindexD, tileindexC, tileindexT, tileindexkD, tileindexkC, tileindexkT;
@@ -343,6 +345,36 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
         }
     }
 }
+
+// void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x){
+//     UINT16 indexDy, indexCy, indexTy, index_x, indexCamx, tileindexD, tileindexC, tileindexT;
+//     if (joy & J_LEFT) {
+//         LR_Offset_X = -8;
+//     } else if (joy & J_RIGHT) {
+//         LR_Offset_X = 8;
+//     }
+//     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
+//     indexCamx = camera_x;
+//     indexTy = (newplayery - 16) / 8;  // TOP Y AXIS
+//     indexCy = (newplayery - 8) / 8;  // CENTER Y AXIS
+//     indexDy = (newplayery) / 8;   // BOTTOM Y AXIS
+
+//     index_x = ((newplayerx + LR_Offset_X) + indexCamx) / 8;
+
+//     // REGULAR COLLISION INDEX
+//     tileindexT = WORLD1_COLLISIONWidth * indexTy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+//     tileindexC = WORLD1_COLLISIONWidth * indexCy + index_x;
+//     tileindexD = WORLD1_COLLISIONWidth * indexDy + index_x;
+
+
+//     if ((WORLD1_COLLISION[tileindexT] == 0x01) || (WORLD1_COLLISION[tileindexC] == 0x01) || (WORLD1_COLLISION[tileindexD] == 0x01)) {
+//             PLAYER.SpdX = 0;
+//     }
+ 
+//     if ((WORLD1_COLLISION[tileindexC] == 0x08)) {
+//         WINNER = TRUE;
+//     }
+// }
 
 // LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
 BYTE overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x) {  // BYTE IS SAME AS BOOLEAN (ONLY SHORTER NAME)

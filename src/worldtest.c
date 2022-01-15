@@ -459,6 +459,9 @@ void npc_collisions_worldtest() {
     }
 }
 
+
+
+
 void init_submap_worldtest() {
     HIDE_BKG;
     bkg.redraw = TRUE;
@@ -579,7 +582,7 @@ void enter_worldtest() {
                     jump();
                 }
                 if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
-                    spawn_bullets();
+                    spawn_bullets_worldtest();
                 }
             }
         }
@@ -682,8 +685,8 @@ void enter_worldtest() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
-        // Y-AXIS COLLISION CHECK / /LADDER CHECK
-        // check_UD(px, py, TO_PIXELS(bkg.camera_x));
+  
+        // check_world_collisions(px, py, TO_PIXELS(bkg.camera_x));
 
         if ((CROUCH) && (!canCROUCH)) {
             if (!(joy & J_DOWN)) {
