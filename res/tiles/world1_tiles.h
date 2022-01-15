@@ -24,7 +24,7 @@
 
 
 /* Bank of tiles. */
-#define WORLD1_TILESBank 202
+#define WORLD1_TILESBank 10
 /* Start of tile array. */
 extern unsigned char WORLD1_TILES[];
 #define WORLD1_TILESLen 4

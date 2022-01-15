@@ -20,7 +20,7 @@
 
 #define WORLD1_MAPWidth 40
 #define WORLD1_MAPHeight 36
-#define WORLD1_MAPBank 202
+#define WORLD1_MAPBank 10
 
 extern unsigned char WORLD1_MAP[];
 

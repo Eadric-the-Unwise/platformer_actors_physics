@@ -1,4 +1,4 @@
-#pragma bank 202
+#pragma bank 10
 /*
 
  WORLD1_TILES.C

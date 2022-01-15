@@ -1,4 +1,4 @@
-#pragma bank 202
+#pragma bank 10
 /*
 
  WORLD1_MAP.C
@@ -21,7 +21,7 @@
 
 #define WORLD1_MAPWidth 40
 #define WORLD1_MAPHeight 36
-#define WORLD1_MAPBank 202
+#define WORLD1_MAPBank 10
 
 unsigned char WORLD1_MAP[] =
 {
