@@ -225,7 +225,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, co
     // SWITCH_ROM_MBC1(__save);
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
-void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, const UINT8 *COLLISION_DATA) {
     UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
 
@@ -250,36 +250,36 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     index_ky = (newplayery - UD_Offset_kY) / 8;  // KILL SPIKE CHECK
     index_Ly = (newplayery - UD_Offset_LY) / 8;  // LADDER COLLISION CHECK
     // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexL = STAGE_DROP_COLLISIONWidth * index_y + indexLx;  // THESE ARE USED MOSTLY FOR BASIC COLLISION CHECKS (NOT LADDERS)
-    tileindexC = STAGE_DROP_COLLISIONWidth * index_y + indexCx;  // AS THEY FLUCTUATE DEPENDING ON THE SPD OF THE PLAYER
-    tileindexR = STAGE_DROP_COLLISIONWidth * index_y + indexRx;  // LADDERS REQUIRE HARDSET TOP AND BOTTOM AND CENTER ROWS OF X, SEE BELOW
+    tileindexL = map_w * index_y + indexLx;  // THESE ARE USED MOSTLY FOR BASIC COLLISION CHECKS (NOT LADDERS)
+    tileindexC = map_w * index_y + indexCx;  // AS THEY FLUCTUATE DEPENDING ON THE SPD OF THE PLAYER
+    tileindexR = map_w * index_y + indexRx;  // LADDERS REQUIRE HARDSET TOP AND BOTTOM AND CENTER ROWS OF X, SEE BELOW
 
-    tileindexLL = STAGE_DROP_COLLISIONWidth * index_Ly + indexLx;  // LADDER CENTER Y
-    tileindexCL = STAGE_DROP_COLLISIONWidth * index_Ly + indexCx;  // LADDER CENTER Y
-    tileindexRL = STAGE_DROP_COLLISIONWidth * index_Ly + indexRx;  // LADDER CENTER Y
+    tileindexLL = map_w * index_Ly + indexLx;  // LADDER CENTER Y
+    tileindexCL = map_w * index_Ly + indexCx;  // LADDER CENTER Y
+    tileindexRL = map_w * index_Ly + indexRx;  // LADDER CENTER Y
 
-    tileindexLB = STAGE_DROP_COLLISIONWidth * index_By + indexLx;  // BOT Y
-    tileindexCB = STAGE_DROP_COLLISIONWidth * index_By + indexCx;  // BOT Y
-    tileindexRB = STAGE_DROP_COLLISIONWidth * index_By + indexRx;  // BOT Y
-    tileindex6B = STAGE_DROP_COLLISIONWidth * index_By + index6;
-    tileindex10B = STAGE_DROP_COLLISIONWidth * index_By + index10;
+    tileindexLB = map_w * index_By + indexLx;  // BOT Y
+    tileindexCB = map_w * index_By + indexCx;  // BOT Y
+    tileindexRB = map_w * index_By + indexRx;  // BOT Y
+    tileindex6B = map_w * index_By + index6;
+    tileindex10B = map_w * index_By + index10;
 
-    tileindex6 = STAGE_DROP_COLLISIONWidth * index_Ly + index6;    // OFFSET FOR LADDER X "CENTER"
-    tileindex10 = STAGE_DROP_COLLISIONWidth * index_Ly + index10;  // OFFSET FOR LADDER X "CENTER"
+    tileindex6 = map_w * index_Ly + index6;    // OFFSET FOR LADDER X "CENTER"
+    tileindex10 = map_w * index_Ly + index10;  // OFFSET FOR LADDER X "CENTER"
 
-    tileindexkL = STAGE_DROP_COLLISIONWidth * index_ky + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexkC = STAGE_DROP_COLLISIONWidth * index_ky + indexCx;
-    tileindexkR = STAGE_DROP_COLLISIONWidth * index_ky + indexRx;
+    tileindexkL = map_w * index_ky + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexkC = map_w * index_ky + indexCx;
+    tileindexkR = map_w * index_ky + indexRx;
     // IF THE CHARACTER IS STANDING UNDER AN 0x02 COLLISION CORNER AND CLIPS, ADJUST HIS X UNTIL HE IS SAFELY OUTSIDE OF THE COLLISION WALL OF TILES
     if (x_Adjust) {
         if ((PLAYER.SpdX < MAX_WALK_SPEED) && (PLAYER.SpdX > -MAX_WALK_SPEED)) {
-            if ((STAGE_DROP_COLLISION[tileindexL] != 0x02) && (STAGE_DROP_COLLISION[tileindexR] == 0x02)) {
+            if ((COLLISION_DATA[tileindexL] != 0x02) && (COLLISION_DATA[tileindexR] == 0x02)) {
                 PLAYER.SpdX = -MAX_CRAWL_SPEED;
-            } else if ((STAGE_DROP_COLLISION[tileindexL] == 0x02) && (STAGE_DROP_COLLISION[tileindexR] != 0x02)) {
+            } else if ((COLLISION_DATA[tileindexL] == 0x02) && (COLLISION_DATA[tileindexR] != 0x02)) {
                 PLAYER.SpdX = MAX_CRAWL_SPEED;
             }
         }
-        if ((STAGE_DROP_COLLISION[tileindexL] != 0x02) && (STAGE_DROP_COLLISION[tileindexR] != 0x02)) {
+        if ((COLLISION_DATA[tileindexL] != 0x02) && (COLLISION_DATA[tileindexR] != 0x02)) {
             if (PLAYER.SpdX != MAX_WALK_SPEED && PLAYER.SpdX != -MAX_WALK_SPEED && (!(joy & J_LEFT)) && (!(joy & J_RIGHT))) {
                 PLAYER.SpdX = 0;
             }
@@ -288,7 +288,7 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
 
     if (PLAYER.SpdY > 0) {
-        if ((STAGE_DROP_COLLISION[tileindexL] == 0x01) || (STAGE_DROP_COLLISION[tileindexC] == 0x01) || (STAGE_DROP_COLLISION[tileindexR] == 0x01) || (STAGE_DROP_COLLISION[tileindexL] == 0x03) || (STAGE_DROP_COLLISION[tileindexC] == 0x03) || (STAGE_DROP_COLLISION[tileindexR] == 0x03) || (STAGE_DROP_COLLISION[tileindex10B] == 0x06) && (!SPAWN) && (!LADDER) && (STAGE_DROP_COLLISION[tileindexCL] != 0x05) || (STAGE_DROP_COLLISION[tileindexCB] == 0x06) && (!SPAWN) && (!LADDER) && (STAGE_DROP_COLLISION[tileindexCL] != 0x05) || (STAGE_DROP_COLLISION[tileindex6B] == 0x06) && (!SPAWN) && (!LADDER) && (STAGE_DROP_COLLISION[tileindexCL] != 0x05)) {
+        if ((COLLISION_DATA[tileindexL] == 0x01) || (COLLISION_DATA[tileindexC] == 0x01) || (COLLISION_DATA[tileindexR] == 0x01) || (COLLISION_DATA[tileindexL] == 0x03) || (COLLISION_DATA[tileindexC] == 0x03) || (COLLISION_DATA[tileindexR] == 0x03) || (COLLISION_DATA[tileindex10B] == 0x06) && (!SPAWN) && (!LADDER) && (COLLISION_DATA[tileindexCL] != 0x05) || (COLLISION_DATA[tileindexCB] == 0x06) && (!SPAWN) && (!LADDER) && (COLLISION_DATA[tileindexCL] != 0x05) || (COLLISION_DATA[tileindex6B] == 0x06) && (!SPAWN) && (!LADDER) && (COLLISION_DATA[tileindexCL] != 0x05)) {
             if (!DROP) {
                 UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
                 PLAYER.y = TO_COORDS(ty * 8);
@@ -296,18 +296,18 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 SPAWN = JUMP = y_Collide = Gravity = FALSE;
                 switch_land();
             }
-        } else if ((STAGE_DROP_COLLISION[tileindexkL] == 0x04) || (STAGE_DROP_COLLISION[tileindexkC] == 0x04) || (STAGE_DROP_COLLISION[tileindexkR] == 0x04)) {
+        } else if ((COLLISION_DATA[tileindexkL] == 0x04) || (COLLISION_DATA[tileindexkC] == 0x04) || (COLLISION_DATA[tileindexkR] == 0x04)) {
             GAMEOVER = TRUE;
         }
     } else if (PLAYER.SpdY < 0) {
-        if ((STAGE_DROP_COLLISION[tileindexkL] == 0x01) || (STAGE_DROP_COLLISION[tileindexkC] == 0x01) || (STAGE_DROP_COLLISION[tileindexkR] == 0x01) || (y_Collide)) {
+        if ((COLLISION_DATA[tileindexkL] == 0x01) || (COLLISION_DATA[tileindexkC] == 0x01) || (COLLISION_DATA[tileindexkR] == 0x01) || (y_Collide)) {
             PLAYER.SpdY = 0;
             Gravity = TRUE;
-        } else if ((STAGE_DROP_COLLISION[tileindexL] == 0x04) || (STAGE_DROP_COLLISION[tileindexC] == 0x04) || (STAGE_DROP_COLLISION[tileindexR] == 0x04)) {
+        } else if ((COLLISION_DATA[tileindexL] == 0x04) || (COLLISION_DATA[tileindexC] == 0x04) || (COLLISION_DATA[tileindexR] == 0x04)) {
             GAMEOVER = TRUE;
         }
     } else if (PLAYER.SpdY == 0) {
-        if ((STAGE_DROP_COLLISION[tileindexL] == 0x00) || (STAGE_DROP_COLLISION[tileindexC] == 0x00) || (STAGE_DROP_COLLISION[tileindexR] == 0x00) || (y_Collide)) {
+        if ((COLLISION_DATA[tileindexL] == 0x00) || (COLLISION_DATA[tileindexC] == 0x00) || (COLLISION_DATA[tileindexR] == 0x00) || (y_Collide)) {
             Gravity = TRUE;
         }
     }

@@ -663,7 +663,7 @@ void enter_lvl1() {
         py = TO_PIXELS(PLAYER.y);
 
         // Y-AXIS COLLISION CHECK / /LADDER CHECK
-        check_UD(px, py, TO_PIXELS(bkg.camera_x));
+        check_UD(px, py, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION);
 
         if ((CROUCH) && (!canCROUCH)) {
             if (!(joy & J_DOWN)) {
