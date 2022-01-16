@@ -498,6 +498,9 @@ void init_submap() {
 
     bkg.camera_style = horizontal_cam;
 
+    bkg.collision_width = STAGE_DROP_COLLISIONWidth;
+    bkg.collision_data = STAGE_DROP_COLLISION;
+
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;
 

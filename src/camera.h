@@ -68,4 +68,7 @@ typedef struct Variables {
     slide_dir slide_dir;
     UINT8 level_map_bank;
 
+    UINT8 collision_width;
+    const UINT8 *collision_data;
+
 } Variables;
