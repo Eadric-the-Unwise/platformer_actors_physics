@@ -682,10 +682,10 @@ void enter_lvl1() {
             py = TO_PIXELS(PLAYER.y);
 
             if (PLAYER.SpdX > 0) {
-                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING RIGHT
+                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION, STAGE_DROP_COLLISIONBank);  // IF MOVING RIGHT
 
             } else if (PLAYER.SpdX < 0) {
-                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
+                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION, STAGE_DROP_COLLISIONBank);  // IF MOVING LEFT
             }
         }
 

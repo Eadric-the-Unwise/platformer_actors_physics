@@ -9,12 +9,14 @@ extern UINT8 joy, last_joy;
 extern BYTE ATTACH, x_Collide, y_Collide;
 BYTE LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
 
-//ADD STAGE_DROP_MAP AS A VARIABLE IN THE FUNC CALL
+// ADD STAGE_DROP_MAP AS A VARIABLE IN THE FUNC CALL
 
 // THESE COLLISIONS ARE SET ON SINGLE PIXELS, MEANING FINDING THE CENTER IS A CHALLENGE (AS OPPOSED TO NPC COLLISIONS WHICH ARE PERFECTLY CENTRED)
-void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, const UINT8 *COLLISION_DATA, UINT8 bank)
+    NONBANKED {
     UINT16 indexDy, indexCy, indexTy, index_x, index_kx, indexCamx, tileindexD, tileindexC, tileindexT, tileindexkD, tileindexkC, tileindexkT;
-    ;
+    UINT8 __save = _current_bank;
+    SWITCH_ROM_MBC1(bank);
     if (joy & J_LEFT) {
         LR_Offset_X = 16;
         LR_Offset_kX = 14;
@@ -32,23 +34,23 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     index_kx = ((newplayerx - LR_Offset_kX) + indexCamx) / 8;  // SPIKE KILL CHECK
 
     // REGULAR COLLISION INDEX
-    tileindexT = STAGE_DROP_COLLISIONWidth * indexTy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexC = STAGE_DROP_COLLISIONWidth * indexCy + index_x;
-    tileindexD = STAGE_DROP_COLLISIONWidth * indexDy + index_x;
+    tileindexT = map_w * indexTy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexC = map_w * indexCy + index_x;
+    tileindexD = map_w * indexDy + index_x;
 
     // KILL COLLISION INDEX
-    tileindexkT = STAGE_DROP_COLLISIONWidth * indexTy + index_kx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexkC = STAGE_DROP_COLLISIONWidth * indexCy + index_kx;
-    tileindexkD = STAGE_DROP_COLLISIONWidth * indexDy + index_kx;
+    tileindexkT = map_w * indexTy + index_kx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexkC = map_w * indexCy + index_kx;
+    tileindexkD = map_w * indexDy + index_kx;
 
     if (CROUCH) {
-        if ((STAGE_DROP_COLLISION[tileindexD] == 0x01) || (STAGE_DROP_COLLISION[tileindexC] == 0x01) || (STAGE_DROP_COLLISION[tileindexD] == 0x02) || (STAGE_DROP_COLLISION[tileindexC] == 0x02)) {
+        if ((COLLISION_DATA[tileindexD] == 0x01) || (COLLISION_DATA[tileindexC] == 0x01) || (COLLISION_DATA[tileindexD] == 0x02) || (COLLISION_DATA[tileindexC] == 0x02)) {
             if (!JUMP) {
                 PLAYER.SpdX = 0;
                 switch_crawl();
             }
         }
-        if ((STAGE_DROP_COLLISION[tileindexD] == 0x00) && (STAGE_DROP_COLLISION[tileindexC] == 0x00) && (STAGE_DROP_COLLISION[tileindexT] == 0x01)) {
+        if ((COLLISION_DATA[tileindexD] == 0x00) && (COLLISION_DATA[tileindexC] == 0x00) && (COLLISION_DATA[tileindexT] == 0x01)) {
             if (canCROUCH_timer == 1) {
                 canCROUCH = TRUE;
                 CROUCH = TRUE;
@@ -57,7 +59,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             canCROUCH_timer -= 1;
         }
     } else if (!CROUCH) {
-        if ((STAGE_DROP_COLLISION[tileindexD] == 0x01) || (STAGE_DROP_COLLISION[tileindexC] == 0x01) || (STAGE_DROP_COLLISION[tileindexT] == 0x01) || (STAGE_DROP_COLLISION[tileindexD] == 0x02) || (STAGE_DROP_COLLISION[tileindexC] == 0x02) || (STAGE_DROP_COLLISION[tileindexT] == 0x02) || (x_Collide)) {
+        if ((COLLISION_DATA[tileindexD] == 0x01) || (COLLISION_DATA[tileindexC] == 0x01) || (COLLISION_DATA[tileindexT] == 0x01) || (COLLISION_DATA[tileindexD] == 0x02) || (COLLISION_DATA[tileindexC] == 0x02) || (COLLISION_DATA[tileindexT] == 0x02) || (x_Collide)) {
             if (!x_Adjust) {
                 PLAYER.SpdX = 0;
                 if (!JUMP) {
@@ -66,7 +68,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
         }
         if (!JUMP) {
-            if ((STAGE_DROP_COLLISION[tileindexD] == 0x00) && (STAGE_DROP_COLLISION[tileindexC] == 0x00) && (STAGE_DROP_COLLISION[tileindexT] == 0x01)) {
+            if ((COLLISION_DATA[tileindexD] == 0x00) && (COLLISION_DATA[tileindexC] == 0x00) && (COLLISION_DATA[tileindexT] == 0x01)) {
                 if (canCROUCH_timer == 1) {
                     canCROUCH = TRUE;
                     CROUCH = TRUE;
@@ -76,12 +78,13 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
             }
         }
     }
-    if ((STAGE_DROP_COLLISION[tileindexkD] == 0x04) || (STAGE_DROP_COLLISION[tileindexkC] == 0x04) || (STAGE_DROP_COLLISION[tileindexkT] == 0x04)) {
+    if ((COLLISION_DATA[tileindexkD] == 0x04) || (COLLISION_DATA[tileindexkC] == 0x04) || (COLLISION_DATA[tileindexkT] == 0x04)) {
         GAMEOVER = TRUE;
     }
-    if ((STAGE_DROP_COLLISION[tileindexC] == 0x08)) {
+    if ((COLLISION_DATA[tileindexC] == 0x08)) {
         WINNER = TRUE;
     }
+    SWITCH_ROM_MBC1(__save);
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
@@ -366,11 +369,10 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 //     tileindexC = WORLD1_COLLISIONWidth * indexCy + index_x;
 //     tileindexD = WORLD1_COLLISIONWidth * indexDy + index_x;
 
-
 //     if ((WORLD1_COLLISION[tileindexT] == 0x01) || (WORLD1_COLLISION[tileindexC] == 0x01) || (WORLD1_COLLISION[tileindexD] == 0x01)) {
 //             PLAYER.SpdX = 0;
 //     }
- 
+
 //     if ((WORLD1_COLLISION[tileindexC] == 0x08)) {
 //         WINNER = TRUE;
 //     }
