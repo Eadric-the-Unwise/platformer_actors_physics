@@ -69,6 +69,6 @@ typedef struct Variables {
     UINT8 level_map_bank;
 
     UINT8 collision_width;
-    const UINT8 *collision_data;
+    // const UINT8 *collision_data;
 
 } Variables;

@@ -19,6 +19,7 @@ extern UINT8 current_elevator;
 extern UINT8 render_actors_count;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 extern UINT8 bullet_timer;
 extern UINT8 *cam_ptr;
+// extern unsigned char *COLLISION_DATA;
 
 const level_t level1 = {
     .bank = LEVEL1_BANK,
@@ -498,9 +499,10 @@ void init_submap() {
 
     bkg.camera_style = horizontal_cam;
 
-    bkg.collision_width = STAGE_DROP_COLLISIONWidth;
-    bkg.collision_data = STAGE_DROP_COLLISION;
-
+    // bkg.collision_width = STAGE_DROP_COLLISIONWidth;
+    COLLISION_WIDTH = STAGE_DROP_COLLISIONWidth;
+    // bkg.collision_data = STAGE_DROP_COLLISION;
+    COLLISION_DATA = STAGE_DROP_COLLISION;
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;
 
