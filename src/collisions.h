@@ -6,7 +6,7 @@ extern BYTE SPAWN, JUMP, Gravity, CROUCH, canCROUCH, DROP, x_Adjust;
 extern BYTE L_LEFT, L_RIGHT;
 extern BYTE canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
 extern BYTE LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
-extern unsigned char *COLLISION_DATA;
+extern const UINT8 *COLLISION_DATA;
 extern unsigned char COLLISION_WIDTH;
 
 // Release_timer

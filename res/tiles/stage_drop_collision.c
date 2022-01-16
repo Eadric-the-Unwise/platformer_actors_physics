@@ -1,4 +1,5 @@
 #pragma bank 3
+
 /*
 
  STAGE_DROP_COLLISION.C
@@ -19,11 +20,11 @@
 
 */
 
-#define STAGE_DROP_COLLISIONWidth 100
-#define STAGE_DROP_COLLISIONHeight 23
-#define STAGE_DROP_COLLISIONBank 6
+// #define STAGE_DROP_COLLISIONWidth 100
+// #define STAGE_DROP_COLLISIONHeight 23
+// #define STAGE_DROP_COLLISIONBank 66
 
-unsigned char STAGE_DROP_COLLISION[] =
+const unsigned char STAGE_DROP_COLLISION[] =
     {
         0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,
         0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,

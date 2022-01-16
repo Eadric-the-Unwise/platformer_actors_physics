@@ -20,8 +20,8 @@
 
 #define WORLD1_COLLISIONWidth 40
 #define WORLD1_COLLISIONHeight 36
-#define WORLD1_COLLISIONBank 101
+#define WORLD1_COLLISIONBank 50
 
-extern unsigned char WORLD1_COLLISION[];
+const extern unsigned char WORLD1_COLLISION[];
 
 /* End of WORLD1_COLLISION.H */

@@ -1,3 +1,4 @@
+#pragma once
 /*
 
  STAGE_DROP_COLLISION.H
@@ -22,6 +23,6 @@
 #define STAGE_DROP_COLLISIONHeight 23
 #define STAGE_DROP_COLLISIONBank 3
 
-extern unsigned char STAGE_DROP_COLLISION[];
+extern const unsigned char STAGE_DROP_COLLISION[];
 
 /* End of STAGE_DROP_COLLISION.H */

@@ -9,7 +9,7 @@ extern UINT8 joy, last_joy;
 extern BYTE ATTACH, x_Collide, y_Collide;
 extern Variables bkg;
 BYTE LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
-unsigned char *COLLISION_DATA;
+const UINT8 *COLLISION_DATA;
 unsigned char COLLISION_WIDTH;
 
 // ADD STAGE_DROP_MAP AS A VARIABLE IN THE FUNC CALL

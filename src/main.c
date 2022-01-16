@@ -2,6 +2,7 @@
 #include <gbdk/metasprites.h>
 #include <stdio.h>
 
+#include "../res/tiles/stage_drop_collision.h"
 #include "scene.h"
 
 UINT8 joy, last_joy;
