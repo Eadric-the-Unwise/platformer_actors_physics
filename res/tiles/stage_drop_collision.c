@@ -1,4 +1,4 @@
-#pragma bank 6
+#pragma bank 5
 /*
 
  STAGE_DROP_COLLISION.C

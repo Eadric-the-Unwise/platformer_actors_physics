@@ -523,7 +523,7 @@ void jump() {
         check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
     }
     // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
-    check_J(px, py - 25, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION, STAGE_DROP_COLLISIONBank);
+    check_J(px, py - 25, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION);
 }
 void enter_lvl1() {
     // load_level(&level1);
@@ -692,10 +692,10 @@ void enter_lvl1() {
             py = TO_PIXELS(PLAYER.y);
 
             if (PLAYER.SpdX > 0) {
-                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION, STAGE_DROP_COLLISIONBank);  // IF MOVING RIGHT
+                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION);  // IF MOVING RIGHT
 
             } else if (PLAYER.SpdX < 0) {
-                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION, STAGE_DROP_COLLISIONBank);  // IF MOVING LEFT
+                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION);  // IF MOVING LEFT
             }
         }
 

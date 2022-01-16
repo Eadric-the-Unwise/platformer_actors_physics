@@ -12,11 +12,11 @@ BYTE LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
 // ADD STAGE_DROP_MAP AS A VARIABLE IN THE FUNC CALL
 
 // THESE COLLISIONS ARE SET ON SINGLE PIXELS, MEANING FINDING THE CENTER IS A CHALLENGE (AS OPPOSED TO NPC COLLISIONS WHICH ARE PERFECTLY CENTRED)
-void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, const UINT8 *COLLISION_DATA, UINT8 bank)
+void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, const UINT8 *COLLISION_DATA)
     NONBANKED {
     UINT16 indexDy, indexCy, indexTy, index_x, index_kx, indexCamx, tileindexD, tileindexC, tileindexT, tileindexkD, tileindexkC, tileindexkT;
-    UINT8 __save = _current_bank;
-    SWITCH_ROM_MBC1(bank);
+    // UINT8 __save = _current_bank;
+    // SWITCH_ROM_MBC1(bank);
     if (joy & J_LEFT) {
         LR_Offset_X = 16;
         LR_Offset_kX = 14;
@@ -84,15 +84,15 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, c
     if ((COLLISION_DATA[tileindexC] == 0x08)) {
         WINNER = TRUE;
     }
-    SWITCH_ROM_MBC1(__save);
+    // SWITCH_ROM_MBC1(__save);
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
-void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, const UINT8 *COLLISION_DATA, UINT8 bank)
+void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, const UINT8 *COLLISION_DATA)
     NONBANKED {
     UINT16 indexLx, indexCx, indexRx, indexLLx, indexRLx, indexSLx, indexSCx, indexSRx, index_y, index_Ty, index_Ly, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLLT, tileindexRLT, tileindexLLC, tileindexRLC, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
     // CL = CROUCH Left CC = CROUCH Center CR = CROUCH Right
-    UINT8 __save = _current_bank;
-    SWITCH_ROM_MBC1(bank);
+    // UINT8 __save = _current_bank;
+    // SWITCH_ROM_MBC1(bank);
     indexCamx = camera_x;
 
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
@@ -222,7 +222,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, UINT8 map_w, co
             }
         }
     }
-    SWITCH_ROM_MBC1(__save);
+    // SWITCH_ROM_MBC1(__save);
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
