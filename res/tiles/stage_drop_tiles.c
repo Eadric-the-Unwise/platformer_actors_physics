@@ -1,4 +1,4 @@
-#pragma bank 6
+#pragma bank 2
 /*
 
  STAGE_DROP_TILES.C

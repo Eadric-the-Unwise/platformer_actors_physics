@@ -1,4 +1,4 @@
-#pragma bank 101
+#pragma bank 50
 #include "worldtest.h"
 
 #include <gb/gb.h>
@@ -459,9 +459,6 @@ void npc_collisions_worldtest() {
     }
 }
 
-
-
-
 void init_submap_worldtest() {
     HIDE_BKG;
     bkg.redraw = TRUE;
@@ -489,6 +486,9 @@ void init_submap_worldtest() {
 
     bkg.camera_style = horizontal_cam;
     bkg.slide_dir = NULL;
+
+    // COLLISION_WIDTH = WORLD1_COLLISIONWidth;
+    // COLLISION_DATA = WORLD1_COLLISION;
 
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;
@@ -685,7 +685,6 @@ void enter_worldtest() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
-  
         // check_world_collisions(px, py, TO_PIXELS(bkg.camera_x));
 
         if ((CROUCH) && (!canCROUCH)) {

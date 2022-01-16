@@ -20,7 +20,7 @@
 
 #define STAGE_DROP_MAPWidth 100
 #define STAGE_DROP_MAPHeight 18
-#define STAGE_DROP_MAPBank 6
+#define STAGE_DROP_MAPBank 2
 
 extern unsigned char STAGE_DROP_MAP[];
 

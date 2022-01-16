@@ -5,7 +5,7 @@
  Map Include File.
 
  Info:
-   Section       : 
+   Section       :
    Bank          : 0
    Map size      : 40 x 36
    Tile set      : stage_collision_tileset.gbr
@@ -20,7 +20,7 @@
 
 #define WORLD1_COLLISIONWidth 40
 #define WORLD1_COLLISIONHeight 36
-#define WORLD1_COLLISIONBank 180
+#define WORLD1_COLLISIONBank 101
 
 extern unsigned char WORLD1_COLLISION[];
 

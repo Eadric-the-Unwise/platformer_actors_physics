@@ -222,7 +222,7 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
-    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLB, tileindexCB, tileindexRB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
+    UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
 
     if (PLAYER.SpdY >= 0) {
@@ -353,34 +353,34 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
 }
 
-// void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x){
-//     UINT16 indexDy, indexCy, indexTy, index_x, indexCamx, tileindexD, tileindexC, tileindexT;
-//     if (joy & J_LEFT) {
-//         LR_Offset_X = -8;
-//     } else if (joy & J_RIGHT) {
-//         LR_Offset_X = 8;
-//     }
-//     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
-//     indexCamx = camera_x;
-//     indexTy = (newplayery - 16) / 8;  // TOP Y AXIS
-//     indexCy = (newplayery - 8) / 8;  // CENTER Y AXIS
-//     indexDy = (newplayery) / 8;   // BOTTOM Y AXIS
+void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+    UINT16 indexDy, indexCy, indexTy, index_x, indexCamx, tileindexD, tileindexC, tileindexT;
+    if (joy & J_LEFT) {
+        LR_Offset_X = -8;
+    } else if (joy & J_RIGHT) {
+        LR_Offset_X = 8;
+    }
+    // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
+    indexCamx = camera_x;
+    indexTy = (newplayery - 16) / 8;  // TOP Y AXIS
+    indexCy = (newplayery - 8) / 8;   // CENTER Y AXIS
+    indexDy = (newplayery) / 8;       // BOTTOM Y AXIS
 
-//     index_x = ((newplayerx + LR_Offset_X) + indexCamx) / 8;
+    index_x = ((newplayerx + LR_Offset_X) + indexCamx) / 8;
 
-//     // REGULAR COLLISION INDEX
-//     tileindexT = WORLD1_COLLISIONWidth * indexTy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-//     tileindexC = WORLD1_COLLISIONWidth * indexCy + index_x;
-//     tileindexD = WORLD1_COLLISIONWidth * indexDy + index_x;
+    // REGULAR COLLISION INDEX
+    tileindexT = COLLISION_WIDTH * indexTy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexC = COLLISION_WIDTH * indexCy + index_x;
+    tileindexD = COLLISION_WIDTH * indexDy + index_x;
 
-//     if ((WORLD1_COLLISION[tileindexT] == 0x01) || (WORLD1_COLLISION[tileindexC] == 0x01) || (WORLD1_COLLISION[tileindexD] == 0x01)) {
-//             PLAYER.SpdX = 0;
-//     }
+    if ((COLLISION_DATA[tileindexT] == 0x01) || (COLLISION_DATA[tileindexC] == 0x01) || (COLLISION_DATA[tileindexD] == 0x01)) {
+        PLAYER.SpdX = 0;
+    }
 
-//     if ((WORLD1_COLLISION[tileindexC] == 0x08)) {
-//         WINNER = TRUE;
-//     }
-// }
+    if ((COLLISION_DATA[tileindexC] == 0x08)) {
+        WINNER = TRUE;
+    }
+}
 
 // LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
 BYTE overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x) {  // BYTE IS SAME AS BOOLEAN (ONLY SHORTER NAME)

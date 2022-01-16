@@ -1,4 +1,4 @@
-#pragma bank 5
+#pragma bank 3
 #include "level1.h"
 
 #include <gb/gb.h>
@@ -500,8 +500,9 @@ void init_submap() {
     bkg.camera_style = horizontal_cam;
 
     // bkg.collision_width = STAGE_DROP_COLLISIONWidth;
-    COLLISION_WIDTH = STAGE_DROP_COLLISIONWidth;
+
     // bkg.collision_data = STAGE_DROP_COLLISION;
+    COLLISION_WIDTH = STAGE_DROP_COLLISIONWidth;
     COLLISION_DATA = STAGE_DROP_COLLISION;
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;

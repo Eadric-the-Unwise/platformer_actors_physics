@@ -20,7 +20,7 @@
 
 #define STAGE_DROP_COLLISIONWidth 100
 #define STAGE_DROP_COLLISIONHeight 23
-#define STAGE_DROP_COLLISIONBank 5
+#define STAGE_DROP_COLLISIONBank 3
 
 extern unsigned char STAGE_DROP_COLLISION[];
 
