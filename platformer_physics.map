@@ -28,11 +28,11 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000030  l__HEADER |    0000004F  l__HEADER |    00000082  l__HEADER
      00000200  s__CODE   |    00000318  l__DATA   |    00000DEE  l__INITIA
      00000DEE  l__INITIA |    00000E43  l__HOME   |    0000110A  l__CODE_2
-     000013DE  l__CODE_0 |    00001641  l__CODE   |    00001841  s__HOME  
-     00001CF0  l__CODE_5 |    00002000  _rROMB0   |    0000208C  l__CODE_3
+     000013E1  l__CODE_0 |    00001641  l__CODE   |    00001841  s__HOME  
+     00001D21  l__CODE_5 |    00002000  _rROMB0   |    0000208C  l__CODE_3
      00002684  s__BASE   |    00002684  s__CODE_0 |    00003000  _rROMB1  
-     00003A62  s__INITIA |    00003A62  s__LIT    |    00004000  _rRAMB   
-     00004850  s__GSINIT |    0000485C  s__GSFINA |    00008000  __VRAM   
+     00003A65  s__INITIA |    00003A65  s__LIT    |    00004000  _rRAMB   
+     00004853  s__GSINIT |    0000485F  s__GSFINA |    00008000  __VRAM   
      00008000  __VRAM800 |    00008800  __VRAM880 |    00009000  __VRAM900
      00009800  __SCRN0   |    00009C00  __SCRN1   |    0000A000  __SRAM   
      0000C000  __RAM     |    0000C000  _shadow_O |    0000C0A0  s__DATA  
@@ -291,19 +291,19 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_0                00002684    000013DE =        5086. bytes (REL,CON)
+_CODE_0                00002684    000013E1 =        5089. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      00002684  _check_LR |    00002A0A  _check_J  |    0000308B  _check_UD
      00003650  _check_Dr |    00003734  _check_C  |    00003809  _check_wo
-     00003996  _overlap 
+     00003999  _overlap 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 24.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           00003A62    00000DEE =        3566. bytes (REL,CON)
+_INITIALIZER           00003A65    00000DEE =        3566. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -312,17 +312,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                00004850    0000000C =          12. bytes (REL,CON)
+_GSINIT                00004853    0000000C =          12. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00004850  gsinit   
+     00004853  gsinit   
 ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               0000485C    00000001 =           1. bytes (REL,CON)
+_GSFINAL               0000485F    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -402,14 +402,14 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_50               00324000    00001CF0 =        7408. bytes (REL,CON)
+_CODE_50               00324000    00001D21 =        7457. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      00324000  _anim_wor |    0032476D  _worldtes |    00324779  _worldtes
      0032495E  _worldtes |    003249BF  _spawn_bu |    00324AEF  _npc_coll
-     00324E4B  _init_sub |    00324F7A  _setup_wo |    00324FC9  _enter_wo
-     00325750  _WORLD1_C
+     00324E4B  _init_sub |    00324F87  _setup_wo |    00324FD6  _enter_wo
+     00325781  _WORLD1_C
 ASxxxx Linker V03.00 + NoICE + sdld,  page 32.
 Hexadecimal  [32-Bits]
 
@@ -455,41 +455,41 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc84960.rel
+C:\Users\User\AppData\Local\Temp/lcc179680.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc84961.rel
+C:\Users\User\AppData\Local\Temp/lcc179681.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc84962.rel
+C:\Users\User\AppData\Local\Temp/lcc179682.rel
                                           [ ladder ]
-C:\Users\User\AppData\Local\Temp/lcc84963.rel
+C:\Users\User\AppData\Local\Temp/lcc179683.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc84964.rel
+C:\Users\User\AppData\Local\Temp/lcc179684.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc84965.rel
+C:\Users\User\AppData\Local\Temp/lcc179685.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc84966.rel
+C:\Users\User\AppData\Local\Temp/lcc179686.rel
                                           [ worldtest ]
-C:\Users\User\AppData\Local\Temp/lcc84967.rel
+C:\Users\User\AppData\Local\Temp/lcc179687.rel
                                           [ bullet ]
-C:\Users\User\AppData\Local\Temp/lcc84968.rel
+C:\Users\User\AppData\Local\Temp/lcc179688.rel
                                           [ detective_16 ]
-C:\Users\User\AppData\Local\Temp/lcc84969.rel
+C:\Users\User\AppData\Local\Temp/lcc179689.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc849610.rel
+C:\Users\User\AppData\Local\Temp/lcc1796810.rel
                                           [ elevator ]
-C:\Users\User\AppData\Local\Temp/lcc849611.rel
+C:\Users\User\AppData\Local\Temp/lcc1796811.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc849612.rel
+C:\Users\User\AppData\Local\Temp/lcc1796812.rel
                                           [ stage_drop_collision ]
-C:\Users\User\AppData\Local\Temp/lcc849613.rel
+C:\Users\User\AppData\Local\Temp/lcc1796813.rel
                                           [ stage_drop_map ]
-C:\Users\User\AppData\Local\Temp/lcc849614.rel
+C:\Users\User\AppData\Local\Temp/lcc1796814.rel
                                           [ stage_drop_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc849615.rel
+C:\Users\User\AppData\Local\Temp/lcc1796815.rel
                                           [ world1_collision ]
-C:\Users\User\AppData\Local\Temp/lcc849616.rel
+C:\Users\User\AppData\Local\Temp/lcc1796816.rel
                                           [ world1_map ]
-C:\Users\User\AppData\Local\Temp/lcc849617.rel
+C:\Users\User\AppData\Local\Temp/lcc1796817.rel
                                           [ world1_tiles ]
 
 

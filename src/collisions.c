@@ -356,9 +356,9 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT16 indexDy, indexCy, indexTy, index_x, indexCamx, tileindexD, tileindexC, tileindexT;
     if (joy & J_LEFT) {
-        LR_Offset_X = -8;
+        LR_Offset_X = 12;
     } else if (joy & J_RIGHT) {
-        LR_Offset_X = 8;
+        LR_Offset_X = 4;
     }
     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
     indexCamx = camera_x;
@@ -366,7 +366,7 @@ void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) 
     indexCy = (newplayery - 8) / 8;   // CENTER Y AXIS
     indexDy = (newplayery) / 8;       // BOTTOM Y AXIS
 
-    index_x = ((newplayerx + LR_Offset_X) + indexCamx) / 8;
+    index_x = ((newplayerx - LR_Offset_X) + indexCamx) / 8;
 
     // REGULAR COLLISION INDEX
     tileindexT = COLLISION_WIDTH * indexTy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
