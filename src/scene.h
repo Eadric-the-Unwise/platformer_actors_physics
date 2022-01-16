@@ -166,7 +166,7 @@ void switch_onto_ladder();
 void switch_off_ladder();
 void switch_ladder();
 void LEFT_RIGHT();
-void jump();
+// void jump();
 void land();
 void setGameBank(UBYTE i);
 void gameover();

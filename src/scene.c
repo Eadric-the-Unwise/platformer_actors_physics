@@ -297,16 +297,16 @@ void LEFT_RIGHT() {
     }
 }
 
-void jump() {
-    UINT8 px, py;
-    px = TO_PIXELS(PLAYER.x);
-    py = TO_PIXELS(PLAYER.y);
-    if (CROUCH) {
-        check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
-    }
-    // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
-    check_J(px, py - 25, TO_PIXELS(bkg.camera_x));
-}
+// void jump() {
+//     UINT8 px, py;
+//     px = TO_PIXELS(PLAYER.x);
+//     py = TO_PIXELS(PLAYER.y);
+//     if (CROUCH) {
+//         check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
+//     }
+//     // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
+//     check_J(px, py - 25, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION, STAGE_DROP_COLLISIONBank);
+// }
 void land() {
     UINT8 ty = (TO_PIXELS(PLAYER.y) / 8);
     PLAYER.y = TO_COORDS(ty * 8);

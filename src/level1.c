@@ -515,6 +515,16 @@ void setup_lvl1() {
     current_stage = &level1;
 }
 
+void jump() {
+    UINT8 px, py;
+    px = TO_PIXELS(PLAYER.x);
+    py = TO_PIXELS(PLAYER.y);
+    if (CROUCH) {
+        check_Drop(px, py + 1, TO_PIXELS(bkg.camera_x));
+    }
+    // CHECK WHETHER CAN JUMP (NO COLLISION ABOVE PLAYER)
+    check_J(px, py - 25, TO_PIXELS(bkg.camera_x), STAGE_DROP_COLLISIONWidth, STAGE_DROP_COLLISION, STAGE_DROP_COLLISIONBank);
+}
 void enter_lvl1() {
     // load_level(&level1);
     // if (load_submap) load_submap();
