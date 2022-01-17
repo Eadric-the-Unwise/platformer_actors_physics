@@ -23,24 +23,24 @@ const level_t worldtest = {
     .bank = worldtest_BANK,
     .submap_hook = init_submap_worldtest,  // call this in collision
     .actors = worldtest_actors,
-    .bullets = worldtest_bullets,
+    .bullets = NULL,
     .actor_count = 5,
     .animate_hook = anim_worldtest,  // function that put life into the scene
-    .collide_hook = NULL};
+    .collide_hook = npc_collisions_worldtest};
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
 //.w and .h are adjusted for COLLISION functions
 const actor_t worldtest_actors[5] = {
     // 0 PLAYER
-    {.x = TO_COORDS(144),
-     .y = TO_COORDS(140),
+    {.x = TO_COORDS(88),
+     .y = TO_COORDS(88),
      .SpdX = 0,
      .SpdY = 0,
      .w = detective_16_WIDTH,
      .h = detective_16_HEIGHT,
-     .h_offset = 7,
-     .x_offset = 6,
-     .y_offset = 16,
+     .h_offset = 2,
+     .x_offset = 2,
+     .y_offset = 8,
      .direction = DIR_LEFT,
      .facing = LEFT,
      .patrol_timer = 12,
@@ -194,13 +194,14 @@ void anim_worldtest() {
     UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
     UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
-    if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
+    if (camera_x >= 160) {  // CAM1
         cam_ptr = worldtest_cam1_render;
         active_actors_count = worldtest_CAM1_COUNT;
         next_actors_count = worldtest_CAM2_COUNT;
         ptr = worldtest_cam1;
         nptr = worldtest_cam2;
-    } else if ((camera_x >= 320) && (camera_x < 480)) {  // CAM2
+
+    } else if ((camera_x >= 0) && (camera_x < 160)) {  // CAM2
 
         cam_ptr = worldtest_cam2_render;
         prev_actors_count = worldtest_CAM1_COUNT;
@@ -209,23 +210,24 @@ void anim_worldtest() {
         pptr = worldtest_cam1;
         ptr = worldtest_cam2;
         nptr = worldtest_cam3;
-    } else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-
-        cam_ptr = worldtest_cam3_render;
-        prev_actors_count = worldtest_CAM2_COUNT;
-        active_actors_count = worldtest_CAM3_COUNT;
-        next_actors_count = worldtest_CAM4_COUNT;
-        pptr = worldtest_cam2;
-        ptr = worldtest_cam3;
-        nptr = worldtest_cam4;
-    } else if (camera_x < 160) {  // CAM4
-        cam_ptr = worldtest_cam4_render;
-
-        prev_actors_count = worldtest_CAM3_COUNT;
-        active_actors_count = worldtest_CAM4_COUNT;
-        pptr = worldtest_cam3;
-        ptr = worldtest_cam4;
     }
+    //  else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
+
+    //     cam_ptr = worldtest_cam3_render;
+    //     prev_actors_count = worldtest_CAM2_COUNT;
+    //     active_actors_count = worldtest_CAM3_COUNT;
+    //     next_actors_count = worldtest_CAM4_COUNT;
+    //     pptr = worldtest_cam2;
+    //     ptr = worldtest_cam3;
+    //     nptr = worldtest_cam4;
+    // } else if (camera_x < 160) {  // CAM4
+    //     cam_ptr = worldtest_cam4_render;
+
+    //     prev_actors_count = worldtest_CAM3_COUNT;
+    //     active_actors_count = worldtest_CAM4_COUNT;
+    //     pptr = worldtest_cam3;
+    //     ptr = worldtest_cam4;
+    // }
     render_actors_count = active_actors_count + 1;
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     actor_t *prev_actor = &active_actors[*pptr];
@@ -381,19 +383,10 @@ void spawn_bullets_worldtest() {
 void npc_collisions_worldtest() {
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
-    if (CROUCH) {  // CROUCH HITBOX
-        PLAYER.h_offset = -2;
-        PLAYER.x_offset = 8;
-        PLAYER.y_offset = 16;
-    } else if (PLAYER.SpdY != 0) {  // JUMP AND FALLING HITBOX
-        PLAYER.h_offset = 11;
-        PLAYER.x_offset = 6;
-        PLAYER.y_offset = 6;
-    } else if ((!CROUCH) && (!JUMP)) {  // STAND AND WALKING HITBOX
-        PLAYER.h_offset = 7;
-        PLAYER.x_offset = 6;
-        PLAYER.y_offset = 16;
-    }
+    // PLAYER.h_offset = 8;
+    // PLAYER.x_offset = 8;
+    // PLAYER.y_offset = 8;
+
     for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++) {
         //[y][x]
         UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
@@ -574,16 +567,16 @@ void enter_worldtest() {
                         PLAYER.SpdY = MAX_WALK_SPEED;
                 }
 
-                if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder)) {
-                    CROUCH = TRUE;
-                }
+                // if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder)) {
+                //     CROUCH = TRUE;
+                // }
 
-                if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder) && (!OFF_LADDER)) {
-                    jump();
-                }
-                if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
-                    spawn_bullets_worldtest();
-                }
+                // if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
+                //     //INSERT NPC DIALOGUE CHECK / ITEM ENGAGEMENT
+                // }
+                // if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
+                //     spawn_bullets_worldtest();
+                // }
             }
         }
         if (bkg.slider) {
@@ -632,66 +625,15 @@ void enter_worldtest() {
             }
         }
 
-        // IF PLAYER IS FREE FALLING FOR ANY REASON
-        // if (PLAYER.SpdY != 0) {
-        //     JUMP = Gravity = TRUE;
-        //     CROUCH = FALSE;
-        //     if (!LADDER) {
-        //         switch_jump();
-        //     }
-        // }
-        if (DROP) {
-            DROP_timer -= 1;
-            if (DROP_timer == 0) {
-                DROP = FALSE;
-                DROP_timer = 16;
-            }
-        }
-        if ((CROUCH) && (canCROUCH)) {
-            if ((PLAYER.direction == DIR_CRAWL_L) || (PLAYER.direction == DIR_DOWN_L)) {
-                PLAYER.SpdX = -MAX_CRAWL_SPEED;
-            } else if ((PLAYER.direction == DIR_CRAWL_R) || (PLAYER.direction == DIR_DOWN_R)) {
-                PLAYER.SpdX = MAX_CRAWL_SPEED;
-            }
-            canCROUCH_Ftimer -= 1;
-            if (canCROUCH_Ftimer == 1) {
-                canCROUCH = FALSE;
-                canCROUCH_Ftimer = 8;
-            }
-        }
-        if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
-            canCROUCH_timer = 10;
-            // Release_timer = 20;
-        }
-
         // ---------------------------------------------
         // WORLD PHYSICS:
-        // GRAVITY
+        // FRICTION
 
-        // if (Gravity) {
-        //     if (LADDER) {
-        //         if (PLAYER.SpdY < 0) {
-        //             PLAYER.SpdY += GRAVITY;
-        //         } else if (PLAYER.SpdY > 0) {
-        //             PLAYER.SpdY -= GRAVITY;
-        //         }
-        //     } else {
-        //         PLAYER.SpdY += GRAVITY;
-        //         if (PLAYER.SpdY > MAX_FALL_SPEED) {
-        //             PLAYER.SpdY = MAX_FALL_SPEED;
-        //         }
-        //     }
-        // }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
         check_world_collisions(px, py, TO_PIXELS(bkg.camera_x));
 
-        if ((CROUCH) && (!canCROUCH)) {
-            if (!(joy & J_DOWN)) {
-                check_C(px, py, TO_PIXELS(bkg.camera_x));
-            }
-        }
         if (PLAYER.SpdY < 0) {
             if (PLAYER.SpdY != -MAX_WALK_SPEED) {
                 PLAYER.SpdY += FRICTION;
@@ -722,19 +664,6 @@ void enter_worldtest() {
             }
         }
 
-        // if (PLAYER.SpdX != 0) {
-        //     UINT8 px, py;
-        //     px = TO_PIXELS(PLAYER.x);
-        //     py = TO_PIXELS(PLAYER.y);
-
-        //     if (PLAYER.SpdX > 0) {
-        //         check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING RIGHT
-
-        //     } else if (PLAYER.SpdX < 0) {
-        //         check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
-        //     }
-        // }
-
         // update PLAYER absolute posiiton
         if (!ATTACH) {
             PLAYER.y += PLAYER.SpdY;
@@ -751,16 +680,18 @@ void enter_worldtest() {
         }
         // }
         // DOWN while standing still
-        if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
-            switch_down();
-        }
+        // if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
+        //     switch_down();
+        // }
 
         // UPDATE THE CAMERA POSITION SETTINGS
         // render_camera(px, TO_PIXELS(bkg.camera_x));
+
         // UPDATE CURRENT LEVEL NPC ANIMATIONS AND X/Y POSITIONS
+        // npc_collisions_worldtest();
         if (animate_level) animate_level();  // call level animation hook (if any)
         // // CHECK FOR NPC COLLISIONS
-        // if (collide_level) collide_level();
+        if (collide_level) collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_actors_platform();
         // bkg.camera_x -= TO_COORDS(1);
