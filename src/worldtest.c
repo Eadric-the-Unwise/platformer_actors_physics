@@ -495,7 +495,7 @@ void setup_worldtest() {
     GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
     load_level(&worldtest);
-    render_actors_platform();
+    render_platform_actors();
     DISPLAY_ON;
     current_stage = &worldtest;
 }
@@ -693,7 +693,7 @@ void enter_worldtest() {
         // // CHECK FOR NPC COLLISIONS
         if (collide_level) collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
-        render_actors_platform();
+        render_platform_actors();
         // bkg.camera_x -= TO_COORDS(1);
         // bkg.redraw = TRUE;
 

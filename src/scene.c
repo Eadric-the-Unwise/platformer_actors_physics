@@ -115,7 +115,7 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater)
 
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
 uint8_t animation_timer = 6;
-void render_actors_platform()
+void render_platform_actors()
     NONBANKED {
     UINT8 __save = _current_bank;
 
@@ -212,6 +212,84 @@ void render_actors_platform()
     // hide rest of the hardware sprites
     for (UINT8 i = OAM_hiwater; i < 40u; i++) shadow_OAM[i].y = 0;
 }
+    void render_world_actors()
+    NONBANKED {
+    UINT8 __save = _current_bank;
+
+    actor_t *current_actor = &active_actors[*cam_ptr];
+    actor_t *current_bullet = active_bullets;
+    // current_actor
+
+    last_dir = dir;
+    dir = PLAYER.direction;
+    if (dir != last_dir || animation_timer == 0) {
+        animation_timer = 6;
+    }
+    animation_timer -= 1;
+
+    // draw each metasprite
+    direction_e current_direction;
+    UINT8 OAM_hiwater = 0;  // OAM Sprite hiwater
+
+    for (UINT8 i = render_actors_count; i != ACTOR_DETECTIVE; i--) {
+        UINT16 camera_x = TO_PIXELS(bkg.camera_x);
+        INT16 actor_x = TO_PIXELS(current_actor->x);
+        current_direction = current_actor->direction;
+        const metasprite_t **current_animation = current_actor->animations[current_direction];
+        if (current_animation != NULL) {
+            if (current_actor->RENDER == TRUE) {
+                if (current_animation[current_actor->animation_phase] != NULL) {
+                    if (current_actor->KILL != TRUE) {
+                        current_actor->ON = TRUE;
+                        SWITCH_ROM_MBC1(current_actor->bank);
+                        if ((current_direction == DIR_RIGHT) || (current_direction == DIR_UP_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R) || (current_direction == DIR_OFFLADDER_R)) {
+                            OAM_hiwater += move_metasprite_vflip(
+                                current_animation[current_actor->animation_phase],
+                                current_actor->tile_index,
+                                OAM_hiwater,
+                                TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                            if (!LADDER) {
+                                current_actor->facing = RIGHT;
+                            }
+                        } else {
+                            OAM_hiwater += move_metasprite(
+                                current_animation[current_actor->animation_phase],
+                                current_actor->tile_index,
+                                OAM_hiwater,
+                                TO_PIXELS(current_actor->x), TO_PIXELS(current_actor->y));
+                            if (!LADDER) {
+                                current_actor->facing = LEFT;
+                            }
+                        }
+                    } else {
+                        current_actor->ON = FALSE;
+                        hide_metasprite(
+                            current_animation[current_actor->animation_phase],
+                            OAM_hiwater);
+                    }
+                }
+                // process actor animation
+                if ((animation_timer == 1) && !(ANIMATIONLOCK)) {
+                    current_actor->animation_phase++;
+                    // check for the last animation frame
+                    if (current_animation[current_actor->animation_phase] == NULL) {
+                        // check for loop of animation
+                        if (current_actor->animations_props[current_actor->direction] == ANIM_LOOP) {
+                            current_actor->animation_phase = 0;  // loop animation back from frame[0]
+                        } else {
+                            current_actor->animation_phase--;  // stick to last animation frame
+                        }
+                    }
+                }
+            } else {
+                current_actor->ON = FALSE;
+            }
+        }
+        // current_actor++;
+        cam_ptr++;
+        current_actor = &active_actors[*cam_ptr];
+    }
+    }
 void switch_down() {
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L) {
         SetActorDirection(&PLAYER, DIR_DOWN_L, 0);
@@ -325,7 +403,7 @@ void gameover() {
     JUMP = LADDER_Release = TRUE;
     load_level(current_stage);
     if (load_submap) load_submap();
-    render_actors_platform();
+    render_platform_actors();
     GAMEOVER = FALSE;
     DISPLAY_ON;
 }

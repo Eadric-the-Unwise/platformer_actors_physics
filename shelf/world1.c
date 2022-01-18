@@ -470,7 +470,7 @@ void setup_world1() {
     GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
     load_level(&world1);
-    // render_actors_platform();
+    // render_platform_actors();
     DISPLAY_ON;
     current_stage = &world1;
 }
@@ -684,7 +684,7 @@ void enter_world1() {
         // CHECK FOR NPC COLLISIONS
         if (collide_level) collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
-        render_actors_platform();
+        render_platform_actors();
 
         if (bkg.redraw) {
             set_world_camera();

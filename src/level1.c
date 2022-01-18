@@ -516,7 +516,7 @@ void setup_lvl1() {
     GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
     load_level(&level1);
-    render_actors_platform();
+    render_platform_actors();
     DISPLAY_ON;
     current_stage = &level1;
 }
@@ -722,7 +722,7 @@ void enter_lvl1() {
         // CHECK FOR NPC COLLISIONS
         if (collide_level) collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
-        render_actors_platform();
+        render_platform_actors();
 
         if (bkg.redraw) {
             set_camera();
