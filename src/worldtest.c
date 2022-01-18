@@ -190,9 +190,9 @@ void anim_worldtest() {
     INT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 player_x = TO_PIXELS(PLAYER.x);
     // UINT16 playerx = TO_PIXELS(PLAYER.x);
-    UINT8 active_NPC_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
-    UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
-    UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
+    UINT8 active_NPC_count = NULL;   // the amount of actors in 160px window, the first actor to load current_actor pointer
+    UINT8 prev_actors_count = NULL;  // previous array of sprites to turn off
+    UINT8 next_actors_count = NULL;  // next array of sprite to turn off (in case you move back to a previous position)
 
     if (camera_x >= 160) {  // CAM1
         cam_ptr = worldtest_cam1_render;
@@ -270,11 +270,11 @@ void anim_worldtest() {
     }
     INT16 camx = TO_PIXELS(bkg.camera_x);
     for (UINT8 i = active_NPC_count; i != 0; i--) {  // TURN ON CURRENT SET OF NPC SPRITES
-        if (ANIMATIONLOCK){
+        if (ANIMATIONLOCK) {
             current_actor->RENDER = FALSE;
             current_actor->ON = FALSE;
         } else {
-        current_actor->RENDER = TRUE;
+            current_actor->RENDER = TRUE;
         }
 
         // if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
@@ -520,7 +520,7 @@ void enter_worldtest() {
             py = TO_PIXELS(PLAYER.y);
             if (!JOYLOCK) {
                 if (joy & J_LEFT) {
-                    if (px < 16 && TO_PIXELS(bkg.camera_x) > 0) {
+                    if (px < 8 && TO_PIXELS(bkg.camera_x) > 0) {
                         bkg.slider = TRUE;
                         bkg.slide_dir = SLIDELEFT;
                         JOYLOCK = TRUE;
@@ -533,7 +533,7 @@ void enter_worldtest() {
                         PLAYER.SpdX = -MAX_WALK_SPEED;
                     }
                 } else if (joy & J_RIGHT) {
-                    if (px > 160 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x) {
+                    if (px > 152 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x) {
                         bkg.slider = TRUE;
                         JOYLOCK = TRUE;
                         ANIMATIONLOCK = TRUE;
@@ -548,7 +548,7 @@ void enter_worldtest() {
                     }
                 }
                 if (joy & J_UP) {
-                    if (py < 8 && TO_PIXELS(bkg.camera_y) > 0) {
+                    if (py < 16 && TO_PIXELS(bkg.camera_y) > 0) {
                         bkg.slider = TRUE;
                         bkg.slide_dir = SLIDEUP;
                         JOYLOCK = TRUE;
@@ -594,28 +594,28 @@ void enter_worldtest() {
                 bkg.camera_x -= TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.x += 56;
+                PLAYER.x = TO_COORDS(140);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             } else if (bkg.slide_dir == SLIDERIGHT) {
                 bkg.camera_x += TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.x -= 56;
+                PLAYER.x = TO_COORDS(16);
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             } else if (bkg.slide_dir == SLIDEUP) {
                 bkg.camera_y -= TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.y += 56;
+                PLAYER.y += 68;
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             } else if (bkg.slide_dir == SLIDEDOWN) {
                 bkg.camera_y += TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.y -= 56;
+                PLAYER.y -= 68;
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             }

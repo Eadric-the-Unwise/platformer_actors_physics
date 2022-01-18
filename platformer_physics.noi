@@ -64,7 +64,7 @@ DEF l__HOME 0x1234
 DEF l__CODE_0 0x13E1
 DEF l__CODE 0x1641
 DEF s__HOME 0x1841
-DEF l__CODE_50 0x1B54
+DEF l__CODE_50 0x1B3D
 DEF _rROMB0 0x2000
 DEF l__CODE_3 0x208C
 DEF s__BASE 0x2A75
@@ -378,7 +378,7 @@ DEF _npc_collisions_worldtest 0x324A6D
 DEF _init_submap_worldtest 0x324D7D
 DEF _setup_worldtest 0x324EB9
 DEF _enter_worldtest 0x324F12
-DEF _WORLD1_COLLISION 0x3255B4
+DEF _WORLD1_COLLISION 0x32559D
 DEF _bullet_data 0xC94000
 DEF _bullet_metasprite0 0xC94020
 DEF _bullet_metasprites 0xC94028
