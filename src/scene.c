@@ -212,7 +212,7 @@ void render_platform_actors()
     // hide rest of the hardware sprites
     for (UINT8 i = OAM_hiwater; i < 40u; i++) shadow_OAM[i].y = 0;
 }
-    void render_world_actors()
+void render_world_actors()
     NONBANKED {
     UINT8 __save = _current_bank;
 
@@ -289,7 +289,7 @@ void render_platform_actors()
         cam_ptr++;
         current_actor = &active_actors[*cam_ptr];
     }
-    }
+}
 void switch_down() {
     if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_DOWN_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L) {
         SetActorDirection(&PLAYER, DIR_DOWN_L, 0);

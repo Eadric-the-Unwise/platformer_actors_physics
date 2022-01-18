@@ -103,8 +103,8 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 3 WALK
-    {.x = TO_COORDS(-144),
-     .y = TO_COORDS(116),
+    {.x = TO_COORDS(20),
+     .y = TO_COORDS(140),
      .SpdX = 8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -124,8 +124,8 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 4 ELEVATOR
-    {.x = TO_COORDS(-148),
-     .y = TO_COORDS(136),
+    {.x = TO_COORDS(16),
+     .y = TO_COORDS(88),
      .SpdX = 0,
      .SpdY = 8,
      .w = elevator_WIDTH,
@@ -168,16 +168,16 @@ const actor_t worldtest_bullets[1] = {
 // current_actor = cam1 + 1
 //  for loop
 // aka don't need double arrays here
-UINT8 worldtest_cam1_render[4] = {0, 1, 2, 3};
+UINT8 worldtest_cam1_render[3] = {0, 1, 2};
 UINT8 worldtest_cam2_render[3] = {0, 3, 4};
 UINT8 worldtest_cam3_render[3] = {0, 3, 4};
 UINT8 worldtest_cam4_render[2] = {0, 4};
-UINT8 worldtest_cam1[3] = {1, 2, 3};
+UINT8 worldtest_cam1[2] = {1, 2};
 UINT8 worldtest_cam2[2] = {3, 4};
 UINT8 worldtest_cam3[2] = {3, 4};
 UINT8 worldtest_cam4[1] = {4};
 
-#define worldtest_CAM1_COUNT 3
+#define worldtest_CAM1_COUNT 2
 #define worldtest_CAM2_COUNT 2
 #define worldtest_CAM3_COUNT 2
 #define worldtest_CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
@@ -190,13 +190,13 @@ void anim_worldtest() {
     INT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 player_x = TO_PIXELS(PLAYER.x);
     // UINT16 playerx = TO_PIXELS(PLAYER.x);
-    UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+    UINT8 active_NPC_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
     UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
     UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
 
     if (camera_x >= 160) {  // CAM1
         cam_ptr = worldtest_cam1_render;
-        active_actors_count = worldtest_CAM1_COUNT;
+        active_NPC_count = worldtest_CAM1_COUNT;
         next_actors_count = worldtest_CAM2_COUNT;
         ptr = worldtest_cam1;
         nptr = worldtest_cam2;
@@ -205,7 +205,7 @@ void anim_worldtest() {
 
         cam_ptr = worldtest_cam2_render;
         prev_actors_count = worldtest_CAM1_COUNT;
-        active_actors_count = worldtest_CAM2_COUNT;
+        active_NPC_count = worldtest_CAM2_COUNT;
         next_actors_count = worldtest_CAM3_COUNT;
         pptr = worldtest_cam1;
         ptr = worldtest_cam2;
@@ -215,7 +215,7 @@ void anim_worldtest() {
 
     //     cam_ptr = worldtest_cam3_render;
     //     prev_actors_count = worldtest_CAM2_COUNT;
-    //     active_actors_count = worldtest_CAM3_COUNT;
+    //     active_NPC_count = worldtest_CAM3_COUNT;
     //     next_actors_count = worldtest_CAM4_COUNT;
     //     pptr = worldtest_cam2;
     //     ptr = worldtest_cam3;
@@ -224,11 +224,11 @@ void anim_worldtest() {
     //     cam_ptr = worldtest_cam4_render;
 
     //     prev_actors_count = worldtest_CAM3_COUNT;
-    //     active_actors_count = worldtest_CAM4_COUNT;
+    //     active_NPC_count = worldtest_CAM4_COUNT;
     //     pptr = worldtest_cam3;
     //     ptr = worldtest_cam4;
     // }
-    render_actors_count = active_actors_count + 1;
+    render_actors_count = active_NPC_count + 1;
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
@@ -254,25 +254,32 @@ void anim_worldtest() {
     //     }
     // }
 
-    for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF SPRITES
+    for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF NPC SPRITES
         prev_actor->RENDER = FALSE;
+        prev_actor->ON = FALSE;
         // prev_actor++;
         pptr++;
         prev_actor = &active_actors[*pptr];
     }
-    for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF NEXT SET OF SPRITES
+    for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF NEXT SET OF NPC SPRITES
         next_actor->RENDER = FALSE;
+        next_actor->ON = FALSE;
         // next_actor++;
         nptr++;
         next_actor = &active_actors[*nptr];
     }
     INT16 camx = TO_PIXELS(bkg.camera_x);
-    for (UINT8 i = active_actors_count; i != 0; i--) {  // TURN ON CURRENT SET OF SPRITES
+    for (UINT8 i = active_NPC_count; i != 0; i--) {  // TURN ON CURRENT SET OF NPC SPRITES
+        if (ANIMATIONLOCK){
+            current_actor->RENDER = FALSE;
+            current_actor->ON = FALSE;
+        } else {
         current_actor->RENDER = TRUE;
-
-        if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
-            current_actor->x -= PLAYER.SpdX;
         }
+
+        // if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
+        //     current_actor->x -= PLAYER.SpdX;
+        // }
 
         if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {  // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
             if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
@@ -492,7 +499,7 @@ void init_submap_worldtest() {
 void setup_worldtest() {
     DISPLAY_OFF;
     SPAWN = FALSE;
-    GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
+    GAMEOVER = JOYLOCK = ANIMATIONLOCK = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
     JUMP = LADDER_Release = TRUE;
     load_level(&worldtest);
     render_platform_actors();
@@ -526,19 +533,18 @@ void enter_worldtest() {
                         PLAYER.SpdX = -MAX_WALK_SPEED;
                     }
                 } else if (joy & J_RIGHT) {
+                    if (px > 160 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x) {
+                        bkg.slider = TRUE;
+                        JOYLOCK = TRUE;
+                        ANIMATIONLOCK = TRUE;
+                        bkg.slide_dir = SLIDERIGHT;
+                    }
                     SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
 
                     if (PLAYER.SpdX < MAX_WALK_SPEED) {
                         PLAYER.SpdX += WALK_VELOCITY;
                     } else {
                         PLAYER.SpdX = MAX_WALK_SPEED;
-                    }
-
-                    if (px > 160 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x) {
-                        bkg.slider = TRUE;
-                        JOYLOCK = TRUE;
-                        ANIMATIONLOCK = TRUE;
-                        bkg.slide_dir = SLIDERIGHT;
                     }
                 }
                 if (joy & J_UP) {
@@ -588,28 +594,28 @@ void enter_worldtest() {
                 bkg.camera_x -= TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.x += TO_COORDS(3);
+                PLAYER.x += 56;
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             } else if (bkg.slide_dir == SLIDERIGHT) {
                 bkg.camera_x += TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.x -= TO_COORDS(3);
+                PLAYER.x -= 56;
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             } else if (bkg.slide_dir == SLIDEUP) {
                 bkg.camera_y -= TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.y += TO_COORDS(3);
+                PLAYER.y += 56;
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             } else if (bkg.slide_dir == SLIDEDOWN) {
                 bkg.camera_y += TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.y -= TO_COORDS(3);
+                PLAYER.y -= 56;
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             }
