@@ -23,7 +23,7 @@
 */
 
 /* Bank of tiles. */
-#define STAGE_DROP_TILESBank 2
+#define STAGE_DROP_TILESBank 6
 /* Start of tile array. */
 extern unsigned char STAGE_DROP_TILES[];
 #define STAGE_DROP_TILESLen 13

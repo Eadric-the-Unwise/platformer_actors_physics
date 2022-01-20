@@ -1,4 +1,4 @@
-#pragma bank 2
+#pragma bank 6
 /*
 
  STAGE_DROP_TILES.C
@@ -24,7 +24,7 @@
 */
 
 /* Start of tile array. */
-unsigned char STAGE_DROP_TILES[] =
+const unsigned char STAGE_DROP_TILES[] =
     {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
