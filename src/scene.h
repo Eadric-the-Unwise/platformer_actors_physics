@@ -20,6 +20,8 @@
 #include "../res/tiles/world1_collision.h"
 #include "../res/tiles/level_1_map.h"
 #include "../res/tiles/level_1_collision.h"
+#include "../res/tiles/level_2_map.h"
+#include "../res/tiles/level_2_collision.h"
 
 
 
@@ -27,7 +29,7 @@
 #include "collisions.h"
 #include "ladder.h"
 #include "level1.h"
-// #include "level2.h"
+#include "level2.h"
 // #include "world1.h"
 #include "worldtest.h"
 
