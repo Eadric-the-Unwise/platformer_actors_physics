@@ -1,4 +1,4 @@
-#pragma bank 3
+#pragma bank 5
 #include "level1.h"
 
 #include <gb/gb.h>

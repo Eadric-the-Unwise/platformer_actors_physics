@@ -1,4 +1,4 @@
-#define worldtest_BANK 50
+#define worldtest_BANK 100
 #include <gb/gb.h>
 
 #include "../res/tiles/stage_drop_map.h"

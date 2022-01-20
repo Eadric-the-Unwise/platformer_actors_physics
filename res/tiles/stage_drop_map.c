@@ -1,4 +1,4 @@
-#pragma bank 2
+#pragma bank 6
 /*
 
  STAGE_DROP_MAP.C
@@ -21,9 +21,9 @@
 
 #define STAGE_DROP_MAPWidth 100
 #define STAGE_DROP_MAPHeight 18
-#define STAGE_DROP_MAPBank 2
+#define STAGE_DROP_MAPBank 6
 
-unsigned char STAGE_DROP_MAP[] =
+const unsigned char STAGE_DROP_MAP[] =
     {
         0x01, 0x02, 0x01, 0x02, 0x01, 0x02, 0x01, 0x02, 0x01, 0x02,
         0x01, 0x02, 0x01, 0x02, 0x01, 0x02, 0x01, 0x02, 0x01, 0x02,

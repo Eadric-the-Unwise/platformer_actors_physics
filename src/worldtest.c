@@ -1,4 +1,4 @@
-#pragma bank 50
+#pragma bank 100
 #include "worldtest.h"
 
 #include <gb/gb.h>

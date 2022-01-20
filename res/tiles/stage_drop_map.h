@@ -20,8 +20,8 @@
 
 #define STAGE_DROP_MAPWidth 100
 #define STAGE_DROP_MAPHeight 18
-#define STAGE_DROP_MAPBank 2
+#define STAGE_DROP_MAPBank 6
 
-extern unsigned char STAGE_DROP_MAP[];
+extern const unsigned char STAGE_DROP_MAP[];
 
 /* End of STAGE_DROP_MAP.H */

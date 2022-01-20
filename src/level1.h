@@ -1,4 +1,4 @@
-#define LEVEL1_BANK 3
+#define LEVEL1_BANK 5
 #include <gb/gb.h>
 
 #include "../res/tiles/stage_drop_map.h"

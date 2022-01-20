@@ -20,7 +20,7 @@
 
 #define WORLD1_COLLISIONWidth 40
 #define WORLD1_COLLISIONHeight 36
-#define WORLD1_COLLISIONBank 50
+#define WORLD1_COLLISIONBank 100
 
 const extern unsigned char WORLD1_COLLISION[];
 

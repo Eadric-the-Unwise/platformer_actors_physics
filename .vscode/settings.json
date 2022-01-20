@@ -12,7 +12,8 @@
         "metasprites.h": "c",
         "brick_wide_tiles.h": "c",
         "ladder.h": "c",
-        "stage_drop_tiles.h": "c"
+        "stage_drop_tiles.h": "c",
+        "stage_drop_map.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
