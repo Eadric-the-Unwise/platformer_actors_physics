@@ -477,10 +477,10 @@ void init_submap() {
     HIDE_BKG;
     bkg.redraw = TRUE;
     bkg.slider = FALSE;
-    bkg.camera_max_y = (STAGE_DROP_MAPHeight - 18) * 8;
-    bkg.camera_max_x = (STAGE_DROP_MAPWidth - 20) * 8;
-    bkg.camera_tiles_x = STAGE_DROP_MAPWidth * 8;
-    bkg.camera_tiles_y = STAGE_DROP_MAPHeight * 8;
+    bkg.camera_max_y = (LEVEL_1_MAPHeight - 18) * 8;
+    bkg.camera_max_x = (LEVEL_1_MAPWidth - 20) * 8;
+    bkg.camera_tiles_x = LEVEL_1_MAPWidth * 8;
+    bkg.camera_tiles_y = LEVEL_1_MAPHeight * 8;
     bkg.camera_x = TO_COORDS(bkg.camera_max_x);
     bkg.camera_y = 0;
     bkg.old_camera_x = bkg.camera_x;
@@ -488,11 +488,11 @@ void init_submap() {
     bkg.map_pos_x = (UINT8)(bkg.camera_x >> 7u);
     bkg.map_pos_y = (UINT8)(bkg.camera_y >> 3u);
     // CHANGE THE TILE COUNT AS YOU ADD TILES TO THE BKG TILE_SET
-    set_bkg_data_nonbanked(0, STAGE_DROP_TILESLen, STAGE_DROP_TILES, STAGE_DROP_TILESBank);
+    set_bkg_data_nonbanked(0, LEVEL_TILESLen, LEVEL_TILES, LEVEL_TILESBank);
     bkg.old_map_pos_x = bkg.old_map_pos_y = 255;
 
-    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, STAGE_DROP_MAP, STAGE_DROP_MAPWidth, STAGE_DROP_MAPBank);
-    set_level(STAGE_DROP_MAPWidth, STAGE_DROP_MAPHeight, STAGE_DROP_MAP, STAGE_DROP_MAPBank);
+    set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 20, 18, LEVEL_1_MAP, LEVEL_1_MAPWidth, LEVEL_1_MAPBank);
+    set_level(LEVEL_1_MAPWidth, LEVEL_1_MAPHeight, LEVEL_1_MAP, LEVEL_1_MAPBank);
 
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
@@ -502,8 +502,8 @@ void init_submap() {
     // bkg.collision_width = STAGE_DROP_COLLISIONWidth;
 
     // bkg.collision_data = STAGE_DROP_COLLISION;
-    COLLISION_WIDTH = STAGE_DROP_COLLISIONWidth;
-    COLLISION_DATA = STAGE_DROP_COLLISION;
+    COLLISION_WIDTH = LEVEL_1_COLLISIONWidth;
+    COLLISION_DATA = LEVEL_1_COLLISION;
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;
 

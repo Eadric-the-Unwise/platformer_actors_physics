@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "../res/tiles/level_tileset.h"
+#include "../res/tiles/world1_tiles.h"
 #include "../res/tiles/bullet.h"
 #include "../res/tiles/detective_16.h"
 #include "../res/tiles/detective_large.h"
@@ -14,9 +16,13 @@
 #include "../res/tiles/stage_drop_collision.h"
 #include "../res/tiles/stage_drop_map.h"
 #include "../res/tiles/stage_drop_tiles.h"
-#include "../res/tiles/world1_collision.h"
 #include "../res/tiles/world1_map.h"
-#include "../res/tiles/world1_tiles.h"
+#include "../res/tiles/world1_collision.h"
+#include "../res/tiles/level_1_map.h"
+#include "../res/tiles/level_1_collision.h"
+
+
+
 #include "camera.h"
 #include "collisions.h"
 #include "ladder.h"

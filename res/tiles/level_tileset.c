@@ -2,7 +2,7 @@
 
 /*
 
- STAGE_DROP_TILES.C
+ LEVEL_TILESET.C
 
  Tile Source File.
 
@@ -25,8 +25,8 @@
 */
 
 /* Start of tile array. */
-const void __at(4) __bank_STAGE_DROP_TILES;
-const unsigned char STAGE_DROP_TILES[] =
+const void __at(4) __bank_LEVEL_TILES;
+const unsigned char LEVEL_TILES[] =
 {
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -56,4 +56,4 @@ const unsigned char STAGE_DROP_TILES[] =
   0x00,0xF3,0x00,0xFF,0x00,0xFF,0x00,0xFF
 };
 
-/* End of STAGE_DROP_TILES.C */
+/* End of LEVEL_TILESET.C */

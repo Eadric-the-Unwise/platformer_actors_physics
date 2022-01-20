@@ -1,6 +1,6 @@
 /*
 
- STAGE_DROP_TILES.H
+ LEVEL_TILESET.H
 
  Include File.
 
@@ -22,16 +22,16 @@
 
 */
 
-#ifndef __stage_drop_tiles_h_INCLUDE
-#define __stage_drop_tiles_h_INCLUDE
+#ifndef __level_tileset_h_INCLUDE
+#define __level_tileset_h_INCLUDE
 
 /* Bank of tiles. */
-#define STAGE_DROP_TILESBank 4
+#define LEVEL_TILESBank 4
 /* Start of tile array. */
-extern const void __bank_STAGE_DROP_TILES;
-extern const unsigned char STAGE_DROP_TILES[];
-#define STAGE_DROP_TILESLen 13
+extern const void __bank_LEVEL_TILES;
+extern const unsigned char LEVEL_TILES[];
+#define LEVEL_TILESLen 13
 
 #endif
 
-/* End of STAGE_DROP_TILES.H */
+/* End of LEVEL_TILESET.H */
