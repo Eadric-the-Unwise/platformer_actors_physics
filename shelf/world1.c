@@ -13,17 +13,17 @@ extern UINT8 gamestate;
 extern const level_t *current_stage;
 extern BYTE ATTACH, x_Collide, y_Collide;
 extern UINT8 current_elevator;
-extern UINT8 render_actors_count;  // the amount of actors in 160px window, the first actor to load current_actor pointer
+extern UINT8 render_actors_count; // the amount of actors in 160px window, the first actor to load current_actor pointer
 extern UINT8 bullet_timer;
 extern UINT8 *cam_ptr;
 
 const level_t world1 = {
     .bank = WORLD1_BANK,
-    .submap_hook = init_submap_example,  // call this in collision
+    .submap_hook = init_submap_example, // call this in collision
     .actors = world1_actors,
     // .bullets = world1_bullets,
     .actor_count = 1,
-    .animate_hook = anim_world1,  // function that put life into the scene
+    .animate_hook = anim_world1, // function that put life into the scene
     .collide_hook = npc_collisions_world1};
 
 // CURRENTLY, LOADING FROM THE RIGHT FORCES YOU TO CALC (X COORD MINUS THE TO_PIXELS(CAM.X)). IS THERE A WAY TO AUTOMATICALLY CAL THIS VALUE UPON LOAD?
@@ -89,17 +89,18 @@ UINT8 world1_cam1_render[1] = {0};
 // #define world1_CAM3_COUNT 2
 // #define world1_CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
 // CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
-void anim_world1() {
-    UINT8 *ptr = NULL;   // pointer // simply = NULL to bypass compiler error lol
-    UINT8 *pptr = NULL;  // previous pointer
-    UINT8 *nptr = NULL;  // next pointer
+void anim_world1()
+{
+    UINT8 *ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
+    UINT8 *pptr = NULL; // previous pointer
+    UINT8 *nptr = NULL; // next pointer
 
     INT16 camera_x = TO_PIXELS(bkg.camera_x);
     UINT8 player_x = TO_PIXELS(PLAYER.x);
     // UINT16 playerx = TO_PIXELS(PLAYER.x);
-    UINT8 active_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
-    UINT8 prev_actors_count = NULL;    // previous array of sprites to turn off
-    UINT8 next_actors_count = NULL;    // next array of sprite to turn off (in case you move back to a previous position)
+    UINT8 active_actors_count = NULL; // the amount of actors in 160px window, the first actor to load current_actor pointer
+    UINT8 prev_actors_count = NULL;   // previous array of sprites to turn off
+    UINT8 next_actors_count = NULL;   // next array of sprite to turn off (in case you move back to a previous position)
 
     // if ((camera_x >= 480) && (camera_x <= bkg.camera_max_x)) {  // CAM1
 
@@ -136,7 +137,7 @@ void anim_world1() {
     // }
     cam_ptr = world1_cam1_render;
     render_actors_count = active_actors_count + 1;
-    actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
+    actor_t *current_actor = &active_actors[*ptr]; // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
     actor_t *current_bullet = active_bullets;
@@ -287,23 +288,30 @@ void anim_world1() {
 //     // if (spawn_bullet->RENDER == FALSE) {
 //     // }
 // }
-void npc_collisions_world1() {
+void npc_collisions_world1()
+{
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
-    if (CROUCH) {  // CROUCH HITBOX
+    if (CROUCH)
+    { // CROUCH HITBOX
         PLAYER.h_offset = -2;
         PLAYER.x_offset = 8;
         PLAYER.y_offset = 16;
-    } else if (PLAYER.SpdY != 0) {  // JUMP AND FALLING HITBOX
+    }
+    else if (PLAYER.SpdY != 0)
+    { // JUMP AND FALLING HITBOX
         PLAYER.h_offset = 11;
         PLAYER.x_offset = 6;
         PLAYER.y_offset = 6;
-    } else if ((!CROUCH) && (!JUMP)) {  // STAND AND WALKING HITBOX
+    }
+    else if ((!CROUCH) && (!JUMP))
+    { // STAND AND WALKING HITBOX
         PLAYER.h_offset = 7;
         PLAYER.x_offset = 6;
         PLAYER.y_offset = 16;
     }
-    for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++) {
+    for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++)
+    {
         //[y][x]
         UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
         UINT8 ax, ay;
@@ -311,63 +319,87 @@ void npc_collisions_world1() {
         ay = TO_PIXELS(active_actors[i].y);
         INT16 NPC_PLAYER_Offset = px - (ax - active_actors[i].x_pivot);
         // THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
-        PTR_y = py - PLAYER.h_offset;            // TR y
-        PTR_x = px + PLAYER.x_offset;            // TR x
-        PBL_y = py + PLAYER.y_offset;            // BL y
-        PBL_x = px - PLAYER.x_offset;            // BL x
-        NTR_y = ay - active_actors[i].y_offset;  // TR y
-        NTR_x = ax + active_actors[i].x_offset;  // TR x
-        NBL_y = ay + active_actors[i].y_offset;  // BL y
-        NBL_x = ax - active_actors[i].x_offset;  // BL x
-        if (active_actors[i].ON && active_actors[i].KILL == NULL) {
-            if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
-                if (active_actors[i].NPC_type != ELEVATOR) {
+        PTR_y = py - PLAYER.h_offset;           // TR y
+        PTR_x = px + PLAYER.x_offset;           // TR x
+        PBL_y = py + PLAYER.y_offset;           // BL y
+        PBL_x = px - PLAYER.x_offset;           // BL x
+        NTR_y = ay - active_actors[i].y_offset; // TR y
+        NTR_x = ax + active_actors[i].x_offset; // TR x
+        NBL_y = ay + active_actors[i].y_offset; // BL y
+        NBL_x = ax - active_actors[i].x_offset; // BL x
+        if (active_actors[i].ON && active_actors[i].KILL == NULL)
+        {
+            if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U)
+            {
+                if (active_actors[i].NPC_type != ELEVATOR)
+                {
                     GAMEOVER = TRUE;
-                } else if (active_actors[i].NPC_type == ELEVATOR) {
-                    if (!ATTACH) {
-                        if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
+                }
+                else if (active_actors[i].NPC_type == ELEVATOR)
+                {
+                    if (!ATTACH)
+                    {
+                        if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2)) // is not on top of elevator
                         {
                             x_Collide = TRUE;
-                        } else if ((PBL_y > NTR_y) && (PBL_y < NBL_y)) {
+                        }
+                        else if ((PBL_y > NTR_y) && (PBL_y < NBL_y))
+                        {
                             ATTACH = TRUE;
                             Gravity = FALSE;
                             current_elevator = i;
-                        } else if ((PTR_y < NBL_y) && (PTR_y > NTR_y)) {
+                        }
+                        else if ((PTR_y < NBL_y) && (PTR_y > NTR_y))
+                        {
                             y_Collide = TRUE;
                         }
                     }
                 }
-            } else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U) {
-                if (x_Collide) {
+            }
+            else if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x00U)
+            {
+                if (x_Collide)
+                {
                     x_Collide = FALSE;
                 }
             }
-
-        } else {
         }
-        if (ATTACH) {
-            if (i == current_elevator) {
-                if ((PBL_x > NTR_x) || (PTR_x < NBL_x)) {
+        else
+        {
+        }
+        if (ATTACH)
+        {
+            if (i == current_elevator)
+            {
+                if ((PBL_x > NTR_x) || (PTR_x < NBL_x))
+                {
                     ATTACH = FALSE;
                     Gravity = TRUE;
-                } else {
+                }
+                else
+                {
                     PLAYER.SpdY = 0;
                     PLAYER.y = TO_COORDS(NTR_y - (PLAYER.h / 2));
-                    if (JUMP) {
+                    if (JUMP)
+                    {
                         switch_land();
-                    } else if (!(joy & J_LEFT) && !(joy & J_RIGHT) && (!CROUCH)) {
+                    }
+                    else if (!(joy & J_LEFT) && !(joy & J_RIGHT) && (!CROUCH))
+                    {
                         switch_idle();
                     }
                     SPAWN = Gravity = JUMP = FALSE;
                 }
             }
-            if ((CHANGED_BUTTONS & J_A) && (joy & J_A)) {
+            if ((CHANGED_BUTTONS & J_A) && (joy & J_A))
+            {
                 jump();
             }
         }
     }
 }
-void init_submap_example() {
+void init_submap_example()
+{
     HIDE_BKG;
     bkg.redraw = TRUE;
     bkg.slider = FALSE;
@@ -399,7 +431,8 @@ void init_submap_example() {
     SHOW_BKG;
 }
 
-void init_submap_world1() {
+void init_submap_world1()
+{
     // fadeout_white();
     HIDE_BKG;
     bkg.redraw = TRUE;
@@ -464,7 +497,8 @@ void init_submap_world1() {
 //     fadein_white();
 // }
 
-void setup_world1() {
+void setup_world1()
+{
     DISPLAY_OFF;
     SPAWN = TRUE;
     GAMEOVER = L_LEFT = L_RIGHT = LADDER = CROUCH = canCROUCH = DROP = FALSE;
@@ -475,126 +509,180 @@ void setup_world1() {
     current_stage = &world1;
 }
 
-void enter_world1() {
+void enter_world1()
+{
     setup_world1();
-    while (gamestate == 3) {
+    while (gamestate == 3)
+    {
         last_joy = joy;
         joy = joypad();
-        if (joy & J_LEFT) {
-            if (bkg.camera_x) {
+        if (joy & J_LEFT)
+        {
+            if (bkg.camera_x)
+            {
                 bkg.camera_x -= TO_COORDS(1);
                 bkg.redraw = TRUE;
             }
-        } else if (joy & J_RIGHT) {
-            if (bkg.camera_x < bkg.camera_max_x) {
+        }
+        else if (joy & J_RIGHT)
+        {
+            if (bkg.camera_x < bkg.camera_max_x)
+            {
                 bkg.camera_x += TO_COORDS(1);
                 bkg.redraw = TRUE;
             }
         }
-        if (!SPAWN) {
+        if (!SPAWN)
+        {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
-            if (joy & J_LEFT) {
-                if (PLAYER.SpdX == 0) {
-                    if (joy & J_DOWN) {
+            if (joy & J_LEFT)
+            {
+                if (PLAYER.SpdX == 0)
+                {
+                    if (joy & J_DOWN)
+                    {
                         canCROUCH_timer = 1;
                     }
                 }
-                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
-                    if (canCROUCH) {
+                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder))
+                {
+                    if (canCROUCH)
+                    {
                         SetActorDirection(&PLAYER, DIR_CRAWL_L, PLAYER.animation_phase);
-                    } else {
+                    }
+                    else
+                    {
                         SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
                     }
-
-                } else if (CROUCH) {
-                    if (!JUMP) {
+                }
+                else if (CROUCH)
+                {
+                    if (!JUMP)
+                    {
                         SetActorDirection(&PLAYER, DIR_CRAWL_L, 0);
                     }
                 }
-                if (CROUCH) {
-                    if (PLAYER.SpdX > -MAX_CRAWL_SPEED) {
+                if (CROUCH)
+                {
+                    if (PLAYER.SpdX > -MAX_CRAWL_SPEED)
+                    {
                         PLAYER.SpdX -= WALK_VELOCITY;
-                    } else
+                    }
+                    else
                         PLAYER.SpdX = -MAX_CRAWL_SPEED;
-                } else if ((!CROUCH) && (!LADDER)) {
-                    if (PLAYER.SpdX > -MAX_WALK_SPEED) {
+                }
+                else if ((!CROUCH) && (!LADDER))
+                {
+                    if (PLAYER.SpdX > -MAX_WALK_SPEED)
+                    {
                         PLAYER.SpdX -= WALK_VELOCITY;
-                    } else
+                    }
+                    else
                         PLAYER.SpdX = -MAX_WALK_SPEED;
                 }
-
-            } else if (joy & J_RIGHT) {
-                if (PLAYER.SpdX == 0) {
-                    if (joy & J_DOWN) {
+            }
+            else if (joy & J_RIGHT)
+            {
+                if (PLAYER.SpdX == 0)
+                {
+                    if (joy & J_DOWN)
+                    {
                         canCROUCH_timer = 1;
                     }
                 }
-                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder)) {
-                    if (canCROUCH) {
+                if ((!JUMP) && !(joy & J_DOWN) && (!CROUCH) && (!ONTO_Ladder))
+                {
+                    if (canCROUCH)
+                    {
                         SetActorDirection(&PLAYER, DIR_CRAWL_R, PLAYER.animation_phase);
-                    } else {
+                    }
+                    else
+                    {
                         SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
                     }
-                } else if (CROUCH) {
-                    if (!JUMP) {
+                }
+                else if (CROUCH)
+                {
+                    if (!JUMP)
+                    {
                         SetActorDirection(&PLAYER, DIR_CRAWL_R, 0);
                     }
                 }
-                if (CROUCH) {
-                    if (PLAYER.SpdX < MAX_CRAWL_SPEED) {
+                if (CROUCH)
+                {
+                    if (PLAYER.SpdX < MAX_CRAWL_SPEED)
+                    {
                         PLAYER.SpdX += WALK_VELOCITY;
-                    } else
+                    }
+                    else
                         PLAYER.SpdX = MAX_CRAWL_SPEED;
-                } else if ((!CROUCH) && (!LADDER)) {
-                    if (PLAYER.SpdX < MAX_WALK_SPEED) {
+                }
+                else if ((!CROUCH) && (!LADDER))
+                {
+                    if (PLAYER.SpdX < MAX_WALK_SPEED)
+                    {
                         PLAYER.SpdX += WALK_VELOCITY;
-                    } else
+                    }
+                    else
                         PLAYER.SpdX = MAX_WALK_SPEED;
                 }
             }
 
-            if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder)) {
+            if ((joy & J_DOWN) && (!JUMP) && (!LADDER) && (!ONTO_Ladder))
+            {
                 CROUCH = TRUE;
             }
 
-            if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder) && (!OFF_LADDER)) {
+            if ((CHANGED_BUTTONS & J_A) && (joy & J_A) && (!ONTO_Ladder) && (!OFF_LADDER))
+            {
                 jump();
             }
-            if ((CHANGED_BUTTONS & J_B) && (joy & J_B)) {
+            if ((CHANGED_BUTTONS & J_B) && (joy & J_B))
+            {
                 spawn_bullets();
             }
         }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
-        if (PLAYER.SpdY != 0) {
+        if (PLAYER.SpdY != 0)
+        {
             JUMP = Gravity = TRUE;
             CROUCH = FALSE;
-            if (!LADDER) {
+            if (!LADDER)
+            {
                 switch_jump();
             }
         }
-        if (DROP) {
+        if (DROP)
+        {
             DROP_timer -= 1;
-            if (DROP_timer == 0) {
+            if (DROP_timer == 0)
+            {
                 DROP = FALSE;
                 DROP_timer = 16;
             }
         }
-        if ((CROUCH) && (canCROUCH)) {
-            if ((PLAYER.direction == DIR_CRAWL_L) || (PLAYER.direction == DIR_DOWN_L)) {
+        if ((CROUCH) && (canCROUCH))
+        {
+            if ((PLAYER.direction == DIR_CRAWL_L) || (PLAYER.direction == DIR_DOWN_L))
+            {
                 PLAYER.SpdX = -MAX_CRAWL_SPEED;
-            } else if ((PLAYER.direction == DIR_CRAWL_R) || (PLAYER.direction == DIR_DOWN_R)) {
+            }
+            else if ((PLAYER.direction == DIR_CRAWL_R) || (PLAYER.direction == DIR_DOWN_R))
+            {
                 PLAYER.SpdX = MAX_CRAWL_SPEED;
             }
             canCROUCH_Ftimer -= 1;
-            if (canCROUCH_Ftimer == 1) {
+            if (canCROUCH_Ftimer == 1)
+            {
                 canCROUCH = FALSE;
                 canCROUCH_Ftimer = 8;
             }
         }
-        if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+        if (!(joy & J_LEFT) && !(joy & J_RIGHT))
+        {
             canCROUCH_timer = 10;
             // Release_timer = 20;
         }
@@ -603,16 +691,24 @@ void enter_world1() {
         // WORLD PHYSICS:
         // GRAVITY
 
-        if (Gravity) {
-            if (LADDER) {
-                if (PLAYER.SpdY < 0) {
+        if (Gravity)
+        {
+            if (LADDER)
+            {
+                if (PLAYER.SpdY < 0)
+                {
                     PLAYER.SpdY += GRAVITY;
-                } else if (PLAYER.SpdY > 0) {
+                }
+                else if (PLAYER.SpdY > 0)
+                {
                     PLAYER.SpdY -= GRAVITY;
                 }
-            } else {
+            }
+            else
+            {
                 PLAYER.SpdY += GRAVITY;
-                if (PLAYER.SpdY > MAX_FALL_SPEED) {
+                if (PLAYER.SpdY > MAX_FALL_SPEED)
+                {
                     PLAYER.SpdY = MAX_FALL_SPEED;
                 }
             }
@@ -623,78 +719,100 @@ void enter_world1() {
         // Y-AXIS COLLISION CHECK / /LADDER CHECK
         check_UD(px, py, TO_PIXELS(bkg.camera_x));
 
-        if ((CROUCH) && (!canCROUCH)) {
-            if (!(joy & J_DOWN)) {
+        if ((CROUCH) && (!canCROUCH))
+        {
+            if (!(joy & J_DOWN))
+            {
                 check_C(px, py, TO_PIXELS(bkg.camera_x));
             }
         }
 
-        if (PLAYER.SpdX < 0) {
-            if (PLAYER.SpdX != -MAX_WALK_SPEED) {
+        if (PLAYER.SpdX < 0)
+        {
+            if (PLAYER.SpdX != -MAX_WALK_SPEED)
+            {
                 PLAYER.SpdX += FRICTION;
-            } else if ((PLAYER.SpdX <= -MAX_WALK_SPEED) && !(joy & J_LEFT)) {
+            }
+            else if ((PLAYER.SpdX <= -MAX_WALK_SPEED) && !(joy & J_LEFT))
+            {
                 PLAYER.SpdX += FRICTION;
             }
         }
-        if (PLAYER.SpdX > 0) {
-            if (PLAYER.SpdX != MAX_WALK_SPEED) {
+        if (PLAYER.SpdX > 0)
+        {
+            if (PLAYER.SpdX != MAX_WALK_SPEED)
+            {
                 PLAYER.SpdX -= FRICTION;
-            } else if ((PLAYER.SpdX >= MAX_WALK_SPEED) && !(joy & J_RIGHT)) {
+            }
+            else if ((PLAYER.SpdX >= MAX_WALK_SPEED) && !(joy & J_RIGHT))
+            {
                 PLAYER.SpdX -= FRICTION;
             }
         }
 
-        if (PLAYER.SpdX != 0) {
+        if (PLAYER.SpdX != 0)
+        {
             UINT8 px, py;
             px = TO_PIXELS(PLAYER.x);
             py = TO_PIXELS(PLAYER.y);
 
-            if (PLAYER.SpdX > 0) {
-                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING RIGHT
-
-            } else if (PLAYER.SpdX < 0) {
-                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
+            if (PLAYER.SpdX > 0)
+            {
+                check_LR(px + 1, py, TO_PIXELS(bkg.camera_x)); // IF MOVING RIGHT
+            }
+            else if (PLAYER.SpdX < 0)
+            {
+                check_LR(px - 1, py, TO_PIXELS(bkg.camera_x)); // IF MOVING LEFT
             }
         }
 
         // update PLAYER absolute posiiton
-        if (!ATTACH) {
+        if (!ATTACH)
+        {
             PLAYER.y += PLAYER.SpdY;
         }
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
         // // Change to IDLE state when not moving
-        if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER)) {
-            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
-                if (!(joy & J_LEFT) && !(joy & J_RIGHT)) {
+        if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER))
+        {
+            if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0))
+            {
+                if (!(joy & J_LEFT) && !(joy & J_RIGHT))
+                {
                     switch_idle();
                     check_C(px, py, TO_PIXELS(bkg.camera_x));
                 }
             }
         }
         // DOWN while standing still
-        if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
+        if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0))
+        {
             switch_down();
         }
 
         // UPDATE THE CAMERA POSITION SETTINGS
         render_camera(px, TO_PIXELS(bkg.camera_x));
         // UPDATE CURRENT LEVEL NPC ANIMATIONS AND X/Y POSITIONS
-        if (animate_level) animate_level();  // call level animation hook (if any)
+        if (animate_level)
+            animate_level(); // call level animation hook (if any)
         // CHECK FOR NPC COLLISIONS
-        if (collide_level) collide_level();
+        if (collide_level)
+            collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_platform_actors();
 
-        if (bkg.redraw) {
+        if (bkg.redraw)
+        {
             set_world_camera();
             wait_vbl_done();
             refresh_OAM();
             SCX_REG = shadow_scx;
             SCY_REG = shadow_scy;
             bkg.redraw = FALSE;
-
-        } else {
+        }
+        else
+        {
             wait_vbl_done();
             refresh_OAM();
         }
@@ -704,8 +822,8 @@ void enter_world1() {
         //         enter_world1();
         //         // gameover();
         //         // TRY LOADING A SECOND STAGE HERE?
-        //     } else if (WINNER) {
-        //         WINNER = FALSE;
+        //     } else if (EXIT1) {
+        //         EXIT1 = FALSE;
         //         gamestate = 1;
         //     }
     }
