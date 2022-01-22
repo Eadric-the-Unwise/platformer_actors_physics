@@ -32,7 +32,7 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
         LR_Offset_X = 1;
         LR_Offset_kX = 3;
     }
-    // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
+    // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNCT
     indexCamx = camera_x;
     indexTy = (newplayery - 24) / 8; // TOP Y AXIS
     indexCy = (newplayery - 16) / 8; // CENTER Y AXIS
