@@ -22,7 +22,7 @@
 
 #define LEVEL_2_COLLISIONWidth 100
 #define LEVEL_2_COLLISIONHeight 23
-#define LEVEL_2_COLLISIONBank 99
+#define LEVEL_2_COLLISIONBank 225
 
 extern const void __bank_LEVEL_2_COLLISION;
 extern const unsigned char LEVEL_2_COLLISION[];
