@@ -43,7 +43,7 @@ void main()
     DROP_timer = 16;
     canCROUCH_timer = 10; // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCROUCH_Ftimer = 8; // TURN canCROUCH TO FALSE WHEN REACH COUNTDOWN
-    // SWITCH_ROM_MBC1(LEVEL1_BANK);
+    // SWITCH_ROM(LEVEL1_BANK);
     // load_level(&level1);
     // if (load_submap) load_submap();
 
@@ -59,19 +59,19 @@ void main()
         switch (gamestate)
         {
         case 1:
-            SWITCH_ROM_MBC1(LEVEL1_BANK);
+            SWITCH_ROM(LEVEL1_BANK);
             enter_lvl1();
             break;
         case 2:
-            SWITCH_ROM_MBC1(LEVEL2_BANK);
+            SWITCH_ROM(LEVEL2_BANK);
             enter_lvl2();
             break;
         // case 3:
-        //     SWITCH_ROM_MBC1(WORLD1_BANK);
+        //     SWITCH_ROM(WORLD1_BANK);
         //     enter_world1();
         //     break;
         case 4:
-            SWITCH_ROM_MBC1(worldtest_BANK);
+            SWITCH_ROM(worldtest_BANK);
             enter_worldtest();
             break;
         }

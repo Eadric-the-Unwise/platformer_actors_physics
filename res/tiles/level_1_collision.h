@@ -22,7 +22,7 @@
 
 #define LEVEL_1_COLLISIONWidth 100
 #define LEVEL_1_COLLISIONHeight 23
-#define LEVEL_1_COLLISIONBank 5
+#define LEVEL_1_COLLISIONBank 99
 
 extern const void __bank_LEVEL_1_COLLISION;
 extern const unsigned char LEVEL_1_COLLISION[];

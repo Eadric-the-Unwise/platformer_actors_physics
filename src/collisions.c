@@ -17,6 +17,8 @@ unsigned char COLLISION_WIDTH;
 // THESE COLLISIONS ARE SET ON SINGLE PIXELS, MEANING FINDING THE CENTER IS A CHALLENGE (AS OPPOSED TO NPC COLLISIONS WHICH ARE PERFECTLY CENTRED)
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
 {
+    UINT8 __save = _current_bank;
+    SWITCH_ROM(99);
     UINT16 indexDy, indexCy, indexTy, index_x, index_kx, indexCamx, tileindexD, tileindexC, tileindexT, tileindexkD, tileindexkC, tileindexkT;
 
     if (joy & J_LEFT)
@@ -108,10 +110,13 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
     {
         EXIT2 = TRUE;
     }
+    SWITCH_ROM(__save);
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
 {
+    UINT8 __save = _current_bank;
+    SWITCH_ROM(99);
     UINT16 indexLx, indexCx, indexRx, indexLLx, indexRLx, indexSLx, indexSCx, indexSRx, index_y, index_Ty, index_Ly, index_Cy, indexCamx, tileindexL, tileindexC, tileindexR, tileindexLLT, tileindexRLT, tileindexLLC, tileindexRLC, tileindexCL, tileindexCC, tileindexCR, tileindexSL, tileindexSC, tileindexSR;
     // CL = CROUCH Left CC = CROUCH Center CR = CROUCH Right
     indexCamx = camera_x;
@@ -288,10 +293,13 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
             }
         }
     }
+    SWITCH_ROM(__save);
 }
 // TRY COMBINING THIS WITH CHECK_J BY ADDING A SWITCH WHEN PRESSING A BUTTON, TURNS OFF AFTER CHECK_J IN BOTH IF AND ELSE IF SECNARIOS
 void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
 {
+    UINT8 __save = _current_bank;
+    SWITCH_ROM(99);
     UINT16 indexLx, indexCx, indexRx, index6, index10, index_y, index_By, index_ky, index_Ly, indexCamx, tileindexL, tileindexC, tileindexR, tileindexCB, tileindex6B, tileindex10B, tileindexLL, tileindexCL, tileindexRL, tileindex6, tileindex10, tileindexkL, tileindexkC, tileindexkR;
     indexCamx = camera_x;
 
@@ -404,10 +412,13 @@ void check_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
         }
     }
     // check_LADDER(newplayerx, newplayery, camera_x);
+    SWITCH_ROM(__save);
 }
 
 void check_Drop(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
 {
+    UINT8 __save = _current_bank;
+    SWITCH_ROM(99);
     UINT16 indexLx, indexCx, indexRx, index_y, indexCamx, tileindexL, tileindexC, tileindexR;
     indexCamx = camera_x;
     indexLx = ((newplayerx - 16) + indexCamx) / 8;
@@ -423,10 +434,13 @@ void check_Drop(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
     {
         DROP = Gravity = TRUE;
     }
+    SWITCH_ROM(__save);
 }
 // CHECK CROUCH
 void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
 {
+    UINT8 __save = _current_bank;
+    SWITCH_ROM(99);
     UINT16 indexSLx, indexSRx, index_y, indexCamx, tileindexSL, tileindexSR;
 
     indexCamx = camera_x;
@@ -450,10 +464,13 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
             CROUCH = FALSE;
         }
     }
+    SWITCH_ROM(__save);
 }
 
 void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
 {
+    UINT8 __save = _current_bank;
+    SWITCH_ROM(99);
     UINT16 indexDy, indexCy, indexTy, index_x, indexCamx, tileindexD, tileindexC, tileindexT;
     if (joy & J_LEFT)
     {
@@ -489,6 +506,7 @@ void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
     {
         EXIT2 = TRUE;
     }
+    SWITCH_ROM(__save);
 }
 
 // LATER MOVE THIS TO A RENDER PORTION OF THE GAME AND REMOVE THE TILE #INCLUDES //
