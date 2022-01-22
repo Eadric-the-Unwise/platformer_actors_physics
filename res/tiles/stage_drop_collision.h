@@ -21,7 +21,7 @@
 
 #define STAGE_DROP_COLLISIONWidth 100
 #define STAGE_DROP_COLLISIONHeight 23
-#define STAGE_DROP_COLLISIONBank 99
+#define STAGE_DROP_COLLISIONBank 225
 
 extern const unsigned char STAGE_DROP_COLLISION[];
 

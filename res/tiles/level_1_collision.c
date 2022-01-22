@@ -1,4 +1,4 @@
-#pragma bank 99
+#pragma bank 225
 
 /*
 
@@ -22,7 +22,7 @@
 
 #define LEVEL_1_COLLISIONWidth 100
 #define LEVEL_1_COLLISIONHeight 23
-#define LEVEL_1_COLLISIONBank 99
+#define LEVEL_1_COLLISIONBank 225
 
 const void __at(5) __bank_LEVEL_1_COLLISION;
 const unsigned char LEVEL_1_COLLISION[] =

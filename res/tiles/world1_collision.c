@@ -1,4 +1,4 @@
-#pragma bank 99
+#pragma bank 225
 
 /*
 
@@ -22,7 +22,7 @@
 
 #define WORLD1_COLLISIONWidth 40
 #define WORLD1_COLLISIONHeight 36
-#define WORLD1_COLLISIONBank 99
+#define WORLD1_COLLISIONBank 225
 
 const void __at(100) __bank_WORLD1_COLLISION;
 const unsigned char WORLD1_COLLISION[] =

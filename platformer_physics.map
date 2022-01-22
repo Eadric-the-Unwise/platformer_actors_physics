@@ -34,7 +34,7 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      0000110A  l__CODE_2 |    00001234  l__HOME   |    00001514  l__CODE_0
      000015B3  l__CODE_1 |    0000165B  l__CODE   |    00001795  l__CODE_5
      00001796  l__CODE_7 |    0000185B  s__HOME   |    00002000  _rROMB0  
-     00002094  l__CODE_9 |    00002A8F  s__BASE   |    00002A8F  s__CODE_0
+     00002094  l__CODE_2 |    00002A8F  s__BASE   |    00002A8F  s__CODE_0
      00003000  _rROMB1   |    00003FA3  s__INITIA |    00003FA3  s__LIT   
      00004000  _rRAMB    |    0000402B  s__GSINIT |    00004037  s__GSFINA
      00008000  __VRAM    |    00008000  __VRAM800 |    00008800  __VRAM880
@@ -74,8 +74,8 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      0000FF80  .refresh_ |    0000FF80  __HRAM    |    0000FFFF  _IE_REG  
      00044000  s__CODE_4 |    00054000  s__CODE_5 |    00064000  s__CODE_6
      00074000  s__CODE_7 |    00084000  s__CODE_8 |    000A4000  s__CODE_1
-     00634000  s__CODE_9 |    00644000  s__CODE_1 |    00654000  s__CODE_1
-     00C84000  s__CODE_2 |    00C94000  s__CODE_2
+     00644000  s__CODE_1 |    00654000  s__CODE_1 |    00C84000  s__CODE_2
+     00C94000  s__CODE_2 |    00E14000  s__CODE_2
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
@@ -474,12 +474,12 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_99               00634000    00002094 =        8340. bytes (REL,CON)
+_CODE_225              00E14000    00002094 =        8340. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00634000  _LEVEL_1_ |    006348FC  _LEVEL_2_ |    006351F8  _STAGE_DR
-     00635AF4  _WORLD1_C
+     00E14000  _LEVEL_1_ |    00E148FC  _LEVEL_2_ |    00E151F8  _STAGE_DR
+     00E15AF4  _WORLD1_C
 ASxxxx Linker V03.00 + NoICE + sdld,  page 36.
 Hexadecimal  [32-Bits]
 
@@ -526,53 +526,53 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186080.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9320.rel
                                           [ camera ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186081.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9321.rel
                                           [ collisions ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186082.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9322.rel
                                           [ ladder ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186083.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9323.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186084.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9324.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186085.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9325.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186086.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9326.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186087.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9327.rel
                                           [ worldtest ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186088.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9328.rel
                                           [ bullet ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc186089.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc9329.rel
                                           [ detective_16 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860810.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93210.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860811.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93211.rel
                                           [ elevator ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860812.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93212.rel
                                           [ level_1_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860813.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93213.rel
                                           [ level_1_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860814.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93214.rel
                                           [ level_2_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860815.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93215.rel
                                           [ level_2_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860816.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93216.rel
                                           [ level_tileset ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860817.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93217.rel
                                           [ NPC_electric ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860818.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93218.rel
                                           [ stage_drop_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860819.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93219.rel
                                           [ stage_drop_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860820.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93220.rel
                                           [ stage_drop_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860821.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93221.rel
                                           [ world1_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860822.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93222.rel
                                           [ world1_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc1860823.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc93223.rel
                                           [ world1_tiles ]
 
 
