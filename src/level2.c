@@ -594,6 +594,8 @@ void init_submap_lvl2()
     // bkg.collision_data = STAGE_DROP_COLLISION;
     COLLISION_WIDTH = LEVEL_2_COLLISIONWidth;
     COLLISION_DATA = LEVEL_2_COLLISION;
+    COLLISION_BANK = LEVEL_2_COLLISIONBank;
+
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;
 

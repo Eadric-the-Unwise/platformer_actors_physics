@@ -8,6 +8,7 @@ extern BYTE canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
 extern BYTE LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
 extern const UINT8 *COLLISION_DATA;
 extern unsigned char COLLISION_WIDTH;
+extern UINT8 COLLISION_BANK;
 
 // Release_timer
 void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);

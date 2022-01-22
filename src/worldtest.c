@@ -565,6 +565,7 @@ void init_submap_worldtest()
 
     COLLISION_WIDTH = WORLD1_COLLISIONWidth;
     COLLISION_DATA = WORLD1_COLLISION;
+    COLLISION_BANK = WORLD1_COLLISIONBank;
 
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;
