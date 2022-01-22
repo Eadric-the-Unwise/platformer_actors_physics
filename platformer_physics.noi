@@ -74,10 +74,10 @@ DEF l__CODE_6 0xE10
 DEF l__CODE_200 0x110A
 DEF l__HOME 0x1234
 DEF l__CODE_0 0x1514
-DEF l__CODE_100 0x15B3
+DEF l__CODE_100 0x15AB
 DEF l__CODE 0x165B
-DEF l__CODE_5 0x1795
-DEF l__CODE_7 0x1796
+DEF l__CODE_5 0x178D
+DEF l__CODE_7 0x178E
 DEF s__HOME 0x185B
 DEF l__CODE_225 0x1AF4
 DEF _rROMB0 0x2000
@@ -353,10 +353,10 @@ DEF _lvl1_cam1_render 0xC3BA
 DEF _lvl1_cam2_render 0xC3BE
 DEF _lvl1_cam3_render 0xC3C1
 DEF _lvl1_cam4_render 0xC3C4
-DEF _cam1 0xC3C6
-DEF _cam2 0xC3C9
-DEF _cam3 0xC3CB
-DEF _cam4 0xC3CD
+DEF _lvl1_cam1 0xC3C6
+DEF _lvl1_cam2 0xC3C9
+DEF _lvl1_cam3 0xC3CB
+DEF _lvl1_cam4 0xC3CD
 DEF _lvl2_cam1_render 0xC3CE
 DEF _lvl2_cam2_render 0xC3D2
 DEF _lvl2_cam3_render 0xC3D5
@@ -394,7 +394,7 @@ DEF _spawn_bullets 0x54B01
 DEF _npc_collisions_level1 0x54C31
 DEF _init_submap 0x54F8D
 DEF _setup_lvl1 0x550B7
-DEF _enter_lvl1 0x55106
+DEF _enter_lvl1 0x550FE
 DEF _anim_level2 0x74000
 DEF _level2 0x748AF
 DEF _level2_actors 0x748BB
@@ -403,7 +403,7 @@ DEF _spawn_bullets_lvl2 0x74B01
 DEF _npc_collisions_level2 0x74C31
 DEF _init_submap_lvl2 0x74F8D
 DEF _setup_lvl2 0x750B7
-DEF _enter_lvl2 0x75106
+DEF _enter_lvl2 0x750FE
 DEF _anim_worldtest 0x644000
 DEF _worldtest 0x6446EB
 DEF _worldtest_actors 0x6446F7
@@ -412,7 +412,7 @@ DEF _spawn_bullets_worldtest 0x64493D
 DEF _npc_collisions_worldtest 0x644A6D
 DEF _init_submap_worldtest 0x644D7D
 DEF _setup_worldtest 0x644EBE
-DEF _enter_worldtest 0x644F17
+DEF _enter_worldtest 0x644F0F
 DEF _bullet_data 0xC94000
 DEF _bullet_metasprite0 0xC94020
 DEF _bullet_metasprites 0xC94028

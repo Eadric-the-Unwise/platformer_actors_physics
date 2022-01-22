@@ -301,10 +301,10 @@
 00:C3BE _lvl1_cam2_render
 00:C3C1 _lvl1_cam3_render
 00:C3C4 _lvl1_cam4_render
-00:C3C6 _cam1
-00:C3C9 _cam2
-00:C3CB _cam3
-00:C3CD _cam4
+00:C3C6 _lvl1_cam1
+00:C3C9 _lvl1_cam2
+00:C3CB _lvl1_cam3
+00:C3CD _lvl1_cam4
 00:C3CE _lvl2_cam1_render
 00:C3D2 _lvl2_cam2_render
 00:C3D5 _lvl2_cam3_render
@@ -342,7 +342,7 @@
 05:4C31 _npc_collisions_level1
 05:4F8D _init_submap
 05:50B7 _setup_lvl1
-05:5106 _enter_lvl1
+05:50FE _enter_lvl1
 07:4000 _anim_level2
 07:48AF _level2
 07:48BB _level2_actors
@@ -351,7 +351,7 @@
 07:4C31 _npc_collisions_level2
 07:4F8D _init_submap_lvl2
 07:50B7 _setup_lvl2
-07:5106 _enter_lvl2
+07:50FE _enter_lvl2
 06:4000 _LEVEL_1_MAP
 06:4708 _STAGE_DROP_MAP
 08:4000 _LEVEL_2_MAP
