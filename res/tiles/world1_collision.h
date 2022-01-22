@@ -22,7 +22,7 @@
 
 #define WORLD1_COLLISIONWidth 40
 #define WORLD1_COLLISIONHeight 36
-#define WORLD1_COLLISIONBank 225
+#define WORLD1_COLLISIONBank 230
 
 extern const void __bank_WORLD1_COLLISION;
 extern const unsigned char WORLD1_COLLISION[];
