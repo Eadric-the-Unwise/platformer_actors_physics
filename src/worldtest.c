@@ -531,7 +531,7 @@ void enter_worldtest() {
                         PLAYER.SpdX = -MAX_WALK_SPEED;
                     }
                 } else if (joy & J_RIGHT) {
-                    if (px > 152 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x) {
+                    if (px > 160 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x) {
                         bkg.slider = TRUE;
                         JOYLOCK = TRUE;
                         ANIMATIONLOCK = TRUE;
@@ -592,7 +592,7 @@ void enter_worldtest() {
                 bkg.camera_x -= TO_COORDS(4);  // Move as much as slide in X direction
                 PLAYER.SpdX = 0;
                 PLAYER.SpdY = 0;
-                PLAYER.x = TO_COORDS(140);
+                PLAYER.x += 52;
                 // bkg.camera_y -= 8; // " " in Y direction
                 bkg.redraw = TRUE;  // Flag for redraw
             } else if (bkg.slide_dir == SLIDERIGHT) {
