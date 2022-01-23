@@ -178,6 +178,7 @@ void land();
 void setGameBank(UBYTE i);
 void gameover();
 extern UINT8 GAMEOVER;
+extern UINT8 WALKSTATE;
 extern UINT8 EXIT1, EXIT2;
 extern UINT8 JOYLOCK;
 extern UINT8 ANIMATIONLOCK;
