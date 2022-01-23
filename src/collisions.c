@@ -370,16 +370,52 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     SWITCH_ROM(__save);
 }
 
-void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+void check_world_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT8 __save = _current_bank;
     SWITCH_ROM(COLLISION_BANK);
-    UINT16 index_y, index_x, indexCamx, tileindex;  //
+    UINT16 indexTy, indexDy, index_x, indexCamx, tileindexT, tileindexD;  //
     // INSTEAD OF CHECKING T C D, CHECK TL, BL, TR, BR ONLY. HARD CODE THESE OFFSETS AND CHECK ALL 4 IN ANY DIRECTION
     if (joy & J_LEFT) {
         LR_Offset_X = 12;
     } else if (joy & J_RIGHT) {
         LR_Offset_X = 6;
     }
+    // if (joy & J_UP) {
+    //     UD_Offset_Y = 12;
+    // } else if (joy & J_DOWN) {
+    //     UD_Offset_Y = 10;
+    // }
+    // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
+    indexCamx = camera_x;
+    indexTy = (newplayery - 12) / 8;  // TOP Y AXIS
+    indexDy = (newplayery - 10) / 8;
+    index_x = ((newplayerx - LR_Offset_X) + indexCamx) / 8;
+
+    // REGULAR COLLISION INDEX
+    tileindexT = COLLISION_WIDTH * indexTy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexD = COLLISION_WIDTH * indexDy + index_x;
+
+    if ((COLLISION_DATA[tileindexT] == 0x01) || (COLLISION_DATA[tileindexD] == 0x01)) {
+        PLAYER.SpdX = 0;
+    }
+
+    if ((COLLISION_DATA[tileindexT] == 0x08) || (COLLISION_DATA[tileindexD] == 0x08)) {
+        EXIT1 = TRUE;
+    } else if ((COLLISION_DATA[tileindexT] == 0x09) || (COLLISION_DATA[tileindexD] == 0x09)) {
+        EXIT2 = TRUE;
+    }
+    SWITCH_ROM(__save);
+}
+void check_world_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+    UINT8 __save = _current_bank;
+    SWITCH_ROM(COLLISION_BANK);
+    UINT16 index_y, indexLx, indexRx, indexCamx, tileindexL, tileindexR;  //
+    // INSTEAD OF CHECKING T C D, CHECK TL, BL, TR, BR ONLY. HARD CODE THESE OFFSETS AND CHECK ALL 4 IN ANY DIRECTION
+    // if (joy & J_LEFT) {
+    //     LR_Offset_X = 12;
+    // } else if (joy & J_RIGHT) {
+    //     LR_Offset_X = 6;
+    // }
     if (joy & J_UP) {
         UD_Offset_Y = 12;
     } else if (joy & J_DOWN) {
@@ -388,19 +424,19 @@ void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) 
     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
     indexCamx = camera_x;
     index_y = (newplayery - UD_Offset_Y) / 8;  // TOP Y AXIS
-    index_x = ((newplayerx - LR_Offset_X) + indexCamx) / 8;
-
+    indexLx = ((newplayerx - 12) + indexCamx) / 8;
+    indexRx = ((newplayerx - 6) + indexCamx) / 8;
     // REGULAR COLLISION INDEX
-    tileindex = COLLISION_WIDTH * index_y + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexL = COLLISION_WIDTH * index_y + indexLx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexR = COLLISION_WIDTH * index_y + indexRx;
 
-    if ((COLLISION_DATA[tileindex] == 0x01)) {
-        PLAYER.SpdX = 0;
+    if ((COLLISION_DATA[tileindexL] == 0x01) || (COLLISION_DATA[tileindexR] == 0x01)) {
         PLAYER.SpdY = 0;
     }
 
-    if ((COLLISION_DATA[tileindex] == 0x08)) {
+    if ((COLLISION_DATA[tileindexL] == 0x08) || (COLLISION_DATA[tileindexR] == 0x08)) {
         EXIT1 = TRUE;
-    } else if ((COLLISION_DATA[tileindex] == 0x09)) {
+    } else if ((COLLISION_DATA[tileindexL] == 0x09) || (COLLISION_DATA[tileindexR] == 0x09)) {
         EXIT2 = TRUE;
     }
     SWITCH_ROM(__save);

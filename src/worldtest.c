@@ -621,7 +621,17 @@ void enter_worldtest() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
 
-        check_world_collisions(px, py, TO_PIXELS(bkg.camera_x));
+        if (PLAYER.SpdY > 0) {
+            check_world_UD(px, py + 1, TO_PIXELS(bkg.camera_x));  // IF MOVING RIGHT
+        } else if (PLAYER.SpdY < 0) {
+            check_world_UD(px, py - 1, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
+        }
+
+        if (PLAYER.SpdX > 0) {
+            check_world_LR(px + 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING RIGHT
+        } else if (PLAYER.SpdX < 0) {
+            check_world_LR(px - 1, py, TO_PIXELS(bkg.camera_x));  // IF MOVING LEFT
+        }
 
         if (PLAYER.SpdY < 0) {
             if (PLAYER.SpdY != -MAX_WALK_SPEED) {
