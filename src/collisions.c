@@ -394,8 +394,9 @@ void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) 
     tileindexTR = COLLISION_WIDTH * indexTy + index_Rx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexDR = COLLISION_WIDTH * indexDy + index_Rx;
 
-    if ((COLLISION_DATA[tileindexDL] == 0x01) || (COLLISION_DATA[tileindexDR] == 0x01)) {
+    if ((COLLISION_DATA[tileindexTL] == 0x01) || (COLLISION_DATA[tileindexDL] == 0x01) || (COLLISION_DATA[tileindexTR] == 0x01) || (COLLISION_DATA[tileindexDR] == 0x01)) {
         PLAYER.SpdX = 0;
+        PLAYER.SpdY = 0;
     }
 
     if ((COLLISION_DATA[tileindexTL] == 0x08) || (COLLISION_DATA[tileindexDR] == 0x08) || (COLLISION_DATA[tileindexDL] == 0x08) || (COLLISION_DATA[tileindexDR] == 0x08)) {

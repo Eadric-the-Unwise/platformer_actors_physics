@@ -6,7 +6,7 @@
 
  Info:
    Section       : 
-   Bank          : 100
+   Bank          : 230
    Map size      : 40 x 36
    Tile set      : stage_collision_tileset.gbr
    Plane count   : 1 plane (8 bits)
