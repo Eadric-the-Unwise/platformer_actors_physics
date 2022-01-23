@@ -400,10 +400,9 @@ void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) 
 
     if ((COLLISION_DATA[tileindexTL] == 0x08) || (COLLISION_DATA[tileindexDR] == 0x08) || (COLLISION_DATA[tileindexDL] == 0x08) || (COLLISION_DATA[tileindexDR] == 0x08)) {
         EXIT1 = TRUE;
+    } else if ((COLLISION_DATA[tileindexTL] == 0x09) || (COLLISION_DATA[tileindexDR] == 0x09) || (COLLISION_DATA[tileindexDL] == 0x09) || (COLLISION_DATA[tileindexDR] == 0x09)) {
+        EXIT2 = TRUE;
     }
-    // else if ((COLLISION_DATA[tileindexT] == 0x09) || (COLLISION_DATA[tileindexC] == 0x09) || (COLLISION_DATA[tileindexD] == 0x09)) {
-    //     EXIT2 = TRUE;
-    // }
     SWITCH_ROM(__save);
 }
 
