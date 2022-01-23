@@ -17,5 +17,5 @@ void check_J(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
 void check_Drop(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
 void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
 BYTE overlap(INT16 r1_y, INT16 r1_x, INT16 l1_y, INT16 l1_x, INT16 r2_y, INT16 r2_x, INT16 l2_y, INT16 l2_x);
-void check_world_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
-void check_world_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x);
+void check_world_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, INT16 camera_y);
+void check_world_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, INT16 camera_y);

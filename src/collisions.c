@@ -370,7 +370,7 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     SWITCH_ROM(__save);
 }
 
-void check_world_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+void check_world_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, INT16 camera_y) {
     UINT8 __save = _current_bank;
     SWITCH_ROM(COLLISION_BANK);
     UINT16 indexTy, indexDy, index_x, indexCamx, tileindexT, tileindexD;  //
@@ -380,15 +380,10 @@ void check_world_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     } else if (joy & J_RIGHT) {
         LR_Offset_X = 6;
     }
-    // if (joy & J_UP) {
-    //     UD_Offset_Y = 12;
-    // } else if (joy & J_DOWN) {
-    //     UD_Offset_Y = 10;
-    // }
     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
     indexCamx = camera_x;
-    indexTy = (newplayery - 12) / 8;  // TOP Y AXIS
-    indexDy = (newplayery - 10) / 8;
+    indexTy = ((newplayery - 12) + camera_y) / 8;  // TOP Y AXIS
+    indexDy = ((newplayery - 10) + camera_y) / 8;
     index_x = ((newplayerx - LR_Offset_X) + indexCamx) / 8;
 
     // REGULAR COLLISION INDEX
@@ -406,24 +401,20 @@ void check_world_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     }
     SWITCH_ROM(__save);
 }
-void check_world_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
+void check_world_UD(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, INT16 camera_y) {
     UINT8 __save = _current_bank;
     SWITCH_ROM(COLLISION_BANK);
     UINT16 index_y, indexLx, indexRx, indexCamx, tileindexL, tileindexR;  //
     // INSTEAD OF CHECKING T C D, CHECK TL, BL, TR, BR ONLY. HARD CODE THESE OFFSETS AND CHECK ALL 4 IN ANY DIRECTION
-    // if (joy & J_LEFT) {
-    //     LR_Offset_X = 12;
-    // } else if (joy & J_RIGHT) {
-    //     LR_Offset_X = 6;
-    // }
+
     if (joy & J_UP) {
-        UD_Offset_Y = 12;
+        UD_Offset_Y = 24;
     } else if (joy & J_DOWN) {
         UD_Offset_Y = 10;
     }
     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
     indexCamx = camera_x;
-    index_y = (newplayery - UD_Offset_Y) / 8;  // TOP Y AXIS
+    index_y = ((newplayery - UD_Offset_Y) + camera_y) / 8;  // TOP Y AXIS
     indexLx = ((newplayerx - 12) + indexCamx) / 8;
     indexRx = ((newplayerx - 6) + indexCamx) / 8;
     // REGULAR COLLISION INDEX
