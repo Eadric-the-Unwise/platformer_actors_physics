@@ -373,31 +373,32 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT8 __save = _current_bank;
     SWITCH_ROM(COLLISION_BANK);
-    UINT16 indexDy, indexCy, indexTy, index_x, indexCamx, tileindexD, tileindexC, tileindexT;
+    UINT16 indexDy, index_Lx, index_Rx, indexCamx, tileindexDL, tileindexDR;  // indexTy tileindexTR tileindexTL
     // INSTEAD OF CHECKING T C D, CHECK TL, BL, TR, BR ONLY. HARD CODE THESE OFFSETS AND CHECK ALL 4 IN ANY DIRECTION
-    if (joy & J_LEFT) {
-        LR_Offset_X = 12;
-    } else if (joy & J_RIGHT) {
-        LR_Offset_X = 4;
-    }
+    // if (joy & J_LEFT) {
+    //     LR_Offset_X = 12;
+    // } else if (joy & J_RIGHT) {
+    //     LR_Offset_X = 4;
+    // }
     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
     indexCamx = camera_x;
-    indexTy = (newplayery - 16) / 8;  // TOP Y AXIS
-    indexCy = (newplayery - 8) / 8;   // CENTER Y AXIS
-    indexDy = (newplayery) / 8;       // BOTTOM Y AXIS
+    // indexTy = (newplayery) / 8;       // TOP Y AXIS
+    indexDy = (newplayery - 8) / 8;  // BOTTOM Y AXIS
 
-    index_x = ((newplayerx - LR_Offset_X) + indexCamx) / 8;
+    index_Lx = ((newplayerx - 12) + indexCamx) / 8;
+    index_Rx = ((newplayerx - 4) + indexCamx) / 8;
 
     // REGULAR COLLISION INDEX
-    tileindexT = COLLISION_WIDTH * indexTy + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexC = COLLISION_WIDTH * indexCy + index_x;
-    tileindexD = COLLISION_WIDTH * indexDy + index_x;
+    // tileindexTL = COLLISION_WIDTH * indexTy + index_Lx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexDL = COLLISION_WIDTH * indexDy + index_Lx;
+    // tileindexTR = COLLISION_WIDTH * indexTy + index_Rx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
+    tileindexDR = COLLISION_WIDTH * indexDy + index_Rx;
 
-    if ((COLLISION_DATA[tileindexT] == 0x01) || (COLLISION_DATA[tileindexC] == 0x01) || (COLLISION_DATA[tileindexD] == 0x01)) {
+    if ((COLLISION_DATA[tileindexDL] == 0x01) || (COLLISION_DATA[tileindexDR] == 0x01)) {
         PLAYER.SpdX = 0;
     }
 
-    if ((COLLISION_DATA[tileindexT] == 0x08) || (COLLISION_DATA[tileindexC] == 0x08) || (COLLISION_DATA[tileindexD] == 0x08)) {
+    if ((COLLISION_DATA[tileindexDL] == 0x08) || (COLLISION_DATA[tileindexDR] == 0x08)) {
         EXIT1 = TRUE;
     }
     // else if ((COLLISION_DATA[tileindexT] == 0x09) || (COLLISION_DATA[tileindexC] == 0x09) || (COLLISION_DATA[tileindexD] == 0x09)) {
