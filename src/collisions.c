@@ -373,35 +373,34 @@ void check_C(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
 void check_world_collisions(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
     UINT8 __save = _current_bank;
     SWITCH_ROM(COLLISION_BANK);
-    UINT16 indexTy, indexDy, index_Lx, index_Rx, indexCamx, tileindexTR, tileindexTL, tileindexDL, tileindexDR;  //
+    UINT16 index_y, index_x, indexCamx, tileindex;  //
     // INSTEAD OF CHECKING T C D, CHECK TL, BL, TR, BR ONLY. HARD CODE THESE OFFSETS AND CHECK ALL 4 IN ANY DIRECTION
-    // if (joy & J_LEFT) {
-    //     LR_Offset_X = 12;
-    // } else if (joy & J_RIGHT) {
-    //     LR_Offset_X = 4;
-    // }
+    if (joy & J_LEFT) {
+        LR_Offset_X = 12;
+    } else if (joy & J_RIGHT) {
+        LR_Offset_X = 6;
+    }
+    if (joy & J_UP) {
+        UD_Offset_Y = 12;
+    } else if (joy & J_DOWN) {
+        UD_Offset_Y = 10;
+    }
     // REPLACE THESE HARD CODED INDEXES WITH OFFSETS SIMILAR TO THE NPC COLLISION FUNC
     indexCamx = camera_x;
-    indexTy = (newplayery - 12) / 8;  // TOP Y AXIS
-    indexDy = (newplayery - 10) / 8;  // BOTTOM Y AXIS
-
-    index_Lx = ((newplayerx - 12) + indexCamx) / 8;
-    index_Rx = ((newplayerx - 6) + indexCamx) / 8;
+    index_y = (newplayery - UD_Offset_Y) / 8;  // TOP Y AXIS
+    index_x = ((newplayerx - LR_Offset_X) + indexCamx) / 8;
 
     // REGULAR COLLISION INDEX
-    tileindexTL = COLLISION_WIDTH * indexTy + index_Lx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexDL = COLLISION_WIDTH * indexDy + index_Lx;
-    tileindexTR = COLLISION_WIDTH * indexTy + index_Rx;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
-    tileindexDR = COLLISION_WIDTH * indexDy + index_Rx;
+    tileindex = COLLISION_WIDTH * index_y + index_x;  // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
 
-    if ((COLLISION_DATA[tileindexTL] == 0x01) || (COLLISION_DATA[tileindexDL] == 0x01) || (COLLISION_DATA[tileindexTR] == 0x01) || (COLLISION_DATA[tileindexDR] == 0x01)) {
+    if ((COLLISION_DATA[tileindex] == 0x01)) {
         PLAYER.SpdX = 0;
         PLAYER.SpdY = 0;
     }
 
-    if ((COLLISION_DATA[tileindexTL] == 0x08) || (COLLISION_DATA[tileindexDR] == 0x08) || (COLLISION_DATA[tileindexDL] == 0x08) || (COLLISION_DATA[tileindexDR] == 0x08)) {
+    if ((COLLISION_DATA[tileindex] == 0x08)) {
         EXIT1 = TRUE;
-    } else if ((COLLISION_DATA[tileindexTL] == 0x09) || (COLLISION_DATA[tileindexDR] == 0x09) || (COLLISION_DATA[tileindexDL] == 0x09) || (COLLISION_DATA[tileindexDR] == 0x09)) {
+    } else if ((COLLISION_DATA[tileindex] == 0x09)) {
         EXIT2 = TRUE;
     }
     SWITCH_ROM(__save);
