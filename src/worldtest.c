@@ -546,7 +546,7 @@ void enter_worldtest() {
                     }
                 }
                 if (joy & J_UP) {
-                    if (py < 16 && TO_PIXELS(bkg.camera_y) > 0) {
+                    if (py < 8 && TO_PIXELS(bkg.camera_y) > 0) {
                         bkg.slider = TRUE;
                         bkg.slide_dir = SLIDEUP;
                         JOYLOCK = TRUE;
@@ -558,7 +558,7 @@ void enter_worldtest() {
                     } else
                         PLAYER.SpdY = -MAX_WALK_SPEED;
                 } else if (joy & J_DOWN) {
-                    if (py > 160 && TO_PIXELS(bkg.camera_y) < bkg.camera_max_y) {
+                    if (py > 168 && TO_PIXELS(bkg.camera_y) < bkg.camera_max_y) {
                         bkg.slider = TRUE;
                         bkg.slide_dir = SLIDEDOWN;
                         JOYLOCK = TRUE;
