@@ -3,6 +3,7 @@
 #include "scene.h"
 
 Variables bkg;
+WORLDCAM CAM;
 extern UINT8 joy;
 
 void set_camera() {

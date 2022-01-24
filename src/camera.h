@@ -78,7 +78,6 @@ typedef struct Variables {
     cam_style camera_style;
     slide_dir slide_dir;
     UINT8 level_map_bank;
-    WORLDCAM CAM;
     UINT8 collision_width;
     // const UINT8 *collision_data;
 
