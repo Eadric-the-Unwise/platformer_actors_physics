@@ -210,48 +210,13 @@ void anim_worldtest() {
         ptr = worldtest_cam2;
         nptr = worldtest_cam3;
     }
-    //  else if ((camera_x >= 160) && (camera_x < 320)) {  // CAM3
-
-    //     cam_ptr = worldtest_cam3_render;
-    //     prev_actors_count = worldtest_CAM2_COUNT;
-    //     active_NPC_count = worldtest_CAM3_COUNT;
-    //     next_actors_count = worldtest_CAM4_COUNT;
-    //     pptr = worldtest_cam2;
-    //     ptr = worldtest_cam3;
-    //     nptr = worldtest_cam4;
-    // } else if (camera_x < 160) {  // CAM4
-    //     cam_ptr = worldtest_cam4_render;
-
-    //     prev_actors_count = worldtest_CAM3_COUNT;
-    //     active_NPC_count = worldtest_CAM4_COUNT;
-    //     pptr = worldtest_cam3;
-    //     ptr = worldtest_cam4;
-    // }
     render_actors_count = active_NPC_count + 1;
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
     actor_t *current_bullet = active_bullets;
 
-    // SIDE SCROLLING CAMERA LOCKED AT 118
-
-    // if ((camera_x > 0) && (camera_x < bkg.camera_max_x)) {
-    //     bkg.camera_x += PLAYER.SpdX;
-    //     bkg.redraw = TRUE;
-
-    // } else
     PLAYER.x += PLAYER.SpdX;
-    // if ((camera_x - 1) <= 0) {
-    //     if ((joy & J_RIGHT) && (player_x >= 118)) {
-    //         bkg.camera_x += PLAYER.SpdX;
-    //         bkg.redraw = TRUE;
-    //     }
-    // } else if ((camera_x + 1) >= bkg.camera_max_x) {
-    //     if ((joy & J_LEFT) && (player_x <= 118)) {
-    //         bkg.camera_x += PLAYER.SpdX;
-    //         bkg.redraw = TRUE;
-    //     }
-    // }
 
     for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF NPC SPRITES
         prev_actor->RENDER = FALSE;
@@ -275,10 +240,6 @@ void anim_worldtest() {
         } else {
             current_actor->RENDER = TRUE;
         }
-
-        // if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
-        //     current_actor->x -= PLAYER.SpdX;
-        // }
 
         if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {  // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
             if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
@@ -319,7 +280,6 @@ void anim_worldtest() {
         }
         ptr++;
         current_actor = &active_actors[*ptr];
-        // current_actor++;
     }
     for (UINT8 i = MAX_BULLETS; i != 0; i--) {
         if (current_bullet->RENDER == TRUE) {
@@ -386,12 +346,6 @@ void spawn_bullets_worldtest() {
     // }
 }
 void npc_collisions_worldtest() {
-    // CHECK LANDING HOTBOX TIMING
-    // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
-    // PLAYER.h_offset = 8;
-    // PLAYER.x_offset = 8;
-    // PLAYER.y_offset = 8;
-
     for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++) {
         //[y][x]
         UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
@@ -518,12 +472,6 @@ void enter_worldtest() {
             py = TO_PIXELS(PLAYER.y);
             if (!JOYLOCK) {
                 if (joy & J_LEFT) {
-                    if (px > 192 && TO_PIXELS(bkg.camera_x) > 0) {  // if player walks off edge of screen LEFT
-                        bkg.slider = TRUE;
-                        bkg.slide_dir = SLIDELEFT;
-                        JOYLOCK = TRUE;
-                        ANIMATIONLOCK = TRUE;
-                    }
                     SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
                     if (PLAYER.SpdX > -MAX_WALK_SPEED) {
                         PLAYER.SpdX -= WALK_VELOCITY;
@@ -531,12 +479,6 @@ void enter_worldtest() {
                         PLAYER.SpdX = -MAX_WALK_SPEED;
                     }
                 } else if (joy & J_RIGHT) {
-                    if (px > 176 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x) {
-                        bkg.slider = TRUE;
-                        JOYLOCK = TRUE;
-                        ANIMATIONLOCK = TRUE;
-                        bkg.slide_dir = SLIDERIGHT;
-                    }
                     SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
 
                     if (PLAYER.SpdX < MAX_WALK_SPEED) {
@@ -545,65 +487,67 @@ void enter_worldtest() {
                         PLAYER.SpdX = MAX_WALK_SPEED;
                     }
                 }
-                if (joy & J_UP) {
-                    if (py < 8 && TO_PIXELS(bkg.camera_y) > 0) {
-                        bkg.slider = TRUE;
-                        bkg.slide_dir = SLIDEUP;
-                        JOYLOCK = TRUE;
-                        ANIMATIONLOCK = TRUE;
-                    }
-                    SetActorDirection(&PLAYER, DIR_UP_L, PLAYER.animation_phase);
-                    if (PLAYER.SpdY > MAX_WALK_SPEED) {
-                        PLAYER.SpdY -= WALK_VELOCITY;
-                    } else
-                        PLAYER.SpdY = -MAX_WALK_SPEED;
-                } else if (joy & J_DOWN) {
-                    if (py > 168 && TO_PIXELS(bkg.camera_y) < bkg.camera_max_y) {
-                        bkg.slider = TRUE;
-                        bkg.slide_dir = SLIDEDOWN;
-                        JOYLOCK = TRUE;
-                        ANIMATIONLOCK = TRUE;
-                    }
+                if (joy & J_DOWN) {
                     SetActorDirection(&PLAYER, DIR_DOWN_L, PLAYER.animation_phase);
                     if (PLAYER.SpdY < MAX_WALK_SPEED) {
                         PLAYER.SpdY += WALK_VELOCITY;
                     } else
                         PLAYER.SpdY = MAX_WALK_SPEED;
+                } else if (joy & J_UP) {
+                    SetActorDirection(&PLAYER, DIR_UP_L, PLAYER.animation_phase);
+                    if (PLAYER.SpdY > MAX_WALK_SPEED) {
+                        PLAYER.SpdY -= WALK_VELOCITY;
+                    } else
+                        PLAYER.SpdY = -MAX_WALK_SPEED;
+                }
+                if (px <= 2 && TO_PIXELS(bkg.camera_x) > 0) {  // if player walks off edge of screen LEFT
+                    bkg.slider = TRUE;
+                    bkg.slide_dir = SLIDELEFT;
+                    JOYLOCK = TRUE;
+                    ANIMATIONLOCK = TRUE;
+                } else if (px >= 174 && TO_PIXELS(bkg.camera_x) < bkg.camera_max_x) {
+                    bkg.slider = TRUE;
+                    JOYLOCK = TRUE;
+                    ANIMATIONLOCK = TRUE;
+                    bkg.slide_dir = SLIDERIGHT;
+                } else if (py >= 168 && TO_PIXELS(bkg.camera_y) < bkg.camera_max_y) {
+                    bkg.slider = TRUE;
+                    bkg.slide_dir = SLIDEDOWN;
+                    JOYLOCK = TRUE;
+                    ANIMATIONLOCK = TRUE;
+                } else if (py <= 8 && TO_PIXELS(bkg.camera_y) > 0) {
+                    bkg.slider = TRUE;
+                    bkg.slide_dir = SLIDEUP;
+                    JOYLOCK = TRUE;
+                    ANIMATIONLOCK = TRUE;
                 }
             }
         }
         if (bkg.slider) {
+            PLAYER.SpdX = 0;
+            PLAYER.SpdY = 0;
             // If the camera and slide is inside the map, slide, otherwise cancel slide
-            // if (!(TO_PIXELS(bkg.camera_x) <= 0 || TO_PIXELS(bkg.camera_x) > bkg.camera_max_x ||
-            //       bkg.camera_y < 0 || bkg.camera_y > bkg.camera_max_y))
-            // {
-            if (bkg.slide_dir == SLIDELEFT) {
-                bkg.camera_x -= TO_COORDS(4);  // Move as much as slide in X direction
-                PLAYER.SpdX = 0;
-                PLAYER.SpdY = 0;
-                PLAYER.x = TO_COORDS(174);
-                bkg.redraw = TRUE;  // Flag for redraw
-            } else if (bkg.slide_dir == SLIDERIGHT) {
-                bkg.camera_x += TO_COORDS(4);  // Move as much as slide in X direction
-                PLAYER.SpdX = 0;
-                PLAYER.SpdY = 0;
-                PLAYER.x = TO_COORDS(0);
-                bkg.redraw = TRUE;  // Flag for redraw
-            } else if (bkg.slide_dir == SLIDEUP) {
-                bkg.camera_y -= TO_COORDS(4);  // Move as much as slide in X direction
-                PLAYER.SpdX = 0;
-                PLAYER.SpdY = 0;
-                // PLAYER.y += SCROLL_SPD;
-                PLAYER.y = TO_COORDS(178);
-                // bkg.camera_y -= 8; // " " in Y direction
-                bkg.redraw = TRUE;  // Flag for redraw
-            } else if (bkg.slide_dir == SLIDEDOWN) {
-                bkg.camera_y += TO_COORDS(4);  // Move as much as slide in X direction
-                PLAYER.SpdX = 0;
-                PLAYER.SpdY = 0;
-                PLAYER.y = TO_COORDS(0);
-                // bkg.camera_y -= 8; // " " in Y direction
-                bkg.redraw = TRUE;  // Flag for redraw
+            switch (bkg.slide_dir) {
+                case SLIDELEFT:
+                    bkg.camera_x -= TO_COORDS(4);  // Move as much as slide in X direction
+                    PLAYER.x = TO_COORDS(174);
+                    bkg.redraw = TRUE;  // Flag for redraw
+                    break;
+                case SLIDERIGHT:
+                    bkg.camera_x += TO_COORDS(4);  // Move as much as slide in X direction
+                    PLAYER.x = TO_COORDS(0);
+                    bkg.redraw = TRUE;  // Flag for redraw
+                    break;
+                case SLIDEUP:
+                    bkg.camera_y -= TO_COORDS(4);  // Move as much as slide in X direction
+                    PLAYER.y = TO_COORDS(178);
+                    bkg.redraw = TRUE;  // Flag for redraw
+                    break;
+                case SLIDEDOWN:
+                    bkg.camera_y += TO_COORDS(4);  // Move as much as slide in X direction
+                    PLAYER.y = TO_COORDS(0);
+                    bkg.redraw = TRUE;  // Flag for redraw
+                    break;
             }
             // If camera is at the end of the slide, stop slider
             if (TO_PIXELS(bkg.camera_x) % 160 == 0 && TO_PIXELS(bkg.camera_y) % 144 == 0) {
@@ -688,18 +632,11 @@ void enter_worldtest() {
         px = TO_PIXELS(PLAYER.x);
         py = TO_PIXELS(PLAYER.y);
         // // Change to IDLE state when not moving
-        // if ((!JUMP) && (!CROUCH) && (PLAYER.direction != DIR_LAND_L) && (PLAYER.direction != DIR_LAND_R) && (!LADDER)) {
         if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0)) {
             if (!(joy & J_LEFT) && !(joy & J_RIGHT) && !(ANIMATIONLOCK)) {
                 switch_idle();
-                // check_C(px, py, TO_PIXELS(bkg.camera_x));
             }
         }
-        // }
-        // DOWN while standing still
-        // if ((CROUCH) && (!canCROUCH) && (!(joy & J_LEFT) && !(joy & J_RIGHT)) && (PLAYER.SpdY == 0)) {
-        //     switch_down();
-        // }
 
         // UPDATE THE CAMERA POSITION SETTINGS
         // render_camera(px, TO_PIXELS(bkg.camera_x));
@@ -713,8 +650,6 @@ void enter_worldtest() {
             collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_world_actors();
-        // bkg.camera_x -= TO_COORDS(1);
-        // bkg.redraw = TRUE;
 
         if (bkg.redraw) {
             set_world_camera();
@@ -729,16 +664,11 @@ void enter_worldtest() {
         }
 
         if (GAMEOVER) {
-            // gamestate = 1;
             enter_worldtest();
-            // gameover();
-            // TRY LOADING A SECOND STAGE HERE?
-        } else if (EXIT1)  // GO TO LEVEL1
-        {
+        } else if (EXIT1) {  // GO TO LEVEL1
             EXIT1 = FALSE;
             gamestate = 1;
-        } else if (EXIT2)  // GO TO LEVEL2
-        {
+        } else if (EXIT2) {  // GO TO LEVEL2
             EXIT2 = FALSE;
             gamestate = 2;
         }

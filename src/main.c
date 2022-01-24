@@ -19,12 +19,10 @@ extern uint8_t animation_timer;
 const level_t *current_stage;
 uint8_t shadow_scx = 0, shadow_scy = 0;
 UINT8 *cam_ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
-
 BYTE ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
 UINT8 render_actors_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 UINT8 bullet_timer = 0;
-// WE NEED TO ADD A STATE OF LOCKING ALL BUTTONS. FOR EXAMPLE: IF ONTO_LADDER {LOCK BUTTONS}
 // actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 /*****************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -43,13 +41,6 @@ void main() {
     DROP_timer = 16;
     canCROUCH_timer = 10;  // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCROUCH_Ftimer = 8;  // TURN canCROUCH TO FALSE WHEN REACH COUNTDOWN
-    // SWITCH_ROM(LEVEL1_BANK);
-    // load_level(&level1);
-    // if (load_submap) load_submap();
-
-    // actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
-    // switch on display after everything is ready
-    // DISPLAY_ON;
     gamestate = 4;
 
     last_joy = joy = 0;

@@ -156,23 +156,9 @@ void check_LADDER(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x) {
                 }
             }
             if (UP_LADDER) {
-                // ONTO_Ladder_timer = 32;
-                // UINT8 tiley = ((TO_PIXELS(PLAYER.y)) / 8);
-                // PLAYER.y = TO_COORDS((tiley * 8) - 4);
-                // PLAYER.SpdY = 0;
-                // UP_LADDER = SPAWN = LADDER = JUMP = y_Collide = Gravity = FALSE;
                 SPAWN = JUMP = y_Collide = Gravity = FALSE;
                 PLAYER.SpdY = -10;
                 switch_ladder();
-                // PREVENT PLAYER FROM FLICKERING OFF LADDER IF FACING THE WRONG DIRECTION
-                // if (LEFT) {
-                //     if (PLAYER.direction == DIR_LADDER_R && PLAYER.patrol_timer < 3) {
-                //         // PLAYER.patrol_timer = 4;
-                //         SetActorDirection(&PLAYER, DIR_LADDER_L, 0);
-                //     }
-                // } else if (RIGHT) {
-                //     SetActorDirection(&PLAYER, DIR_LADDER_R, 0);
-                // }
 
                 if (UP_LADDER_timer == 0) {
                     UP_LADDER = FALSE;

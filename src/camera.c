@@ -5,20 +5,15 @@
 Variables bkg;
 extern UINT8 joy;
 
-void set_camera()
-{
+void set_camera() {
     shadow_scy = bkg.camera_y;
     shadow_scx = (bkg.camera_x >> 4u);
 
     bkg.map_pos_y = (bkg.camera_y >> 3u);
-    if (bkg.map_pos_y != bkg.old_map_pos_y)
-    {
-        if (bkg.camera_y < bkg.old_camera_y)
-        {
+    if (bkg.map_pos_y != bkg.old_map_pos_y) {
+        if (bkg.camera_y < bkg.old_camera_y) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, MIN(21u, bkg.level_map_width - bkg.map_pos_x), 1, bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
-        }
-        else
-        {
+        } else {
             if ((bkg.level_map_height - 18u) > bkg.map_pos_y)
                 set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y + 18u, MIN(21u, bkg.level_map_width - bkg.map_pos_x), 1, bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
         }
@@ -26,14 +21,10 @@ void set_camera()
     }
     // left or right
     bkg.map_pos_x = (bkg.camera_x >> 7u);
-    if (bkg.map_pos_x != bkg.old_map_pos_x)
-    {
-        if (bkg.camera_x < bkg.old_camera_x)
-        {
+    if (bkg.map_pos_x != bkg.old_map_pos_x) {
+        if (bkg.camera_x < bkg.old_camera_x) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 1, MIN(19u, bkg.level_map_height - bkg.map_pos_y), bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
-        }
-        else
-        {
+        } else {
             if ((bkg.level_map_width - 20u) > bkg.map_pos_x)
                 set_bkg_submap_nonbanked(bkg.map_pos_x + 20u, bkg.map_pos_y, 1, MIN(19u, bkg.level_map_height - bkg.map_pos_y), bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
         }
@@ -42,20 +33,15 @@ void set_camera()
     // set old camera position to current camera position
     bkg.old_camera_x = bkg.camera_x, bkg.old_camera_y = bkg.camera_y;
 }
-void set_world_camera()
-{
+void set_world_camera() {
     shadow_scy = bkg.camera_y >> 4u;
     shadow_scx = (bkg.camera_x >> 4u);
 
     bkg.map_pos_y = (bkg.camera_y >> 7u);
-    if (bkg.map_pos_y != bkg.old_map_pos_y)
-    {
-        if (bkg.camera_y < bkg.old_camera_y)
-        {
+    if (bkg.map_pos_y != bkg.old_map_pos_y) {
+        if (bkg.camera_y < bkg.old_camera_y) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, MIN(21u, bkg.level_map_width - bkg.map_pos_x), 1, bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
-        }
-        else
-        {
+        } else {
             if ((bkg.level_map_height - 18u) > bkg.map_pos_y)
                 set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y + 18u, MIN(21u, bkg.level_map_width - bkg.map_pos_x), 1, bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
         }
@@ -63,14 +49,10 @@ void set_world_camera()
     }
     // left or right
     bkg.map_pos_x = (bkg.camera_x >> 7u);
-    if (bkg.map_pos_x != bkg.old_map_pos_x)
-    {
-        if (bkg.camera_x < bkg.old_camera_x)
-        {
+    if (bkg.map_pos_x != bkg.old_map_pos_x) {
+        if (bkg.camera_x < bkg.old_camera_x) {
             set_bkg_submap_nonbanked(bkg.map_pos_x, bkg.map_pos_y, 1, MIN(19u, bkg.level_map_height - bkg.map_pos_y), bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
-        }
-        else
-        {
+        } else {
             if ((bkg.level_map_width - 20u) > bkg.map_pos_x)
                 set_bkg_submap_nonbanked(bkg.map_pos_x + 20u, bkg.map_pos_y, 1, MIN(19u, bkg.level_map_height - bkg.map_pos_y), bkg.level_map_data, bkg.level_map_width, bkg.level_map_bank);
         }
@@ -80,8 +62,7 @@ void set_world_camera()
     bkg.old_camera_x = bkg.camera_x, bkg.old_camera_y = bkg.camera_y;
 }
 
-inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, UINT8 bank)
-{
+inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, UINT8 bank) {
     bkg.level_map_width = map_width;
     bkg.level_map_height = map_height;
     bkg.level_map_data = map_data;
@@ -90,50 +71,31 @@ inline void set_level(UINT8 map_width, UINT8 map_height, const UINT8 *map_data, 
     bkg.level_map_bank = bank;
 }
 // PLATFORMING CAMERA
-void render_camera(UINT8 playerx, INT16 camx)
-{
+void render_camera(UINT8 playerx, INT16 camx) {
     // THIS IS ASSUMING PLAYER IS WALKING LEFT TO RIGHT. PERHAPS ADD A STAGE_LEFT AND STAGE_RIGHT VARIABLE IN THE STAGE STRUCT SO HE IS ON THE LEFT SIDE WHEN STAGE_RIGHT//
-    if ((camx > 0) && (camx < bkg.camera_max_x))
-    {
+    if ((camx > 0) && (camx < bkg.camera_max_x)) {
         bkg.camera_x += PLAYER.SpdX;
         bkg.redraw = TRUE;
         // if (playerx != 118) {
         //     PLAYER.x = TO_COORDS(118);
         // }
-    }
-    else
+    } else
         PLAYER.x += PLAYER.SpdX;
-    if ((camx - 1) <= 0)
-    {
-        if ((joy & J_RIGHT) && (playerx >= 118))
-        {
+    if ((camx - 1) <= 0) {
+        if ((joy & J_RIGHT) && (playerx >= 118)) {
             bkg.camera_x += PLAYER.SpdX;
             bkg.redraw = TRUE;
         }
-    }
-    else if ((camx + 1) >= bkg.camera_max_x)
-    {
-        if ((joy & J_LEFT) && (playerx <= 118))
-        {
+    } else if ((camx + 1) >= bkg.camera_max_x) {
+        if ((joy & J_LEFT) && (playerx <= 118)) {
             bkg.camera_x += PLAYER.SpdX;
             bkg.redraw = TRUE;
         }
     }
 }
-// void set_sprite_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank)
-// #ifndef __INTELLISENSE__
-//     NONBANKED
-// #endif
-// {
-//     UINT8 __save = _current_bank;
-//     SWITCH_ROM(bank);
-//     set_sprite_data(first_tile, nb_tiles, tile_data);
-//     SWITCH_ROM(__save);
-// }
 
 void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_data, UINT8 bank)
-    NONBANKED
-{
+    NONBANKED {
     UINT8 __save = _current_bank;
     SWITCH_ROM(bank);
     set_bkg_data(first_tile, nb_tiles, tile_data);
@@ -141,19 +103,16 @@ void set_bkg_data_nonbanked(UINT8 first_tile, UINT8 nb_tiles, const UINT8 *tile_
 }
 
 void set_bkg_submap_nonbanked(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const UINT8 *map_data, UINT8 map_w, UINT8 bank)
-    NONBANKED
-{
+    NONBANKED {
     UINT8 __save = _current_bank;
     SWITCH_ROM(bank);
     set_bkg_submap(x, y, w, h, map_data, map_w);
     SWITCH_ROM(__save);
 }
 
-void performantdelay(UINT8 numloops)
-{
+void performantdelay(UINT8 numloops) {
     UINT8 i;
-    for (i = 0; i < numloops; i++)
-    {
+    for (i = 0; i < numloops; i++) {
         wait_vbl_done();
     }
 }
