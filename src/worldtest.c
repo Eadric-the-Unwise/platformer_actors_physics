@@ -189,6 +189,7 @@ void anim_worldtest() {
     UINT8 prev_actors_count = NULL;  // previous array of sprites to turn off
     UINT8 next_actors_count = NULL;  // next array of sprite to turn off (in case you move back to a previous position)
 
+    //TRY LOADING THIS AS A FUNCTION INSTEAD OF A CONSITENT SWITCH CASE
     switch (CAM) {
         case CAM1:
             if (bkg.slide_dir == SLIDELEFT) {

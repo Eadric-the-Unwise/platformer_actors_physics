@@ -33,7 +33,7 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      000005A0  l__CODE_1 |    000005A0  l__CODE_2 |    00000708  l__CODE_8
      0000084A  l__CODE_3 |    00000E10  l__CODE_6 |    00000E16  l__CODE  
      00001016  s__HOME   |    0000110A  l__CODE_2 |    0000126A  l__HOME  
-     00001675  l__CODE_1 |    00001695  l__CODE_0 |    0000178D  l__CODE_5
+     00001666  l__CODE_1 |    00001695  l__CODE_0 |    0000178D  l__CODE_5
      0000178E  l__CODE_7 |    00001AF4  l__CODE_2 |    00002000  _rROMB0  
      00002280  s__BASE   |    00002280  s__CODE_0 |    00003000  _rROMB1  
      00003915  s__INITIA |    00003915  s__LIT    |    00003998  s__GSINIT
@@ -435,13 +435,13 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_100              00644000    00001675 =        5749. bytes (REL,CON)
+_CODE_100              00644000    00001666 =        5734. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00644000  _anim_wor |    00644581  _worldtes |    0064458D  _worldtes
-     00644772  _worldtes |    006447D3  _spawn_bu |    00644903  _npc_coll
-     00644C13  _init_sub |    00644D59  _setup_wo |    00644DAA  _enter_wo
+     00644000  _anim_wor |    00644572  _worldtes |    0064457E  _worldtes
+     00644763  _worldtes |    006447C4  _spawn_bu |    006448F4  _npc_coll
+     00644C04  _init_sub |    00644D4A  _setup_wo |    00644D9B  _enter_wo
 ASxxxx Linker V03.00 + NoICE + sdld,  page 34.
 Hexadecimal  [32-Bits]
 
@@ -547,53 +547,53 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\User\AppData\Local\Temp/lcc177480.rel
+C:\Users\User\AppData\Local\Temp/lcc183360.rel
                                           [ camera ]
-C:\Users\User\AppData\Local\Temp/lcc177481.rel
+C:\Users\User\AppData\Local\Temp/lcc183361.rel
                                           [ collisions ]
-C:\Users\User\AppData\Local\Temp/lcc177482.rel
+C:\Users\User\AppData\Local\Temp/lcc183362.rel
                                           [ ladder ]
-C:\Users\User\AppData\Local\Temp/lcc177483.rel
+C:\Users\User\AppData\Local\Temp/lcc183363.rel
                                           [ level1 ]
-C:\Users\User\AppData\Local\Temp/lcc177484.rel
+C:\Users\User\AppData\Local\Temp/lcc183364.rel
                                           [ level2 ]
-C:\Users\User\AppData\Local\Temp/lcc177485.rel
+C:\Users\User\AppData\Local\Temp/lcc183365.rel
                                           [ main ]
-C:\Users\User\AppData\Local\Temp/lcc177486.rel
+C:\Users\User\AppData\Local\Temp/lcc183366.rel
                                           [ scene ]
-C:\Users\User\AppData\Local\Temp/lcc177487.rel
+C:\Users\User\AppData\Local\Temp/lcc183367.rel
                                           [ worldtest ]
-C:\Users\User\AppData\Local\Temp/lcc177488.rel
+C:\Users\User\AppData\Local\Temp/lcc183368.rel
                                           [ bullet ]
-C:\Users\User\AppData\Local\Temp/lcc177489.rel
+C:\Users\User\AppData\Local\Temp/lcc183369.rel
                                           [ detective_16 ]
-C:\Users\User\AppData\Local\Temp/lcc1774810.rel
+C:\Users\User\AppData\Local\Temp/lcc1833610.rel
                                           [ detective_large ]
-C:\Users\User\AppData\Local\Temp/lcc1774811.rel
+C:\Users\User\AppData\Local\Temp/lcc1833611.rel
                                           [ elevator ]
-C:\Users\User\AppData\Local\Temp/lcc1774812.rel
+C:\Users\User\AppData\Local\Temp/lcc1833612.rel
                                           [ level_1_collision ]
-C:\Users\User\AppData\Local\Temp/lcc1774813.rel
+C:\Users\User\AppData\Local\Temp/lcc1833613.rel
                                           [ level_1_map ]
-C:\Users\User\AppData\Local\Temp/lcc1774814.rel
+C:\Users\User\AppData\Local\Temp/lcc1833614.rel
                                           [ level_2_collision ]
-C:\Users\User\AppData\Local\Temp/lcc1774815.rel
+C:\Users\User\AppData\Local\Temp/lcc1833615.rel
                                           [ level_2_map ]
-C:\Users\User\AppData\Local\Temp/lcc1774816.rel
+C:\Users\User\AppData\Local\Temp/lcc1833616.rel
                                           [ level_tileset ]
-C:\Users\User\AppData\Local\Temp/lcc1774817.rel
+C:\Users\User\AppData\Local\Temp/lcc1833617.rel
                                           [ NPC_electric ]
-C:\Users\User\AppData\Local\Temp/lcc1774818.rel
+C:\Users\User\AppData\Local\Temp/lcc1833618.rel
                                           [ stage_drop_collision ]
-C:\Users\User\AppData\Local\Temp/lcc1774819.rel
+C:\Users\User\AppData\Local\Temp/lcc1833619.rel
                                           [ stage_drop_map ]
-C:\Users\User\AppData\Local\Temp/lcc1774820.rel
+C:\Users\User\AppData\Local\Temp/lcc1833620.rel
                                           [ stage_drop_tiles ]
-C:\Users\User\AppData\Local\Temp/lcc1774821.rel
+C:\Users\User\AppData\Local\Temp/lcc1833621.rel
                                           [ world1_collision ]
-C:\Users\User\AppData\Local\Temp/lcc1774822.rel
+C:\Users\User\AppData\Local\Temp/lcc1833622.rel
                                           [ world1_map ]
-C:\Users\User\AppData\Local\Temp/lcc1774823.rel
+C:\Users\User\AppData\Local\Temp/lcc1833623.rel
                                           [ world1_tiles ]
 
 
