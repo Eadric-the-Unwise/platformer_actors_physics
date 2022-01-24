@@ -103,7 +103,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 3 WALK
-    {.x = TO_COORDS(-140),
+    {.x = TO_COORDS(20),
      .y = TO_COORDS(140),
      .SpdX = 8,
      .SpdY = 0,
@@ -124,7 +124,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 4 ELEVATOR
-    {.x = TO_COORDS(-144),
+    {.x = TO_COORDS(16),
      .y = TO_COORDS(88),
      .SpdX = 0,
      .SpdY = 8,
@@ -188,22 +188,50 @@ void anim_worldtest() {
     UINT8 prev_actors_count = NULL;  // previous array of sprites to turn off
     UINT8 next_actors_count = NULL;  // next array of sprite to turn off (in case you move back to a previous position)
 
-    if (camera_x >= 160) {  // CAM1
-        cam_ptr = worldtest_cam1;
-        active_NPC_count = worldtest_CAM1_NPCS;
-        next_actors_count = worldtest_CAM2_NPCS;
-        ptr = worldtest_cam1;
-        nptr = worldtest_cam2;
-    } else if ((camera_x >= 0) && (camera_x < 160)) {  // CAM2
-
-        cam_ptr = worldtest_cam2;
-        prev_actors_count = worldtest_CAM1_NPCS;
-        active_NPC_count = worldtest_CAM2_NPCS;
-        next_actors_count = worldtest_CAM3_NPCS;
-        pptr = worldtest_cam1;
-        ptr = worldtest_cam2;
-        nptr = worldtest_cam3;
+    switch (bkg.CAM) {
+        case CAM1:
+            if (bkg.slide_dir == SLIDELEFT) {
+                bkg.CAM = CAM2;
+                pptr = worldtest_cam1;
+                prev_actors_count = worldtest_CAM1_NPCS;
+            } else {
+                cam_ptr = worldtest_cam1;
+                active_NPC_count = worldtest_CAM1_NPCS;
+                next_actors_count = worldtest_CAM2_NPCS;
+                ptr = worldtest_cam1;
+                nptr = worldtest_cam2;
+            }
+            break;
+        case CAM2:
+            if (bkg.slide_dir == SLIDERIGHT) {
+                bkg.CAM = CAM1;
+            } else {
+                cam_ptr = worldtest_cam2;
+                prev_actors_count = worldtest_CAM1_NPCS;
+                active_NPC_count = worldtest_CAM2_NPCS;
+                next_actors_count = worldtest_CAM3_NPCS;
+                pptr = worldtest_cam1;
+                ptr = worldtest_cam2;
+                nptr = worldtest_cam3;
+            }
+            break;
     }
+    // if (camera_x >= 160) {  // CAM1
+    //     cam_ptr = worldtest_cam1;
+    //     active_NPC_count = worldtest_CAM1_NPCS;
+    //     next_actors_count = worldtest_CAM2_NPCS;
+    //     ptr = worldtest_cam1;
+    //     nptr = worldtest_cam2;
+    // } else if ((camera_x >= 0) && (camera_x < 160)) {  // CAM2
+
+    //     cam_ptr = worldtest_cam2;
+    //     prev_actors_count = worldtest_CAM1_NPCS;
+    //     active_NPC_count = worldtest_CAM2_NPCS;
+    //     next_actors_count = worldtest_CAM3_NPCS;
+    //     pptr = worldtest_cam1;
+    //     ptr = worldtest_cam2;
+    //     nptr = worldtest_cam3;
+    // }
     render_actors_count = active_NPC_count + 1;
     pptr++;
     ptr++;
@@ -216,36 +244,45 @@ void anim_worldtest() {
     PLAYER.x += PLAYER.SpdX;
 
     for (UINT8 x = prev_actors_count; x != 0; x--) {  // TURN OFF PREVIOUS SET OF NPC SPRITES
+        // switch (bkg.slide_dir) {
+        //     case SLIDELEFT:
+        //         prev_actor->x += 64;
+        //         break;
+        //     case SLIDERIGHT:
+        //         prev_actor->x -= 64;
+        //         break;
+        // }
         prev_actor->RENDER = FALSE;
         prev_actor->ON = FALSE;
+
         // prev_actor++;
         pptr++;
         prev_actor = &active_actors[*pptr];
     }
-    for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF NEXT SET OF NPC SPRITES
-        next_actor->RENDER = FALSE;
-        next_actor->ON = FALSE;
-        // next_actor++;
-        nptr++;
-        next_actor = &active_actors[*nptr];
-    }
+    // for (UINT8 x = next_actors_count; x != 0; x--) {  // TURN OFF NEXT SET OF NPC SPRITES
+    //     next_actor->RENDER = FALSE;
+    //     next_actor->ON = FALSE;
+    //     // next_actor++;
+    //     nptr++;
+    //     next_actor = &active_actors[*nptr];
+    // }
 
     INT16 camx = TO_PIXELS(bkg.camera_x);
 
     for (UINT8 i = active_NPC_count; i != 0; i--) {  // TURN ON CURRENT SET OF NPC SPRITES
-        switch (bkg.slide_dir) {
-            case SLIDELEFT:
-                current_actor->x += 64;
-                if (TO_PIXELS(current_actor->x) - (current_actor->x_pivot + 8) > -48) {
-                    current_actor->RENDER = TRUE;
-                }
-                break;
-            case SLIDERIGHT:
-                current_actor->x -= 64;
-                break;
-        }
+        // switch (bkg.slide_dir) {
+        //     case SLIDELEFT:
+        //         current_actor->x += 64;
+        //         if (TO_PIXELS(current_actor->x) - (current_actor->x_pivot + 8) > -48) {
+        //             current_actor->RENDER = TRUE;
+        //         }
+        //         break;
+        //     case SLIDERIGHT:
+        //         current_actor->x -= 64;
+        //         break;
+        // }
         if (ANIMATIONLOCK) {
-            // current_actor->RENDER = FALSE;
+            current_actor->RENDER = FALSE;
             current_actor->ON = FALSE;
         } else {
             current_actor->RENDER = TRUE;
@@ -451,6 +488,7 @@ void init_submap_worldtest() {
     COLLISION_WIDTH = WORLD1_COLLISIONWidth;
     COLLISION_DATA = WORLD1_COLLISION;
     COLLISION_BANK = WORLD1_COLLISIONBank;
+    bkg.CAM = CAM1;
 
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;

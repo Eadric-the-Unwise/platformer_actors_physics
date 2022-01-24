@@ -43,6 +43,17 @@ typedef enum {
     SLIDERIGHT
 } slide_dir;
 
+typedef enum {
+    CAM1,
+    CAM2,
+    CAM3,
+    CAM4,
+    CAM5,
+    CAM6,
+    CAM7,
+    CAM8
+} WORLDCAM;
+
 typedef struct Variables {
     UINT16 camera_max_y;
     UINT16 camera_max_x;
@@ -67,7 +78,7 @@ typedef struct Variables {
     cam_style camera_style;
     slide_dir slide_dir;
     UINT8 level_map_bank;
-
+    WORLDCAM CAM;
     UINT8 collision_width;
     // const UINT8 *collision_data;
 
