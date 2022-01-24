@@ -244,7 +244,9 @@ void render_world_actors()
         if (current_animation != NULL) {
             if (current_actor->RENDER == TRUE) {
                 if (current_animation[current_actor->animation_phase] != NULL) {
+                    // if (!ANIMATIONLOCK) {
                     current_actor->ON = TRUE;
+                    // }
                     SWITCH_ROM(current_actor->bank);
                     if ((current_direction == DIR_RIGHT) || (current_direction == DIR_UP_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R) || (current_direction == DIR_OFFLADDER_R)) {
                         OAM_hiwater += move_metasprite_vflip(
@@ -265,6 +267,12 @@ void render_world_actors()
                             current_actor->facing = LEFT;
                         }
                     }
+                } else {
+                    current_actor->ON = FALSE;
+                    // current_actor->RENDER = FALSE;
+                    hide_metasprite(
+                        current_animation[current_actor->animation_phase],
+                        OAM_hiwater);
                 }
                 // process actor animation
                 if ((animation_timer == 1) && !(ANIMATIONLOCK)) {

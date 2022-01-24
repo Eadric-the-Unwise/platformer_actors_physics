@@ -103,7 +103,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 3 WALK
-    {.x = TO_COORDS(20),
+    {.x = TO_COORDS(-140),
      .y = TO_COORDS(140),
      .SpdX = 8,
      .SpdY = 0,
@@ -124,7 +124,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 4 ELEVATOR
-    {.x = TO_COORDS(16),
+    {.x = TO_COORDS(-144),
      .y = TO_COORDS(88),
      .SpdX = 0,
      .SpdY = 8,
@@ -165,22 +165,16 @@ const actor_t worldtest_bullets[1] = {
      .RENDER = FALSE,
      .ON = FALSE}};
 
-// current_actor = cam1 + 1
-//  for loop
-// aka don't need double arrays here
-UINT8 worldtest_cam1_render[3] = {0, 1, 2};
-UINT8 worldtest_cam2_render[3] = {0, 3, 4};
-UINT8 worldtest_cam3_render[3] = {0, 3, 4};
-UINT8 worldtest_cam4_render[2] = {0, 4};
-// UINT8 worldtest_cam1[2] = {1, 2};
-// UINT8 worldtest_cam2[2] = {3, 4};
-// UINT8 worldtest_cam3[2] = {3, 4};
-// UINT8 worldtest_cam4[1] = {4};
-
-#define worldtest_CAM1_COUNT 2
-#define worldtest_CAM2_COUNT 2
-#define worldtest_CAM3_COUNT 2
-#define worldtest_CAM4_COUNT 1  // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
+UINT8 worldtest_cam1[3] = {0, 1, 2};
+UINT8 worldtest_cam2[3] = {0, 3, 4};
+UINT8 worldtest_cam3[3] = {0, 3, 4};
+UINT8 worldtest_cam4[2] = {0, 4};
+//finds the size of the array by dividing the total sizeof the array by the sizeof the array's first element
+UINT8 worldtest_CAM1_NPCS = sizeof(worldtest_cam1) / sizeof(worldtest_cam1[0]) - 1;
+UINT8 worldtest_CAM2_NPCS = sizeof(worldtest_cam2) / sizeof(worldtest_cam2[0]) - 1;
+UINT8 worldtest_CAM3_NPCS = sizeof(worldtest_cam3) / sizeof(worldtest_cam3[0]) - 1;
+UINT8 worldtest_CAM4_NPCS = sizeof(worldtest_cam4) / sizeof(worldtest_cam4[0]) - 1;
+// CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
 // CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
 void anim_worldtest() {
     UINT8 *ptr = NULL;   // pointer // simply = NULL to bypass compiler error lol
@@ -195,20 +189,20 @@ void anim_worldtest() {
     UINT8 next_actors_count = NULL;  // next array of sprite to turn off (in case you move back to a previous position)
 
     if (camera_x >= 160) {  // CAM1
-        cam_ptr = worldtest_cam1_render;
-        active_NPC_count = worldtest_CAM1_COUNT;
-        next_actors_count = worldtest_CAM2_COUNT;
-        ptr = worldtest_cam1_render;
-        nptr = worldtest_cam2_render;
+        cam_ptr = worldtest_cam1;
+        active_NPC_count = worldtest_CAM1_NPCS;
+        next_actors_count = worldtest_CAM2_NPCS;
+        ptr = worldtest_cam1;
+        nptr = worldtest_cam2;
     } else if ((camera_x >= 0) && (camera_x < 160)) {  // CAM2
 
-        cam_ptr = worldtest_cam2_render;
-        prev_actors_count = worldtest_CAM1_COUNT;
-        active_NPC_count = worldtest_CAM2_COUNT;
-        next_actors_count = worldtest_CAM3_COUNT;
-        pptr = worldtest_cam1_render;
-        ptr = worldtest_cam2_render;
-        nptr = worldtest_cam3_render;
+        cam_ptr = worldtest_cam2;
+        prev_actors_count = worldtest_CAM1_NPCS;
+        active_NPC_count = worldtest_CAM2_NPCS;
+        next_actors_count = worldtest_CAM3_NPCS;
+        pptr = worldtest_cam1;
+        ptr = worldtest_cam2;
+        nptr = worldtest_cam3;
     }
     render_actors_count = active_NPC_count + 1;
     pptr++;
@@ -235,11 +229,23 @@ void anim_worldtest() {
         nptr++;
         next_actor = &active_actors[*nptr];
     }
+
     INT16 camx = TO_PIXELS(bkg.camera_x);
 
     for (UINT8 i = active_NPC_count; i != 0; i--) {  // TURN ON CURRENT SET OF NPC SPRITES
+        switch (bkg.slide_dir) {
+            case SLIDELEFT:
+                current_actor->x += 64;
+                if (TO_PIXELS(current_actor->x) - (current_actor->x_pivot + 8) > -48) {
+                    current_actor->RENDER = TRUE;
+                }
+                break;
+            case SLIDERIGHT:
+                current_actor->x -= 64;
+                break;
+        }
         if (ANIMATIONLOCK) {
-            current_actor->RENDER = FALSE;
+            // current_actor->RENDER = FALSE;
             current_actor->ON = FALSE;
         } else {
             current_actor->RENDER = TRUE;
@@ -533,22 +539,22 @@ void enter_worldtest() {
             // If the camera and slide is inside the map, slide, otherwise cancel slide
             switch (bkg.slide_dir) {
                 case SLIDELEFT:
-                    bkg.camera_x -= TO_COORDS(4);  // Move as much as slide in X direction
+                    bkg.camera_x -= 64;  // Move as much as slide in X direction
                     PLAYER.x = TO_COORDS(174);
                     bkg.redraw = TRUE;  // Flag for redraw
                     break;
                 case SLIDERIGHT:
-                    bkg.camera_x += TO_COORDS(4);  // Move as much as slide in X direction
+                    bkg.camera_x += 64;  // Move as much as slide in X direction
                     PLAYER.x = TO_COORDS(0);
                     bkg.redraw = TRUE;  // Flag for redraw
                     break;
                 case SLIDEUP:
-                    bkg.camera_y -= TO_COORDS(4);  // Move as much as slide in X direction
+                    bkg.camera_y -= 64;  // Move as much as slide in X direction
                     PLAYER.y = TO_COORDS(178);
                     bkg.redraw = TRUE;  // Flag for redraw
                     break;
                 case SLIDEDOWN:
-                    bkg.camera_y += TO_COORDS(4);  // Move as much as slide in X direction
+                    bkg.camera_y += 64;  // Move as much as slide in X direction
                     PLAYER.y = TO_COORDS(0);
                     bkg.redraw = TRUE;  // Flag for redraw
                     break;
