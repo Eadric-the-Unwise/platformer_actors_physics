@@ -172,10 +172,10 @@ UINT8 worldtest_cam1_render[3] = {0, 1, 2};
 UINT8 worldtest_cam2_render[3] = {0, 3, 4};
 UINT8 worldtest_cam3_render[3] = {0, 3, 4};
 UINT8 worldtest_cam4_render[2] = {0, 4};
-UINT8 worldtest_cam1[2] = {1, 2};
-UINT8 worldtest_cam2[2] = {3, 4};
-UINT8 worldtest_cam3[2] = {3, 4};
-UINT8 worldtest_cam4[1] = {4};
+// UINT8 worldtest_cam1[2] = {1, 2};
+// UINT8 worldtest_cam2[2] = {3, 4};
+// UINT8 worldtest_cam3[2] = {3, 4};
+// UINT8 worldtest_cam4[1] = {4};
 
 #define worldtest_CAM1_COUNT 2
 #define worldtest_CAM2_COUNT 2
@@ -198,19 +198,22 @@ void anim_worldtest() {
         cam_ptr = worldtest_cam1_render;
         active_NPC_count = worldtest_CAM1_COUNT;
         next_actors_count = worldtest_CAM2_COUNT;
-        ptr = worldtest_cam1;
-        nptr = worldtest_cam2;
+        ptr = worldtest_cam1_render;
+        nptr = worldtest_cam2_render;
     } else if ((camera_x >= 0) && (camera_x < 160)) {  // CAM2
 
         cam_ptr = worldtest_cam2_render;
         prev_actors_count = worldtest_CAM1_COUNT;
         active_NPC_count = worldtest_CAM2_COUNT;
         next_actors_count = worldtest_CAM3_COUNT;
-        pptr = worldtest_cam1;
-        ptr = worldtest_cam2;
-        nptr = worldtest_cam3;
+        pptr = worldtest_cam1_render;
+        ptr = worldtest_cam2_render;
+        nptr = worldtest_cam3_render;
     }
     render_actors_count = active_NPC_count + 1;
+    pptr++;
+    ptr++;
+    nptr++;
     actor_t *current_actor = &active_actors[*ptr];  // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
     actor_t *prev_actor = &active_actors[*pptr];
     actor_t *next_actor = &active_actors[*nptr];
@@ -233,6 +236,7 @@ void anim_worldtest() {
         next_actor = &active_actors[*nptr];
     }
     INT16 camx = TO_PIXELS(bkg.camera_x);
+
     for (UINT8 i = active_NPC_count; i != 0; i--) {  // TURN ON CURRENT SET OF NPC SPRITES
         if (ANIMATIONLOCK) {
             current_actor->RENDER = FALSE;
