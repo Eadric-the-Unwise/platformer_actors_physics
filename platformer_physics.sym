@@ -40,8 +40,8 @@
 00:3000 _rROMB1
 00:390E s__INITIALIZER
 00:390E s__LIT
-00:3991 s__GSINIT
-00:399D s__GSFINAL
+00:3992 s__GSINIT
+00:399E s__GSFINAL
 00:4000 _rRAMB
 00:8000 __VRAM
 00:8000 __VRAM8000
@@ -55,7 +55,7 @@
 00:C0A0 s__DATA
 00:C3BC s__BSS
 00:C3BC s__INITIALIZED
-00:C43F s__HEAP
+00:C440 s__HEAP
 00:D000 __RAMBANK
 00:E000 .STACK
 00:FE00 __OAMRAM
@@ -234,7 +234,7 @@
 00:3503 _check_world_LR
 00:36C3 _check_world_UD
 00:3842 _overlap
-00:3991 gsinit
+00:3992 gsinit
 00:C0A0 __cpu
 00:C0A1 __is_GBA
 00:C0A2 .mode
@@ -328,12 +328,12 @@
 00:C3F3 _worldtest_cam2
 00:C3F5 _worldtest_cam3
 00:C3F6 _worldtest_cam4
-00:C3FA _worldtest_CAM1_NPCS
-00:C3FB _worldtest_CAM2_NPCS
-00:C3FC _worldtest_CAM3_NPCS
-00:C3FD _worldtest_CAM4_NPCS
-00:C3FE _WORLD1_TILES
-00:C43E ___render_shadow_OAM
+00:C3FB _worldtest_CAM1_NPCS
+00:C3FC _worldtest_CAM2_NPCS
+00:C3FD _worldtest_CAM3_NPCS
+00:C3FE _worldtest_CAM4_NPCS
+00:C3FF _WORLD1_TILES
+00:C43F ___render_shadow_OAM
 00:FF90 __current_bank
 00:FF92 __shadow_OAM_base
 03:4000 _check_LADDER

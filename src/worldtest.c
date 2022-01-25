@@ -168,7 +168,7 @@ const actor_t worldtest_bullets[1] = {
 UINT8 worldtest_cam1[2] = {0, 4};
 UINT8 worldtest_cam2[2] = {0, 3};
 UINT8 worldtest_cam3[1] = {0};
-UINT8 worldtest_cam4[4] = {0, 1, 2, 3};
+UINT8 worldtest_cam4[5] = {0, 1, 2, 3, 4};
 //finds the size of the array by dividing the total sizeof the array by the sizeof the array's first element
 UINT8 worldtest_CAM1_NPCS = sizeof(worldtest_cam1) / sizeof(worldtest_cam1[0]) - 1;
 UINT8 worldtest_CAM2_NPCS = sizeof(worldtest_cam2) / sizeof(worldtest_cam2[0]) - 1;
@@ -190,89 +190,89 @@ void anim_worldtest()
     UINT8 next_actors_count = NULL; // next array of sprite to turn off (in case you move back to a previous position)
 
     //TRY LOADING THIS AS A FUNCTION INSTEAD OF A CONSITENT SWITCH CASE
-    switch (CAM)
-    {
-    case CAM1:
-        if (bkg.slide_dir == SLIDELEFT)
-        {
-            pptr = worldtest_cam1;
-            prev_actors_count = worldtest_CAM1_NPCS;
-            CAM = CAM2;
-        }
-        else if (bkg.slide_dir == SLIDEDOWN)
-        {
-            pptr = worldtest_cam1;
-            prev_actors_count = worldtest_CAM1_NPCS;
-            CAM = CAM4;
-        }
-        else
-        {
-            cam_ptr = worldtest_cam1;
-            active_NPC_count = worldtest_CAM1_NPCS;
-            ptr = worldtest_cam1;
-        }
-        break;
-    case CAM2:
-        if (bkg.slide_dir == SLIDERIGHT)
-        {
-            pptr = worldtest_cam2;
-            prev_actors_count = worldtest_CAM2_NPCS;
-            CAM = CAM1;
-        }
-        else if (bkg.slide_dir == SLIDEDOWN)
-        {
-            pptr = worldtest_cam2;
-            prev_actors_count = worldtest_CAM2_NPCS;
-            CAM = CAM1;
-        }
-        else
-        {
-            cam_ptr = worldtest_cam2;
-            active_NPC_count = worldtest_CAM2_NPCS;
-            ptr = worldtest_cam2;
-        }
-        break;
-    case CAM3:
-        if (bkg.slide_dir == SLIDERIGHT)
-        {
-            pptr = worldtest_cam3;
-            prev_actors_count = worldtest_CAM3_NPCS;
-            CAM = CAM4;
-        }
-        else if (bkg.slide_dir == SLIDEUP)
-        {
-            pptr = worldtest_cam3;
-            prev_actors_count = worldtest_CAM3_NPCS;
-            CAM = CAM2;
-        }
-        else
-        {
-            cam_ptr = worldtest_cam2;
-            active_NPC_count = worldtest_CAM2_NPCS;
-            ptr = worldtest_cam2;
-        }
-        break;
-    case CAM4:
-        if (bkg.slide_dir == SLIDEUP)
-        {
-            pptr = worldtest_cam4;
-            prev_actors_count = worldtest_CAM4_NPCS;
-            CAM = CAM1;
-        }
-        else if (bkg.slide_dir == SLIDELEFT)
-        {
-            pptr = worldtest_cam4;
-            prev_actors_count = worldtest_CAM4_NPCS;
-            CAM = CAM3;
-        }
-        else
-        {
-            cam_ptr = worldtest_cam4;
-            active_NPC_count = worldtest_CAM4_NPCS;
-            ptr = worldtest_cam4;
-        }
-        break;
-    }
+    // switch (CAM)
+    // {
+    // case CAM1:
+    //     if (bkg.slide_dir == SLIDELEFT)
+    //     {
+    //         pptr = worldtest_cam1;
+    //         prev_actors_count = worldtest_CAM1_NPCS;
+    //         CAM = CAM2;
+    //     }
+    //     else if (bkg.slide_dir == SLIDEDOWN)
+    //     {
+    //         pptr = worldtest_cam1;
+    //         prev_actors_count = worldtest_CAM1_NPCS;
+    //         CAM = CAM4;
+    //     }
+    //     else
+    //     {
+    //         cam_ptr = worldtest_cam1;
+    //         active_NPC_count = worldtest_CAM1_NPCS;
+    //         ptr = worldtest_cam1;
+    //     }
+    //     break;
+    // case CAM2:
+    //     if (bkg.slide_dir == SLIDERIGHT)
+    //     {
+    //         pptr = worldtest_cam2;
+    //         prev_actors_count = worldtest_CAM2_NPCS;
+    //         CAM = CAM1;
+    //     }
+    //     else if (bkg.slide_dir == SLIDEDOWN)
+    //     {
+    //         pptr = worldtest_cam2;
+    //         prev_actors_count = worldtest_CAM2_NPCS;
+    //         CAM = CAM1;
+    //     }
+    //     else
+    //     {
+    //         cam_ptr = worldtest_cam2;
+    //         active_NPC_count = worldtest_CAM2_NPCS;
+    //         ptr = worldtest_cam2;
+    //     }
+    //     break;
+    // case CAM3:
+    //     if (bkg.slide_dir == SLIDERIGHT)
+    //     {
+    //         pptr = worldtest_cam3;
+    //         prev_actors_count = worldtest_CAM3_NPCS;
+    //         CAM = CAM4;
+    //     }
+    //     else if (bkg.slide_dir == SLIDEUP)
+    //     {
+    //         pptr = worldtest_cam3;
+    //         prev_actors_count = worldtest_CAM3_NPCS;
+    //         CAM = CAM2;
+    //     }
+    //     else
+    //     {
+    //         cam_ptr = worldtest_cam2;
+    //         active_NPC_count = worldtest_CAM2_NPCS;
+    //         ptr = worldtest_cam2;
+    //     }
+    //     break;
+    // case CAM4:
+    //     if (bkg.slide_dir == SLIDEUP)
+    //     {
+    //         pptr = worldtest_cam4;
+    //         prev_actors_count = worldtest_CAM4_NPCS;
+    //         CAM = CAM1;
+    //     }
+    //     else if (bkg.slide_dir == SLIDELEFT)
+    //     {
+    //         pptr = worldtest_cam4;
+    //         prev_actors_count = worldtest_CAM4_NPCS;
+    //         CAM = CAM3;
+    //     }
+    //     else
+    //     {
+    //         cam_ptr = worldtest_cam4;
+    //         active_NPC_count = worldtest_CAM4_NPCS;
+    //         ptr = worldtest_cam4;
+    //     }
+    //     break;
+    // }
 
     // if (camera_x >= 160) {  // CAM1
     //     cam_ptr = worldtest_cam1;
@@ -290,6 +290,20 @@ void anim_worldtest()
     //     ptr = worldtest_cam2;
     //     nptr = worldtest_cam3;
     // }
+
+    cam_ptr = worldtest_cam1;
+    active_NPC_count = worldtest_CAM1_NPCS;
+    ptr = worldtest_cam1;
+    pptr = worldtest_cam1;
+
+    // if (joy & J_DOWN)
+    // {
+    //     cam_ptr = worldtest_cam4;
+    //     active_NPC_count = worldtest_CAM4_NPCS;
+    //     ptr = worldtest_cam4;
+    //     pptr = worldtest_cam1;
+    // }
+
     render_actors_count = active_NPC_count + 1;
     pptr++;
     ptr++;
@@ -301,28 +315,36 @@ void anim_worldtest()
 
     PLAYER.x += PLAYER.SpdX;
 
-    for (UINT8 x = prev_actors_count; x != 0; x--)
-    { // TURN OFF PREVIOUS SET OF NPC SPRITES
-        prev_actor->RENDER = FALSE;
-        prev_actor->ON = FALSE;
-        pptr++;
-        prev_actor = &active_actors[*pptr];
-    }
+    // for (UINT8 x = prev_actors_count; x != 0; x--)
+    // { // TURN OFF PREVIOUS SET OF NPC SPRITES
+    //     prev_actor->RENDER = FALSE;
+    //     prev_actor->ON = FALSE;
+    //     pptr++;
+    //     prev_actor = &active_actors[*pptr];
+    // }
 
     INT16 camx = TO_PIXELS(bkg.camera_x);
 
     for (UINT8 i = active_NPC_count; i != 0; i--)
     { // TURN ON CURRENT SET OF NPC SPRITES
-        if (ANIMATIONLOCK)
-        { //THIS CONTROLS WHEN THE NPCS WILL APPEAR ON THE SCREEN
-            current_actor->RENDER = FALSE;
-            current_actor->ON = FALSE;
-        }
-        else
+        if (bkg.slide_dir == SLIDELEFT)
         {
+            // if (ANIMATIONLOCK)
+            // { //THIS CONTROLS WHEN THE NPCS WILL APPEAR ON THE SCREEN
+            //     current_actor->RENDER = FALSE;
+            //     current_actor->ON = FALSE;
+            // }
+            // else
+            // {
             current_actor->RENDER = TRUE;
             // current_actor->ON = TRUE;
             // current_actor->RENDER = TRUE;
+            // }
+        }
+        else if (bkg.slide_dir == SLIDERIGHT)
+        {
+            prev_actor->RENDER = FALSE;
+            prev_actor->ON = FALSE;
         }
 
         if (current_actor->RENDER == TRUE && current_actor->KILL == NULL)
