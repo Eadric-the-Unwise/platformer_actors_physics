@@ -191,9 +191,9 @@ void anim_worldtest()
     UINT8 next_actors_count = NULL; // next array of sprite to turn off (in case you move back to a previous position)
 
     // TRY LOADING THIS AS A FUNCTION INSTEAD OF A CONSITENT SWITCH CASE
-
-    if (CAM == CAM1)
+    switch (CAM)
     {
+    case CAM1:
         cam_ptr = worldtest_cam1;
         active_NPC_count = worldtest_CAM1_NPCs;
         ptr = worldtest_cam1;
@@ -206,9 +206,8 @@ void anim_worldtest()
             CAM = CAM2;
         }
         pptr = worldtest_cam1;
-    }
-    else if (CAM == CAM2)
-    {
+        break;
+    case CAM2:
         cam_ptr = worldtest_cam2;
         active_NPC_count = worldtest_CAM2_NPCs;
         ptr = worldtest_cam2;
@@ -220,9 +219,8 @@ void anim_worldtest()
         {
             CAM = CAM1;
         }
-    }
-    else if (CAM == CAM3)
-    {
+        break;
+    case CAM3:
         cam_ptr = worldtest_cam3;
         active_NPC_count = worldtest_CAM3_NPCs;
         ptr = worldtest_cam3;
@@ -234,9 +232,8 @@ void anim_worldtest()
         {
             CAM = CAM4;
         }
-    }
-    else if (CAM == CAM4)
-    {
+        break;
+    case CAM4:
         cam_ptr = worldtest_cam4;
         active_NPC_count = worldtest_CAM4_NPCs;
         ptr = worldtest_cam4;
@@ -248,6 +245,7 @@ void anim_worldtest()
         {
             CAM = CAM3;
         }
+        break;
     }
 
     render_actors_count = active_NPC_count + 1;
@@ -280,25 +278,10 @@ void anim_worldtest()
 
     for (UINT8 i = active_NPC_count; i != 0; i--)
     { // TURN ON CURRENT SET OF NPC SPRITES
-        // if (bkg.slide_dir == SLIDELEFT) {
-        // if (ANIMATIONLOCK)
-        // { //THIS CONTROLS WHEN THE NPCS WILL APPEAR ON THE SCREEN
-        //     current_actor->RENDER = FALSE;
-        //     current_actor->ON = FALSE;
-        // }
-        // else
-        // {
         if (!ANIMATIONLOCK)
         {
             current_actor->RENDER = TRUE;
         }
-        // current_actor->ON = TRUE;
-        // current_actor->RENDER = TRUE;
-        // }
-        // } else if (bkg.slide_dir == SLIDERIGHT) {
-        //     prev_actor->RENDER = FALSE;
-        //     prev_actor->ON = FALSE;
-        // }
 
         if (current_actor->RENDER == TRUE && current_actor->KILL == NULL)
         { // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
