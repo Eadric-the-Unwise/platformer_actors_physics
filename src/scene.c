@@ -162,7 +162,7 @@ void render_platform_actors()
                 {
                     if (NPC_xOffset <= 160 && NPC_xOffset >= -48 && current_actor->KILL != TRUE)
                     {
-                        // current_actor->ON = TRUE;
+                        current_actor->ON = TRUE;
                         SWITCH_ROM(current_actor->bank);
                         if ((current_direction == DIR_RIGHT) || (current_direction == DIR_UP_R) || (current_direction == DIR_DOWN_R) || (current_direction == DIR_IDLE_R) || (current_direction == DIR_CRAWL_R) || (current_direction == DIR_JUMP_R) || (current_direction == DIR_LAND_R) || (current_direction == DIR_DROP_R) || (current_direction == DIR_LADDER_R) || (current_direction == DIR_ONTOLADDER_R) || (current_direction == DIR_OFFLADDER_R))
                         {
