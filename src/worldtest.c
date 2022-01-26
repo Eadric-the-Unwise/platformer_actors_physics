@@ -205,7 +205,6 @@ void anim_worldtest()
         {
             CAM = CAM2;
         }
-        pptr = worldtest_cam1;
         break;
     case CAM2:
         cam_ptr = worldtest_cam2;
