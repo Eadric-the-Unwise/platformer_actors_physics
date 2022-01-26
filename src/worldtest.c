@@ -57,7 +57,7 @@ const actor_t worldtest_actors[5] = {
      .RENDER = TRUE,
      .ON = TRUE},
     // 1 PISTOL
-    {.x = TO_COORDS(56),
+    {.x = TO_COORDS(216),
      .y = TO_COORDS(68),
      .SpdX = 8,
      .SpdY = 0,
@@ -80,7 +80,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE},
     // 2 PISTOL
-    {.x = TO_COORDS(56),
+    {.x = TO_COORDS(-104),
      .y = TO_COORDS(132),
      .SpdX = -8,
      .SpdY = 0,
@@ -124,7 +124,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 4 ELEVATOR
-    {.x = TO_COORDS(16),
+    {.x = TO_COORDS(-144),
      .y = TO_COORDS(88),
      .SpdX = 0,
      .SpdY = 8,
@@ -254,25 +254,34 @@ void anim_worldtest() {
     for (UINT8 i = active_NPC_count; i != 0; i--) {  // TURN ON CURRENT SET OF NPC SPRITES
                                                      // if (!ANIMATIONLOCK)
                                                      // {
-        current_actor->RENDER = TRUE;
-        current_actor->ON = TRUE;
+
         // }
         if (ANIMATIONLOCK) {
             switch (bkg.slide_dir) {
                 case SLIDELEFT:
                     current_actor->x += 64;
+                    if (TO_PIXELS(current_actor->x) >= 0) {
+                        current_actor->RENDER = TRUE;
+                        current_actor->ON = TRUE;
+                    }
                     break;
                 case SLIDERIGHT:
                     current_actor->x -= 64;
-                    break;
-                case SLIDEDOWN:
-                    current_actor->y += 64;
+                    if (TO_PIXELS(current_actor->x) <= 160) {
+                        current_actor->RENDER = TRUE;
+                        current_actor->ON = TRUE;
+                    }
                     break;
                 case SLIDEUP:
+                    current_actor->y += 64;
+                    break;
+                case SLIDEDOWN:
                     current_actor->y -= 64;
                     break;
             }
         } else if (!ANIMATIONLOCK) {
+            // current_actor->RENDER = TRUE;
+            // current_actor->ON = TRUE;
             if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {  // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
                 if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
                     current_actor->patrol_timer--;
