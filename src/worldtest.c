@@ -212,14 +212,28 @@ void anim_worldtest()
         cam_ptr = worldtest_cam2;
         active_NPC_count = worldtest_CAM2_NPCs;
         ptr = worldtest_cam2;
-        // pptr = worldtest_cam1;
+        if (bkg.slide_dir == SLIDEDOWN)
+        {
+            CAM = CAM3;
+        }
+        else if (bkg.slide_dir == SLIDERIGHT)
+        {
+            CAM = CAM1;
+        }
     }
     else if (CAM == CAM3)
     {
         cam_ptr = worldtest_cam3;
         active_NPC_count = worldtest_CAM3_NPCs;
         ptr = worldtest_cam3;
-        // pptr = worldtest_cam1;
+        if (bkg.slide_dir == SLIDEUP)
+        {
+            CAM = CAM2;
+        }
+        else if (bkg.slide_dir == SLIDERIGHT)
+        {
+            CAM = CAM4;
+        }
     }
     else if (CAM == CAM4)
     {
@@ -230,10 +244,10 @@ void anim_worldtest()
         {
             CAM = CAM1;
         }
-        // else if (bkg.slide_dir == SLIDELEFT)
-        // {
-        //     CAM = CAM3;
-        // }
+        else if (bkg.slide_dir == SLIDELEFT)
+        {
+            CAM = CAM3;
+        }
     }
 
     render_actors_count = active_NPC_count + 1;
