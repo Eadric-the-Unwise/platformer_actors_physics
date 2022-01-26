@@ -68,7 +68,7 @@ const actor_t level2_actors[5] = {
      .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
-     .direction = DIR_RIGHT,
+     .direction = DIR_UP_L,
      .NPC_type = PATROL,
      .patrol_timer = 78,
      .patrol_reset = 156,
@@ -76,8 +76,8 @@ const actor_t level2_actors[5] = {
      .tile_index = 0,
      .tile_data = NPC_electric_data,
      .bank = NPC_electric_data_Bank,
-     .animations = {NPC_electric_animation, NPC_electric_animation},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animations = {NULL, NULL, NPC_electric_animation, NULL, NPC_electric_animation},
+     .animations_props = {NULL, NULL, ANIM_LOOP, NULL, ANIM_LOOP},
      .animation_phase = 0,
      .copy = FALSE},
     // 2 BOTTOM PATROL
@@ -91,7 +91,7 @@ const actor_t level2_actors[5] = {
      .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
-     .direction = DIR_LEFT,
+     .direction = DIR_DOWN_L,
      .NPC_type = PATROL,
      .patrol_timer = 78,
      .patrol_reset = 156,
@@ -99,8 +99,8 @@ const actor_t level2_actors[5] = {
      .tile_index = 0,
      .tile_data = NPC_electric_data,
      .bank = NPC_electric_data_Bank,
-     .animations = {NPC_electric_animation, NPC_electric_animation},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animations = {NULL, NULL, NPC_electric_animation, NULL, NPC_electric_animation},
+     .animations_props = {NULL, NULL, ANIM_LOOP, NULL, ANIM_LOOP},
      .animation_phase = 0,
      .copy = TRUE},
     // 3 WALK
@@ -298,15 +298,15 @@ void anim_level2()
             { // PATROL NPCS
                 current_actor->patrol_timer--;
                 current_actor->x += current_actor->SpdX;
-                if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0))
+                if ((current_actor->direction == DIR_DOWN_L) && (current_actor->patrol_timer == 0))
                 {
-                    SetActorDirection(current_actor, DIR_RIGHT, 0);
+                    SetActorDirection(current_actor, DIR_UP_L, 0);
                     current_actor->SpdX = abs(current_actor->SpdX);
                     current_actor->patrol_timer = current_actor->patrol_reset;
                 }
-                else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0))
+                else if ((current_actor->direction == DIR_UP_L) && (current_actor->patrol_timer == 0))
                 {
-                    SetActorDirection(current_actor, DIR_LEFT, 0);
+                    SetActorDirection(current_actor, DIR_DOWN_L, 0);
                     current_actor->SpdX = -abs(current_actor->SpdX);
                     current_actor->patrol_timer = current_actor->patrol_reset;
                 }
@@ -919,7 +919,7 @@ void enter_lvl2()
         else if (EXIT1)
         {
             EXIT1 = FALSE;
-            gamestate = 1;
+            gamestate = 4;
         }
     }
 }
