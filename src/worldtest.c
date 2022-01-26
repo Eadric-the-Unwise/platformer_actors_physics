@@ -282,7 +282,7 @@ void anim_worldtest() {
     //     nptr = worldtest_cam2;
     // } else if ((camera_x >= 0) && (camera_x < 160)) {  // CAM2
 
-    //     cam_ptr = worldtest_cam2;
+    //   jenny  cam_ptr = worldtest_cam2;
     //     prev_actors_count = worldtest_CAM1_NPCS;
     //     active_NPC_count = worldtest_CAM2_NPCS;
     //     next_actors_count = worldtest_CAM3_NPCS;
