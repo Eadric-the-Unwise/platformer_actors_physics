@@ -328,10 +328,10 @@
 00:C3F6 _worldtest_cam2
 00:C3F8 _worldtest_cam3
 00:C3F9 _worldtest_cam4
-00:C3FC _worldtest_CAM1_NPCS
-00:C3FD _worldtest_CAM2_NPCS
-00:C3FE _worldtest_CAM3_NPCS
-00:C3FF _worldtest_CAM4_NPCS
+00:C3FC _worldtest_CAM1_NPCs
+00:C3FD _worldtest_CAM2_NPCs
+00:C3FE _worldtest_CAM3_NPCs
+00:C3FF _worldtest_CAM4_NPCs
 00:C400 _WORLD1_TILES
 00:C440 ___render_shadow_OAM
 00:FF90 __current_bank
