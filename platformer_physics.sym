@@ -325,9 +325,9 @@
 00:C3EE _load_submap
 00:C3F0 _animation_timer
 00:C3F1 _worldtest_cam1
-00:C3F3 _worldtest_cam2
-00:C3F5 _worldtest_cam3
-00:C3F6 _worldtest_cam4
+00:C3F6 _worldtest_cam2
+00:C3F8 _worldtest_cam3
+00:C3F9 _worldtest_cam4
 00:C3FB _worldtest_CAM1_NPCS
 00:C3FC _worldtest_CAM2_NPCS
 00:C3FD _worldtest_CAM3_NPCS
