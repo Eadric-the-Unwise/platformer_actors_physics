@@ -56,7 +56,7 @@ const actor_t worldtest_actors[5] = {
      .copy = FALSE,
      .RENDER = TRUE,
      .ON = TRUE},
-    // 1 TOP PATROL
+    // 1 PISTOL
     {.x = TO_COORDS(56),
      .y = TO_COORDS(68),
      .SpdX = 8,
@@ -67,19 +67,19 @@ const actor_t worldtest_actors[5] = {
      .y_pivot = NPC_electric_PIVOT_Y,
      .x_offset = 6,
      .y_offset = 6,
-     .direction = DIR_LEFT,
-     .NPC_type = PISTOL,
+     .direction = DIR_UP_L,
+     .NPC_type = PATROL,
      .patrol_timer = 78,
      .patrol_reset = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
      .bank = NPC_electric_data_Bank,
-     .animations = {NPC_electric_animation, NPC_electric_animation},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP},
+     .animations = {NULL, NULL, NPC_electric_animation, NULL, NPC_electric_animation},
+     .animations_props = {NULL, NULL, ANIM_LOOP, NULL, ANIM_LOOP},
      .animation_phase = 0,
      .copy = FALSE},
-    // 2 BOTTOM PATROL
+    // 2 PISTOL
     {.x = TO_COORDS(56),
      .y = TO_COORDS(132),
      .SpdX = -8,
@@ -248,12 +248,8 @@ void anim_worldtest()
     }
 
     render_actors_count = active_NPC_count + 1;
-    pptr++;
     ptr++;
-    nptr++;
     actor_t *current_actor = &active_actors[*ptr]; // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
-    actor_t *prev_actor = &active_actors[*pptr];
-    actor_t *next_actor = &active_actors[*nptr];
     actor_t *current_bullet = active_bullets;
     actor_t *erase_actor = active_actors;
 
@@ -261,12 +257,8 @@ void anim_worldtest()
     erase_actor++;
     if (ANIMATIONLOCK)
     {
-        for (UINT8 x = 4; x != 0; x--)
-        { // TURN OFF PREVIOUS SET OF NPC SPRITES
-            // prev_actor->RENDER = FALSE;
-            // prev_actor->ON = FALSE;
-            // pptr++;
-            // prev_actor = &active_actors[*pptr];
+        for (UINT8 x = level1.actor_count - 1; x != 0; x--)
+        { // TURN OFF ALL NPC SPRITES
             erase_actor->RENDER = FALSE;
             erase_actor->ON = FALSE;
             erase_actor++;
@@ -288,15 +280,15 @@ void anim_worldtest()
             { // PATROL NPCS
                 current_actor->patrol_timer--;
                 current_actor->x += current_actor->SpdX;
-                if ((current_actor->direction == DIR_LEFT) && (current_actor->patrol_timer == 0))
+                if ((current_actor->direction == DIR_DOWN_L) && (current_actor->patrol_timer == 0))
                 {
-                    SetActorDirection(current_actor, DIR_RIGHT, 0);
+                    SetActorDirection(current_actor, DIR_UP_L, 0);
                     current_actor->SpdX = abs(current_actor->SpdX);
                     current_actor->patrol_timer = current_actor->patrol_reset;
                 }
-                else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0))
+                else if ((current_actor->direction == DIR_UP_L) && (current_actor->patrol_timer == 0))
                 {
-                    SetActorDirection(current_actor, DIR_LEFT, 0);
+                    SetActorDirection(current_actor, DIR_DOWN_L, 0);
                     current_actor->SpdX = -abs(current_actor->SpdX);
                     current_actor->patrol_timer = current_actor->patrol_reset;
                 }
