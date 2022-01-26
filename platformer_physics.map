@@ -28,20 +28,20 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000007  l__HEADER |    00000008  ___bank_L |    00000008  l__HEADER
      0000000C  l__GSINIT |    0000002E  l__CODE_2 |    00000030  l__HEADER
      0000004F  l__HEADER |    00000065  ___bank_W |    00000082  l__HEADER
-     00000085  l__INITIA |    00000085  l__INITIA |    000000E6  ___bank_W
+     00000082  l__INITIA |    00000082  l__INITIA |    000000E6  ___bank_W
      000001A0  l__CODE_4 |    00000200  s__CODE   |    0000031C  l__DATA  
      000005A0  l__CODE_1 |    000005A0  l__CODE_2 |    00000708  l__CODE_8
      0000084A  l__CODE_3 |    00000E10  l__CODE_6 |    00000E16  l__CODE  
-     00001016  s__HOME   |    0000110A  l__CODE_2 |    0000126A  l__HOME  
+     00001016  s__HOME   |    0000110A  l__CODE_2 |    00001264  l__HOME  
      00001596  l__CODE_1 |    00001695  l__CODE_0 |    0000178C  l__CODE_5
      0000178D  l__CODE_7 |    00001AF4  l__CODE_2 |    00002000  _rROMB0  
-     00002280  s__BASE   |    00002280  s__CODE_0 |    00003000  _rROMB1  
-     00003915  s__INITIA |    00003915  s__LIT    |    0000399A  s__GSINIT
-     000039A6  s__GSFINA |    00004000  _rRAMB    |    00008000  __VRAM   
+     0000227A  s__BASE   |    0000227A  s__CODE_0 |    00003000  _rROMB1  
+     0000390F  s__INITIA |    0000390F  s__LIT    |    00003991  s__GSINIT
+     0000399D  s__GSFINA |    00004000  _rRAMB    |    00008000  __VRAM   
      00008000  __VRAM800 |    00008800  __VRAM880 |    00009000  __VRAM900
      00009800  __SCRN0   |    00009C00  __SCRN1   |    0000A000  __SRAM   
      0000C000  __RAM     |    0000C000  _shadow_O |    0000C0A0  s__DATA  
-     0000C3BC  s__BSS    |    0000C3BC  s__INITIA |    0000C441  s__HEAP  
+     0000C3BC  s__BSS    |    0000C3BC  s__INITIA |    0000C43E  s__HEAP  
      0000D000  __RAMBANK |    0000E000  .STACK    |    0000FE00  __OAMRAM 
      0000FF00  _P1_REG   |    0000FF00  __IO      |    0000FF01  _SB_REG  
      0000FF02  _SC_REG   |    0000FF04  _DIV_REG  |    0000FF05  _TIMA_REG
@@ -269,7 +269,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_HOME                  00001016    0000126A =        4714. bytes (REL,CON)
+_HOME                  00001016    00001264 =        4708. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -279,39 +279,39 @@ _HOME                  00001016    0000126A =        4714. bytes (REL,CON)
      0000107A  _display_ |    00001092  _remove_V |    0000109D  _add_VBL 
      000010A8  _set_bkg_ |    000010CD  _set_bkg_ |    000010FC  _load_sce
      0000146B  _load_bul |    00001624  _render_p |    00001B66  _render_w
-     00001F8D  _abs      |    00001F9C  __mulsuch |    00001FA6  __mulusch
-     00001FB0  __mulscha |    00001FC2  __mulucha |    00001FCE  __mulint 
-     00001FF4  _set_tile |    00001FF9  _set_bkg_ |    00001FF9  _set_win_
-     00002001  _set_spri |    00002031  _set_bkg_ |    00002075  .set_xy_w
-     0000207E  .set_xy_b |    0000208D  .set_xy_s |    000020D3  .padup   
-     000020D3  _waitpadu |    000020E3  .jpad     |    000020E3  _joypad  
-     0000210B  _waitpad  |    0000210E  .wait_pad |    00002115  ___sdcc_c
-     00002116  ___memcpy |    00002116  _memcpy   |    00002159  __divsuch
-     00002166  __modsuch |    00002170  __divusch |    00002182  __modusch
-     00002192  __divscha |    0000219E  __modscha |    000021A8  __divsint
-     000021B9  __modsint |    000021C8  __divucha |    000021D4  __moducha
-     000021DE  __divuint |    000021EF  __moduint |    000021FE  .div8    
-     000021FE  .mod8     |    00002206  .div16    |    00002206  .mod16   
-     0000223C  .divu8    |    0000223C  .modu8    |    0000223F  .divu16  
-     0000223F  .modu16  
+     00001F87  _abs      |    00001F96  __mulsuch |    00001FA0  __mulusch
+     00001FAA  __mulscha |    00001FBC  __mulucha |    00001FC8  __mulint 
+     00001FEE  _set_tile |    00001FF3  _set_bkg_ |    00001FF3  _set_win_
+     00001FFB  _set_spri |    0000202B  _set_bkg_ |    0000206F  .set_xy_w
+     00002078  .set_xy_b |    00002087  .set_xy_s |    000020CD  .padup   
+     000020CD  _waitpadu |    000020DD  .jpad     |    000020DD  _joypad  
+     00002105  _waitpad  |    00002108  .wait_pad |    0000210F  ___sdcc_c
+     00002110  ___memcpy |    00002110  _memcpy   |    00002153  __divsuch
+     00002160  __modsuch |    0000216A  __divusch |    0000217C  __modusch
+     0000218C  __divscha |    00002198  __modscha |    000021A2  __divsint
+     000021B3  __modsint |    000021C2  __divucha |    000021CE  __moducha
+     000021D8  __divuint |    000021E9  __moduint |    000021F8  .div8    
+     000021F8  .mod8     |    00002200  .div16    |    00002200  .mod16   
+     00002236  .divu8    |    00002236  .modu8    |    00002239  .divu16  
+     00002239  .modu16  
 ASxxxx Linker V03.00 + NoICE + sdld,  page 23.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_0                00002280    00001695 =        5781. bytes (REL,CON)
+_CODE_0                0000227A    00001695 =        5781. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00002280  _check_LR |    0000265D  _check_J  |    00002CFE  _check_UD
-     0000331D  _check_Dr |    0000341B  _check_C  |    0000350A  _check_wo
-     000036CA  _check_wo |    00003849  _overlap 
+     0000227A  _check_LR |    00002657  _check_J  |    00002CF8  _check_UD
+     00003317  _check_Dr |    00003415  _check_C  |    00003504  _check_wo
+     000036C4  _check_wo |    00003843  _overlap 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 24.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           00003915    00000085 =         133. bytes (REL,CON)
+_INITIALIZER           0000390F    00000082 =         130. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -320,17 +320,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                0000399A    0000000C =          12. bytes (REL,CON)
+_GSINIT                00003991    0000000C =          12. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     0000399A  gsinit   
+     00003991  gsinit   
 ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               000039A6    00000001 =           1. bytes (REL,CON)
+_GSFINAL               0000399D    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -370,7 +370,7 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZED           0000C3BC    00000085 =         133. bytes (REL,CON)
+_INITIALIZED           0000C3BC    00000082 =         130. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -382,10 +382,10 @@ _INITIALIZED           0000C3BC    00000085 =         133. bytes (REL,CON)
      0000C3E3  _lvl2_cam |    0000C3E4  _shadow_s |    0000C3E5  _shadow_s
      0000C3E6  _cam_ptr  |    0000C3E8  _render_a |    0000C3E9  _bullet_t
      0000C3EA  _animate_ |    0000C3EC  _collide_ |    0000C3EE  _load_sub
-     0000C3F0  _animatio |    0000C3F1  _worldtes |    0000C3F6  _worldtes
-     0000C3F8  _worldtes |    0000C3F9  _worldtes |    0000C3FC  _worldtes
-     0000C3FD  _worldtes |    0000C3FE  _worldtes |    0000C3FF  _worldtes
-     0000C400  _WORLD1_T |    0000C440  ___render
+     0000C3F0  _animatio |    0000C3F1  _worldtes |    0000C3F3  _worldtes
+     0000C3F6  _worldtes |    0000C3F7  _worldtes |    0000C3F9  _worldtes
+     0000C3FA  _worldtes |    0000C3FB  _worldtes |    0000C3FC  _worldtes
+     0000C3FD  _WORLD1_T |    0000C43D  ___render
 ASxxxx Linker V03.00 + NoICE + sdld,  page 29.
 Hexadecimal  [32-Bits]
 
@@ -547,53 +547,53 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85200.rel
+C:\Users\User\AppData\Local\Temp/lcc19720.rel
                                           [ camera ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85201.rel
+C:\Users\User\AppData\Local\Temp/lcc19721.rel
                                           [ collisions ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85202.rel
+C:\Users\User\AppData\Local\Temp/lcc19722.rel
                                           [ ladder ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85203.rel
+C:\Users\User\AppData\Local\Temp/lcc19723.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85204.rel
+C:\Users\User\AppData\Local\Temp/lcc19724.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85205.rel
+C:\Users\User\AppData\Local\Temp/lcc19725.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85206.rel
+C:\Users\User\AppData\Local\Temp/lcc19726.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85207.rel
+C:\Users\User\AppData\Local\Temp/lcc19727.rel
                                           [ worldtest ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85208.rel
+C:\Users\User\AppData\Local\Temp/lcc19728.rel
                                           [ bullet ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc85209.rel
+C:\Users\User\AppData\Local\Temp/lcc19729.rel
                                           [ detective_16 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852010.rel
+C:\Users\User\AppData\Local\Temp/lcc197210.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852011.rel
+C:\Users\User\AppData\Local\Temp/lcc197211.rel
                                           [ elevator ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852012.rel
+C:\Users\User\AppData\Local\Temp/lcc197212.rel
                                           [ level_1_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852013.rel
+C:\Users\User\AppData\Local\Temp/lcc197213.rel
                                           [ level_1_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852014.rel
+C:\Users\User\AppData\Local\Temp/lcc197214.rel
                                           [ level_2_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852015.rel
+C:\Users\User\AppData\Local\Temp/lcc197215.rel
                                           [ level_2_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852016.rel
+C:\Users\User\AppData\Local\Temp/lcc197216.rel
                                           [ level_tileset ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852017.rel
+C:\Users\User\AppData\Local\Temp/lcc197217.rel
                                           [ NPC_electric ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852018.rel
+C:\Users\User\AppData\Local\Temp/lcc197218.rel
                                           [ stage_drop_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852019.rel
+C:\Users\User\AppData\Local\Temp/lcc197219.rel
                                           [ stage_drop_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852020.rel
+C:\Users\User\AppData\Local\Temp/lcc197220.rel
                                           [ stage_drop_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852021.rel
+C:\Users\User\AppData\Local\Temp/lcc197221.rel
                                           [ world1_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852022.rel
+C:\Users\User\AppData\Local\Temp/lcc197222.rel
                                           [ world1_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc852023.rel
+C:\Users\User\AppData\Local\Temp/lcc197223.rel
                                           [ world1_tiles ]
 
 
