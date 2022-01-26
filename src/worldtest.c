@@ -257,7 +257,22 @@ void anim_worldtest() {
         current_actor->RENDER = TRUE;
         current_actor->ON = TRUE;
         // }
-        if (!ANIMATIONLOCK) {
+        if (ANIMATIONLOCK) {
+            switch (bkg.slide_dir) {
+                case SLIDELEFT:
+                    current_actor->x += 64;
+                    break;
+                case SLIDERIGHT:
+                    current_actor->x -= 64;
+                    break;
+                case SLIDEDOWN:
+                    current_actor->y += 64;
+                    break;
+                case SLIDEUP:
+                    current_actor->y -= 64;
+                    break;
+            }
+        } else if (!ANIMATIONLOCK) {
             if (current_actor->RENDER == TRUE && current_actor->KILL == NULL) {  // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
                 if (current_actor->NPC_type == PATROL) {                         // PATROL NPCS
                     current_actor->patrol_timer--;
