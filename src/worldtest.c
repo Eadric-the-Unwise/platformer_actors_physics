@@ -126,7 +126,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 4 ELEVATOR
-    {.x = TO_COORDS(16),
+    {.x = TO_COORDS(40),
      .y = TO_COORDS(88),
      .SpdX = 0,
      .SpdY = 8,

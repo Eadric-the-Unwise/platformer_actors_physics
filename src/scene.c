@@ -127,24 +127,24 @@ UINT8 reload_NPC_actors(const actor_t *actor, UINT8 actors_count)
         current_actor->y = actor->y;
         current_actor->SpdX = actor->SpdX;
         current_actor->SpdY = actor->SpdY;
-        current_actor->w = actor->w;
-        current_actor->h = actor->h;
-        current_actor->x_pivot = actor->x_pivot;
-        current_actor->y_pivot = actor->y_pivot;
-        current_actor->h_offset = actor->h_offset;
-        current_actor->x_offset = actor->x_offset;
-        current_actor->y_offset = actor->y_offset;
+        // current_actor->w = actor->w;
+        // current_actor->h = actor->h;
+        // current_actor->x_pivot = actor->x_pivot;
+        // current_actor->y_pivot = actor->y_pivot;
+        // current_actor->h_offset = actor->h_offset;
+        // current_actor->x_offset = actor->x_offset;
+        // current_actor->y_offset = actor->y_offset;
         current_actor->last_direction = current_actor->direction = actor->direction;
-        current_actor->NPC_type = actor->NPC_type;
+        // current_actor->NPC_type = actor->NPC_type;
         current_actor->patrol_timer = actor->patrol_timer;
         current_actor->patrol_reset = actor->patrol_reset;
         current_actor->patrol_max = actor->patrol_max;
-        memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations)); // copy array of 5 pointers to animation phases
-        memcpy(current_actor->animations_props, actor->animations_props, sizeof(actor->animations_props));
-        current_actor->animation_phase = actor->animation_phase;
-        current_actor->RENDER = actor->RENDER;
-        current_actor->ON = actor->ON;
-        current_actor->KILL = actor->KILL;
+        // memcpy(current_actor->animations, actor->animations, sizeof(current_actor->animations)); // copy array of 5 pointers to animation phases
+        // memcpy(current_actor->animations_props, actor->animations_props, sizeof(actor->animations_props));
+        // current_actor->animation_phase = actor->animation_phase;
+        // current_actor->RENDER = actor->RENDER;
+        // current_actor->ON = actor->ON;
+        // current_actor->KILL = actor->KILL;
 
         hiwater += actor->tile_count;
         current_actor++;
