@@ -268,6 +268,7 @@ void anim_worldtest()
 
     for (UINT8 i = active_NPC_count; i != 0; i--)
     { // TURN ON CURRENT SET OF NPC SPRITES
+
         if (ANIMATIONLOCK)
         {
             switch (bkg.slide_dir)
@@ -300,6 +301,8 @@ void anim_worldtest()
         {
             // current_actor->RENDER = TRUE;
             // current_actor->ON = TRUE;
+            current_actor->RENDER = TRUE;
+            current_actor->ON = TRUE;
             if (current_actor->RENDER == TRUE && current_actor->KILL == NULL)
             { // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
                 if (current_actor->NPC_type == PATROL)
@@ -557,7 +560,7 @@ void init_submap_worldtest()
     bkg.old_camera_y = bkg.camera_y;
 
     bkg.camera_style = horizontal_cam;
-    // bkg.slide_dir = NULL;
+    // bkg.slide_dir = SLIDERIGHT;
 
     COLLISION_WIDTH = WORLD1_COLLISIONWidth;
     COLLISION_DATA = WORLD1_COLLISION;
@@ -705,7 +708,6 @@ void enter_worldtest()
             if (TO_PIXELS(bkg.camera_x) % 160 == 0 && TO_PIXELS(bkg.camera_y) % 144 == 0)
             {
                 bkg.slider = FALSE;
-                // bkg.slide_dir = NULL;
                 ANIMATIONLOCK = FALSE;
                 WALKSTATE = TRUE;
             }
