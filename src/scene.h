@@ -43,7 +43,7 @@
 
 #define TO_COORDS(A) ((A) << 4)
 #define TO_PIXELS(A) ((A) >> 4)
-#define TO_TILES(A) ((A) >> (4 + 3))  // 4 is "subpixels to pixels" and 3 is "pixels to tiles".
+#define TO_TILES(A) ((A) >> (4 + 3)) // 4 is "subpixels to pixels" and 3 is "pixels to tiles".
 
 #define GRAVITY 4
 #define FRICTION 2
@@ -56,7 +56,8 @@
 #define CHANGED_BUTTONS (last_joy ^ joy)
 #define SCROLL_SPD 62
 
-typedef enum {
+typedef enum
+{
     DIR_LEFT,
     DIR_RIGHT,
     DIR_UP_L,
@@ -81,12 +82,14 @@ typedef enum {
     DIR_OFFLADDER_R,
 } direction_e;
 
-typedef enum {
+typedef enum
+{
     LEFT,
     RIGHT,
 } facing_e;
 
-typedef enum {
+typedef enum
+{
     PATROL,
     PISTOL,
     WALK,
@@ -94,12 +97,14 @@ typedef enum {
     BULLET,
 } NPC_type_e;
 
-typedef enum {
+typedef enum
+{
     ANIM_LOOP,
     ANIM_ONCE
 } anim_loop_e;
 
-typedef struct actor_t {
+typedef struct actor_t
+{
     INT16 x;
     INT16 y;
     INT16 SpdX;
@@ -108,9 +113,9 @@ typedef struct actor_t {
     INT8 h;
     INT8 x_pivot;
     INT8 y_pivot;
-    INT8 h_offset;  // y - value
+    INT8 h_offset; // y - value
     INT8 x_offset;
-    INT8 y_offset;  // y + value
+    INT8 y_offset; // y + value
     // direction
     direction_e direction;
     direction_e last_direction;
@@ -122,23 +127,25 @@ typedef struct actor_t {
     UINT8 tile_index;
     UINT8 patrol_timer;
     UINT8 patrol_reset;
-    const UINT8 *tile_data;  // const variables cannot be manipulated. Initialized only ONCE
+    UINT8 patrol_max;
+    const UINT8 *tile_data; // const variables cannot be manipulated. Initialized only ONCE
     UINT8 bank;
     // animation description
-    const metasprite_t **animations[22];  // list all DIRs in level's actors struct, up to max of [this value]
-    anim_loop_e animations_props[22];     // equivilent to above DIRs to define whether they loop or play ONCE
-    UINT8 animation_phase;                // frame of metasprite animation loop
+    const metasprite_t **animations[22]; // list all DIRs in level's actors struct, up to max of [this value]
+    anim_loop_e animations_props[22];    // equivilent to above DIRs to define whether they loop or play ONCE
+    UINT8 animation_phase;               // frame of metasprite animation loop
     UINT8 copy;
-    UINT8 RENDER;  // if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
+    UINT8 RENDER; // if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
     UINT8 ON;
-    UINT8 KILL;  // if disabled, the NPC will hide_metasprite();
+    UINT8 KILL; // if disabled, the NPC will hide_metasprite();
 } actor_t;
 
 typedef void (*animate_level_t)();
 typedef void (*collide_level_t)();
 typedef void (*load_submap_t)();
 
-typedef struct level_t {
+typedef struct level_t
+{
     UINT8 bank;
     load_submap_t submap_hook;
     const actor_t *actors;
@@ -161,6 +168,7 @@ extern UINT8 hiwater;
 extern const level_t *current_stage;
 void load_level(const level_t *level);
 UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count);
+UINT8 reload_NPC_actors(const actor_t *actor, UINT8 actors_count);
 void load_bullets(const actor_t *bullet, UINT8 hiwater);
 void render_platform_actors();
 void render_world_actors();
@@ -177,18 +185,22 @@ void jump();
 void land();
 void setGameBank(UBYTE i);
 void gameover();
+void NPC_reset(UINT8 actor_count);
 extern UINT8 GAMEOVER;
 extern UINT8 WALKSTATE;
 extern UINT8 EXIT1, EXIT2;
 extern UINT8 JOYLOCK;
 extern UINT8 ANIMATIONLOCK;
+// extern UINT8 NPC_RESET;
 extern uint8_t animation_timer;
 
 extern uint8_t shadow_scx, shadow_scy;
 
 // fuction body is inlined into the code
-inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase) {
-    if (actor->direction != dir) {
+inline void SetActorDirection(actor_t *actor, direction_e dir, UINT8 phase)
+{
+    if (actor->direction != dir)
+    {
         actor->last_direction = actor->direction;
         actor->direction = dir;
         actor->animation_phase = phase;

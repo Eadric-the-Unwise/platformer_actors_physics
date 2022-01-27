@@ -9,7 +9,7 @@
 extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;
-extern UINT8 gamestate;
+extern UINT8 GAMESTATE;
 extern const level_t *current_stage;
 extern BYTE ATTACH, x_Collide, y_Collide;
 extern UINT8 current_elevator;
@@ -42,7 +42,7 @@ const actor_t world1_actors[1] = {
      .direction = DIR_JUMP_L,
      .facing = LEFT,
      .patrol_timer = 12,
-     .patrol_reset = 12,
+     .patrol_max = 12,
      .tile_count = (sizeof(detective_16_data) >> 4),
      .tile_index = 0,
      .tile_data = detective_16_data,
@@ -189,11 +189,11 @@ void anim_world1()
     //                 if ((current_actor->direction == DIR_UP_L) && (current_actor->patrol_timer == 0)) {
     //                     SetActorDirection(current_actor, DIR_UP_R, 0);
     //                     current_actor->SpdX = abs(current_actor->SpdX);
-    //                     current_actor->patrol_timer = current_actor->patrol_reset;
+    //                     current_actor->patrol_timer = current_actor->patrol_max;
     //                 } else if ((current_actor->direction == DIR_UP_R) && (current_actor->patrol_timer == 0)) {
     //                     SetActorDirection(current_actor, DIR_UP_L, 0);
     //                     current_actor->SpdX = -abs(current_actor->SpdX);
-    //                     current_actor->patrol_timer = current_actor->patrol_reset;
+    //                     current_actor->patrol_timer = current_actor->patrol_max;
     //                 }
 
     //             } else if (current_actor->NPC_type == ELEVATOR) {  // ELEVATORS
@@ -203,11 +203,11 @@ void anim_world1()
     //                 if ((current_actor->direction == DIR_UP_L) && (current_actor->patrol_timer == 0)) {
     //                     SetActorDirection(current_actor, DIR_UP_R, 0);
     //                     current_actor->SpdY = abs(current_actor->SpdY);
-    //                     current_actor->patrol_timer = current_actor->patrol_reset;
+    //                     current_actor->patrol_timer = current_actor->patrol_max;
     //                 } else if ((current_actor->direction == DIR_UP_R) && (current_actor->patrol_timer == 0)) {
     //                     SetActorDirection(current_actor, DIR_UP_L, 0);
     //                     current_actor->SpdY = -abs(current_actor->SpdY);
-    //                     current_actor->patrol_timer = current_actor->patrol_reset;
+    //                     current_actor->patrol_timer = current_actor->patrol_max;
     //                 }
     //             } else if (current_actor->NPC_type == WALK) {  // WALK NPCS WALK STRAIGHT AHEAD
     //                 INT16 actor_x = TO_PIXELS(current_actor->x);
@@ -512,7 +512,7 @@ void setup_world1()
 void enter_world1()
 {
     setup_world1();
-    while (gamestate == 3)
+    while (GAMESTATE == 3)
     {
         last_joy = joy;
         joy = joypad();
@@ -818,13 +818,13 @@ void enter_world1()
         }
 
         //     if (GAMEOVER) {
-        //         // gamestate = 1;
+        //         // GAMESTATE = 1;
         //         enter_world1();
         //         // gameover();
         //         // TRY LOADING A SECOND STAGE HERE?
         //     } else if (EXIT1) {
         //         EXIT1 = FALSE;
-        //         gamestate = 1;
+        //         GAMESTATE = 1;
         //     }
     }
 }

@@ -10,7 +10,7 @@
 extern Variables bkg;
 extern UINT8 px, py;
 extern UINT8 joy, last_joy;
-extern UINT8 gamestate;
+extern UINT8 GAMESTATE;
 extern const level_t *current_stage;
 extern BYTE ATTACH, x_Collide, y_Collide;
 extern UINT8 current_elevator;
@@ -43,7 +43,7 @@ const actor_t level2_actors[5] = {
      .direction = DIR_JUMP_L,
      .facing = LEFT,
      .patrol_timer = 12,
-     .patrol_reset = 12,
+     .patrol_max = 12,
      .tile_count = (sizeof(detective_large_data) >> 4),
      .tile_index = 0,
      .tile_data = detective_large_data,
@@ -68,7 +68,7 @@ const actor_t level2_actors[5] = {
      .direction = DIR_LEFT,
      .NPC_type = PISTOL,
      .patrol_timer = 78,
-     .patrol_reset = 156,
+     .patrol_max = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -92,7 +92,7 @@ const actor_t level2_actors[5] = {
      .direction = DIR_LEFT,
      .NPC_type = PISTOL,
      .patrol_timer = 78,
-     .patrol_reset = 156,
+     .patrol_max = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -140,7 +140,7 @@ const actor_t level2_actors[5] = {
      .tile_data = elevator_data,
      .bank = elevator_data_Bank,
      .patrol_timer = 1,
-     .patrol_reset = 160,
+     .patrol_max = 160,
      .animations = {NULL, NULL, elevator_frame, NULL, elevator_frame},
      .animations_props = {NULL, NULL, NULL, NULL, NULL},
      .animation_phase = 0,
@@ -299,13 +299,13 @@ void anim_level2()
                 {
                     SetActorDirection(current_actor, DIR_RIGHT, 0);
                     current_actor->SpdX = abs(current_actor->SpdX);
-                    current_actor->patrol_timer = current_actor->patrol_reset;
+                    current_actor->patrol_timer = current_actor->patrol_max;
                 }
                 else if ((current_actor->direction == DIR_RIGHT) && (current_actor->patrol_timer == 0))
                 {
                     SetActorDirection(current_actor, DIR_LEFT, 0);
                     current_actor->SpdX = -abs(current_actor->SpdX);
-                    current_actor->patrol_timer = current_actor->patrol_reset;
+                    current_actor->patrol_timer = current_actor->patrol_max;
                 }
             }
             else if (current_actor->NPC_type == ELEVATOR)
@@ -317,13 +317,13 @@ void anim_level2()
                 {
                     SetActorDirection(current_actor, DIR_DOWN_L, 0);
                     current_actor->SpdY = abs(current_actor->SpdY);
-                    current_actor->patrol_timer = current_actor->patrol_reset;
+                    current_actor->patrol_timer = current_actor->patrol_max;
                 }
                 else if ((current_actor->direction == DIR_DOWN_L) && (current_actor->patrol_timer == 0))
                 {
                     SetActorDirection(current_actor, DIR_UP_L, 0);
                     current_actor->SpdY = -abs(current_actor->SpdY);
-                    current_actor->patrol_timer = current_actor->patrol_reset;
+                    current_actor->patrol_timer = current_actor->patrol_max;
                 }
             }
             else if (current_actor->NPC_type == WALK)
@@ -597,7 +597,7 @@ void enter_lvl2()
     // load_level(&level2);
     // if (load_submap) load_submap();
     setup_lvl2();
-    while (gamestate == 2)
+    while (GAMESTATE == 2)
     {
         last_joy = joy;
         joy = joypad();
@@ -888,7 +888,7 @@ void enter_lvl2()
 
         if (GAMEOVER)
         {
-            // gamestate = 1;
+            // GAMESTATE = 1;
             enter_lvl2();
             // gameover();
             // TRY LOADING A SECOND STAGE HERE?
@@ -896,7 +896,7 @@ void enter_lvl2()
         else if (EXIT1)
         {
             EXIT1 = FALSE;
-            gamestate = 1;
+            GAMESTATE = 1;
         }
     }
 }
