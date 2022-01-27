@@ -180,6 +180,16 @@ UINT8 worldtest_CAM3_NPCs = sizeof(worldtest_cam3) / sizeof(worldtest_cam3[0]) -
 UINT8 worldtest_CAM4_NPCs = sizeof(worldtest_cam4) / sizeof(worldtest_cam4[0]) - 1;
 // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
 // CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
+void NPC_adjust(UINT8 x, UINT8 y)
+{
+    actor_t *adjust_actor = active_actors; // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
+    adjust_actor++;
+    for (UINT8 i = render_actors_count - 1; i != 0; i--)
+    {
+        adjust_actor->x += TO_COORDS(x);
+        adjust_actor->y += TO_COORDS(y);
+    }
+}
 
 void anim_worldtest()
 {
@@ -195,6 +205,8 @@ void anim_worldtest()
     UINT8 next_actors_count = NULL; // next array of sprite to turn off (in case you move back to a previous position)
 
     // TRY LOADING THIS AS A FUNCTION INSTEAD OF A CONSITENT SWITCH CASE
+    // if (!ANIMATIONLOCK)
+    // {
     switch (CAM)
     {
     case CAM1:
@@ -218,6 +230,7 @@ void anim_worldtest()
             ptr = worldtest_cam2;
             NPC_reset(worldtest.actor_count);
             reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            NPC_adjust(-160, 0);
         }
         break;
     case CAM2:
@@ -290,6 +303,7 @@ void anim_worldtest()
         }
         break;
     }
+    // }
 
     render_actors_count = active_NPC_count + 1;
     ptr++;
