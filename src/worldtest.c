@@ -187,8 +187,8 @@ void anim_worldtest()
     UINT8 *pptr = NULL; // previous pointer
     UINT8 *nptr = NULL; // next pointer
 
-    INT16 camera_x = TO_PIXELS(bkg.camera_x);
-    UINT8 player_x = TO_PIXELS(PLAYER.x);
+    // INT16 camera_x = TO_PIXELS(bkg.camera_x);
+    // UINT8 player_x = TO_PIXELS(PLAYER.x);
     // UINT16 playerx = TO_PIXELS(PLAYER.x);
     UINT8 active_NPC_count = NULL;  // the amount of actors in 160px window, the first actor to load current_actor pointer
     UINT8 prev_actors_count = NULL; // previous array of sprites to turn off
@@ -223,6 +223,11 @@ void anim_worldtest()
         else if (bkg.slide_dir == SLIDERIGHT)
         {
             CAM = CAM1;
+            cam_ptr = worldtest_cam1;
+            active_NPC_count = worldtest_CAM1_NPCs;
+            ptr = worldtest_cam1;
+            NPC_reset(worldtest.actor_count);
+            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
         break;
     case CAM3:
@@ -259,26 +264,10 @@ void anim_worldtest()
     actor_t *current_bullet = active_bullets;
     PLAYER.x += PLAYER.SpdX;
 
-    // if (ANIMATIONLOCK)
-    // {
-    //     for (UINT8 x = worldtest.actor_count - 1; x != 0; x--)
-    //     { // TURN OFF ALL NPC SPRITES
-    //         // erase_actor->x = erase_actor->x_reset;
-    //         // erase_actor->y = erase_actor->y_reset;
-    //         erase_actor->RENDER = FALSE;
-    //         erase_actor->ON = FALSE;
-    //         erase_actor++;
-    //     }
-    // }
-
     INT16 camx = TO_PIXELS(bkg.camera_x);
 
     for (UINT8 i = active_NPC_count; i != 0; i--)
     { // TURN ON CURRENT SET OF NPC SPRITES
-        // if (!ANIMATIONLOCK)
-        // {
-
-        // }
         if (ANIMATIONLOCK)
         {
             switch (bkg.slide_dir)

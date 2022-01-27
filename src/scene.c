@@ -586,7 +586,7 @@ void NPC_reset(UINT8 actor_count)
 {
     actor_t *reset_actor = active_actors;
     reset_actor++;
-    for (UINT8 x = actor_count; x != 0; x--)
+    for (UINT8 x = actor_count - 1; x != 0; x--)
     { // TURN OFF ALL NPC SPRITES
         // reset_actor->x = reset_actor->x_reset;
         // reset_actor->y = reset_actor->y_reset;
