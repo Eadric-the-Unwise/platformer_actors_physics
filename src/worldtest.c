@@ -222,7 +222,7 @@ void anim_worldtest()
             NPC_reset(worldtest.actor_count);
             reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
-        else if (bkg.slide_dir == SLIDELEFT)
+        else if (bkg.slide_dir == SLIDELEFT) //&&!ANIMATIONLOCK
         {
             CAM = CAM2;
             cam_ptr = worldtest_cam2;
@@ -254,6 +254,7 @@ void anim_worldtest()
             ptr = worldtest_cam1;
             NPC_reset(worldtest.actor_count);
             reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            NPC_adjust(80, 0);
         }
         break;
     case CAM3:
@@ -330,11 +331,11 @@ void anim_worldtest()
                 break;
             case SLIDERIGHT:
                 current_actor->x -= 64;
-                if (TO_PIXELS(current_actor->x) <= 160)
-                {
-                    current_actor->RENDER = TRUE;
-                    current_actor->ON = TRUE;
-                }
+                // if (TO_PIXELS(current_actor->x) <= 160)
+                // {
+                current_actor->RENDER = TRUE;
+                current_actor->ON = TRUE;
+                // }
                 break;
             case SLIDEUP:
                 current_actor->y += 64;
