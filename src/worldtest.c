@@ -57,7 +57,7 @@ const actor_t worldtest_actors[5] = {
      .RENDER = TRUE,
      .ON = TRUE},
     // 1 PATROL
-    {.x = TO_COORDS(216),
+    {.x = TO_COORDS(56),
      .y = TO_COORDS(68),
      .SpdX = 8,
      .SpdY = 0,
@@ -204,10 +204,18 @@ void anim_worldtest()
         if (bkg.slide_dir == SLIDEDOWN)
         {
             CAM = CAM4;
+            cam_ptr = worldtest_cam4;
+            active_NPC_count = worldtest_CAM4_NPCs;
+            ptr = worldtest_cam4;
+            NPC_reset(worldtest.actor_count);
+            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
         else if (bkg.slide_dir == SLIDELEFT)
         {
             CAM = CAM2;
+            cam_ptr = worldtest_cam2;
+            active_NPC_count = worldtest_CAM2_NPCs;
+            ptr = worldtest_cam2;
             NPC_reset(worldtest.actor_count);
             reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
@@ -219,6 +227,11 @@ void anim_worldtest()
         if (bkg.slide_dir == SLIDEDOWN)
         {
             CAM = CAM3;
+            cam_ptr = worldtest_cam3;
+            active_NPC_count = worldtest_CAM3_NPCs;
+            ptr = worldtest_cam3;
+            NPC_reset(worldtest.actor_count);
+            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
         else if (bkg.slide_dir == SLIDERIGHT)
         {
@@ -237,10 +250,20 @@ void anim_worldtest()
         if (bkg.slide_dir == SLIDEUP)
         {
             CAM = CAM2;
+            cam_ptr = worldtest_cam2;
+            active_NPC_count = worldtest_CAM2_NPCs;
+            ptr = worldtest_cam2;
+            NPC_reset(worldtest.actor_count);
+            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
         else if (bkg.slide_dir == SLIDERIGHT)
         {
             CAM = CAM4;
+            cam_ptr = worldtest_cam4;
+            active_NPC_count = worldtest_CAM4_NPCs;
+            ptr = worldtest_cam4;
+            NPC_reset(worldtest.actor_count);
+            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
         break;
     case CAM4:
@@ -250,10 +273,20 @@ void anim_worldtest()
         if (bkg.slide_dir == SLIDEUP)
         {
             CAM = CAM1;
+            cam_ptr = worldtest_cam1;
+            active_NPC_count = worldtest_CAM1_NPCs;
+            ptr = worldtest_cam1;
+            NPC_reset(worldtest.actor_count);
+            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
         else if (bkg.slide_dir == SLIDELEFT)
         {
             CAM = CAM3;
+            cam_ptr = worldtest_cam3;
+            active_NPC_count = worldtest_CAM3_NPCs;
+            ptr = worldtest_cam3;
+            NPC_reset(worldtest.actor_count);
+            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
         }
         break;
     }
@@ -291,9 +324,13 @@ void anim_worldtest()
                 break;
             case SLIDEUP:
                 current_actor->y += 64;
+                current_actor->RENDER = TRUE;
+                current_actor->ON = TRUE;
                 break;
             case SLIDEDOWN:
                 current_actor->y -= 64;
+                current_actor->RENDER = TRUE;
+                current_actor->ON = TRUE;
                 break;
             }
         }
