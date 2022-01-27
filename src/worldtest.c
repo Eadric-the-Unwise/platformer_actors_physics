@@ -81,7 +81,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE},
     // 2 PISTOL
-    {.x = TO_COORDS(-104),
+    {.x = TO_COORDS(56),
      .y = TO_COORDS(132),
      .SpdX = -8,
      .SpdY = 0,
@@ -126,7 +126,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 4 ELEVATOR
-    {.x = TO_COORDS(-144),
+    {.x = TO_COORDS(16),
      .y = TO_COORDS(88),
      .SpdX = 0,
      .SpdY = 8,
@@ -180,22 +180,22 @@ UINT8 worldtest_CAM3_NPCs = sizeof(worldtest_cam3) / sizeof(worldtest_cam3[0]) -
 UINT8 worldtest_CAM4_NPCs = sizeof(worldtest_cam4) / sizeof(worldtest_cam4[0]) - 1;
 // CURRENTLY, WHEN RETURNING TO A STANDING NPC, THEY ARE SHIFTED IF YOU REACH THE END OF THE STAGE AND THEN GO BACK. WE EITHER NEED TO PREVENT PLAYERS FROM RETURNING TO A PREVIOUS POINT, OR *FIX THIS*
 // CURRENTLY, IF YOU ARE ABLE TO RETURN TO A PREVIOUS POINT, AND ONE OR MORE NPCS WERE TURNED OFF THEN TURNED BACK ON, THEIR X POSITION WILL BE SHIFTED TO THE LEFT
-void NPC_adjust(UINT8 x, UINT8 y)
-{
-    actor_t *adjust_actor = active_actors; // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
-    adjust_actor++;
-    for (UINT8 i = render_actors_count - 1; i != 0; i--)
-    {
-        adjust_actor->x += TO_COORDS(x);
-        adjust_actor->y += TO_COORDS(y);
-    }
-}
+// void NPC_adjust(UINT8 x, UINT8 y)
+// {
+//     actor_t *adjust_actor = active_actors; // The Detective is currently active_actors[0], so active_actors[1] and above are enemies
+//     adjust_actor++;
+//     for (UINT8 i = render_actors_count - 1; i != 0; i--)
+//     {
+//         adjust_actor->x += TO_COORDS(x);
+//         adjust_actor->y += TO_COORDS(y);
+//     }
+// }
 
 void anim_worldtest()
 {
     UINT8 *ptr = NULL;  // pointer // simply = NULL to bypass compiler error lol
     UINT8 *pptr = NULL; // previous pointer
-    UINT8 *nptr = NULL; // next pointer
+    // UINT8 *nptr = NULL; // next pointer
 
     // INT16 camera_x = TO_PIXELS(bkg.camera_x);
     // UINT8 player_x = TO_PIXELS(PLAYER.x);
@@ -230,7 +230,6 @@ void anim_worldtest()
             ptr = worldtest_cam2;
             NPC_reset(worldtest.actor_count);
             reload_NPC_actors(worldtest.actors, worldtest.actor_count);
-            NPC_adjust(-160, 0);
         }
         break;
     case CAM2:
@@ -254,7 +253,6 @@ void anim_worldtest()
             ptr = worldtest_cam1;
             NPC_reset(worldtest.actor_count);
             reload_NPC_actors(worldtest.actors, worldtest.actor_count);
-            NPC_adjust(80, 0);
         }
         break;
     case CAM3:
@@ -317,20 +315,20 @@ void anim_worldtest()
     for (UINT8 i = active_NPC_count; i != 0; i--)
     { // TURN ON CURRENT SET OF NPC SPRITES
 
-        if (ANIMATIONLOCK)
+        if (!ANIMATIONLOCK)
         {
             switch (bkg.slide_dir)
             {
             case SLIDELEFT:
-                current_actor->x += 64;
-                if (TO_PIXELS(current_actor->x) >= 0)
-                {
-                    current_actor->RENDER = TRUE;
-                    current_actor->ON = TRUE;
-                }
+                // current_actor->x += 64;
+                // if (TO_PIXELS(current_actor->x) >= 0)
+                // {
+                current_actor->RENDER = TRUE;
+                current_actor->ON = TRUE;
+                // }
                 break;
             case SLIDERIGHT:
-                current_actor->x -= 64;
+                // current_actor->x -= 64;
                 // if (TO_PIXELS(current_actor->x) <= 160)
                 // {
                 current_actor->RENDER = TRUE;
@@ -338,23 +336,23 @@ void anim_worldtest()
                 // }
                 break;
             case SLIDEUP:
-                current_actor->y += 64;
+                // current_actor->y += 64;
                 current_actor->RENDER = TRUE;
                 current_actor->ON = TRUE;
                 break;
             case SLIDEDOWN:
-                current_actor->y -= 64;
+                // current_actor->y -= 64;
                 current_actor->RENDER = TRUE;
                 current_actor->ON = TRUE;
                 break;
             }
-        }
-        else if (!ANIMATIONLOCK)
-        {
+
+            // else if (!ANIMATIONLOCK)
+            // {
             // current_actor->RENDER = TRUE;
             // current_actor->ON = TRUE;
-            current_actor->RENDER = TRUE;
-            current_actor->ON = TRUE;
+            // current_actor->RENDER = TRUE;
+            // current_actor->ON = TRUE;
             if (current_actor->RENDER == TRUE && current_actor->KILL == NULL)
             { // AI RULES FOR ALL NPCS ON THIS PARTICULAR STAGE
                 if (current_actor->NPC_type == PATROL)
@@ -407,6 +405,7 @@ void anim_worldtest()
                 }
             }
         }
+        // }
         ptr++;
         current_actor = &active_actors[*ptr];
     }
