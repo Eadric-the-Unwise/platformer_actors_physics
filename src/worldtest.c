@@ -57,8 +57,8 @@ const actor_t worldtest_actors[5] = {
      .RENDER = TRUE,
      .ON = TRUE},
     // 1 PATROL
-    {.x = TO_COORDS(56),
-     .y = TO_COORDS(68),
+    {.x = TO_COORDS(72),
+     .y = TO_COORDS(48),
      .SpdX = 8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -81,8 +81,8 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE},
     // 2 PISTOL
-    {.x = TO_COORDS(56),
-     .y = TO_COORDS(132),
+    {.x = TO_COORDS(104),
+     .y = TO_COORDS(32),
      .SpdX = -8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -105,7 +105,7 @@ const actor_t worldtest_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 3 WALK
-    {.x = TO_COORDS(20),
+    {.x = TO_COORDS(36),
      .y = TO_COORDS(140),
      .SpdX = 8,
      .SpdY = 0,
@@ -127,7 +127,7 @@ const actor_t worldtest_actors[5] = {
      .copy = TRUE},
     // 4 ELEVATOR
     {.x = TO_COORDS(40),
-     .y = TO_COORDS(88),
+     .y = TO_COORDS(168),
      .SpdX = 0,
      .SpdY = 8,
      .w = elevator_WIDTH,
@@ -576,10 +576,9 @@ void npc_collisions_worldtest()
                     SPAWN = Gravity = JUMP = FALSE;
                 }
             }
-            if ((CHANGED_BUTTONS & J_A) && (joy & J_A))
-            {
-                jump();
-            }
+
+            check_world_UD(px, py, TO_PIXELS(bkg.camera_x), TO_PIXELS(bkg.camera_y)); // IF MOVING RIGHT
+            check_world_LR(px, py, TO_PIXELS(bkg.camera_x), TO_PIXELS(bkg.camera_y)); // IF MOVING RIGHT
         }
     }
 }
@@ -655,13 +654,27 @@ void enter_worldtest()
                 if (joy & J_LEFT)
                 {
                     SetActorDirection(&PLAYER, DIR_LEFT, PLAYER.animation_phase);
-                    if (PLAYER.SpdX > -MAX_WALK_SPEED)
+                    if (joy & J_UP || joy & J_DOWN)
                     {
-                        PLAYER.SpdX -= WALK_VELOCITY;
+                        if (PLAYER.SpdX > -ANGLED_WALK_SPEED)
+                        {
+                            PLAYER.SpdX -= ANGLED_VELOCITY;
+                        }
+                        else
+                        {
+                            PLAYER.SpdX = -ANGLED_WALK_SPEED;
+                        }
                     }
                     else
                     {
-                        PLAYER.SpdX = -MAX_WALK_SPEED;
+                        if (PLAYER.SpdX > -MAX_WALK_SPEED)
+                        {
+                            PLAYER.SpdX -= WALK_VELOCITY;
+                        }
+                        else
+                        {
+                            PLAYER.SpdX = -MAX_WALK_SPEED;
+                        }
                     }
                 }
                 else if (joy & J_RIGHT)
@@ -819,45 +832,32 @@ void enter_worldtest()
 
         if (PLAYER.SpdY < 0)
         {
-            if (PLAYER.SpdY != -MAX_WALK_SPEED)
-            {
-                PLAYER.SpdY += FRICTION;
-            }
-            else if ((PLAYER.SpdY <= -MAX_WALK_SPEED) && !(joy & J_UP))
+            if (PLAYER.SpdY != -MAX_WALK_SPEED || PLAYER.SpdY <= -MAX_WALK_SPEED && !(joy & J_UP))
             {
                 PLAYER.SpdY += FRICTION;
             }
         }
         if (PLAYER.SpdY > 0)
         {
-            if (PLAYER.SpdY != MAX_WALK_SPEED)
-            {
-                PLAYER.SpdY -= FRICTION;
-            }
-            else if ((PLAYER.SpdY >= MAX_WALK_SPEED) && !(joy & J_DOWN))
+            if (PLAYER.SpdY != MAX_WALK_SPEED || (PLAYER.SpdY >= MAX_WALK_SPEED) && !(joy & J_DOWN))
             {
                 PLAYER.SpdY -= FRICTION;
             }
         }
-
+        UINT8 FRICTIONX;
+        UINT8 mod;
+        mod = PLAYER.SpdX % 2;
+        FRICTIONX = (mod == 0) ? 2 : 1;
         if (PLAYER.SpdX < 0)
         {
-            if (PLAYER.SpdX != -MAX_WALK_SPEED)
+            if (PLAYER.SpdX != -MAX_WALK_SPEED || PLAYER.SpdX != -ANGLED_WALK_SPEED || PLAYER.SpdX == -MAX_WALK_SPEED && !(joy & J_LEFT) || PLAYER.SpdX == -ANGLED_WALK_SPEED && !(joy & J_LEFT)) //IF NOT MAX SPEED
             {
-                PLAYER.SpdX += FRICTION;
-            }
-            else if ((PLAYER.SpdX <= -MAX_WALK_SPEED) && !(joy & J_LEFT))
-            {
-                PLAYER.SpdX += FRICTION;
+                PLAYER.SpdX += FRICTIONX;
             }
         }
         if (PLAYER.SpdX > 0)
         {
-            if (PLAYER.SpdX != MAX_WALK_SPEED)
-            {
-                PLAYER.SpdX -= FRICTION;
-            }
-            else if ((PLAYER.SpdX >= MAX_WALK_SPEED) && !(joy & J_RIGHT))
+            if (PLAYER.SpdX != MAX_WALK_SPEED || PLAYER.SpdX != ANGLED_WALK_SPEED || (PLAYER.SpdX >= MAX_WALK_SPEED) && !(joy & J_RIGHT) || (PLAYER.SpdX >= ANGLED_WALK_SPEED) && !(joy & J_RIGHT))
             {
                 PLAYER.SpdX -= FRICTION;
             }
