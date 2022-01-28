@@ -51,7 +51,7 @@
 #define WALK_VELOCITY 4
 #define MAX_WALK_SPEED 16
 #define ANGLED_VELOCITY 3
-#define ANGLED_WALK_SPEED 12
+#define ANGLED_WALK_SPEED 15
 #define MAX_CRAWL_SPEED 10
 #define MAX_FALL_SPEED 64
 // if last_joy and J_A both equal 1, XOR = 0.

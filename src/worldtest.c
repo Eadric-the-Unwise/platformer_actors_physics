@@ -680,36 +680,75 @@ void enter_worldtest()
                 else if (joy & J_RIGHT)
                 {
                     SetActorDirection(&PLAYER, DIR_RIGHT, PLAYER.animation_phase);
-
-                    if (PLAYER.SpdX < MAX_WALK_SPEED)
+                    if (joy & J_UP || joy & J_DOWN)
                     {
-                        PLAYER.SpdX += WALK_VELOCITY;
+                        if (PLAYER.SpdX < ANGLED_WALK_SPEED)
+                        {
+                            PLAYER.SpdX += ANGLED_VELOCITY;
+                        }
+                        else
+                        {
+                            PLAYER.SpdX = ANGLED_WALK_SPEED;
+                        }
                     }
                     else
                     {
-                        PLAYER.SpdX = MAX_WALK_SPEED;
+                        if (PLAYER.SpdX < MAX_WALK_SPEED)
+                        {
+                            PLAYER.SpdX += WALK_VELOCITY;
+                        }
+                        else
+                        {
+                            PLAYER.SpdX = MAX_WALK_SPEED;
+                        }
                     }
                 }
                 if (joy & J_DOWN)
                 {
                     SetActorDirection(&PLAYER, DIR_DOWN_L, PLAYER.animation_phase);
-                    if (PLAYER.SpdY < MAX_WALK_SPEED)
+                    if (joy & J_LEFT || joy & J_RIGHT)
                     {
-                        PLAYER.SpdY += WALK_VELOCITY;
+                        if (PLAYER.SpdY < ANGLED_WALK_SPEED)
+                        {
+                            PLAYER.SpdY += ANGLED_VELOCITY;
+                        }
+                        else
+                            PLAYER.SpdY = ANGLED_WALK_SPEED;
                     }
                     else
-                        PLAYER.SpdY = MAX_WALK_SPEED;
+                    {
+                        if (PLAYER.SpdY < MAX_WALK_SPEED)
+                        {
+                            PLAYER.SpdY += WALK_VELOCITY;
+                        }
+                        else
+                            PLAYER.SpdY = MAX_WALK_SPEED;
+                    }
                 }
                 else if (joy & J_UP)
                 {
                     SetActorDirection(&PLAYER, DIR_UP_L, PLAYER.animation_phase);
-                    if (PLAYER.SpdY > MAX_WALK_SPEED)
+                    if (joy & J_LEFT || joy & J_RIGHT)
                     {
-                        PLAYER.SpdY -= WALK_VELOCITY;
+                        if (PLAYER.SpdY > ANGLED_WALK_SPEED)
+                        {
+                            PLAYER.SpdY -= ANGLED_VELOCITY;
+                        }
+                        else
+                            PLAYER.SpdY = -ANGLED_WALK_SPEED;
                     }
                     else
-                        PLAYER.SpdY = -MAX_WALK_SPEED;
+                    {
+                        if (PLAYER.SpdY > MAX_WALK_SPEED)
+                        {
+                            PLAYER.SpdY -= WALK_VELOCITY;
+                        }
+                        else
+                            PLAYER.SpdY = -MAX_WALK_SPEED;
+                    }
                 }
+
+                //SLIDE CAMERA
                 if (px <= 2 && TO_PIXELS(bkg.camera_x) > 0)
                 { // if player walks off edge of screen LEFT
                     bkg.slider = TRUE;
@@ -829,37 +868,48 @@ void enter_worldtest()
         {
             check_world_LR(px - 1, py, TO_PIXELS(bkg.camera_x), TO_PIXELS(bkg.camera_y)); // IF MOVING LEFT
         }
-
+        UINT8 FRICTIONY;
+        UINT8 modY;
+        modY = PLAYER.SpdY % 2;
+        FRICTIONY = (modY == 0) ? 2 : 1; //if modx == 0, then 1 TRUE
         if (PLAYER.SpdY < 0)
         {
             if (PLAYER.SpdY != -MAX_WALK_SPEED || PLAYER.SpdY <= -MAX_WALK_SPEED && !(joy & J_UP))
             {
-                PLAYER.SpdY += FRICTION;
+                PLAYER.SpdY += FRICTIONY;
             }
         }
         if (PLAYER.SpdY > 0)
         {
             if (PLAYER.SpdY != MAX_WALK_SPEED || (PLAYER.SpdY >= MAX_WALK_SPEED) && !(joy & J_DOWN))
             {
-                PLAYER.SpdY -= FRICTION;
+                PLAYER.SpdY -= FRICTIONY;
             }
         }
         UINT8 FRICTIONX;
-        UINT8 mod;
-        mod = PLAYER.SpdX % 2;
-        FRICTIONX = (mod == 0) ? 2 : 1;
+        UINT8 modX;
+        modX = PLAYER.SpdX % 2;
+        FRICTIONX = (modX == 0) ? 2 : 1; //if modx == 0, then 1 TRUE
         if (PLAYER.SpdX < 0)
         {
-            if (PLAYER.SpdX != -MAX_WALK_SPEED || PLAYER.SpdX != -ANGLED_WALK_SPEED || PLAYER.SpdX == -MAX_WALK_SPEED && !(joy & J_LEFT) || PLAYER.SpdX == -ANGLED_WALK_SPEED && !(joy & J_LEFT)) //IF NOT MAX SPEED
+            if (PLAYER.SpdX != -MAX_WALK_SPEED || PLAYER.SpdX != -ANGLED_WALK_SPEED) //IF NOT MAX SPEED
+            {
+                PLAYER.SpdX += FRICTIONX;
+            }
+            else if (PLAYER.SpdX == -MAX_WALK_SPEED && !(joy & J_LEFT) || PLAYER.SpdX == -ANGLED_WALK_SPEED && !(joy & J_LEFT)) //IF MAX SPEED
             {
                 PLAYER.SpdX += FRICTIONX;
             }
         }
         if (PLAYER.SpdX > 0)
         {
-            if (PLAYER.SpdX != MAX_WALK_SPEED || PLAYER.SpdX != ANGLED_WALK_SPEED || (PLAYER.SpdX >= MAX_WALK_SPEED) && !(joy & J_RIGHT) || (PLAYER.SpdX >= ANGLED_WALK_SPEED) && !(joy & J_RIGHT))
+            if (PLAYER.SpdX != MAX_WALK_SPEED || PLAYER.SpdX != ANGLED_WALK_SPEED) //IF NOT MAX SPEED
             {
-                PLAYER.SpdX -= FRICTION;
+                PLAYER.SpdX -= FRICTIONX;
+            }
+            else if ((PLAYER.SpdX >= MAX_WALK_SPEED) && !(joy & J_RIGHT) || (PLAYER.SpdX >= ANGLED_WALK_SPEED) && !(joy & J_RIGHT)) //IF MAX SPEED
+            {
+                PLAYER.SpdX += FRICTIONX;
             }
         }
 
