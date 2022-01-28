@@ -576,9 +576,6 @@ void npc_collisions_worldtest()
                     SPAWN = Gravity = JUMP = FALSE;
                 }
             }
-
-            check_world_UD(px, py, TO_PIXELS(bkg.camera_x), TO_PIXELS(bkg.camera_y)); // IF MOVING RIGHT
-            check_world_LR(px, py, TO_PIXELS(bkg.camera_x), TO_PIXELS(bkg.camera_y)); // IF MOVING RIGHT
         }
     }
 }
@@ -868,6 +865,12 @@ void enter_worldtest()
         {
             check_world_LR(px - 1, py, TO_PIXELS(bkg.camera_x), TO_PIXELS(bkg.camera_y)); // IF MOVING LEFT
         }
+        else if (ATTACH)
+        {
+            check_world_UD(px, py, TO_PIXELS(bkg.camera_x), TO_PIXELS(bkg.camera_y)); // IF MOVING RIGHT
+            check_world_LR(px, py, TO_PIXELS(bkg.camera_x), TO_PIXELS(bkg.camera_y)); // IF MOVING RIGHT
+        }
+
         UINT8 FRICTIONY;
         UINT8 modY;
         modY = PLAYER.SpdY % 2;
@@ -881,7 +884,7 @@ void enter_worldtest()
         }
         if (PLAYER.SpdY > 0)
         {
-            if (PLAYER.SpdY != MAX_WALK_SPEED || (PLAYER.SpdY >= MAX_WALK_SPEED) && !(joy & J_DOWN))
+            if (PLAYER.SpdY != MAX_WALK_SPEED || PLAYER.SpdY >= MAX_WALK_SPEED && !(joy & J_DOWN))
             {
                 PLAYER.SpdY -= FRICTIONY;
             }
@@ -892,24 +895,16 @@ void enter_worldtest()
         FRICTIONX = (modX == 0) ? 2 : 1; //if modx == 0, then 1 TRUE
         if (PLAYER.SpdX < 0)
         {
-            if (PLAYER.SpdX != -MAX_WALK_SPEED || PLAYER.SpdX != -ANGLED_WALK_SPEED) //IF NOT MAX SPEED
-            {
-                PLAYER.SpdX += FRICTIONX;
-            }
-            else if (PLAYER.SpdX == -MAX_WALK_SPEED && !(joy & J_LEFT) || PLAYER.SpdX == -ANGLED_WALK_SPEED && !(joy & J_LEFT)) //IF MAX SPEED
+            if (PLAYER.SpdX != -MAX_WALK_SPEED || PLAYER.SpdX <= -MAX_WALK_SPEED && !(joy & J_LEFT)) //IF NOT MAX SPEED
             {
                 PLAYER.SpdX += FRICTIONX;
             }
         }
         if (PLAYER.SpdX > 0)
         {
-            if (PLAYER.SpdX != MAX_WALK_SPEED || PLAYER.SpdX != ANGLED_WALK_SPEED) //IF NOT MAX SPEED
+            if (PLAYER.SpdX != MAX_WALK_SPEED || PLAYER.SpdX >= MAX_WALK_SPEED && !(joy & J_RIGHT)) //IF NOT MAX SPEED
             {
                 PLAYER.SpdX -= FRICTIONX;
-            }
-            else if ((PLAYER.SpdX >= MAX_WALK_SPEED) && !(joy & J_RIGHT) || (PLAYER.SpdX >= ANGLED_WALK_SPEED) && !(joy & J_RIGHT)) //IF MAX SPEED
-            {
-                PLAYER.SpdX += FRICTIONX;
             }
         }
 
