@@ -43,6 +43,7 @@ typedef enum
     SLIDEDOWN,
     SLIDELEFT,
     SLIDERIGHT,
+    SLIDERESET
 } slide_dir;
 
 typedef enum

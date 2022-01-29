@@ -213,92 +213,104 @@ void anim_worldtest()
         cam_ptr = worldtest_cam1;
         active_NPC_count = worldtest_CAM1_NPCs;
         ptr = worldtest_cam1;
-        if (bkg.slide_dir == SLIDEDOWN)
+        if (bkg.slider)
         {
-            CAM = CAM4;
-            cam_ptr = worldtest_cam4;
-            active_NPC_count = worldtest_CAM4_NPCs;
-            ptr = worldtest_cam4;
-            NPC_reset(worldtest.actor_count);
-            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
-        }
-        else if (bkg.slide_dir == SLIDELEFT) //&&!ANIMATIONLOCK
-        {
-            CAM = CAM2;
-            cam_ptr = worldtest_cam2;
-            active_NPC_count = worldtest_CAM2_NPCs;
-            ptr = worldtest_cam2;
-            NPC_reset(worldtest.actor_count);
-            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            if (bkg.slide_dir == SLIDEDOWN)
+            {
+                CAM = CAM4;
+                cam_ptr = worldtest_cam4;
+                active_NPC_count = worldtest_CAM4_NPCs;
+                ptr = worldtest_cam4;
+                NPC_reset(worldtest.actor_count);
+                reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            }
+            else if (bkg.slide_dir == SLIDELEFT) //&&!ANIMATIONLOCK
+            {
+                CAM = CAM2;
+                cam_ptr = worldtest_cam2;
+                active_NPC_count = worldtest_CAM2_NPCs;
+                ptr = worldtest_cam2;
+                NPC_reset(worldtest.actor_count);
+                reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            }
         }
         break;
     case CAM2:
         cam_ptr = worldtest_cam2;
         active_NPC_count = worldtest_CAM2_NPCs;
         ptr = worldtest_cam2;
-        if (bkg.slide_dir == SLIDEDOWN)
+        if (bkg.slider)
         {
-            CAM = CAM3;
-            cam_ptr = worldtest_cam3;
-            active_NPC_count = worldtest_CAM3_NPCs;
-            ptr = worldtest_cam3;
-            NPC_reset(worldtest.actor_count);
-            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
-        }
-        else if (bkg.slide_dir == SLIDERIGHT)
-        {
-            CAM = CAM1;
-            cam_ptr = worldtest_cam1;
-            active_NPC_count = worldtest_CAM1_NPCs;
-            ptr = worldtest_cam1;
-            NPC_reset(worldtest.actor_count);
-            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            if (bkg.slide_dir == SLIDEDOWN)
+            {
+                CAM = CAM3;
+                cam_ptr = worldtest_cam3;
+                active_NPC_count = worldtest_CAM3_NPCs;
+                ptr = worldtest_cam3;
+                NPC_reset(worldtest.actor_count);
+                reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            }
+            else if (bkg.slide_dir == SLIDERIGHT)
+            {
+                CAM = CAM1;
+                cam_ptr = worldtest_cam1;
+                active_NPC_count = worldtest_CAM1_NPCs;
+                ptr = worldtest_cam1;
+                NPC_reset(worldtest.actor_count);
+                reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            }
         }
         break;
     case CAM3:
         cam_ptr = worldtest_cam3;
         active_NPC_count = worldtest_CAM3_NPCs;
         ptr = worldtest_cam3;
-        if (bkg.slide_dir == SLIDEUP)
+        if (bkg.slider)
         {
-            CAM = CAM2;
-            cam_ptr = worldtest_cam2;
-            active_NPC_count = worldtest_CAM2_NPCs;
-            ptr = worldtest_cam2;
-            NPC_reset(worldtest.actor_count);
-            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
-        }
-        else if (bkg.slide_dir == SLIDERIGHT)
-        {
-            CAM = CAM4;
-            cam_ptr = worldtest_cam4;
-            active_NPC_count = worldtest_CAM4_NPCs;
-            ptr = worldtest_cam4;
-            NPC_reset(worldtest.actor_count);
-            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            if (bkg.slide_dir == SLIDEUP)
+            {
+                CAM = CAM2;
+                cam_ptr = worldtest_cam2;
+                active_NPC_count = worldtest_CAM2_NPCs;
+                ptr = worldtest_cam2;
+                NPC_reset(worldtest.actor_count);
+                reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            }
+            else if (bkg.slide_dir == SLIDERIGHT)
+            {
+                CAM = CAM4;
+                cam_ptr = worldtest_cam4;
+                active_NPC_count = worldtest_CAM4_NPCs;
+                ptr = worldtest_cam4;
+                NPC_reset(worldtest.actor_count);
+                reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            }
         }
         break;
     case CAM4:
         cam_ptr = worldtest_cam4;
         active_NPC_count = worldtest_CAM4_NPCs;
         ptr = worldtest_cam4;
-        if (bkg.slide_dir == SLIDEUP)
+        if (bkg.slider)
         {
-            CAM = CAM1;
-            cam_ptr = worldtest_cam1;
-            active_NPC_count = worldtest_CAM1_NPCs;
-            ptr = worldtest_cam1;
-            NPC_reset(worldtest.actor_count);
-            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
-        }
-        else if (bkg.slide_dir == SLIDELEFT)
-        {
-            CAM = CAM3;
-            cam_ptr = worldtest_cam3;
-            active_NPC_count = worldtest_CAM3_NPCs;
-            ptr = worldtest_cam3;
-            NPC_reset(worldtest.actor_count);
-            reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            if (bkg.slide_dir == SLIDEUP)
+            {
+                CAM = CAM1;
+                cam_ptr = worldtest_cam1;
+                active_NPC_count = worldtest_CAM1_NPCs;
+                ptr = worldtest_cam1;
+                NPC_reset(worldtest.actor_count);
+                reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            }
+            else if (bkg.slide_dir == SLIDELEFT)
+            {
+                CAM = CAM3;
+                cam_ptr = worldtest_cam3;
+                active_NPC_count = worldtest_CAM3_NPCs;
+                ptr = worldtest_cam3;
+                NPC_reset(worldtest.actor_count);
+                reload_NPC_actors(worldtest.actors, worldtest.actor_count);
+            }
         }
         break;
     }
