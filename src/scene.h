@@ -92,6 +92,7 @@ typedef enum
 
 typedef enum
 {
+    TALK,
     PATROL,
     PISTOL,
     WALK,

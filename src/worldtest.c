@@ -116,7 +116,7 @@ const actor_t worldtest_actors[5] = {
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_LEFT,
-     .NPC_type = PISTOL,
+     .NPC_type = TALK,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -528,9 +528,26 @@ void npc_collisions_worldtest()
         {
             if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U)
             {
-                if (active_actors[i].NPC_type != ELEVATOR)
+                if (active_actors[i].NPC_type != ELEVATOR && active_actors[i].NPC_type != TALK)
                 {
                     GAMEOVER = TRUE;
+                }
+                else if (active_actors[i].NPC_type == TALK)
+                {
+                    if ((PBL_x < NTR_x - 2) && joy & J_LEFT)
+                    {
+                        x_Collide = TRUE;
+                        // y_Collide = TRUE;
+                        // GAMEOVER = TRUE;
+                    }
+                    else if ((PTR_x > NBL_x + 2) && joy & J_RIGHT)
+                    {
+                        x_Collide = TRUE;
+                    }
+
+                    //     // y_Collide = TRUE;
+                    //     GAMEOVER = TRUE;
+                    // }
                 }
                 else if (active_actors[i].NPC_type == ELEVATOR)
                 {
@@ -550,6 +567,23 @@ void npc_collisions_worldtest()
                         {
                             y_Collide = TRUE;
                         }
+                    }
+                }
+            }
+            if (x_Collide)
+            {
+                if (PBL_x > NTR_x - 2) //
+                {
+                    if (joy & J_RIGHT)
+                    {
+                        x_Collide = FALSE;
+                    }
+                }
+                else if (PTR_x < NBL_x + 2)
+                {
+                    if (joy & J_LEFT)
+                    {
+                        x_Collide = FALSE;
                     }
                 }
             }

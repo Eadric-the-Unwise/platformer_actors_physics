@@ -492,7 +492,7 @@ void check_world_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x, INT16 ca
     tileindexT = COLLISION_WIDTH * indexTy + index_x; // MULTIPLY THE WIDTH BY THE Y TILE TO FIND THE Y ROW. THEN ADD THE X TILE TO SHIFT THE COLUMN. FINDS THE TILE YOU'RE LOOKING FOR
     tileindexD = COLLISION_WIDTH * indexDy + index_x;
 
-    if ((COLLISION_DATA[tileindexT] == 0x01) || (COLLISION_DATA[tileindexD] == 0x01))
+    if ((COLLISION_DATA[tileindexT] == 0x01) || (COLLISION_DATA[tileindexD] == 0x01) || x_Collide)
     {
         PLAYER.SpdX = 0;
     }
