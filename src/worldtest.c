@@ -33,8 +33,8 @@ const level_t worldtest = {
 //.w and .h are adjusted for COLLISION functions
 const actor_t worldtest_actors[5] = {
     // 0 PLAYER
-    {.x = TO_COORDS(64),
-     .y = TO_COORDS(44),
+    {.x = TO_COORDS(80),
+     .y = TO_COORDS(80),
      .SpdX = 0,
      .SpdY = 0,
      .w = detective_16_WIDTH,
@@ -106,7 +106,7 @@ const actor_t worldtest_actors[5] = {
      .copy = TRUE},
     // 3 WALK
     {.x = TO_COORDS(36),
-     .y = TO_COORDS(44),
+     .y = TO_COORDS(140),
      .SpdX = 8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -558,7 +558,7 @@ void init_submap_worldtest() {
     bkg.camera_tiles_x = WORLD1_MAPWidth * 8;
     bkg.camera_tiles_y = WORLD1_MAPHeight * 8;
     bkg.camera_x = TO_COORDS(bkg.camera_max_x);
-    bkg.camera_y = TO_COORDS(bkg.camera_max_y);
+    bkg.camera_y = TO_COORDS(0);
     ;
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
@@ -574,13 +574,13 @@ void init_submap_worldtest() {
     bkg.old_camera_x = bkg.camera_x;
     bkg.old_camera_y = bkg.camera_y;
 
-    bkg.camera_style = horizontal_cam;
+    // bkg.camera_style = horizontal_cam;
     // bkg.slide_dir = SLIDERIGHT;
 
     COLLISION_WIDTH = WORLD1_COLLISIONWidth;
     COLLISION_DATA = WORLD1_COLLISION;
     COLLISION_BANK = WORLD1_COLLISIONBank;
-    CAM = CAM4;
+    CAM = CAM1;
 
     shadow_scx = bkg.camera_x;
     shadow_scy = bkg.camera_y;
