@@ -509,33 +509,24 @@ void npc_collisions_worldtest() {
                     y_Collide = FALSE;
                 }
             }
-            // if (x_Collide) {
-            //     // if (PBL_x > NTR_x - 2)  //
-            //     // {
+            if (x_Collide) {
+                if (PBL_x > NBL_x) {  // TO RIGHT OF NPC
+                    if (joy & J_RIGHT) {
+                        x_Collide = FALSE;
+                    }
 
-            //     if (PBL_x > NBL_x) {  // TO RIGHT OF NPC
-            //         if (joy & J_RIGHT) {
-            //             x_Collide = FALSE;
-            //         }
-            //         // if (joy & J_UP || joy & J_DOWN) {
-            //         //     y_Collide = FALSE;
-            //         // }
-            //     } else if (PBL_x < NBL_x) {  // TO LEFT OF NPC
-            //         if (joy & J_LEFT) {
-            //             x_Collide = FALSE;
-            //         }
-            //         // if (joy & J_UP || joy & J_DOWN) {
-            //         //     y_Collide = FALSE;
-            //         // }
-            //     }
-            // }
-            // if (y_Collide) {
-            //     if ((PBL_y < NBL_y) && (joy & J_UP)) {
-            //         y_Collide = FALSE;
-            //     } else if ((PBL_y > NBL_y) && (joy & J_DOWN)) {
-            //         y_Collide = FALSE;
-            //     }
-            // }
+                } else if (PBL_x < NBL_x) {  // TO LEFT OF NPC
+                    if (joy & J_LEFT) {
+                        x_Collide = FALSE;
+                    }
+                }
+            } else if (y_Collide) {
+                if ((PBL_y < NBL_y) && (joy & J_UP)) {
+                    y_Collide = FALSE;
+                } else if ((PBL_y > NBL_y) && (joy & J_DOWN)) {
+                    y_Collide = FALSE;
+                }
+            }
         } else {
         }
         if (ATTACH) {
