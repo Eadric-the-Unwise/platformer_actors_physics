@@ -473,17 +473,20 @@ void npc_collisions_worldtest() {
                 if (active_actors[i].NPC_type != ELEVATOR && active_actors[i].NPC_type != TALK) {
                     GAMEOVER = TRUE;
                 } else if (active_actors[i].NPC_type == TALK) {
-                    if ((PBL_x > NBL_x) && (joy & J_LEFT)) {
-                        x_Collide = TRUE;
-                        // y_Collide = TRUE;
-                        // GAMEOVER = TRUE;
-                    } else if ((PBL_x < NBL_x) && (joy & J_RIGHT)) {
-                        x_Collide = TRUE;
+                    if ((PTR_x > NTR_x) && (PBL_y > NTR_y + 2) && (PTR_y < NBL_y - 2)) {  // TO RIGHT OF NPC
+                        if (joy & J_LEFT) {
+                            x_Collide = TRUE;
+                        }
+                    } else if ((PBL_x < NBL_x) && (PBL_y > NTR_y + 2) && (PTR_y < NBL_y - 2)) {  // TO LEFT OF NPC // && (PBL_y > NTR_y + 2) && (PTR_y < NBL_y - 2)
+                        if (joy & J_RIGHT) {
+                            x_Collide = TRUE;
+                        }
                     }
-
-                    //     // y_Collide = TRUE;
-                    //     GAMEOVER = TRUE;
-                    // }
+                    if ((PBL_y > NTR_y) && (PBL_x < NTR_x - 2) && (PTR_x > NBL_x + 2) && (joy & J_DOWN)) {
+                        y_Collide = TRUE;
+                    } else if ((PTR_y < NBL_y) && (PBL_x < NTR_x - 2) && (PTR_x > NBL_x + 2) && (joy & J_UP)) {
+                        y_Collide = TRUE;
+                    }
                 } else if (active_actors[i].NPC_type == ELEVATOR) {
                     if (!ATTACH) {
                         if ((PBL_x > NTR_x - 2) || (PTR_x < NBL_x + 2))  // is not on top of elevator
@@ -502,20 +505,37 @@ void npc_collisions_worldtest() {
                 if (x_Collide) {
                     x_Collide = FALSE;
                 }
-            }
-            if (x_Collide) {
-                // if (PBL_x > NTR_x - 2)  //
-                // {
-                if ((PBL_x > NBL_x)) {
-                    if (joy & J_RIGHT) {
-                        x_Collide = FALSE;
-                    }
-                } else if ((PBL_x < NBL_x)) {
-                    if (joy & J_LEFT) {
-                        x_Collide = FALSE;
-                    }
+                if (y_Collide) {
+                    y_Collide = FALSE;
                 }
             }
+            // if (x_Collide) {
+            //     // if (PBL_x > NTR_x - 2)  //
+            //     // {
+
+            //     if (PBL_x > NBL_x) {  // TO RIGHT OF NPC
+            //         if (joy & J_RIGHT) {
+            //             x_Collide = FALSE;
+            //         }
+            //         // if (joy & J_UP || joy & J_DOWN) {
+            //         //     y_Collide = FALSE;
+            //         // }
+            //     } else if (PBL_x < NBL_x) {  // TO LEFT OF NPC
+            //         if (joy & J_LEFT) {
+            //             x_Collide = FALSE;
+            //         }
+            //         // if (joy & J_UP || joy & J_DOWN) {
+            //         //     y_Collide = FALSE;
+            //         // }
+            //     }
+            // }
+            // if (y_Collide) {
+            //     if ((PBL_y < NBL_y) && (joy & J_UP)) {
+            //         y_Collide = FALSE;
+            //     } else if ((PBL_y > NBL_y) && (joy & J_DOWN)) {
+            //         y_Collide = FALSE;
+            //     }
+            // }
         } else {
         }
         if (ATTACH) {
