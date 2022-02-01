@@ -382,7 +382,7 @@ void anim_level1()
 void spawn_bullets()
 {
     actor_t *spawn_bullet = active_bullets;
-    for (UINT8 i = MAX_BULLETS; i != 0; i--)
+    for (UINT8 i = level1.bullet_count; i != 0; i--)
     {
         if (spawn_bullet->RENDER == TRUE)
         {

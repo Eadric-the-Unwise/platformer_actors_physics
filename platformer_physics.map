@@ -33,7 +33,7 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      000005A0  l__CODE_1 |    000005A0  l__CODE_2 |    00000708  l__CODE_8
      0000084A  l__CODE_3 |    00000E10  l__CODE_6 |    00000EDE  l__CODE  
      000010DE  s__HOME   |    00001112  l__CODE_2 |    00001580  l__HOME  
-     000016A1  l__CODE_0 |    000017D7  l__CODE_5 |    00001831  l__CODE_7
+     000016A1  l__CODE_0 |    000017D9  l__CODE_5 |    0000182B  l__CODE_7
      00001AF4  l__CODE_2 |    00001AFB  l__CODE_1 |    00002000  _rROMB0  
      0000265E  s__BASE   |    0000265E  s__CODE_0 |    00003000  _rROMB1  
      00003CFF  s__INITIA |    00003CFF  s__LIT    |    00003D81  s__GSINIT
@@ -411,25 +411,25 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_5                00054000    000017D7 =        6103. bytes (REL,CON)
+_CODE_5                00054000    000017D9 =        6105. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      00054000  _anim_lev |    000548B5  _level1   |    000548C2  _level1_a
-     00054ADE  _level1_b |    00054B4A  _spawn_bu |    00054C7A  _npc_coll
-     00054FD7  _init_sub |    00055101  _setup_lv |    00055148  _enter_lv
+     00054ADE  _level1_b |    00054B4A  _spawn_bu |    00054C7C  _npc_coll
+     00054FD9  _init_sub |    00055103  _setup_lv |    0005514A  _enter_lv
 ASxxxx Linker V03.00 + NoICE + sdld,  page 32.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE_7                00074000    00001831 =        6193. bytes (REL,CON)
+_CODE_7                00074000    0000182B =        6187. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00074000  _anim_lev |    000748CD  _level2   |    000748DA  _level2_a
-     00074AF6  _level2_b |    00074BCE  _spawn_bu |    00074CE8  _npc_coll
-     00075045  _init_sub |    0007516F  _setup_lv |    000751B6  _enter_lv
+     00074000  _anim_lev |    000748C7  _level2   |    000748D4  _level2_a
+     00074AF0  _level2_b |    00074BC8  _spawn_bu |    00074CE2  _npc_coll
+     0007503F  _init_sub |    00075169  _setup_lv |    000751B0  _enter_lv
 ASxxxx Linker V03.00 + NoICE + sdld,  page 33.
 Hexadecimal  [32-Bits]
 
@@ -548,53 +548,53 @@ Files Linked                              [ module(s) ]
 
 C:\c_code\gbdk\lib/small/asxxxx/gb/crt0.o
                                           [ Runtime ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221880.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215840.rel
                                           [ camera ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221881.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215841.rel
                                           [ collisions ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221882.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215842.rel
                                           [ ladder ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221883.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215843.rel
                                           [ level1 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221884.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215844.rel
                                           [ level2 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221885.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215845.rel
                                           [ main ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221886.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215846.rel
                                           [ scene ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221887.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215847.rel
                                           [ worldtest ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221888.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215848.rel
                                           [ bullet ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc221889.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc215849.rel
                                           [ detective_16 ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218810.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158410.rel
                                           [ detective_large ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218811.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158411.rel
                                           [ elevator ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218812.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158412.rel
                                           [ level_1_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218813.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158413.rel
                                           [ level_1_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218814.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158414.rel
                                           [ level_2_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218815.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158415.rel
                                           [ level_2_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218816.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158416.rel
                                           [ level_tileset ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218817.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158417.rel
                                           [ NPC_electric ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218818.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158418.rel
                                           [ stage_drop_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218819.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158419.rel
                                           [ stage_drop_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218820.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158420.rel
                                           [ stage_drop_tiles ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218821.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158421.rel
                                           [ world1_collision ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218822.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158422.rel
                                           [ world1_map ]
-C:\Users\EMART~1\AppData\Local\Temp/lcc2218823.rel
+C:\Users\EMART~1\AppData\Local\Temp/lcc2158423.rel
                                           [ world1_tiles ]
 
 

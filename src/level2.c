@@ -392,7 +392,7 @@ void anim_level2()
         current_actor = &active_actors[*ptr];
         // current_actor++;
     }
-    for (UINT8 i = MAX_BULLETS; i != 0; i--)
+    for (UINT8 i = level2.bullet_count; i != 0; i--)
     {
         if (current_bullet->RENDER == TRUE)
         {
