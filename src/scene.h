@@ -160,6 +160,7 @@ typedef struct level_t
     const actor_t *actors;
     const actor_t *bullets;
     UINT8 actor_count;
+    UINT8 bullet_count;
     animate_level_t animate_hook;
     collide_level_t collide_hook;
 } level_t;
@@ -178,7 +179,7 @@ extern const level_t *current_stage;
 void load_level(const level_t *level);
 UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count);
 UINT8 reload_NPC_actors(const actor_t *actor, UINT8 actors_count);
-void load_bullets(const actor_t *bullet, UINT8 hiwater);
+void load_bullets(const actor_t *bullet, UINT8 bullet_count, UINT8 hiwater);
 void render_platform_actors();
 void render_world_actors();
 void switch_down();

@@ -27,6 +27,7 @@ const level_t level2 = {
     .actors = level2_actors,
     .bullets = level2_bullets,
     .actor_count = 5,
+    .bullet_count = 2,
     .animate_hook = anim_level2, // function that put life into the scene
     .collide_hook = npc_collisions_level2};
 

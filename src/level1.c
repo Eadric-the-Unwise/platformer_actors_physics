@@ -27,6 +27,7 @@ const level_t level1 = {
     .actors = level1_actors,
     .bullets = level1_bullets,
     .actor_count = 5,
+    .bullet_count = 1,
     .animate_hook = anim_level1, // function that put life into the scene
     .collide_hook = npc_collisions_level1};
 
@@ -347,7 +348,7 @@ void anim_level1()
         current_actor = &active_actors[*ptr];
         // current_actor++;
     }
-    for (UINT8 i = MAX_BULLETS; i != 0; i--)
+    for (UINT8 i = 1; i != 0; i--)
     {
         if (current_bullet->RENDER == TRUE)
         {

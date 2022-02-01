@@ -25,7 +25,7 @@ void load_level(const level_t *level)
         return;
     // init_lvl1_actor_data();
     load_scene_actors(level->actors, level->actor_count); // Loads level1.c actors
-    load_bullets(level->bullets, hiwater);
+    load_bullets(level->bullets, level->bullet_count, hiwater);
     load_submap = level->submap_hook;
     if (load_submap)
         load_submap();
@@ -95,6 +95,39 @@ UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count)
     total_actors_count = actors_count; // copies from ROM to RAM
     return hiwater;
 }
+void load_bullets(const actor_t *bullet, UINT8 bullet_count, UINT8 hiwater)
+    NONBANKED
+{
+    if (bullet == NULL)
+        return;
+    actor_t *current_bullet = active_bullets;
+    UINT8 __save = _current_bank;
+
+    for (UINT8 i = bullet_count; i != 0; i--)
+    {
+        current_bullet->tile_index = hiwater;
+        current_bullet->bank = bullet->bank;
+        current_bullet->tile_count = bullet->tile_count;
+        current_bullet->tile_data = bullet->tile_data;
+        SWITCH_ROM(current_bullet->bank);
+        set_sprite_data(hiwater, current_bullet->tile_count, current_bullet->tile_data);
+        SWITCH_ROM(__save);
+
+        // current_bullet->tile_index = bullet->tile_index;
+        current_bullet->tile_count = bullet->tile_count;
+        current_bullet->x = bullet->x;
+        current_bullet->y = bullet->y;
+        current_bullet->SpdX = bullet->SpdX;
+        current_bullet->SpdY = bullet->SpdY;
+        current_bullet->bullet_timer = bullet->bullet_timer;
+        current_bullet->bullet_reset = bullet->bullet_reset;
+        current_bullet->NPC_type = bullet->NPC_type;
+        current_bullet->actor = bullet->actor;
+        // memcpy(current_bullet->animations, bullet->animations, sizeof(current_bullet->animations));
+        current_bullet++;
+        bullet++;
+    }
+}
 UINT8 reload_NPC_actors(const actor_t *actor, UINT8 actors_count)
     NONBANKED
 {
@@ -155,39 +188,6 @@ UINT8 reload_NPC_actors(const actor_t *actor, UINT8 actors_count)
 
     total_actors_count = actors_count; // copies from ROM to RAM
     return hiwater;
-}
-void load_bullets(const actor_t *bullet, UINT8 hiwater)
-    NONBANKED
-{
-    if (bullet == NULL)
-        return;
-    actor_t *current_bullet = active_bullets;
-    UINT8 __save = _current_bank;
-
-    for (UINT8 i = MAX_BULLETS; i != 0; i--)
-    {
-        current_bullet->tile_index = hiwater;
-        current_bullet->bank = bullet->bank;
-        current_bullet->tile_count = bullet->tile_count;
-        current_bullet->tile_data = bullet->tile_data;
-        SWITCH_ROM(current_bullet->bank);
-        set_sprite_data(hiwater, current_bullet->tile_count, current_bullet->tile_data);
-        SWITCH_ROM(__save);
-
-        // current_bullet->tile_index = bullet->tile_index;
-        current_bullet->tile_count = bullet->tile_count;
-        current_bullet->x = bullet->x;
-        current_bullet->y = bullet->y;
-        current_bullet->SpdX = bullet->SpdX;
-        current_bullet->SpdY = bullet->SpdY;
-        current_bullet->bullet_timer = bullet->bullet_timer;
-        current_bullet->bullet_reset = bullet->bullet_reset;
-        current_bullet->NPC_type = bullet->NPC_type;
-        current_bullet->actor = bullet->actor;
-        // memcpy(current_bullet->animations, bullet->animations, sizeof(current_bullet->animations));
-        current_bullet++;
-        bullet++;
-    }
 }
 
 // calls move_metasprite();, increases hiwater, and clears unnecessary Sprites in OAM after the hiwater's value
