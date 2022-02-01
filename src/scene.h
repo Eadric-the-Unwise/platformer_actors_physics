@@ -133,6 +133,7 @@ typedef struct actor_t
     UINT8 patrol_max;
     const UINT8 *tile_data; // const variables cannot be manipulated. Initialized only ONCE
     UINT8 bank;
+    UINT8 actor;
     // animation description
     const metasprite_t **animations[22]; // list all DIRs in level's actors struct, up to max of [this value]
     anim_loop_e animations_props[22];    // equivilent to above DIRs to define whether they loop or play ONCE

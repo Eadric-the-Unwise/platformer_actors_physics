@@ -158,6 +158,7 @@ const actor_t level2_bullets[1] = {
      .x_offset = 6,
      .y_offset = 6,
      .NPC_type = BULLET,
+     .actor = 3,
      .tile_count = (sizeof(bullet_data) >> 4),
      .animations = {bullet_scroll, bullet_scroll},
      .tile_data = bullet_data,
@@ -398,7 +399,7 @@ void spawn_bullets_lvl2()
                     PLAYER.direction = DIR_LADDER_L;
                 }
                 spawn_bullet->facing = LEFT;
-                spawn_bullet->x = PLAYER.x - TO_COORDS(6);
+                spawn_bullet->x = active_actors[spawn_bullet->actor].x - TO_COORDS(6);
             }
             else
             {
@@ -407,7 +408,7 @@ void spawn_bullets_lvl2()
                     PLAYER.direction = DIR_LADDER_R;
                 }
                 spawn_bullet->facing = RIGHT;
-                spawn_bullet->x = PLAYER.x + TO_COORDS(6);
+                spawn_bullet->x = active_actors[3].x + TO_COORDS(6);
             }
             if (CROUCH)
             {
@@ -732,7 +733,7 @@ void enter_lvl2()
             }
             if ((CHANGED_BUTTONS & J_B) && (joy & J_B))
             {
-                spawn_bullets();
+                spawn_bullets_lvl2();
             }
         }
 

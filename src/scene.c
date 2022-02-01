@@ -179,6 +179,7 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater)
         current_bullet->SpdX = bullet->SpdX;
         current_bullet->SpdY = bullet->SpdY;
         current_bullet->NPC_type = bullet->NPC_type;
+        current_bullet->actor = bullet->actor;
         // memcpy(current_bullet->animations, bullet->animations, sizeof(current_bullet->animations));
         current_bullet++;
         bullet++;
