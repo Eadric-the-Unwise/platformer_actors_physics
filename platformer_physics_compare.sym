@@ -321,7 +321,7 @@
 00:C3EC _shadow_scy
 00:C3ED _cam_ptr
 00:C3EF _render_actors_count
-00:C3F0 _bullet_timer
+00:C3F0 _PLAYER_bullet_timer
 00:C3F1 _animate_level
 00:C3F3 _collide_level
 00:C3F5 _load_submap

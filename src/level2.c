@@ -17,7 +17,7 @@ extern const level_t *current_stage;
 extern BYTE ATTACH, x_Collide, y_Collide;
 extern UINT8 current_elevator;
 extern UINT8 render_actors_count; // the amount of actors in 160px window, the first actor to load current_actor pointer
-extern UINT8 bullet_timer;
+extern UINT8 PLAYER_bullet_timer;
 extern UINT8 *cam_ptr;
 // extern unsigned char *COLLISION_DATA;
 
@@ -81,7 +81,8 @@ const actor_t level2_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE},
     // 2 BOTTOM PATROL
-    {.x = TO_COORDS(56),
+    {.bullet = 1,
+     .x = TO_COORDS(56),
      .y = TO_COORDS(132),
      .SpdX = -8,
      .SpdY = 0,
@@ -104,7 +105,8 @@ const actor_t level2_actors[5] = {
      .animation_phase = 0,
      .copy = TRUE},
     // 3 WALK
-    {.x = TO_COORDS(-144),
+    {.bullet = 0,
+     .x = TO_COORDS(-144),
      .y = TO_COORDS(116),
      .SpdX = 8,
      .SpdY = 0,
@@ -148,7 +150,7 @@ const actor_t level2_actors[5] = {
      .animation_phase = 0,
      .copy = FALSE}};
 
-const actor_t level2_bullets[1] = {
+const actor_t level2_bullets[2] = {
     // 0 BULLET
     {.SpdX = 48,
      .SpdY = 0,
@@ -158,7 +160,28 @@ const actor_t level2_bullets[1] = {
      .x_offset = 6,
      .y_offset = 6,
      .NPC_type = BULLET,
+     .bullet_timer = 0,
+     .bullet_reset = 90,
      .actor = 3,
+     .tile_count = (sizeof(bullet_data) >> 4),
+     .animations = {bullet_scroll, bullet_scroll},
+     .tile_data = bullet_data,
+     .bank = bullet_Bank,
+     .copy = FALSE,
+     .RENDER = FALSE,
+     .ON = FALSE},
+    //1 BULLET
+    {.SpdX = 48,
+     .SpdY = 0,
+     .w = bullet_WIDTH,
+     .h = bullet_HEIGHT,
+     .h_offset = bullet_HEIGHT,
+     .x_offset = 6,
+     .y_offset = 6,
+     .NPC_type = BULLET,
+     .bullet_timer = 0,
+     .bullet_reset = 90,
+     .actor = 2,
      .tile_count = (sizeof(bullet_data) >> 4),
      .animations = {bullet_scroll, bullet_scroll},
      .tile_data = bullet_data,
@@ -348,8 +371,12 @@ void anim_level2()
         current_actor = &active_actors[*ptr];
         // current_actor++;
     }
-    for (UINT8 i = MAX_BULLETS; i != 0; i--)
+    for (UINT8 i = 2; i != 0; i--)
     {
+        if (current_bullet->bullet_timer != 0)
+        {
+            current_bullet->bullet_timer -= 1;
+        }
         if (current_bullet->RENDER == TRUE)
         {
             INT16 bullet_x = TO_PIXELS(current_bullet->x);
@@ -373,70 +400,38 @@ void anim_level2()
         }
         current_bullet++;
     }
-    if (bullet_timer != 0)
-    {
-        bullet_timer -= 1;
-    }
 }
 
-void spawn_bullets_lvl2()
+void spawn_bullets_lvl2(UINT8 bullet_number)
 {
-    actor_t *spawn_bullet = active_bullets;
-    for (UINT8 i = MAX_BULLETS; i != 0; i--)
+    // actor_t *spawn_bullet = active_bullets;
+    // for (UINT8 i = MAX_BULLETS; i != 0; i--)
+    // {
+    // if (active_bullets[bullet_number].RENDER == TRUE)
+    // {
+    //     spawn_bullet++;
+    // }
+    // else
+    if (active_bullets[bullet_number].bullet_timer == 0)
     {
-        if (spawn_bullet->RENDER == TRUE)
-        {
-            spawn_bullet++;
+        active_bullets[bullet_number].RENDER = TRUE;
+        active_bullets[bullet_number].ON = TRUE;
+        if (PLAYER.facing == LEFT)
+        { // BULLET IS VISIBLE BEFORE ITS X AXIS IS LESS THAN DETECTIVE
+            active_bullets[bullet_number].facing = LEFT;
+            active_bullets[bullet_number].x = active_actors[active_bullets[bullet_number].actor].x - TO_COORDS(6);
         }
-        else if (bullet_timer == 0)
+        else
         {
-            spawn_bullet->RENDER = TRUE;
-            spawn_bullet->ON = TRUE;
-            if (PLAYER.facing == LEFT)
-            { // BULLET IS VISIBLE BEFORE ITS X AXIS IS LESS THAN DETECTIVE
-                if ((LADDER) && (PLAYER.direction == DIR_LADDER_R))
-                {
-                    PLAYER.direction = DIR_LADDER_L;
-                }
-                spawn_bullet->facing = LEFT;
-                spawn_bullet->x = active_actors[spawn_bullet->actor].x - TO_COORDS(6);
-            }
-            else
-            {
-                if ((LADDER) && (PLAYER.direction == DIR_LADDER_L))
-                {
-                    PLAYER.direction = DIR_LADDER_R;
-                }
-                spawn_bullet->facing = RIGHT;
-                spawn_bullet->x = active_actors[3].x + TO_COORDS(6);
-            }
-            if (CROUCH)
-            {
-                spawn_bullet->y = PLAYER.y + TO_COORDS(4);
-            }
-            else if (LADDER)
-            {
-                spawn_bullet->y = PLAYER.y - TO_COORDS(4);
-            }
-            else if (JUMP)
-            {
-                if (PLAYER.SpdY < 0)
-                {
-                    spawn_bullet->y = PLAYER.y - TO_COORDS(8);
-                }
-                else
-                {
-                    spawn_bullet->y = PLAYER.y - TO_COORDS(4);
-                }
-            }
-            else
-            {
-                spawn_bullet->y = PLAYER.y;
-            }
-            bullet_timer = 90;
-            break;
+            active_bullets[bullet_number].facing = RIGHT;
+            active_bullets[bullet_number].x = active_actors[active_bullets[bullet_number].actor].x + TO_COORDS(6);
         }
+        active_bullets[bullet_number].y = active_actors[active_bullets[bullet_number].actor].y;
+        // active_bullets[bullet_number].y = PLAYER.y + TO_COORDS(4);
+        active_bullets[bullet_number].bullet_timer = 90;
+        // break;
     }
+    // }
     // if (spawn_bullet->RENDER == FALSE) {
     // }
 }
@@ -733,7 +728,7 @@ void enter_lvl2()
             }
             if ((CHANGED_BUTTONS & J_B) && (joy & J_B))
             {
-                spawn_bullets_lvl2();
+                spawn_bullets_lvl2(active_actors[2].bullet);
             }
         }
 

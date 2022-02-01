@@ -33,7 +33,7 @@
 // typedef INT8 BOOL; //SAME AS BYTE IN GBDK
 
 #define MAX_ACTIVE_ACTORS 6
-#define MAX_BULLETS 1
+#define MAX_BULLETS 2
 #define ACTOR_DETECTIVE 0
 #define ACTOR_FIRST_NPC 1
 #define FALL_DELAY 12
@@ -130,10 +130,13 @@ typedef struct actor_t
     UINT8 tile_index;
     UINT8 patrol_timer;
     UINT8 patrol_reset;
+    UINT8 bullet_timer;
+    UINT8 bullet_reset;
     UINT8 patrol_max;
     const UINT8 *tile_data; // const variables cannot be manipulated. Initialized only ONCE
     UINT8 bank;
     UINT8 actor;
+    UINT8 bullet;
     // animation description
     const metasprite_t **animations[22]; // list all DIRs in level's actors struct, up to max of [this value]
     anim_loop_e animations_props[22];    // equivilent to above DIRs to define whether they loop or play ONCE

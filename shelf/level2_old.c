@@ -15,7 +15,7 @@ extern const level_t *current_stage;
 extern BYTE ATTACH, x_Collide, y_Collide;
 extern UINT8 current_elevator;
 extern UINT8 render_actors_count; // the amount of actors in 160px window, the first actor to load current_actor pointer
-extern UINT8 bullet_timer;
+extern UINT8 PLAYER_bullet_timer;
 extern UINT8 *cam_ptr;
 
 const level_t level2 = {
@@ -369,9 +369,9 @@ void anim_level2()
         }
         current_bullet++;
     }
-    if (bullet_timer != 0)
+    if (PLAYER_bullet_timer != 0)
     {
-        bullet_timer -= 1;
+        PLAYER_bullet_timer -= 1;
     }
 }
 
@@ -384,7 +384,7 @@ void spawn_bullets_lvl2()
         {
             spawn_bullet++;
         }
-        else if (bullet_timer == 0)
+        else if (PLAYER_bullet_timer == 0)
         {
             spawn_bullet->RENDER = TRUE;
             spawn_bullet->ON = TRUE;
@@ -429,7 +429,7 @@ void spawn_bullets_lvl2()
             {
                 spawn_bullet->y = PLAYER.y;
             }
-            bullet_timer = 90;
+            PLAYER_bullet_timer = 90;
             break;
         }
     }

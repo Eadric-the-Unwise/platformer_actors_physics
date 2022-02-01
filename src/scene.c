@@ -47,6 +47,7 @@ UINT8 load_scene_actors(const actor_t *actor, UINT8 actors_count)
     for (UINT8 i = actors_count; i != 0; i--)
     { // counter direction does not matter, because pointer is moved. only number of iterations matter.
         current_actor->bank = actor->bank;
+        current_actor->bullet = actor->bullet;
         current_actor->copy = actor->copy;
         current_actor->tile_count = actor->tile_count;
         current_actor->tile_data = actor->tile_data;
@@ -107,6 +108,7 @@ UINT8 reload_NPC_actors(const actor_t *actor, UINT8 actors_count)
     for (UINT8 i = 4; i != 0; i--)
     { // counter direction does not matter, because pointer is moved. only number of iterations matter.
         current_actor->bank = actor->bank;
+        current_actor->bullet = actor->bullet;
         current_actor->copy = actor->copy;
         current_actor->tile_count = actor->tile_count;
         current_actor->tile_data = actor->tile_data;
@@ -178,6 +180,8 @@ void load_bullets(const actor_t *bullet, UINT8 hiwater)
         current_bullet->y = bullet->y;
         current_bullet->SpdX = bullet->SpdX;
         current_bullet->SpdY = bullet->SpdY;
+        current_bullet->bullet_timer = bullet->bullet_timer;
+        current_bullet->bullet_reset = bullet->bullet_reset;
         current_bullet->NPC_type = bullet->NPC_type;
         current_bullet->actor = bullet->actor;
         // memcpy(current_bullet->animations, bullet->animations, sizeof(current_bullet->animations));

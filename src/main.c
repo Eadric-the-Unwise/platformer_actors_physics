@@ -23,7 +23,7 @@ UINT8 *cam_ptr = NULL; // pointer // simply = NULL to bypass compiler error lol
 BYTE ATTACH, x_Collide, y_Collide;
 UINT8 current_elevator;
 UINT8 render_actors_count = NULL; // the amount of actors in 160px window, the first actor to load current_actor pointer
-UINT8 bullet_timer = 0;
+UINT8 PLAYER_bullet_timer = 0;
 // actor_t *current_actor = &active_actors[ACTOR_FIRST_NPC];
 /*****************************/
 // Define your OBJ and BGP palettes, show SPRITES, turn on DISPLAY
@@ -43,7 +43,7 @@ void main()
     DROP_timer = 16;
     canCROUCH_timer = 10; // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCROUCH_Ftimer = 8; // TURN canCROUCH TO FALSE WHEN REACH COUNTDOWN
-    GAMESTATE = 4;
+    GAMESTATE = 2;
 
     last_joy = joy = 0;
     while (TRUE)

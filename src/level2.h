@@ -10,7 +10,7 @@ extern const struct level_t level2;
 extern UINT8 render_actors_count;
 void npc_collisions_level2();
 void anim_level2();
-void spawn_bullets_lvl2();
+void spawn_bullets_lvl2(UINT8 bullet_number);
 void init_submap_lvl2();
 void setup_lvl2();
 void enter_lvl2();

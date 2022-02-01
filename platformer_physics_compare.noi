@@ -374,7 +374,7 @@ DEF _shadow_scx 0xC3EB
 DEF _shadow_scy 0xC3EC
 DEF _cam_ptr 0xC3ED
 DEF _render_actors_count 0xC3EF
-DEF _bullet_timer 0xC3F0
+DEF _PLAYER_bullet_timer 0xC3F0
 DEF _animate_level 0xC3F1
 DEF _collide_level 0xC3F3
 DEF _load_submap 0xC3F5
