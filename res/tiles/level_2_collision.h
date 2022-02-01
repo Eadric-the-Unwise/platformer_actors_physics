@@ -7,7 +7,7 @@
  Info:
    Section       : 
    Bank          : 7
-   Map size      : 100 x 23
+   Map size      : 200 x 23
    Tile set      : stage_collision_tileset.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -20,9 +20,9 @@
 #ifndef __level_2_collision_h_INCLUDE
 #define __level_2_collision_h_INCLUDE
 
-#define LEVEL_2_COLLISIONWidth 100
+#define LEVEL_2_COLLISIONWidth 200
 #define LEVEL_2_COLLISIONHeight 23
-#define LEVEL_2_COLLISIONBank 225
+#define LEVEL_2_COLLISIONBank 7
 
 extern const void __bank_LEVEL_2_COLLISION;
 extern const unsigned char LEVEL_2_COLLISION[];

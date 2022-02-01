@@ -7,7 +7,7 @@
  Info:
    Section       : 
    Bank          : 8
-   Map size      : 100 x 18
+   Map size      : 200 x 18
    Tile set      : stage_drop_tileset.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -20,7 +20,7 @@
 #ifndef __level_2_map_h_INCLUDE
 #define __level_2_map_h_INCLUDE
 
-#define LEVEL_2_MAPWidth 100
+#define LEVEL_2_MAPWidth 200
 #define LEVEL_2_MAPHeight 18
 #define LEVEL_2_MAPBank 8
 
