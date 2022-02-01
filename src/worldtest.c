@@ -50,8 +50,8 @@ const actor_t worldtest_actors[5] = {
      .tile_index = 0,
      .tile_data = detective_16_data,
      .bank = detective_16_Bank,
-     .animations = {detective_16_WALK, detective_16_WALK, detective_16_UP, detective_16_UP, detective_16_DOWN, detective_16_DOWN, NULL, NULL, detective_16_IDLE, detective_16_IDLE},
-     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, NULL, NULL, ANIM_ONCE, ANIM_ONCE},
+     .animations = {detective_16_WALK, detective_16_WALK, detective_16_UP, detective_16_UP, detective_16_DOWN, detective_16_DOWN, NULL, NULL, detective_16_IDLE, detective_16_IDLE, detective_16_IDLE_UP, detective_16_IDLE_DOWN},
+     .animations_props = {ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, ANIM_LOOP, NULL, NULL, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE, ANIM_ONCE},
      .animation_phase = 0,
      .copy = FALSE,
      .RENDER = TRUE,
@@ -987,9 +987,9 @@ void enter_worldtest()
         // // Change to IDLE state when not moving
         if ((PLAYER.SpdX == 0) && (PLAYER.SpdY == 0))
         {
-            if (!(joy & J_LEFT) && !(joy & J_RIGHT) && !(ANIMATIONLOCK))
+            if (!ANIMATIONLOCK) //!(joy & J_LEFT) && !(joy & J_RIGHT) &&
             {
-                switch_idle();
+                switch_idle_world();
             }
         }
 

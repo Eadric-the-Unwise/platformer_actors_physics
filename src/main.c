@@ -43,7 +43,7 @@ void main()
     DROP_timer = 16;
     canCROUCH_timer = 10; // LEFT AND RIGHT BUTTON PRESS TIME DELAY TO AUTO CROUCH
     canCROUCH_Ftimer = 8; // TURN canCROUCH TO FALSE WHEN REACH COUNTDOWN
-    GAMESTATE = 2;
+    GAMESTATE = 4;
 
     last_joy = joy = 0;
     while (TRUE)

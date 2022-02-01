@@ -70,6 +70,8 @@ typedef enum
     DIR_CRAWL_R,
     DIR_IDLE_L,
     DIR_IDLE_R,
+    DIR_IDLE_UP,
+    DIR_IDLE_DOWN,
     DIR_JUMP_L,
     DIR_JUMP_R,
     DIR_LAND_L,
@@ -138,8 +140,8 @@ typedef struct actor_t
     UINT8 actor;
     UINT8 bullet;
     // animation description
-    const metasprite_t **animations[22]; // list all DIRs in level's actors struct, up to max of [this value]
-    anim_loop_e animations_props[22];    // equivilent to above DIRs to define whether they loop or play ONCE
+    const metasprite_t **animations[24]; // list all DIRs in level's actors struct, up to max of [this value]
+    anim_loop_e animations_props[24];    // equivilent to above DIRs to define whether they loop or play ONCE
     UINT8 animation_phase;               // frame of metasprite animation loop
     UINT8 copy;
     UINT8 RENDER; // if a stage has multiple of an NPC design, this variable will keep hiwater from loading it into tile data more than once
@@ -182,6 +184,7 @@ void render_world_actors();
 void switch_down();
 void switch_jump();
 void switch_idle();
+void switch_idle_world();
 void switch_land();
 void switch_crawl();
 void switch_onto_ladder();

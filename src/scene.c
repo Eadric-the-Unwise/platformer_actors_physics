@@ -466,6 +466,38 @@ void switch_idle()
         SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
     }
 }
+void switch_idle_world()
+{
+    switch (PLAYER.direction)
+    {
+    case DIR_LEFT:
+        SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+        break;
+    case DIR_IDLE_L:
+        SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+        break;
+    case DIR_RIGHT:
+        SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+        break;
+    case DIR_IDLE_R:
+        SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+        break;
+    case DIR_UP_L:
+        SetActorDirection(&PLAYER, DIR_IDLE_UP, 0);
+        break;
+    case DIR_DOWN_L:
+        SetActorDirection(&PLAYER, DIR_IDLE_DOWN, 0);
+        break;
+    }
+    // if (PLAYER.direction == DIR_LEFT || PLAYER.direction == DIR_IDLE_L || PLAYER.direction == DIR_UP_L || PLAYER.direction == DIR_CRAWL_L || PLAYER.direction == DIR_JUMP_L || PLAYER.direction == DIR_LAND_L || (L_LEFT))
+    // {
+    //     SetActorDirection(&PLAYER, DIR_IDLE_L, 0);
+    // }
+    // else
+    // {
+    //     SetActorDirection(&PLAYER, DIR_IDLE_R, 0);
+    // }
+}
 void switch_onto_ladder()
 {
     if (L_LEFT)
