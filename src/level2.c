@@ -83,7 +83,7 @@ const actor_t level2_actors[5] = {
     // 2 BOTTOM PATROL
     {.bullet = 1,
      .x = TO_COORDS(56),
-     .y = TO_COORDS(132),
+     .y = TO_COORDS(116),
      .SpdX = -8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -93,7 +93,7 @@ const actor_t level2_actors[5] = {
      .x_offset = 6,
      .y_offset = 6,
      .direction = DIR_DOWN_L,
-     .NPC_type = PATROL,
+     .NPC_type = PISTOL,
      .patrol_timer = 78,
      .patrol_max = 156,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
@@ -366,17 +366,25 @@ void anim_level2()
                     current_actor->KILL = TRUE; // KILL NPC IS HE GOES OFF SCREEN TO THE RIGHT TOO FAR
                 }
             }
+            else if (current_actor->NPC_type == PISTOL)
+            {
+                if (current_actor->bullet_timer == 0)
+                {
+                    spawn_bullets_lvl2(current_actor->bullet);
+                    current_actor->bullet_timer = 90;
+                }
+                else
+                {
+                    current_actor->bullet_timer -= 1;
+                }
+            }
         }
         ptr++;
         current_actor = &active_actors[*ptr];
         // current_actor++;
     }
-    for (UINT8 i = 2; i != 0; i--)
+    for (UINT8 i = MAX_BULLETS; i != 0; i--)
     {
-        if (current_bullet->bullet_timer != 0)
-        {
-            current_bullet->bullet_timer -= 1;
-        }
         if (current_bullet->RENDER == TRUE)
         {
             INT16 bullet_x = TO_PIXELS(current_bullet->x);
@@ -412,25 +420,25 @@ void spawn_bullets_lvl2(UINT8 bullet_number)
     //     spawn_bullet++;
     // }
     // else
-    if (active_bullets[bullet_number].bullet_timer == 0)
-    {
-        active_bullets[bullet_number].RENDER = TRUE;
-        active_bullets[bullet_number].ON = TRUE;
-        if (PLAYER.facing == LEFT)
-        { // BULLET IS VISIBLE BEFORE ITS X AXIS IS LESS THAN DETECTIVE
-            active_bullets[bullet_number].facing = LEFT;
-            active_bullets[bullet_number].x = active_actors[active_bullets[bullet_number].actor].x - TO_COORDS(6);
-        }
-        else
-        {
-            active_bullets[bullet_number].facing = RIGHT;
-            active_bullets[bullet_number].x = active_actors[active_bullets[bullet_number].actor].x + TO_COORDS(6);
-        }
-        active_bullets[bullet_number].y = active_actors[active_bullets[bullet_number].actor].y;
-        // active_bullets[bullet_number].y = PLAYER.y + TO_COORDS(4);
-        active_bullets[bullet_number].bullet_timer = 90;
-        // break;
+    // if (active_bullets[bullet_number].bullet_timer == 0)
+    // {
+    active_bullets[bullet_number].RENDER = TRUE;
+    active_bullets[bullet_number].ON = TRUE;
+    if (PLAYER.facing == LEFT)
+    { // BULLET IS VISIBLE BEFORE ITS X AXIS IS LESS THAN DETECTIVE
+        active_bullets[bullet_number].facing = LEFT;
+        active_bullets[bullet_number].x = active_actors[active_bullets[bullet_number].actor].x - TO_COORDS(6);
     }
+    else
+    {
+        active_bullets[bullet_number].facing = RIGHT;
+        active_bullets[bullet_number].x = active_actors[active_bullets[bullet_number].actor].x + TO_COORDS(6);
+    }
+    active_bullets[bullet_number].y = active_actors[active_bullets[bullet_number].actor].y;
+    // active_bullets[bullet_number].y = PLAYER.y + TO_COORDS(4);
+    // active_bullets[bullet_number].bullet_timer = 90;
+    // break;
+    // }
     // }
     // if (spawn_bullet->RENDER == FALSE) {
     // }
@@ -726,10 +734,10 @@ void enter_lvl2()
             {
                 jump();
             }
-            if ((CHANGED_BUTTONS & J_B) && (joy & J_B))
-            {
-                spawn_bullets_lvl2(active_actors[2].bullet);
-            }
+            // if ((CHANGED_BUTTONS & J_B) && (joy & J_B))
+            // {
+            //     spawn_bullets_lvl2(active_actors[2].bullet);
+            // }
         }
 
         // IF PLAYER IS FREE FALLING FOR ANY REASON
