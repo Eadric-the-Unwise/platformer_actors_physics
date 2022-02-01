@@ -17,6 +17,7 @@ extern const level_t *current_stage;
 extern BYTE ATTACH, x_Collide, y_Collide;
 extern UINT8 current_elevator;
 extern UINT8 render_actors_count; // the amount of actors in 160px window, the first actor to load current_actor pointer
+extern UINT8 render_bullet_count;
 extern UINT8 PLAYER_bullet_timer;
 extern UINT8 *cam_ptr;
 // extern unsigned char *COLLISION_DATA;
