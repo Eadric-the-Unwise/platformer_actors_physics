@@ -69,7 +69,7 @@ DEF s__CODE 0x200
 DEF l__DATA 0x3D5
 DEF l__CODE_101 0x5A0
 DEF l__CODE_230 0x5A0
-DEF l__CODE_3 0x84A
+DEF l__CODE_3 0x8B4
 DEF l__CODE_6 0xE10
 DEF l__CODE_8 0xE10
 DEF l__CODE 0xEDE
@@ -394,7 +394,7 @@ DEF ___render_shadow_OAM 0xC4F3
 DEF __current_bank 0xFF90
 DEF __shadow_OAM_base 0xFF92
 DEF _check_LADDER 0x34000
-DEF _ladder 0x3483F
+DEF _ladder 0x348A9
 DEF _anim_level1 0x54000
 DEF _level1 0x548B5
 DEF _level1_actors 0x548C2
