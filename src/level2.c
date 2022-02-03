@@ -107,8 +107,8 @@ const actor_t level2_actors[5] = {
      .copy = TRUE},
     // 3 WALK
     {.bullet = 0,
-     .x = TO_COORDS(-44),
-     .y = TO_COORDS(80),
+     .x = TO_COORDS(-28),
+     .y = TO_COORDS(24),
      .SpdX = 8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -409,8 +409,8 @@ void spawn_bullets_lvl2(UINT8 bullet_number) {
 }
 
 void npc_collisions_level2() {
-    UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x, BTR_y, BTR_x, BBL_y, BBL_x;
-    UINT8 ax, ay, bx, by;
+    UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;  // BTR_y, BTR_x, BBL_y, BBL_x
+    UINT8 ax, ay;                                                   // bx, by
 
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE

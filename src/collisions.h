@@ -5,6 +5,8 @@
 extern BYTE SPAWN, JUMP, Gravity, CROUCH, canCROUCH, DROP, x_Adjust;
 extern BYTE L_LEFT, L_RIGHT;
 extern BYTE canCROUCH_timer, canCROUCH_Ftimer, DROP_timer;
+extern UINT8 ONTO_Ladder_timer, DOWN_LADDER_timer, UP_LADDER_timer, OFF_LADDER_timer;
+extern UINT8 LADDER, ONTO_Ladder, DOWN_LADDER, DOWN_LADDER_F, UP_LADDER, OFF_LADDER, LADDER_Release;
 extern BYTE LR_Offset_X, LR_Offset_kX, UD_Offset_Y, UD_Offset_kY, UD_Offset_LY;
 extern const UINT8 *COLLISION_DATA;
 extern unsigned char COLLISION_WIDTH;
