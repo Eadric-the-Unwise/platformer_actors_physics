@@ -19,6 +19,8 @@ extern UINT8 current_elevator;
 extern UINT8 render_actors_count;  // the amount of actors in 160px window, the first actor to load current_actor pointer
 extern UINT8 PLAYER_bullet_timer;
 extern UINT8 *cam_ptr;
+UINT16 BTR_y, BTR_x, BBL_y, BBL_x;
+UINT8 DEBUGX;
 // extern unsigned char *COLLISION_DATA;
 
 const level_t level2 = {
@@ -108,7 +110,7 @@ const actor_t level2_actors[5] = {
     // 3 WALK
     {.bullet = 0,
      .x = TO_COORDS(-28),
-     .y = TO_COORDS(24),
+     .y = TO_COORDS(56),
      .SpdX = 8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -409,8 +411,8 @@ void spawn_bullets_lvl2(UINT8 bullet_number) {
 }
 
 void npc_collisions_level2() {
-    UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;  // BTR_y, BTR_x, BBL_y, BBL_x
-    UINT8 ax, ay;                                                   // bx, by
+    UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x, BTR_y, BTR_x, BBL_y, BBL_x;  // BTR_y, BTR_x, BBL_y, BBL_x
+    UINT8 ax, ay, bx, by;                                                                       // bx, by
 
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
@@ -431,19 +433,19 @@ void npc_collisions_level2() {
     PTR_x = px + PLAYER.x_offset;  // TR x
     PBL_y = py + PLAYER.y_offset;  // BL y
     PBL_x = px - PLAYER.x_offset;  // BL x
-    // for (UINT8 b = 0; b != 2; b++) {
-    //     bx = TO_PIXELS(active_bullets[b].x);
-    //     by = TO_PIXELS(active_bullets[b].y);
-    //     BTR_y = by - active_bullets[b].y_offset;  // TR y
-    //     BTR_x = bx + active_bullets[b].x_offset;  // TR x
-    //     BBL_y = by + active_bullets[b].y_offset;  // BL y
-    //     BBL_x = bx - active_bullets[b].x_offset;  // BL x
-    //     if (active_bullets[b].ON) {
-    //         if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, BTR_y, BTR_x, BBL_y, BBL_x) == 0x01U) {
-    //             GAMEOVER = TRUE;
-    //         }
-    //     }
-    // }
+    for (UINT8 b = 0; b != 2; b++) {
+        bx = TO_PIXELS(active_bullets[b].x);
+        by = TO_PIXELS(active_bullets[b].y);
+        BTR_y = by - active_bullets[b].y_offset;  // TR y
+        BTR_x = bx + active_bullets[b].x_offset;  // TR x
+        BBL_y = by + active_bullets[b].y_offset;  // BL y
+        BBL_x = bx - active_bullets[b].x_offset;  // BL x
+        if (active_bullets[b].ON) {
+            if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, BTR_y, BTR_x, BBL_y, BBL_x) == 0x01U) {
+                GAMEOVER = TRUE;
+            }
+        }
+    }
     for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++) {
         //[y][x]
 
@@ -767,7 +769,11 @@ void enter_lvl2() {
             collide_level();
         // RENDER ALL CURRENT ACTORS ON SCREEN
         render_platform_actors();
-
+        DEBUGX = TO_PIXELS(active_bullets[0].x);
+        BTR_y = TO_PIXELS(active_bullets[0].y) - active_bullets[0].y_offset;  // TR y
+        BTR_x = TO_PIXELS(active_bullets[0].x) + active_bullets[0].x_offset;  // TR x
+        BBL_y = TO_PIXELS(active_bullets[0].y) + active_bullets[0].y_offset;  // BL y
+        BBL_x = TO_PIXELS(active_bullets[0].x) - active_bullets[0].x_offset;
         if (bkg.redraw) {
             set_camera();
             wait_vbl_done();
