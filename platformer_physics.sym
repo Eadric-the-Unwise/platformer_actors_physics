@@ -341,7 +341,7 @@
 00:FF90 __current_bank
 00:FF92 __shadow_OAM_base
 03:4000 _check_LADDER
-03:483F _ladder
+03:48A9 _ladder
 05:4000 _anim_level1
 05:48B5 _level1
 05:48C2 _level1_actors
