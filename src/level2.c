@@ -107,8 +107,8 @@ const actor_t level2_actors[5] = {
      .copy = TRUE},
     // 3 WALK
     {.bullet = 0,
-     .x = TO_COORDS(-28),
-     .y = TO_COORDS(24),
+     .x = TO_COORDS(-44),
+     .y = TO_COORDS(80),
      .SpdX = 8,
      .SpdY = 0,
      .w = NPC_electric_WIDTH,
@@ -158,8 +158,8 @@ const actor_t level2_bullets[2] = {
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
      .h_offset = bullet_HEIGHT,
-     .x_offset = 6,
-     .y_offset = 6,
+     .x_offset = 4,
+     .y_offset = 4,
      .NPC_type = BULLET,
      .bullet_timer = 0,
      .bullet_reset = 90,
@@ -177,8 +177,8 @@ const actor_t level2_bullets[2] = {
      .w = bullet_WIDTH,
      .h = bullet_HEIGHT,
      .h_offset = bullet_HEIGHT,
-     .x_offset = 6,
-     .y_offset = 6,
+     .x_offset = 4,
+     .y_offset = 4,
      .NPC_type = BULLET,
      .bullet_timer = 0,
      .bullet_reset = 90,
@@ -409,6 +409,9 @@ void spawn_bullets_lvl2(UINT8 bullet_number) {
 }
 
 void npc_collisions_level2() {
+    UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x, BTR_y, BTR_x, BBL_y, BBL_x;
+    UINT8 ax, ay, bx, by;
+
     // CHECK LANDING HOTBOX TIMING
     // WE SHOULD ONLY NEED TO CHECK FOR CROUCH OR JUMP, BECAUSE BOTH WALK AND LAND HAVE THE SAME HITBOXES. SET THE VALUES FOR EACH BOX HERE
     if (CROUCH) {  // CROUCH HITBOX
@@ -424,18 +427,31 @@ void npc_collisions_level2() {
         PLAYER.x_offset = 6;
         PLAYER.y_offset = 16;
     }
+    PTR_y = py - PLAYER.h_offset;  // TR y
+    PTR_x = px + PLAYER.x_offset;  // TR x
+    PBL_y = py + PLAYER.y_offset;  // BL y
+    PBL_x = px - PLAYER.x_offset;  // BL x
+    // for (UINT8 b = 0; b != 2; b++) {
+    //     bx = TO_PIXELS(active_bullets[b].x);
+    //     by = TO_PIXELS(active_bullets[b].y);
+    //     BTR_y = by - active_bullets[b].y_offset;  // TR y
+    //     BTR_x = bx + active_bullets[b].x_offset;  // TR x
+    //     BBL_y = by + active_bullets[b].y_offset;  // BL y
+    //     BBL_x = bx - active_bullets[b].x_offset;  // BL x
+    //     if (active_bullets[b].ON) {
+    //         if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, BTR_y, BTR_x, BBL_y, BBL_x) == 0x01U) {
+    //             GAMEOVER = TRUE;
+    //         }
+    //     }
+    // }
     for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++) {
         //[y][x]
-        UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
-        UINT8 ax, ay;
+
         ax = TO_PIXELS(active_actors[i].x);
         ay = TO_PIXELS(active_actors[i].y);
         INT16 NPC_PLAYER_Offset = px - (ax - active_actors[i].x_pivot);
         // THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
-        PTR_y = py - PLAYER.h_offset;            // TR y
-        PTR_x = px + PLAYER.x_offset;            // TR x
-        PBL_y = py + PLAYER.y_offset;            // BL y
-        PBL_x = px - PLAYER.x_offset;            // BL x
+
         NTR_y = ay - active_actors[i].y_offset;  // TR y
         NTR_x = ax + active_actors[i].x_offset;  // TR x
         NBL_y = ay + active_actors[i].y_offset;  // BL y

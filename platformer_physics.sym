@@ -357,10 +357,10 @@
 07:4AF7 _level2_bullets
 07:4BCF _spawn_bullets_lvl2
 07:4CE9 _npc_collisions_level2
-07:5046 _init_submap_lvl2
-07:5170 _setup_lvl2
-07:51B7 _enter_lvl2
-07:5832 _LEVEL_2_COLLISION
+07:5174 _init_submap_lvl2
+07:529E _setup_lvl2
+07:52E5 _enter_lvl2
+07:5960 _LEVEL_2_COLLISION
 06:4000 _LEVEL_1_MAP
 06:4708 _STAGE_DROP_MAP
 08:4000 _LEVEL_2_MAP

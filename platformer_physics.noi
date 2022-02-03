@@ -83,7 +83,7 @@ DEF l__CODE_100 0x1AFB
 DEF _rROMB0 0x2000
 DEF s__BASE 0x265E
 DEF s__CODE_0 0x265E
-DEF l__CODE_7 0x2A41
+DEF l__CODE_7 0x2B6F
 DEF _rROMB1 0x3000
 DEF s__INITIALIZER 0x3CFF
 DEF s__LIT 0x3CFF
@@ -410,10 +410,10 @@ DEF _level2_actors 0x748DB
 DEF _level2_bullets 0x74AF7
 DEF _spawn_bullets_lvl2 0x74BCF
 DEF _npc_collisions_level2 0x74CE9
-DEF _init_submap_lvl2 0x75046
-DEF _setup_lvl2 0x75170
-DEF _enter_lvl2 0x751B7
-DEF _LEVEL_2_COLLISION 0x75832
+DEF _init_submap_lvl2 0x75174
+DEF _setup_lvl2 0x7529E
+DEF _enter_lvl2 0x752E5
+DEF _LEVEL_2_COLLISION 0x75960
 DEF _anim_worldtest 0x644000
 DEF _worldtest 0x6446AB
 DEF _worldtest_actors 0x6446B8
