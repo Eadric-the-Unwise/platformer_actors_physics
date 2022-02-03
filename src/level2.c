@@ -61,7 +61,7 @@ const actor_t level2_actors[5] = {
      .RENDER = TRUE,
      .ON = TRUE},
     // 1 TOP PATROL
-    {.x = TO_COORDS(56),
+    {.x = TO_COORDS(72),
      .y = TO_COORDS(52),
      .SpdX = 6,
      .SpdY = 0,
@@ -73,8 +73,8 @@ const actor_t level2_actors[5] = {
      .y_offset = 6,
      .direction = DIR_UP_L,
      .NPC_type = PATROL,
-     .patrol_timer = 110,
-     .patrol_max = 220,
+     .patrol_timer = 60,
+     .patrol_max = 120,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -85,7 +85,7 @@ const actor_t level2_actors[5] = {
      .copy = FALSE},
     // 2 BOTTOM PATROL
     {.bullet = 1,
-     .x = TO_COORDS(56),
+     .x = TO_COORDS(72),
      .y = TO_COORDS(116),
      .SpdX = -6,
      .SpdY = 0,
@@ -97,8 +97,8 @@ const actor_t level2_actors[5] = {
      .y_offset = 6,
      .direction = DIR_DOWN_L,
      .NPC_type = PATROL,
-     .patrol_timer = 110,
-     .patrol_max = 220,
+     .patrol_timer = 60,
+     .patrol_max = 120,
      .tile_count = (sizeof(NPC_electric_data) >> 4),
      .tile_index = 0,
      .tile_data = NPC_electric_data,
@@ -364,14 +364,6 @@ void anim_level2() {
             if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
                 current_bullet->x -= PLAYER.SpdX;
             }
-            // if (current_bullet->facing == LEFT)
-            // {
-            //     current_bullet->x -= current_bullet->SpdX;
-            // }
-            // else if (current_bullet->facing == RIGHT)
-            // {
-            //     current_bullet->x += current_bullet->SpdX;
-            // }
             current_bullet->x += current_bullet->SpdX;
         }
         current_bullet++;
@@ -379,35 +371,16 @@ void anim_level2() {
 }
 
 void spawn_bullets_lvl2(UINT8 bullet_number) {
-    // actor_t *spawn_bullet = active_bullets;
-    // for (UINT8 i = MAX_BULLETS; i != 0; i--)
-    // {
-    // if (active_bullets[bullet_number].RENDER == TRUE)
-    // {
-    //     spawn_bullet++;
-    // }
-    // else
-    // if (active_bullets[bullet_number].bullet_timer == 0)
-    // {
     active_bullets[bullet_number].RENDER = TRUE;
     active_bullets[bullet_number].ON = TRUE;
     if (PLAYER.x < active_actors[active_bullets[bullet_number].actor].x) {  // BULLET IS VISIBLE BEFORE ITS X AXIS IS LESS THAN DETECTIVE
-        // active_bullets[bullet_number].facing = LEFT;
         active_bullets[bullet_number].SpdX = -48;
         active_bullets[bullet_number].x = active_actors[active_bullets[bullet_number].actor].x - TO_COORDS(6);
     } else {
-        // active_bullets[bullet_number].facing = RIGHT;
         active_bullets[bullet_number].SpdX = 48;
         active_bullets[bullet_number].x = active_actors[active_bullets[bullet_number].actor].x + TO_COORDS(6);
     }
     active_bullets[bullet_number].y = active_actors[active_bullets[bullet_number].actor].y;
-    // active_bullets[bullet_number].y = PLAYER.y + TO_COORDS(4);
-    // active_bullets[bullet_number].bullet_timer = 90;
-    // break;
-    // }
-    // }
-    // if (spawn_bullet->RENDER == FALSE) {
-    // }
 }
 
 void npc_collisions_level2() {
