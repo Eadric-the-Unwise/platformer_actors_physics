@@ -352,16 +352,34 @@ void anim_level2() {
         current_actor = &active_actors[*ptr];
         // current_actor++;
     }
+    UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
+    UINT8 ax, ay;
+    PTR_y = py - PLAYER.h_offset;  // TR y
+    PTR_x = px + PLAYER.x_offset;  // TR x
+    PBL_y = py + PLAYER.y_offset;  // BL y
+    PBL_x = px - PLAYER.x_offset;  // BL x
     for (UINT8 i = level2.bullet_count; i != 0; i--) {
+        //[y][x]
+
         if (current_bullet->RENDER == TRUE) {
-            INT16 bullet_x = TO_PIXELS(current_bullet->x);
-            if ((bullet_x < -16) || (bullet_x > 176)) {
+            // INT16 bullet_x = TO_PIXELS(current_bullet->x);
+            ax = TO_PIXELS(current_bullet->x);
+            ay = TO_PIXELS(current_bullet->y);
+            // INT16 NPC_PLAYER_Offset = px - (ax - current_bullet->x_pivot);
+            // THE PIVOT IS THE LITERAL CENTER OF THE METASPRITE. NOT A PIXEL, BUT THE CROSSHAIRS IN THE MIDDLE OF THE DESGIN
+
+            NTR_y = ay - current_bullet->y_offset;  // TR y
+            NTR_x = ax + current_bullet->x_offset;  // TR x
+            NBL_y = ay + current_bullet->y_offset;  // BL y
+            NBL_x = ax - current_bullet->x_offset;  // BL x
+            if ((a_x < -16) || (a_x > 176)) {
                 current_bullet->KILL = TRUE;
                 current_bullet->RENDER = FALSE;
             }
             if ((camx > 0) && (camx < bkg.camera_max_x)) {  // IF CAM IS NOT IN SPAWN OR END POSITION (ie it's moving)
                 current_bullet->x -= PLAYER.SpdX;
             }
+
             // if (current_bullet->facing == LEFT)
             // {
             //     current_bullet->x -= current_bullet->SpdX;
@@ -371,6 +389,11 @@ void anim_level2() {
             //     current_bullet->x += current_bullet->SpdX;
             // }
             current_bullet->x += current_bullet->SpdX;
+            if (current_bullet->ON && current_bullet->KILL == NULL) {
+                if (overlap(PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x) == 0x01U) {
+                    GAMEOVER = TRUE;
+                }
+            }
         }
         current_bullet++;
     }
@@ -424,6 +447,7 @@ void npc_collisions_level2() {
         PLAYER.x_offset = 6;
         PLAYER.y_offset = 16;
     }
+
     for (UINT8 i = ACTOR_FIRST_NPC; i != (total_actors_count); i++) {
         //[y][x]
         UINT16 PTR_y, PTR_x, PBL_y, PBL_x, NTR_y, NTR_x, NBL_y, NBL_x;
