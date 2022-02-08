@@ -738,7 +738,7 @@ void enter_lvl1()
             }
         }
 
-        // IF PLAYER IS FREE FALLING FOR ANY REASON
+        // IF PLAYER IS FREE FALLING FOR ANY REASONs
         if (PLAYER.SpdY != 0)
         {
             JUMP = Gravity = TRUE;
