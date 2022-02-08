@@ -765,12 +765,9 @@ void enter_lvl2()
         }
         if (DROP)
         {
-            DROP_timer -= 1;
-            if (DROP_timer == 0)
-            {
+            DROP_timer++;
+            if (DROP_timer % 16 == 0)
                 DROP = FALSE;
-                DROP_timer = 16;
-            }
         }
         if ((CROUCH) && (canCROUCH))
         {
