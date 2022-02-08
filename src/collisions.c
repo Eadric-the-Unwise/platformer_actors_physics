@@ -63,13 +63,13 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
         }
         if ((COLLISION_DATA[tileindexD] == 0x00) && (COLLISION_DATA[tileindexC] == 0x00) && (COLLISION_DATA[tileindexT] == 0x01))
         {
-            if (canCROUCH_timer == 1)
+            canCROUCH_timer++;
+            if (canCROUCH_timer % 9 == 0)
             {
                 canCROUCH = TRUE;
                 CROUCH = TRUE;
-                canCROUCH_timer = 10;
+                // canCROUCH_timer = 10;
             }
-            canCROUCH_timer -= 1;
         }
     }
     else if (!CROUCH)
@@ -89,13 +89,13 @@ void check_LR(UINT8 newplayerx, UINT8 newplayery, INT16 camera_x)
         {
             if ((COLLISION_DATA[tileindexD] == 0x00) && (COLLISION_DATA[tileindexC] == 0x00) && (COLLISION_DATA[tileindexT] == 0x01))
             {
-                if (canCROUCH_timer == 1)
+                canCROUCH_timer++;
+                if (canCROUCH_timer % 9 == 0)
                 {
                     canCROUCH = TRUE;
                     CROUCH = TRUE;
-                    canCROUCH_timer = 10;
+                    // canCROUCH_timer = 10;
                 }
-                canCROUCH_timer -= 1;
             }
         }
     }
